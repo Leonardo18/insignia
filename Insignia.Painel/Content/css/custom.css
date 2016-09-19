@@ -2164,6 +2164,7 @@ button,
 .modal-footer .btn + .btn {
     margin-bottom: 5px;
     margin-right: 5px;
+    float: right;
 }
 
 .btn-group-vertical .btn, .btn-group .btn {
@@ -3792,7 +3793,7 @@ ul.project_files li {
 /* *********  /ecommerce  **************************** */
 /** login **/
 .login {
-    background: #F7F7F7;
+    background: #14313d;
 }
 
     .login .fa-paw {
@@ -3889,7 +3890,7 @@ a.hiddenanchor {
     padding: 25px 0 0;
     position: relative;
     text-align: center;
-    text-shadow: 0 1px 0 #fff;
+    color: #fff;
     min-width: 280px;
 }
 
@@ -3993,8 +3994,8 @@ a.hiddenanchor {
 
 .login_content div .reset_pass {
     margin-top: 13px !important;
-    margin-right: 39px;
-    float: right;
+    margin-left: 39px;
+    float: left;
 }
 
 .separator {

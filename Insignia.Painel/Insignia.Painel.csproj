@@ -144,7 +144,6 @@
     <Folder Include="Helpers\" />
     <Folder Include="Models\" />
     <Folder Include="Scripts\" />
-    <Folder Include="Views\Dashboard\" />
     <Folder Include="Views\Shared\" />
   </ItemGroup>
   <PropertyGroup>
