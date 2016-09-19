@@ -113,7 +113,7 @@ namespace Insignia.DAO.Usuarios
 
             List<ValidationResult> resultadoValidacao;
 
-            if (Validacao.ValidaModel(user, out resultadoValidacao) && !String.IsNullOrEmpty(user.ID))
+            if (Validacao.ValidaModel(user, out resultadoValidacao) && !String.IsNullOrEmpty("user.ID"))
             {
                 using (var sql = new SqlConnection(conStr))
                 {

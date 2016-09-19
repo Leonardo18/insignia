@@ -22,7 +22,7 @@ namespace Insignia.Painel.Controllers
             Auth auth = new Auth(ConfigurationManager.ConnectionStrings["strConMain"].ConnectionString);
 
             //Tenta efeutar login com os dados passados e retorna um dictionary
-            Usuario DadosUsuario = auth.Login(Email, Senha);
+            Usuario DadosUsuario = auth.LoginUsuario(Email, Senha);
 
             if (DadosUsuario != null)
             {

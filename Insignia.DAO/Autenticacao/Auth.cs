@@ -1,5 +1,6 @@
 ﻿using Dapper;
 using Insignia.Model.Usuario;
+using Insignia.Model.Empresa;
 using Authe = Insignia.DAO.Util.Autenticacao;
 using System;
 using System.Data.SqlClient;
@@ -17,12 +18,39 @@ namespace Insignia.DAO.Autenticacao
         }
 
         /// <summary>
+        /// Verifica se a empresa existe e recupera os dados dela.
+        /// </summary>
+        /// <param name="usuario"></param>
+        /// <param name="senha"></param>
+        /// <returns>Model contendo os dados do usuário ou null.</returns>
+        public Empresa LoginEmpresa(string email, string senha)
+        {
+            Empresa model = null;
+
+            using (var sql = new SqlConnection(conStr))
+            {
+                model = sql.Query<Empresa>(" SELECT ID, RazaoSocial, CNPJ, Email, Senha FROM Empresas WHERE Email = @Email ", new { Email = email }).SingleOrDefault();
+            }
+
+            if (model != null)
+            {
+                string senhaDB = model.SenhaCadastro;
+
+                if (senhaDB != Authe.Criptografar(senha))
+                {
+                    model = null;
+                }
+            }
+            return model;
+        }
+
+        /// <summary>
         /// Verifica se o usuário existe e recupera os dados dele.
         /// </summary>
         /// <param name="usuario"></param>
         /// <param name="senha"></param>
         /// <returns>Model contendo os dados do usuário ou null.</returns>
-        public Usuario Login(string usuario, string senha)
+        public Usuario LoginUsuario(string usuario, string senha)
         {
             Usuario model = null;
 
@@ -33,12 +61,12 @@ namespace Insignia.DAO.Autenticacao
 
             if (model != null)
             {
-                string senhaDB = model.Senha;
+                //string senhaDB = model.Senha;
 
-                if (senhaDB != Authe.Criptografar(senha))
-                {
-                    model = null;
-                }
+                //if (senhaDB != Authe.Criptografar(senha))
+                //{
+                //    model = null;
+                //}
             }
             return model;
         }
