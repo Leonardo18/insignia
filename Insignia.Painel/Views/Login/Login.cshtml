@@ -1,4 +1,5 @@
-﻿@{
+﻿@model Insignia.Model.Empresa.Empresa
+@{
     Layout = null;
 }
 
@@ -16,9 +17,9 @@
         <div class="login_wrapper">
             <div class="animate form login_form">
                 <section class="login_content">
-                    @using (Html.BeginForm())
+                    @using (Html.BeginForm("Login", "Login"))
                     {
-                        <h1>Login Form</h1>
+                        <h1>Logar</h1>
                         <!--<h1><img src="~/Content/Images/.png" width="200" /></h1>-->
                         if (!string.IsNullOrWhiteSpace(ViewBag.Error))
                         {
@@ -30,7 +31,7 @@
                             </div>
                         }
                         <div>
-                            @Html.TextBox("Email", "", new { @class = "form-control", placeholder = "E-mail", Required = "" })
+                            @Html.TextBox("Email", "", new { @class = "form-control", placeholder = "E-mail", Required = "", type = "email" })
                         </div>
                         <div>
                             @Html.Password("Senha", "", new { @class = "form-control", placeholder = "Senha", Required = "" })
@@ -43,15 +44,15 @@
                         <div class="clearfix"></div>
                         <div class="separator">
                             <p class="change_link">
-                                New to site?
-                                <a href="#signup" class="to_register"> Create Account </a>
+                                Primeiro acesso?
+                                <a href="#signup" class="to_register"> Criar uma conta </a>
                             </p>
 
                             <div class="clearfix"></div>
                             <br />
 
                             <div>
-                                <h1><i class="fa fa-paw"></i> Gentelella Alela!</h1>
+                                <h1><i class="fa fa-paw"></i> Insígnia</h1>
                                 <p>©2016 All Rights Reserved. Gentelella Alela! is a Bootstrap 3 template. Privacy and Terms</p>
                             </div>
                         </div>
@@ -63,18 +64,29 @@
                 <section class="login_content">
                     @using (Html.BeginForm("NovaConta", "Login"))
                     {
-                        <h1>Create Account</h1>
+                        <h1>Cadastre sua empresa</h1>
                         <div>
-                            <input type="text" class="form-control" placeholder="Username" required="" />
+                            @Html.ValidationMessageFor(modelItem => modelItem.RazaoSocial, null, new { @class = "text-danger" })
+                            @Html.TextBox("RazaoSocial", Model.RazaoSocial, new { @class = "form-control", placeholder = "Razão Social", Required = "" })
                         </div>
                         <div>
-                            <input type="email" class="form-control" placeholder="Email" required="" />
+                            @Html.ValidationMessageFor(modelItem => modelItem.CNPJ, null, new { @class = "text-danger" })
+                            @Html.TextBox("CNPJ", Model.CNPJ, new { @class = "form-control", placeholder = "CNPJ", Required = "" })
                         </div>
                         <div>
-                            <input type="password" class="form-control" placeholder="Password" required="" />
+                            @Html.ValidationMessageFor(modelItem => modelItem.Email, null, new { @class = "text-danger" })
+                            @Html.TextBox("Email", Model.Email, new { @class = "form-control", placeholder = "E-mail", Required = "", type = "email" })
                         </div>
                         <div>
-                            <a class="btn btn-default submit" href="index.html">Submit</a>
+                            @Html.ValidationMessageFor(modelItem => modelItem.SenhaCadastro, null, new { @class = "text-danger" })
+                            @Html.Password("SenhaCadastro", Model.SenhaCadastro, new { @class = "form-control", placeholder = "Senha", Required = "", id = "SenhaCadastro" })
+                        </div>
+                        <div>
+                            @Html.ValidationMessageFor(modelItem => modelItem.ConfirmaSenha, null, new { @class = "text-danger" })
+                            @Html.Password("ConfirmaSenha", Model.ConfirmaSenha, new { @class = "form-control", placeholder = "Redigite a Senha", Required = "", id = "ConfirmaSenha" })
+                        </div>
+                        <div>
+                            <button class="btn btn-default submit" type="submit">Cadastrar</button>
                         </div>
 
                         <div class="clearfix"></div>
@@ -97,5 +109,20 @@
             </div>
         </div>
     </div>
+    <script>
+        /** ******  ConfirmPassword  *********************** **/
+        var password = document.getElementById("SenhaCadastro"), confirm_password = document.getElementById("ConfirmaSenha");
+
+        function validatePassword() {
+            if (password.value != confirm_password.value) {
+                confirm_password.setCustomValidity("As senhas diferem");
+            } else {
+                confirm_password.setCustomValidity('');
+            }
+        }
+        password.onchange = validatePassword;
+        confirm_password.onkeyup = validatePassword;
+        /** ******  ConfirmPassword  *********************** **/
+    </script>
 </body>
 </html>

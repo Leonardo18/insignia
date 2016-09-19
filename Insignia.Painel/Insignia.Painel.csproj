@@ -147,6 +147,16 @@
     <Folder Include="Scripts\" />
     <Folder Include="Views\Shared\" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Insignia.DAO\Insignia.DAO.csproj">
+      <Project>{360149c7-07fe-47b9-b7a0-2b27b6bede2a}</Project>
+      <Name>Insignia.DAO</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Insignia.Model\Insignia.Model.csproj">
+      <Project>{0ed38ad7-6bb3-4f5c-95cf-7657218cd3fd}</Project>
+      <Name>Insignia.Model</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
