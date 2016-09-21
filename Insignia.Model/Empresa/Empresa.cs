@@ -4,6 +4,8 @@ namespace Insignia.Model.Empresa
 {
     public class Empresa
     {
+        public int ID { get; set; }
+
         [Required(ErrorMessage = "Informe a sua razão social")]
         public string RazaoSocial { get; set; }
 

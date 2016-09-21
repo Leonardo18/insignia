@@ -222,6 +222,7 @@
     margin-bottom: 10px;
     width: 100%;
     position: relative;
+    height: 55px;
 }
 
 @media (min-width: 480px) {

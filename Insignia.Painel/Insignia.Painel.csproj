@@ -113,13 +113,29 @@
     <Content Include="Content\css\animate\animate.css" />
     <Content Include="Content\css\bootstrap\bootstrap.css" />
     <Content Include="Content\css\custom.css" />
-    <Content Include="Content\css\font-aewsome\font-awesome.css" />
     <Content Include="Content\css\nprogress\nprogress.css" />
+    <Content Include="Fonts\css\font-awesome.css" />
+    <Content Include="Fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="packages.config" />
+    <Content Include="Scripts\js\bootstrap\bootstrap.js" />
+    <Content Include="Scripts\js\custom.js" />
+    <Content Include="Scripts\js\fastclick\fastclick.js" />
+    <Content Include="Scripts\js\inputmask\jquery.inputmask.bundle.min.js" />
+    <Content Include="Scripts\js\jquery.js" />
+    <Content Include="Scripts\js\nprogress\nprogress.js" />
     <Content Include="Views\web.config" />
     <Content Include="Views\Login\Login.cshtml" />
+    <Content Include="Fonts\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Fonts\fonts\fontawesome-webfont.woff" />
+    <Content Include="Fonts\fonts\fontawesome-webfont.woff2" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="Fonts\glyphicons-halflings-regular.eot" />
     <None Include="Properties\PublishProfiles\web.pubxml" />
+    <Content Include="Views\Shared\LayoutPrincipal.cshtml" />
+    <Content Include="Views\Dashboard\Dashboard.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -133,19 +149,17 @@
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\CustomAttributes\IsLogged.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Fonts\" />
-    <Folder Include="Helpers\" />
     <Folder Include="Models\" />
-    <Folder Include="Scripts\" />
-    <Folder Include="Views\Shared\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Insignia.DAO\Insignia.DAO.csproj">

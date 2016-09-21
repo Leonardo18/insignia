@@ -1,5 +1,4 @@
 ﻿using Dapper;
-using Insignia.Model.Usuario;
 using Insignia.Model.Empresa;
 using Authe = Insignia.DAO.Util.Autenticacao;
 using System;
@@ -43,33 +42,7 @@ namespace Insignia.DAO.Autenticacao
             }
             return model;
         }
-
-        /// <summary>
-        /// Verifica se o usuário existe e recupera os dados dele.
-        /// </summary>
-        /// <param name="usuario"></param>
-        /// <param name="senha"></param>
-        /// <returns>Model contendo os dados do usuário ou null.</returns>
-        public Usuario LoginUsuario(string usuario, string senha)
-        {
-            Usuario model = null;
-
-            using (var sql = new SqlConnection(conStr))
-            {
-                model = sql.Query<Usuario>(" SELECT ID, Nome, Email, AssociadoID, Usuario, Senha, TipoID FROM Usuarios WHERE Ativo <> 0 AND Usuario = @User ", new { User = usuario }).SingleOrDefault();
-            }
-
-            if (model != null)
-            {
-                //string senhaDB = model.Senha;
-
-                //if (senhaDB != Authe.Criptografar(senha))
-                //{
-                //    model = null;
-                //}
-            }
-            return model;
-        }
+        
 
         /// <summary>
         /// Verifica se o usuário atual possui permissões 

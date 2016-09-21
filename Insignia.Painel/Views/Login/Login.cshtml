@@ -6,8 +6,13 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Insígnia</title>
+    <script src="~/Scripts/js/jquery.js"></script>
     @Styles.Render("~/Login/styles")
 </head>
 <body class="login">
@@ -52,8 +57,8 @@
                             <br />
 
                             <div>
-                                <h1><i class="fa fa-paw"></i> Insígnia</h1>
-                                <p>©2016 All Rights Reserved. Gentelella Alela! is a Bootstrap 3 template. Privacy and Terms</p>
+                                <h1><i class="fa fa-paw"></i>Insígnia.</h1>
+                                <p>©2016 Todos Direitos Reservados. Insígnia é um projeto de TCC.</p>
                             </div>
                         </div>
                     }
@@ -71,7 +76,7 @@
                         </div>
                         <div>
                             @Html.ValidationMessageFor(modelItem => modelItem.CNPJ, null, new { @class = "text-danger" })
-                            @Html.TextBox("CNPJ", Model.CNPJ, new { @class = "form-control", placeholder = "CNPJ", Required = "" })
+                            @Html.TextBox("CNPJ", Model.CNPJ, new { @class = "form-control", placeholder = "CNPJ", datainputmask = "'mask' : '99.999.999/9999-99'", Required = "" })
                         </div>
                         <div>
                             @Html.ValidationMessageFor(modelItem => modelItem.Email, null, new { @class = "text-danger" })
@@ -92,16 +97,16 @@
                         <div class="clearfix"></div>
                         <div class="separator">
                             <p class="change_link">
-                                Already a member ?
-                                <a href="#signin" class="to_register"> Log in </a>
+                                Já é um usuário?
+                                <a href="#signin" class="to_register"> Entrar </a>
                             </p>
 
                             <div class="clearfix"></div>
                             <br />
 
                             <div>
-                                <h1><i class="fa fa-paw"></i> Gentelella Alela!</h1>
-                                <p>©2016 All Rights Reserved. Gentelella Alela! is a Bootstrap 3 template. Privacy and Terms</p>
+                                <h1><i class="fa fa-paw"></i> Insígnia.</h1>
+                                <p>©2016 Todos Direitos Reservados. Insígnia é um projeto de TCC.</p>
                             </div>
                         </div>
                     }
@@ -109,8 +114,16 @@
             </div>
         </div>
     </div>
+    @Scripts.Render("~/Login/scripts");
+    <!-- jquery.inputmask -->
     <script>
-        /** ******  ConfirmPassword  *********************** **/
+        $(document).ready(function () {
+            $(":input").inputmask();
+        });
+    </script>
+    <!-- /jquery.inputmask -->
+    <!-- ConfirmPassword-->
+    <script>
         var password = document.getElementById("SenhaCadastro"), confirm_password = document.getElementById("ConfirmaSenha");
 
         function validatePassword() {
@@ -122,7 +135,7 @@
         }
         password.onchange = validatePassword;
         confirm_password.onkeyup = validatePassword;
-        /** ******  ConfirmPassword  *********************** **/
     </script>
+    <!-- /ConfirmPassword -->
 </body>
 </html>
