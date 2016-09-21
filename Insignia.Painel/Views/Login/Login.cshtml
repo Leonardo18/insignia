@@ -58,7 +58,7 @@
 
                             <div>
                                 <h1><i class="fa fa-paw"></i>Insígnia.</h1>
-                                <p>©2016 Todos Direitos Reservados. Insígnia é um projeto de TCC.</p>
+                                <p>©2016 Todos direitos reservados. Insígnia é um projeto de TCC.</p>
                             </div>
                         </div>
                     }
@@ -76,7 +76,7 @@
                         </div>
                         <div>
                             @Html.ValidationMessageFor(modelItem => modelItem.CNPJ, null, new { @class = "text-danger" })
-                            @Html.TextBox("CNPJ", Model.CNPJ, new { @class = "form-control", placeholder = "CNPJ", datainputmask = "'mask' : '99.999.999/9999-99'", Required = "" })
+                            @Html.TextBox("CNPJ", Model.CNPJ, new { @class = "form-control", placeholder = "CNPJ", Required = "", datainputmask = "'mask' : '99.999.999/9999-99'" })
                         </div>
                         <div>
                             @Html.ValidationMessageFor(modelItem => modelItem.Email, null, new { @class = "text-danger" })
@@ -97,7 +97,7 @@
                         <div class="clearfix"></div>
                         <div class="separator">
                             <p class="change_link">
-                                Já é um usuário?
+                                Já possui uma conta?
                                 <a href="#signin" class="to_register"> Entrar </a>
                             </p>
 
@@ -106,7 +106,7 @@
 
                             <div>
                                 <h1><i class="fa fa-paw"></i> Insígnia.</h1>
-                                <p>©2016 Todos Direitos Reservados. Insígnia é um projeto de TCC.</p>
+                                <p>©2016 Todos direitos reservados. Insígnia é um projeto de TCC.</p>
                             </div>
                         </div>
                     }

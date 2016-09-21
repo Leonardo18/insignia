@@ -42,7 +42,7 @@ namespace Insignia.DAO.Autenticacao
             }
             return model;
         }
-        
+
 
         /// <summary>
         /// Verifica se o usuário atual possui permissões 

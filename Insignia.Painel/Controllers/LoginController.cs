@@ -60,7 +60,6 @@ namespace Insignia.Painel.Controllers
                     return RedirectToAction("../Dashboard/Dashboard");
                 }
             }
-
             return View("Login", EmpresaModel);
         }
 

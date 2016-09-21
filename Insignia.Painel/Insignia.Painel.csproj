@@ -114,6 +114,7 @@
     <Content Include="Content\css\bootstrap\bootstrap.css" />
     <Content Include="Content\css\custom.css" />
     <Content Include="Content\css\nprogress\nprogress.css" />
+    <Content Include="Content\images\B_ODtLOU4AE9jEO.jpg" />
     <Content Include="Fonts\css\font-awesome.css" />
     <Content Include="Fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />

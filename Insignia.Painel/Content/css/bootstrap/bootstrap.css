@@ -424,6 +424,7 @@ th {
 
 .glyphicon-off:before {
     content: "\e017";
+    color: #305c88;
 }
 
 .glyphicon-signal:before {
@@ -432,6 +433,7 @@ th {
 
 .glyphicon-cog:before {
     content: "\e019";
+    color: #305c88;
 }
 
 .glyphicon-trash:before {
@@ -764,6 +766,7 @@ th {
 
 .glyphicon-eye-close:before {
     content: "\e106";
+    color: #305c88;
 }
 
 .glyphicon-warning-sign:before {
@@ -900,6 +903,7 @@ th {
 
 .glyphicon-fullscreen:before {
     content: "\e140";
+    color: #305c88;
 }
 
 .glyphicon-dashboard:before {

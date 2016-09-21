@@ -66,7 +66,7 @@
 
 .nav-sm .nav.child_menu li.active,
 .nav-sm .nav.side-menu li.active-sm {
-    border-right: 5px solid #1ABB9C;
+    border-right: 5px solid #305c88;
 }
 
     .nav-sm ul.nav.child_menu ul,
@@ -650,7 +650,7 @@ a {
     }
 
 .nav-md ul.nav.child_menu li:before {
-    background: #425668;
+    background: #305c88;
     bottom: auto;
     content: "";
     height: 8px;
@@ -664,7 +664,7 @@ a {
 }
 
 .nav-md ul.nav.child_menu li:after {
-    border-left: 1px solid #425668;
+    border-left: 1px solid #305c88;
     bottom: 0;
     content: "";
     left: 27px;
@@ -694,7 +694,7 @@ a {
 }
 
 .nav.side-menu > li.current-page, .nav.side-menu > li.active {
-    border-right: 5px solid #1ABB9C;
+    border-right: 5px solid #305c88;
 }
 
 .nav li.current-page {
@@ -1759,7 +1759,7 @@ span.right {
     padding: 5px 0 0 0;
     position: fixed;
     width: 230px;
-    background: #2A3F54;
+    background: #305c88;
 }
 
     .sidebar-footer a {
@@ -1769,7 +1769,7 @@ span.right {
         font-size: 17px;
         display: block;
         float: left;
-        background: #172D44;
+        background: #112133;
     }
 
         .sidebar-footer a:hover {
@@ -3794,7 +3794,7 @@ ul.project_files li {
 /* *********  /ecommerce  **************************** */
 /** login **/
 .login {
-    background: #14313d;
+    background: #112133;
 }
 
     .login .fa-paw {
