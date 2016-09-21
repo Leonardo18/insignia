@@ -1,4 +1,5 @@
-﻿using Insignia.DAO.Empresas;
+﻿using Insignia.DAO.Autenticacao;
+using Insignia.DAO.Empresas;
 using Insignia.Model.Empresa;
 using System.Configuration;
 using System.Web.Mvc;
@@ -20,27 +21,26 @@ namespace Insignia.Painel.Controllers
         public ActionResult Login(string Email, string Senha)
         {
             //Objeto dao da dll que contém os métodos para buscar dados e editar dados no banco.
-            //Auth auth = new Auth(ConfigurationManager.ConnectionStrings["strConMain"].ConnectionString);
+            Auth auth = new Auth(ConfigurationManager.ConnectionStrings["strConMain"].ConnectionString);
 
             //Tenta efeutar login com os dados passados e retorna um dictionary
-            //Usuario DadosUsuario = auth.LoginUsuario(Email, Senha);
+            Empresa EmpresaDados = auth.LoginEmpresa(Email, Senha);
 
-            //if (DadosUsuario != null)
-            //{
-            //    this.Session["SessionID"] = Session.SessionID;
-            //    this.Session["UsuarioID"] = DadosUsuario.ID;
-            //    this.Session["UsuarioNome"] = DadosUsuario.Nome;
-            //    this.Session["UsuarioEmail"] = DadosUsuario.Email;
-            //    this.Session["Usuario"] = DadosUsuario.Login;
-            //    this.Session["TipoID"] = DadosUsuario.TipoID;
+            if (EmpresaDados != null)
+            {
+                this.Session["SessionID"] = Session.SessionID;
+                this.Session["UsuarioID"] = EmpresaDados.ID;
+                this.Session["UsuarioNome"] = EmpresaDados.RazaoSocial;
+                this.Session["UsuarioEmail"] = EmpresaDados.Email;
+                this.Session["Email"] = EmpresaDados.Email;
 
-            //    return RedirectToAction("../Dashboard/Dashboard");
-            //}
-            //else
-            //{
-            //    ViewBag.Error = "E-mail ou senha incorretos.";
-            //}
-            return View();
+                return RedirectToAction("../Dashboard/Dashboard");
+            }
+            else
+            {
+                ViewBag.Error = "E-mail ou senha incorretos.";
+            }
+            return View(new Empresa());
         }
 
 
@@ -50,14 +50,21 @@ namespace Insignia.Painel.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (dao.Save(EmpresaModel))
+                if (dao.VerificaEmpresa(EmpresaModel.Email))
                 {
-                    this.Session["SessionID"] = Session.SessionID;
-                    this.Session["EmpresaID"] = EmpresaModel.ID;
-                    this.Session["EmpresaRazao"] = EmpresaModel.RazaoSocial;
-                    this.Session["EmpresaEmail"] = EmpresaModel.Email;
+                    if (dao.Save(EmpresaModel))
+                    {
+                        this.Session["SessionID"] = Session.SessionID;
+                        this.Session["EmpresaID"] = EmpresaModel.ID;
+                        this.Session["EmpresaRazao"] = EmpresaModel.RazaoSocial;
+                        this.Session["EmpresaEmail"] = EmpresaModel.Email;
 
-                    return RedirectToAction("../Dashboard/Dashboard");
+                        return RedirectToAction("../Dashboard/Dashboard");
+                    }
+                }
+                else
+                {
+                    ViewBag.Error = "A empresa " + EmpresaModel.RazaoSocial + " já possui um cadastro.";
                 }
             }
             return View("Login", EmpresaModel);

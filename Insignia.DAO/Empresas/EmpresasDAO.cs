@@ -126,5 +126,31 @@ namespace Insignia.DAO.Empresas
             }
             return resp;
         }
+
+        /// <summary>
+        /// Verifica se a empresa já existe no sistema
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns>True se não existe e false caso já exista</returns>
+        public bool VerificaEmpresa(string Email)
+        {
+            bool resp = true;
+            Empresa empresa = null;
+
+            if (!string.IsNullOrWhiteSpace(Email))
+            {
+                using (var sql = new SqlConnection(conStr))
+                {
+                    empresa = sql.Query<Empresa>(" SELECT ID FROM Empresas WHERE Email = @Email ", new { Email = Email }).SingleOrDefault();
+                }
+            }
+
+            if (!string.IsNullOrEmpty(Convert.ToString(empresa.ID)))
+            {
+                resp = false;
+            }
+
+            return resp;
+        }
     }
 }

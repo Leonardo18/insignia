@@ -28,7 +28,7 @@ namespace Insignia.DAO.Autenticacao
 
             using (var sql = new SqlConnection(conStr))
             {
-                model = sql.Query<Empresa>(" SELECT ID, RazaoSocial, CNPJ, Email, Senha FROM Empresas WHERE Email = @Email ", new { Email = email }).SingleOrDefault();
+                model = sql.Query<Empresa>(" SELECT ID, RazaoSocial, CNPJ, Email, Senha As SenhaCadastro FROM Empresas WHERE Email = @Email ", new { Email = email }).SingleOrDefault();
             }
 
             if (model != null)
