@@ -24,7 +24,9 @@
                 <section class="login_content">
                     @using (Html.BeginForm("Login", "Login"))
                     {
-                        <h1>Logar</h1>
+                        <div class="logo">
+                            <h1>Insígnia</h1>
+                        </div>
                         <!--<h1><img src="~/Content/Images/.png" width="200" /></h1>-->
                         if (!string.IsNullOrWhiteSpace(ViewBag.Error))
                         {
@@ -57,7 +59,6 @@
                             <br />
 
                             <div>
-                                <h1><i class="fa fa-paw"></i>Insígnia.</h1>
                                 <p>©2016 Todos direitos reservados. Insígnia é um projeto de TCC.</p>
                             </div>
                         </div>
@@ -65,7 +66,7 @@
                 </section>
             </div>
 
-            <div id="register" class="animate form registration_form">
+            <div id="register" class="animate form registration_form" style="margin-top: 100px;">
                 <section class="login_content">
                     @using (Html.BeginForm("NovaConta", "Login"))
                     {
@@ -105,7 +106,6 @@
                             <br />
 
                             <div>
-                                <h1><i class="fa fa-paw"></i> Insígnia.</h1>
                                 <p>©2016 Todos direitos reservados. Insígnia é um projeto de TCC.</p>
                             </div>
                         </div>

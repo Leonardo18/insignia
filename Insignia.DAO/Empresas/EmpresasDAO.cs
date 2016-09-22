@@ -145,9 +145,12 @@ namespace Insignia.DAO.Empresas
                 }
             }
 
-            if (!string.IsNullOrEmpty(Convert.ToString(empresa.ID)))
+            if (empresa != null)
             {
-                resp = false;
+                if (!string.IsNullOrEmpty(Convert.ToString(empresa.ID)))
+                {
+                    resp = false;
+                }
             }
 
             return resp;
