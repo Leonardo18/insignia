@@ -1,17 +1,46 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using Insignia.DAO.Badges;
+using Insignia.Model.Badge;
+using Insignia.Painel.Helpers.CustomAttributes;
+using Insignia.Painel.ViewModels;
+using System.Configuration;
 using System.Web.Mvc;
 
 namespace Insignia.Painel.Controllers
 {
     public class BadgesController : Controller
     {
+        private BadgesDAO dao = new BadgesDAO(ConfigurationManager.ConnectionStrings["strConMain"].ConnectionString);
+
         // GET: Badges
+        [IsLogged]
         public ActionResult Adicionar()
         {
-            return View();
+            var ViewModel = new ViewModelBadge();
+
+            ViewModel.Badge = new Badge();
+            ViewModel.ListBadge = dao.Listar();
+
+            return View(ViewModel);
+        }
+
+        // POST: Badges
+        [HttpPost, IsLogged]
+        public ActionResult Adicionar(Badge BadgeModel)
+        {
+            var ViewModel = new ViewModelBadge();
+
+            if (ModelState.IsValid)
+            {
+                if (dao.Save(BadgeModel))
+                {
+                    return RedirectToAction("../Badges/Adicionar");
+                }
+            }
+
+            ViewModel.Badge = new Badge();
+            ViewModel.ListBadge = dao.Listar();
+
+            return View(ViewModel);
         }
     }
 }

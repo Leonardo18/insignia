@@ -1759,7 +1759,7 @@ span.right {
     padding: 5px 0 0 0;
     position: fixed;
     width: 230px;
-    background: #CCC;
+    /*background: #CCC;*/
 }
 
     .sidebar-footer a {
@@ -2326,7 +2326,7 @@ button,
 }
 
 .input-group {
-    margin-bottom: 10px;
+    margin-bottom: 0px;
 }
 
 .ln_solid {

@@ -27,6 +27,7 @@ namespace Insignia.Painel
                     "~/Fonts/css/font-awesome.css",
                     "~/Content/css/nprogress/nprogress.css",
                     "~/Content/css/badges/badge.css",
+                    "~/Content/css/colorpicker/bootstrap-colorpicker.css",
                     "~/Content/css/animate/animate.css"));
 
             bundles.Add(new ScriptBundle("~/MainLayout/scripts").Include(
@@ -35,6 +36,7 @@ namespace Insignia.Painel
                     "~/Scripts/js/nprogress/nprogress.js",
                     "~/Scripts/js/fastclick/fastclick.js",
                     "~/Scripts/js/badges/badge.min.js",
+                    "~/Scripts/js/colorpicker/bootstrap-colorpicker.js",
                     "~/Scripts/js/inputmask/jquery.inputmask.bundle.min.js"));
         }
     }

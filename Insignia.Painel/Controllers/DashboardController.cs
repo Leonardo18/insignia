@@ -6,7 +6,7 @@ namespace Insignia.Painel.Controllers
     public class DashboardController : Controller
     {
         // GET: Dashboard
-        //[IsLogged]
+        [IsLogged]
         public ActionResult Dashboard()
         {
             return View();

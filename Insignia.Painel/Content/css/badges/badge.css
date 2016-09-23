@@ -4,7 +4,7 @@
 
 .badge-sistema {
     position: relative;
-    width: 216px;
+    width: 169px;
     display: inline-block;
     margin: 40px;
     background-color: #fff !important;
@@ -31,7 +31,7 @@
         text-align: center;
         color: white;
         position: absolute;
-        top: 100px;
+        top: 73px;
     }
 
         .badge-sistema .subtitle:after {

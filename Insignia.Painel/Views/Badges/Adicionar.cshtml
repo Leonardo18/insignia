@@ -1,4 +1,4 @@
-﻿
+﻿@model Insignia.Painel.ViewModels.ViewModelBadge
 @{
     ViewBag.Title = "Adicionar";
     Layout = "~/Views/Shared/LayoutPrincipal.cshtml";
@@ -6,7 +6,7 @@
 <!-- page content -->
 <div class="page-title">
     <div class="title_left">
-        <h3>Adicionar Badges</h3>
+        <h3>Badges</h3>
     </div>
 </div>
 
@@ -18,6 +18,9 @@
             <ul class="nav navbar-right panel_toolbox">
                 <li>
                     <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                </li>
+                <li>
+                    <a data-toggle="modal" href=".bs-example-modal-lg" class="dropdown-toggle" role="button" aria-expanded="false"><i class="fa fa-plus"></i></a>
                 </li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
@@ -37,70 +40,196 @@
             <div class="clearfix"></div>
         </div>
         <div class="x_content">
-            <div class="badge-sistema red-badge">
-                <svg xmlns="http://www.w3.org/2000/svg" version="1.1" x="0px" y="0px" width="216px" height="232px" viewBox="0 0 216 232">
-                    <path fill="#2B2B2B" d="M207,0C171.827,0.001,43.875,0.004,9.003,0c-5.619-0.001-9,3.514-9,9c0,28.23-0.006,151.375,0,169    c0.005,13.875,94.499,54,107.999,54S216,191.57,216,178V9C216,3.298,212.732,0,207,0z" />
-                </svg>
-                <p class="title">BRUTEFORCE EXPERT</p>
-                <p class="subtitle">CTF 365</p>
-            </div>
+            @foreach (var item in Model.ListBadge)
+            {
+                if (item.Nivel == "Basica")
+                {
+                    <div class="badge-sistema">
+                        <svg xmlns="http://www.w3.org/2000/svg" version="1.1" x="0px" y="0px" width="169px" height="181px" viewBox="0 0 216 232">
+                            <path fill="#2B2B2B" d="M207,0C171.827,0.001,43.875,0.004,9.003,0c-5.619-0.001-9,3.514-9,9c0,28.23-0.006,151.375,0,169    c0.005,13.875,94.499,54,107.999,54S216,191.57,216,178V9C216,3.298,212.732,0,207,0z" />
+                        </svg>
+                        <p class="title" style="background: @item.Cor">@item.Titulo</p>
+                        <p class="subtitle">@item.Subtitulo</p>
+                    </div>
+                }
+            }
         </div>
-        <div class="x_panel">
-            <div class="x_title">
-                <h2>Badges Intermediárias</h2>
-                <ul class="nav navbar-right panel_toolbox">
-                    <li>
-                        <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                    </li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                        <ul class="dropdown-menu" role="menu">
-                            <li>
-                                <a href="#">Settings 1</a>
-                            </li>
-                            <li>
-                                <a href="#">Settings 2</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a class="close-link"><i class="fa fa-close"></i></a>
-                    </li>
-                </ul>
-                <div class="clearfix"></div>
-            </div>
-            <div class="x_content">
-                conteúdo
-            </div>
+    </div>
+
+    <div class="x_panel">
+        <div class="x_title">
+            <h2>Badges Intermediárias</h2>
+            <ul class="nav navbar-right panel_toolbox">
+                <li>
+                    <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                </li>
+                <li>
+                    <a data-toggle="modal" href=".bs-example-modal-lg" class="dropdown-toggle" role="button" aria-expanded="false"><i class="fa fa-plus"></i></a>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li>
+                            <a href="#">Settings 1</a>
+                        </li>
+                        <li>
+                            <a href="#">Settings 2</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a class="close-link"><i class="fa fa-close"></i></a>
+                </li>
+            </ul>
+            <div class="clearfix"></div>
         </div>
-        <div class="x_panel">
-            <div class="x_title">
-                <h2>Badges Avançadas</h2>
-                <ul class="nav navbar-right panel_toolbox">
-                    <li>
-                        <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                    </li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                        <ul class="dropdown-menu" role="menu">
-                            <li>
-                                <a href="#">Settings 1</a>
-                            </li>
-                            <li>
-                                <a href="#">Settings 2</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a class="close-link"><i class="fa fa-close"></i></a>
-                    </li>
-                </ul>
-                <div class="clearfix"></div>
-            </div>
-            <div class="x_content">
-                conteúdo
-            </div>
+        <div class="x_content">
+            @foreach (var item in Model.ListBadge)
+            {
+                if (item.Nivel == "Intermediaria")
+                {
+                    <div class="badge-sistema">
+                        <svg xmlns="http://www.w3.org/2000/svg" version="1.1" x="0px" y="0px" width="169px" height="181px" viewBox="0 0 216 232">
+                            <path fill="#2B2B2B" d="M207,0C171.827,0.001,43.875,0.004,9.003,0c-5.619-0.001-9,3.514-9,9c0,28.23-0.006,151.375,0,169    c0.005,13.875,94.499,54,107.999,54S216,191.57,216,178V9C216,3.298,212.732,0,207,0z" />
+                        </svg>
+                        <p class="title" style="background: @item.Cor">@item.Titulo</p>
+                        <p class="subtitle">@item.Subtitulo</p>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+    <div class="x_panel">
+        <div class="x_title">
+            <h2>Badges Avançadas</h2>
+            <ul class="nav navbar-right panel_toolbox">
+                <li>
+                    <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                </li>
+                <li>
+                    <a data-toggle="modal" href=".bs-example-modal-lg" class="dropdown-toggle" role="button" aria-expanded="false"><i class="fa fa-plus"></i></a>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li>
+                            <a href="#">Settings 1</a>
+                        </li>
+                        <li>
+                            <a href="#">Settings 2</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a class="close-link"><i class="fa fa-close"></i></a>
+                </li>
+            </ul>
+            <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+            @foreach (var item in Model.ListBadge)
+            {
+                if (item.Nivel == "Avancada")
+                {
+                    <div class="badge-sistema">
+                        <svg xmlns="http://www.w3.org/2000/svg" version="1.1" x="0px" y="0px" width="169px" height="181px" viewBox="0 0 216 232">
+                            <path fill="#2B2B2B" d="M207,0C171.827,0.001,43.875,0.004,9.003,0c-5.619-0.001-9,3.514-9,9c0,28.23-0.006,151.375,0,169    c0.005,13.875,94.499,54,107.999,54S216,191.57,216,178V9C216,3.298,212.732,0,207,0z" />
+                        </svg>
+                        <p class="title" style="background: @item.Cor; ">@item.Titulo</p>
+                        <p class="subtitle">@item.Subtitulo</p>
+                    </div>
+                }
+            }
         </div>
     </div>
 </div>
 <!-- /page content -->
+
+@using (Html.BeginForm("Adicionar", "Badges", FormMethod.Post, new { @class = "form-horizontal form-label-left" }))
+{
+    <!-- modal -->
+    <div class="x_content">
+        <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel">Adicionar Badge&nbsp;<i class="fa fa-plus"></i></h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">
+                                Título: <span class="required">*</span>
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                @Html.TextBox("Titulo", Model.Badge.Titulo, new { @class = "form-control col-md-7 col-xs-12", placeholder = "Título", Required = "" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">
+                                Título: <span class="required">*</span>
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                @Html.TextBox("Subtitulo", Model.Badge.Subtitulo, new { @class = "form-control col-md-7 col-xs-12", placeholder = "Subtitulo", Required = "" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                                Cor: <span class="required">*</span>
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <div class="input-group demo2">
+                                    @Html.TextBox("Cor", Model.Badge.Cor, new { @class = "form-control", placeholder = "Cor", Required = "", Value = "#e01ab5" })
+                                    <span class="input-group-addon"><i></i></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                                Nível: <span class="required">*</span>
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                @Html.DropDownList("Nivel", new SelectList(
+                                new List<Object>{
+                                    new { value = "Basica" , text = "Básica"  },
+                                    new { value = "Intermediaria" , text = "Intermediária" },
+                                    new { value = "Avancada" , text = "Avançada"}
+                                },
+                                "value",
+                                "text",
+                                2), null, new { @class = "select2_multiple form-control", Required = "" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-default submit" type="submit">Salvar</button>
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+   <!-- /modal -->
+}
+
+<!-- Bootstrap Colorpicker -->
+<script>
+    $(document).ready(function () {
+        $('.demo1').colorpicker();
+        $('.demo2').colorpicker();
+
+        $('#demo_forceformat').colorpicker({
+            format: 'rgba',
+            horizontal: true
+        });
+
+        $('#demo_forceformat3').colorpicker({
+            format: 'rgba',
+        });
+
+        $('.demo-auto').colorpicker();
+    });
+</script>
+<!-- /Bootstrap Colorpicker -->
