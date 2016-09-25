@@ -1639,6 +1639,7 @@ h6,
 
 p {
     margin: 0 0 10px;
+    font-family:Arial;
 }
 
 .lead {
@@ -3763,6 +3764,7 @@ select[multiple].input-lg {
     font-weight: normal;
     line-height: 1.42857143;
     text-align: center;
+    font-family: Arial;
     white-space: nowrap;
     vertical-align: middle;
     -ms-touch-action: manipulation;

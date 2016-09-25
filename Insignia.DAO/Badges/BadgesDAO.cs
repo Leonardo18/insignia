@@ -33,13 +33,14 @@ namespace Insignia.DAO.Badges
             {
                 using (var sql = new SqlConnection(conStr))
                 {
-                    int queryResultado = sql.Execute(" INSERT INTO Badges(Titulo, Subtitulo, Cor, Nivel) VALUES (@Titulo, @Subtitulo, @Cor, @Nivel) ",
+                    int queryResultado = sql.Execute(" INSERT INTO Badges(Titulo, Subtitulo, Cor, Nivel, Tags) VALUES (@Titulo, @Subtitulo, @Cor, @Nivel, @Tags) ",
                                     new
                                     {
                                         Titulo = bagde.Titulo,
                                         Subtitulo = bagde.Subtitulo,
                                         Cor = bagde.Cor,
                                         Nivel = bagde.Nivel,
+                                        Tags = bagde.Tags,
                                     });
 
                     resp = Convert.ToBoolean(queryResultado);
@@ -58,7 +59,7 @@ namespace Insignia.DAO.Badges
 
             using (var sql = new SqlConnection(conStr))
             {
-                list = sql.Query<Badge>(" SELECT ID, Titulo, Subtitulo, Cor, Nivel FROM Badges ").ToList();
+                list = sql.Query<Badge>(" SELECT ID, Titulo, Subtitulo, Cor, Nivel, Tags FROM Badges ").ToList();
             }
             return list;
         }

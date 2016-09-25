@@ -3,6 +3,8 @@
     ViewBag.Title = "Adicionar";
     Layout = "~/Views/Shared/LayoutPrincipal.cshtml";
 }
+@Styles.Render("~/Badges/styles")
+
 <!-- page content -->
 <div class="page-title">
     <div class="title_left">
@@ -144,7 +146,6 @@
     </div>
 </div>
 <!-- /page content -->
-
 @using (Html.BeginForm("Adicionar", "Badges", FormMethod.Post, new { @class = "form-horizontal form-label-left" }))
 {
     <!-- modal -->
@@ -169,7 +170,7 @@
                         </div>
                         <div class="form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">
-                                Título: <span class="required">*</span>
+                                Subtítulo: <span class="required">*</span>
                             </label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 @Html.TextBox("Subtitulo", Model.Badge.Subtitulo, new { @class = "form-control col-md-7 col-xs-12", placeholder = "Subtitulo", Required = "" })
@@ -177,7 +178,7 @@
                         </div>
                         <div class="form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">
-                                Cor: <span class="required">*</span>
+                                Cor:
                             </label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <div class="input-group demo2">
@@ -188,18 +189,26 @@
                         </div>
                         <div class="form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                                Tags: <span class="required">*</span>
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                @Html.TextBox("Tags", Model.Badge.Tags, new { @class = "tags form-control", Required = "", ID = "tags_1" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">
                                 Nível: <span class="required">*</span>
                             </label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 @Html.DropDownList("Nivel", new SelectList(
-                                new List<Object>{
+                                    new List<Object>{
                                     new { value = "Basica" , text = "Básica"  },
                                     new { value = "Intermediaria" , text = "Intermediária" },
                                     new { value = "Avancada" , text = "Avançada"}
-                                },
-                                "value",
-                                "text",
-                                2), null, new { @class = "select2_multiple form-control", Required = "" })
+                                    },
+                                    "value",
+                                    "text", 2
+                                ), null, new { @class = "select2_multiple form-control", Required = "" })
                             </div>
                         </div>
                     </div>
@@ -211,9 +220,9 @@
             </div>
         </div>
     </div>
-   <!-- /modal -->
+    <!-- /modal -->
 }
-
+@Scripts.Render("~/Badges/scripts")
 <!-- Bootstrap Colorpicker -->
 <script>
     $(document).ready(function () {
@@ -233,3 +242,24 @@
     });
 </script>
 <!-- /Bootstrap Colorpicker -->
+<!-- jQuery Tags Input -->
+<script>
+    function onAddTag(tag) {
+        alert("Adicionar uma tag: " + tag);
+    }
+
+    function onRemoveTag(tag) {
+        alert("Remover uma tag: " + tag);
+    }
+
+    function onChangeTag(input, tag) {
+        alert("Mudar uma tag: " + tag);
+    }
+
+    $(document).ready(function () {
+        $('#tags_1').tagsInput({
+            width: 'auto'
+        });
+    });
+</script>
+<!-- /jQuery Tags Input -->

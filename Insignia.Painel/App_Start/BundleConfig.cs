@@ -14,10 +14,13 @@ namespace Insignia.Painel
                     "~/Content/css/custom.css",
                     "~/Fonts/css/font-awesome.css",
                     "~/Content/css/nprogress/nprogress.css",
-                    "~/Content/css/logo/style.css",
+                    "~/Content/css/logo/logo.css",
                     "~/Content/css/animate/animate.css"));
 
             bundles.Add(new ScriptBundle("~/Login/scripts").Include(
+                    "~/Scripts/js/bootstrap/bootstrap.js",
+                    "~/Scripts/js/custom.js",
+                    "~/Scripts/js/nprogress/nprogress.js",
                     "~/Scripts/js/logo/logo.js",
                     "~/Scripts/js/inputmask/jquery.inputmask.bundle.min.js"));
 
@@ -26,18 +29,26 @@ namespace Insignia.Painel
                     "~/Content/css/custom.css",
                     "~/Fonts/css/font-awesome.css",
                     "~/Content/css/nprogress/nprogress.css",
-                    "~/Content/css/badges/badge.css",
-                    "~/Content/css/colorpicker/bootstrap-colorpicker.css",
                     "~/Content/css/animate/animate.css"));
 
             bundles.Add(new ScriptBundle("~/MainLayout/scripts").Include(
                     "~/Scripts/js/bootstrap/bootstrap.js",
                     "~/Scripts/js/custom.js",
                     "~/Scripts/js/nprogress/nprogress.js",
-                    "~/Scripts/js/fastclick/fastclick.js",
+                    "~/Scripts/js/fastclick/fastclick.js"));
+
+
+            bundles.Add(new ScriptBundle("~/Badges/styles").Include(
+                    "~/Content/css/badges/badge.css",
+                    "~/Content/css/colorpicker/bootstrap-colorpicker.css",
+                    "~/Content/css/tags/jquery.tagsinput.css"));
+
+            bundles.Add(new ScriptBundle("~/Badges/scripts").Include(
                     "~/Scripts/js/badges/badge.min.js",
                     "~/Scripts/js/colorpicker/bootstrap-colorpicker.js",
-                    "~/Scripts/js/inputmask/jquery.inputmask.bundle.min.js"));
+                    "~/Scripts/js/inputmask/jquery.inputmask.bundle.min.js",
+                    "~/Scripts/js/tags/jquery.tagsinput.js"));
         }
     }
 }
+

@@ -120,8 +120,9 @@
     <Content Include="Content\css\colorpicker\imagem\hue.png" />
     <Content Include="Content\css\colorpicker\imagem\saturation.png" />
     <Content Include="Content\css\custom.css" />
-    <Content Include="Content\css\logo\style.css" />
+    <Content Include="Content\css\logo\logo.css" />
     <Content Include="Content\css\nprogress\nprogress.css" />
+    <Content Include="Content\css\tags\jquery.tagsinput.css" />
     <Content Include="Content\images\Background.jpg" />
     <Content Include="Content\images\BackgroundLozange.png" />
     <Content Include="Content\images\dark_embroidery.png" />
@@ -138,6 +139,7 @@
     <Content Include="Scripts\js\jquery.js" />
     <Content Include="Scripts\js\logo\index.js" />
     <Content Include="Scripts\js\nprogress\nprogress.js" />
+    <Content Include="Scripts\js\tags\jquery.tagsinput.js" />
     <Content Include="Views\web.config" />
     <Content Include="Views\Login\Login.cshtml" />
     <Content Include="Fonts\fonts\fontawesome-webfont.ttf" />
