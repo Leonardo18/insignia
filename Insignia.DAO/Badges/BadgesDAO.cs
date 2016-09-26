@@ -19,6 +19,26 @@ namespace Insignia.DAO.Badges
         }
 
         /// <summary>
+        /// Recupera as informações de uma badge no banco de dados.
+        /// </summary>
+        /// <param name="id">ID da empresa desejada.</param>
+        /// <returns>Retorna model com as informações da badge</returns>
+        public Badge Load(int id)
+        {
+            Badge resp = null;
+
+            if (!string.IsNullOrWhiteSpace(Convert.ToString(id)))
+            {
+                using (var sql = new SqlConnection(conStr))
+                {
+                    resp = sql.Query<Badge>(" SELECT ID, Titulo, Subtitulo, Cor, Nivel, Tags FROM Badges WHERE ID = @ID ", new { ID = id }).SingleOrDefault();
+                }
+            }
+
+            return resp;
+        }
+
+        /// <summary>
         /// Cria uma nova badge no banco de dados.
         /// </summary>
         /// <param name="user">Badge contendo os dados a serem salvos.</param>

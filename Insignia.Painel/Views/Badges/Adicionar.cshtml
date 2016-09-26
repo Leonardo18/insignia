@@ -50,7 +50,7 @@
                         <svg xmlns="http://www.w3.org/2000/svg" version="1.1" x="0px" y="0px" width="169px" height="181px" viewBox="0 0 216 232">
                             <path fill="#2B2B2B" d="M207,0C171.827,0.001,43.875,0.004,9.003,0c-5.619-0.001-9,3.514-9,9c0,28.23-0.006,151.375,0,169    c0.005,13.875,94.499,54,107.999,54S216,191.57,216,178V9C216,3.298,212.732,0,207,0z" />
                         </svg>
-                        <p class="title" style="background: @item.Cor">@item.Titulo</p>
+                        <p class="title" style="background: @item.Cor">@item.Titulo</p>                        
                         <p class="subtitle">@item.Subtitulo</p>
                     </div>
                 }
@@ -173,7 +173,7 @@
                                 Subtítulo: <span class="required">*</span>
                             </label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                @Html.TextBox("Subtitulo", Model.Badge.Subtitulo, new { @class = "form-control col-md-7 col-xs-12", placeholder = "Subtitulo", Required = "" })
+                                @Html.TextBox("Subtitulo", Model.Badge.Subtitulo, new { @class = "form-control col-md-7 col-xs-12", placeholder = "Subtítulo", Required = "" })
                             </div>
                         </div>
                         <div class="form-group">
@@ -182,7 +182,7 @@
                             </label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <div class="input-group demo2">
-                                    @Html.TextBox("Cor", Model.Badge.Cor, new { @class = "form-control", placeholder = "Cor", Required = "", Value = "#e01ab5" })
+                                    @Html.TextBox("Cor", Model.Badge.Cor, new { @class = "form-control", placeholder = "Cor", Required = "", Value = "#213499" })
                                     <span class="input-group-addon"><i></i></span>
                                 </div>
                             </div>
@@ -200,14 +200,13 @@
                                 Nível: <span class="required">*</span>
                             </label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                @Html.DropDownList("Nivel", new SelectList(
-                                    new List<Object>{
+                                @Html.DropDownList("Nivel", new SelectList(new List<Object>{
                                     new { value = "Basica" , text = "Básica"  },
                                     new { value = "Intermediaria" , text = "Intermediária" },
                                     new { value = "Avancada" , text = "Avançada"}
-                                    },
-                                    "value",
-                                    "text", 2
+                                     },
+                                     "value",
+                                     "text", 2
                                 ), null, new { @class = "select2_multiple form-control", Required = "" })
                             </div>
                         </div>
