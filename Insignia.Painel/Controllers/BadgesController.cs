@@ -9,7 +9,7 @@ namespace Insignia.Painel.Controllers
 {
     public class BadgesController : Controller
     {
-        private BadgesDAO dao = new BadgesDAO(ConfigurationManager.ConnectionStrings["strConMain"].ConnectionString);
+        private BadgesDAO BadgesDAO = new BadgesDAO(ConfigurationManager.ConnectionStrings["strConMain"].ConnectionString);
 
         // GET: Adicionar
         [IsLogged]
@@ -18,7 +18,7 @@ namespace Insignia.Painel.Controllers
             var ViewModel = new ViewModelBadge();
 
             ViewModel.Badge = new Badge();
-            ViewModel.ListBadge = dao.Listar();
+            ViewModel.ListBadge = BadgesDAO.Listar();
 
             return View(ViewModel);
         }
@@ -31,14 +31,14 @@ namespace Insignia.Painel.Controllers
 
             if (ModelState.IsValid)
             {
-                if (dao.Save(BadgeModel))
+                if (BadgesDAO.Save(BadgeModel))
                 {
                     return RedirectToAction("../Badges/Adicionar");
                 }
             }
 
             ViewModel.Badge = new Badge();
-            ViewModel.ListBadge = dao.Listar();
+            ViewModel.ListBadge = BadgesDAO.Listar();
 
             return View(ViewModel);
         }

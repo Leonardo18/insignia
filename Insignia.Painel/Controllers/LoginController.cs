@@ -8,7 +8,7 @@ namespace Insignia.Painel.Controllers
 {
     public class LoginController : Controller
     {
-        private EmpresasDAO dao = new EmpresasDAO(ConfigurationManager.ConnectionStrings["strConMain"].ConnectionString);
+        private EmpresasDAO EmpresaDAO = new EmpresasDAO(ConfigurationManager.ConnectionStrings["strConMain"].ConnectionString);
 
         // GET: Login
         public ActionResult Login()
@@ -24,15 +24,15 @@ namespace Insignia.Painel.Controllers
             Auth auth = new Auth(ConfigurationManager.ConnectionStrings["strConMain"].ConnectionString);
 
             //Tenta efeutar login com os dados passados e retorna um dictionary
-            Empresa EmpresaDados = auth.LoginEmpresa(Email, Senha);
+            Empresa EmpresaModel = auth.LoginEmpresa(Email, Senha);
 
-            if (EmpresaDados != null)
+            if (EmpresaModel != null)
             {
-                this.Session["SessionID"] = Session.SessionID;
-                this.Session["UsuarioID"] = EmpresaDados.ID;
-                this.Session["UsuarioNome"] = EmpresaDados.RazaoSocial;
-                this.Session["UsuarioEmail"] = EmpresaDados.Email;
-                this.Session["Email"] = EmpresaDados.Email;
+                Session["SessionID"] = Session.SessionID;
+                Session["EmpresaID"] = EmpresaModel.ID;
+                Session["UsuarioID"] = EmpresaModel.ID;
+                Session["UsuarioNome"] = EmpresaModel.RazaoSocial;
+                Session["UsuarioEmail"] = EmpresaModel.Email;
 
                 return RedirectToAction("../Dashboard/Dashboard");
             }
@@ -50,14 +50,15 @@ namespace Insignia.Painel.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (dao.VerificaEmpresa(EmpresaModel.Email))
+                if (EmpresaDAO.VerificaEmpresa(EmpresaModel.Email))
                 {
-                    if (dao.Save(EmpresaModel))
+                    if (EmpresaDAO.Save(EmpresaModel))
                     {
-                        this.Session["SessionID"] = Session.SessionID;
-                        this.Session["EmpresaID"] = EmpresaModel.ID;
-                        this.Session["EmpresaRazao"] = EmpresaModel.RazaoSocial;
-                        this.Session["EmpresaEmail"] = EmpresaModel.Email;
+                        Session["SessionID"] = Session.SessionID;
+                        Session["EmpresaID"] = EmpresaModel.ID;
+                        Session["UsuarioID"] = EmpresaModel.ID;
+                        Session["UsuarioNome"] = EmpresaModel.RazaoSocial;
+                        Session["UsuarioEmail"] = EmpresaModel.Email;
 
                         return RedirectToAction("../Dashboard/Dashboard");
                     }
@@ -80,7 +81,7 @@ namespace Insignia.Painel.Controllers
         // GET: Logout
         public ActionResult Sair()
         {
-            this.Session.Clear();
+            Session.Clear();
 
             return RedirectToAction("Login");
         }

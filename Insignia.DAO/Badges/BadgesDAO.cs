@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Web;
 
 namespace Insignia.DAO.Badges
 {
@@ -31,7 +32,7 @@ namespace Insignia.DAO.Badges
             {
                 using (var sql = new SqlConnection(conStr))
                 {
-                    resp = sql.Query<Badge>(" SELECT ID, Titulo, Subtitulo, Cor, Nivel, Tags FROM Badges WHERE ID = @ID ", new { ID = id }).SingleOrDefault();
+                    resp = sql.Query<Badge>(" SELECT ID, EmpresaID, Titulo, Subtitulo, Cor, Nivel, Tags FROM Badges WHERE ID = @ID ", new { ID = id }).SingleOrDefault();
                 }
             }
 
@@ -53,9 +54,10 @@ namespace Insignia.DAO.Badges
             {
                 using (var sql = new SqlConnection(conStr))
                 {
-                    int queryResultado = sql.Execute(" INSERT INTO Badges(Titulo, Subtitulo, Cor, Nivel, Tags) VALUES (@Titulo, @Subtitulo, @Cor, @Nivel, @Tags) ",
+                    int queryResultado = sql.Execute(" INSERT INTO Badges(EmpresaID, Titulo, Subtitulo, Cor, Nivel, Tags) VALUES (@EmpresaID, @Titulo, @Subtitulo, @Cor, @Nivel, @Tags) ",
                                     new
                                     {
+                                        EmpresaID = HttpContext.Current.Session["EmpresaID"],
                                         Titulo = bagde.Titulo,
                                         Subtitulo = bagde.Subtitulo,
                                         Cor = bagde.Cor,
@@ -79,7 +81,7 @@ namespace Insignia.DAO.Badges
 
             using (var sql = new SqlConnection(conStr))
             {
-                list = sql.Query<Badge>(" SELECT ID, Titulo, Subtitulo, Cor, Nivel, Tags FROM Badges ").ToList();
+                list = sql.Query<Badge>(" SELECT ID, Titulo, Subtitulo, Cor, Nivel, Tags FROM Badges WHERE EmpresaID = @EmpresaID ", new { EmpresaID = HttpContext.Current.Session["EmpresaID"] }).ToList();
             }
             return list;
         }

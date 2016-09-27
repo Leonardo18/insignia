@@ -6,6 +6,8 @@ namespace Insignia.Model.Badge
     {
         public int ID { get; set; }
 
+        public int EmpresaID { get; set; }
+
         [Required(ErrorMessage = "Informe o título da badge")]
         public string Titulo { get; set; }
 
