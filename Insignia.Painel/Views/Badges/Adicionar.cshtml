@@ -17,27 +17,13 @@
     <div class="x_panel">
         <div class="x_title">
             <h2>Badges Básicas</h2>
-            <ul class="nav navbar-right panel_toolbox">
+            <ul class="nav navbar-right panel_toolbox">              
                 <li>
                     <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                 </li>
                 <li>
-                    <a data-toggle="modal" href=".bs-example-modal-lg" class="dropdown-toggle" role="button" aria-expanded="false"><i class="fa fa-plus"></i></a>
-                </li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                    <ul class="dropdown-menu" role="menu">
-                        <li>
-                            <a href="#">Settings 1</a>
-                        </li>
-                        <li>
-                            <a href="#">Settings 2</a>
-                        </li>
-                    </ul>
-                </li>
-                <li>
-                    <a class="close-link"><i class="fa fa-close"></i></a>
-                </li>
+                    <a data-toggle="modal" href=".bs-example-modal-lg" class="dropdown-toggle" role="button" aria-expanded="false"><i class="fa fa-plus" title="Adicionar Badge"></i></a>
+                </li>                
             </ul>
             <div class="clearfix"></div>
         </div>
@@ -46,13 +32,15 @@
             {
                 if (item.Nivel == "Basica")
                 {
-                    <div class="badge-sistema">
-                        <svg xmlns="http://www.w3.org/2000/svg" version="1.1" x="0px" y="0px" width="169px" height="181px" viewBox="0 0 216 232">
-                            <path fill="#2B2B2B" d="M207,0C171.827,0.001,43.875,0.004,9.003,0c-5.619-0.001-9,3.514-9,9c0,28.23-0.006,151.375,0,169    c0.005,13.875,94.499,54,107.999,54S216,191.57,216,178V9C216,3.298,212.732,0,207,0z" />
-                        </svg>
-                        <p class="title" style="background: @item.Cor">@item.Titulo</p>                        
-                        <p class="subtitle">@item.Subtitulo</p>
-                    </div>
+                    <a href="@Url.Action("../Badges/Exibir", null, new { ID = item.ID, controller = "Badges" }, Request.Url.Scheme)">
+                        <div class="badge-sistema">
+                            <svg xmlns="http://www.w3.org/2000/svg" version="1.1" x="0px" y="0px" width="169px" height="181px" viewBox="0 0 216 232">
+                                <path fill="#2B2B2B" d="M207,0C171.827,0.001,43.875,0.004,9.003,0c-5.619-0.001-9,3.514-9,9c0,28.23-0.006,151.375,0,169    c0.005,13.875,94.499,54,107.999,54S216,191.57,216,178V9C216,3.298,212.732,0,207,0z" />
+                            </svg>
+                            <p class="title" style="background: @item.Cor">@item.Titulo</p>
+                            <p class="subtitle">@item.Subtitulo</p>
+                        </div>
+                    </a>
                 }
             }
         </div>
@@ -66,22 +54,8 @@
                     <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                 </li>
                 <li>
-                    <a data-toggle="modal" href=".bs-example-modal-lg" class="dropdown-toggle" role="button" aria-expanded="false"><i class="fa fa-plus"></i></a>
-                </li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                    <ul class="dropdown-menu" role="menu">
-                        <li>
-                            <a href="#">Settings 1</a>
-                        </li>
-                        <li>
-                            <a href="#">Settings 2</a>
-                        </li>
-                    </ul>
-                </li>
-                <li>
-                    <a class="close-link"><i class="fa fa-close"></i></a>
-                </li>
+                    <a data-toggle="modal" href=".bs-example-modal-lg" class="dropdown-toggle" role="button" aria-expanded="false"><i class="fa fa-plus" title="Adicionar Badge"></i></a>
+                </li>               
             </ul>
             <div class="clearfix"></div>
         </div>
@@ -90,13 +64,15 @@
             {
                 if (item.Nivel == "Intermediaria")
                 {
-                    <div class="badge-sistema">
-                        <svg xmlns="http://www.w3.org/2000/svg" version="1.1" x="0px" y="0px" width="169px" height="181px" viewBox="0 0 216 232">
-                            <path fill="#2B2B2B" d="M207,0C171.827,0.001,43.875,0.004,9.003,0c-5.619-0.001-9,3.514-9,9c0,28.23-0.006,151.375,0,169    c0.005,13.875,94.499,54,107.999,54S216,191.57,216,178V9C216,3.298,212.732,0,207,0z" />
-                        </svg>
-                        <p class="title" style="background: @item.Cor">@item.Titulo</p>
-                        <p class="subtitle">@item.Subtitulo</p>
-                    </div>
+                    <a href="@Url.Action("../Badges/Exibir", null, new { ID = item.ID, controller = "Badges" }, Request.Url.Scheme)">
+                        <div class="badge-sistema">
+                            <svg xmlns="http://www.w3.org/2000/svg" version="1.1" x="0px" y="0px" width="169px" height="181px" viewBox="0 0 216 232">
+                                <path fill="#2B2B2B" d="M207,0C171.827,0.001,43.875,0.004,9.003,0c-5.619-0.001-9,3.514-9,9c0,28.23-0.006,151.375,0,169    c0.005,13.875,94.499,54,107.999,54S216,191.57,216,178V9C216,3.298,212.732,0,207,0z" />
+                            </svg>
+                            <p class="title" style="background: @item.Cor">@item.Titulo</p>
+                            <p class="subtitle">@item.Subtitulo</p>
+                        </div>
+                    </a>
                 }
             }
         </div>
@@ -109,22 +85,8 @@
                     <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                 </li>
                 <li>
-                    <a data-toggle="modal" href=".bs-example-modal-lg" class="dropdown-toggle" role="button" aria-expanded="false"><i class="fa fa-plus"></i></a>
-                </li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                    <ul class="dropdown-menu" role="menu">
-                        <li>
-                            <a href="#">Settings 1</a>
-                        </li>
-                        <li>
-                            <a href="#">Settings 2</a>
-                        </li>
-                    </ul>
-                </li>
-                <li>
-                    <a class="close-link"><i class="fa fa-close"></i></a>
-                </li>
+                    <a data-toggle="modal" href=".bs-example-modal-lg" class="dropdown-toggle" role="button" aria-expanded="false"><i class="fa fa-plus" title="Adicionar Badge"></i></a>
+                </li>            
             </ul>
             <div class="clearfix"></div>
         </div>
@@ -133,13 +95,15 @@
             {
                 if (item.Nivel == "Avancada")
                 {
-                    <div class="badge-sistema">
-                        <svg xmlns="http://www.w3.org/2000/svg" version="1.1" x="0px" y="0px" width="169px" height="181px" viewBox="0 0 216 232">
-                            <path fill="#2B2B2B" d="M207,0C171.827,0.001,43.875,0.004,9.003,0c-5.619-0.001-9,3.514-9,9c0,28.23-0.006,151.375,0,169    c0.005,13.875,94.499,54,107.999,54S216,191.57,216,178V9C216,3.298,212.732,0,207,0z" />
-                        </svg>
-                        <p class="title" style="background: @item.Cor; ">@item.Titulo</p>
-                        <p class="subtitle">@item.Subtitulo</p>
-                    </div>
+                    <a href="@Url.Action("../Badges/Exibir", null, new { ID = item.ID, controller = "Badges" }, Request.Url.Scheme)">
+                        <div class="badge-sistema">
+                            <svg xmlns="http://www.w3.org/2000/svg" version="1.1" x="0px" y="0px" width="169px" height="181px" viewBox="0 0 216 232">
+                                <path fill="#2B2B2B" d="M207,0C171.827,0.001,43.875,0.004,9.003,0c-5.619-0.001-9,3.514-9,9c0,28.23-0.006,151.375,0,169    c0.005,13.875,94.499,54,107.999,54S216,191.57,216,178V9C216,3.298,212.732,0,207,0z" />
+                            </svg>
+                            <p class="title" style="background: @item.Cor; ">@item.Titulo</p>
+                            <p class="subtitle">@item.Subtitulo</p>
+                        </div>
+                    </a>
                 }
             }
         </div>
@@ -213,7 +177,7 @@
                     </div>
                     <div class="modal-footer">
                         <button class="btn btn-default submit" type="submit">Salvar</button>
-                        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">Fechar</button>
                     </div>
                 </div>
             </div>

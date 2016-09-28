@@ -153,6 +153,7 @@
     <Content Include="Views\Shared\LayoutPrincipal.cshtml" />
     <Content Include="Views\Dashboard\Dashboard.cshtml" />
     <Content Include="Views\Badges\Adicionar.cshtml" />
+    <Content Include="Views\Badges\Exibir.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

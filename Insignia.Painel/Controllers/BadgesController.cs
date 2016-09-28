@@ -11,7 +11,7 @@ namespace Insignia.Painel.Controllers
     {
         private BadgesDAO BadgesDAO = new BadgesDAO(ConfigurationManager.ConnectionStrings["strConMain"].ConnectionString);
 
-        // GET: Adicionar
+        // GET: Badge Adicionar
         [IsLogged]
         public ActionResult Adicionar()
         {
@@ -23,7 +23,7 @@ namespace Insignia.Painel.Controllers
             return View(ViewModel);
         }
 
-        // POST: Adicionar
+        // POST: Badge Adicionar
         [HttpPost, IsLogged]
         public ActionResult Adicionar(Badge BadgeModel)
         {
@@ -41,6 +41,16 @@ namespace Insignia.Painel.Controllers
             ViewModel.ListBadge = BadgesDAO.Listar();
 
             return View(ViewModel);
+        }
+
+        // GET: Badge Exibir       
+        [IsLogged]
+        public ActionResult Exibir(int ID)
+        {
+            //Faz Load com o ID passado
+            Badge BadgeModel = BadgesDAO.Load(ID);
+
+            return View(BadgeModel);
         }
     }
 }
