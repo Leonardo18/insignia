@@ -297,6 +297,7 @@ input:-ms-input-placeholder {
 .fa-close:before,
 .fa-times:before {
     content: "\f00d";
+    color: #f70b0b;
 }
 
 .fa-search-plus:before {
@@ -910,6 +911,7 @@ input:-ms-input-placeholder {
 
 .fa-wrench:before {
     content: "\f0ad";
+    color: #fdce08;   
 }
 
 .fa-tasks:before {

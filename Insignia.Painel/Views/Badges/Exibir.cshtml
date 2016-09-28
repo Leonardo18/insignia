@@ -1,11 +1,11 @@
-﻿@{
+﻿@model Insignia.Model.Badge.Badge
+@{
     ViewBag.Title = "Exibir";
     Layout = "~/Views/Shared/LayoutPrincipal.cshtml";
 }
 @Styles.Render("~/Badges/styles")
 <div class="page-title">
 </div>
-@model Insignia.Model.Badge.Badge
 <div class="clearfix"></div>
 <div class="row">
     <div class="col-md-12 col-sm-12 col-xs-12">
@@ -17,10 +17,10 @@
                         <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                     </li>
                     <li class="dropdown">
-                        <a href="@Url.Action("Editar", null, new { ID = Model.ID, controller = "Badges" }, Request.Url.Scheme)"><i class="fa fa-wrench"></i></a>
+                        <a href="@Url.Action("Editar", null, new { ID = Model.ID, controller = "Badges" }, Request.Url.Scheme)"><i class="fa fa-wrench" title="Editar Badge"></i></a>
                     </li>
                     <li>
-                        <a href="@Url.Action("Remover", null, new { ID = Model.ID, controller = "Badges" }, Request.Url.Scheme)"><i class="fa fa-close"></i></a>
+                        <a href="@Url.Action("Remover", null, new { ID = Model.ID, controller = "Badges" }, Request.Url.Scheme)"><i class="fa fa-close" title="Remover Badge"></i></a>
                     </li>
                 </ul>
                 <div class="clearfix"></div>
@@ -50,7 +50,7 @@
                             Cor:
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-2">
-                            @Html.Label("", Model.Cor, new { @class = "control-label label-value" })
+                            @Html.Label("Cor", Model.Cor, new { @class = "control-label label-value", Value = "#213499" })
                         </div>
                     </div>
                     <div class="form-group">
@@ -76,4 +76,22 @@
     </div>
 </div>
 @Scripts.Render("~/Badges/scripts")
+<!-- Bootstrap Colorpicker -->
+<script>
+    $(document).ready(function () {
+        $('.demo1').colorpicker();
+        $('.demo2').colorpicker();
 
+        $('#demo_forceformat').colorpicker({
+            format: 'rgba',
+            horizontal: true
+        });
+
+        $('#demo_forceformat3').colorpicker({
+            format: 'rgba',
+        });
+
+        $('.demo-auto').colorpicker();
+    });
+</script>
+<!-- /Bootstrap Colorpicker -->

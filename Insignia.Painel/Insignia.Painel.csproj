@@ -154,6 +154,8 @@
     <Content Include="Views\Dashboard\Dashboard.cshtml" />
     <Content Include="Views\Badges\Adicionar.cshtml" />
     <Content Include="Views\Badges\Exibir.cshtml" />
+    <Content Include="Views\Badges\Editar.cshtml" />
+    <Content Include="Views\Badges\Remover.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

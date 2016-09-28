@@ -52,5 +52,53 @@ namespace Insignia.Painel.Controllers
 
             return View(BadgeModel);
         }
+
+        // GET: Badge Editar
+        [IsLogged]
+        public ActionResult Editar(int ID)
+        {
+            Badge BadgeModel = BadgesDAO.Load(ID);
+
+
+            return View("Editar", BadgeModel);
+        }
+
+        // POST: Badge Editar           
+        [IsLogged, HttpPost]
+        public ActionResult Editar(Badge BadgeModel)
+        {
+            if (ModelState.IsValid)
+            {
+                if (BadgesDAO.Editar(BadgeModel))
+                {
+                    return RedirectToAction("Exibir", new { ID = BadgeModel.ID });
+                }
+            }
+            return View("Editar", BadgeModel);
+        }
+
+        // GET: Badge Remover       
+        [IsLogged]
+        public ActionResult Remover(int ID)
+        {
+            //Faz Load com o ID passado
+            Badge BadgeModel = BadgesDAO.Load(ID);
+
+            return View(BadgeModel);
+        }
+
+        // POST: Badge Remover       
+        [IsLogged, HttpPost]
+        public ActionResult Remover(Badge BadgeModel)
+        {
+            if (BadgeModel != null)
+            {
+                if (BadgesDAO.Remover(BadgeModel.ID))
+                {
+                    return RedirectToAction("Adicionar");
+                }
+            }
+            return View();
+        }
     }
 }

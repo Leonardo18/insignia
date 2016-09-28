@@ -1,0 +1,132 @@
+﻿@model Insignia.Model.Badge.Badge
+@{
+    ViewBag.Title = "Editar";
+    Layout = "~/Views/Shared/LayoutPrincipal.cshtml";
+}
+@Styles.Render("~/Badges/styles")
+<div class="page-title">
+</div>
+<div class="clearfix"></div>
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>Editar Badge</h2>
+                <ul class="nav navbar-right panel_toolbox">
+                    <li>
+                        <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="@Url.Action("Editar", null, new { ID = Model.ID, controller = "Badges" }, Request.Url.Scheme)"><i class="fa fa-wrench"></i></a>
+                    </li>
+                    <li>
+                        <a href="@Url.Action("Remover", null, new { ID = Model.ID, controller = "Badges" }, Request.Url.Scheme)"><i class="fa fa-close"></i></a>
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <br />
+                @using (Html.BeginForm("Editar", "Badges", FormMethod.Post, new { @class = "form-horizontal form-label-left" }))
+                {
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">
+                            Título: <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            @Html.TextBox("Titulo", Model.Titulo, new { @class = "form-control col-md-7 col-xs-12", placeholder = "Título", Required = "" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">
+                            Subtítulo: <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            @Html.TextBox("Subtitulo", Model.Subtitulo, new { @class = "form-control col-md-7 col-xs-12", placeholder = "Subtítulo", Required = "" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                            Cor:
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <div class="input-group demo2">
+                                @Html.TextBox("Cor", Model.Cor, new { @class = "form-control", placeholder = "Cor", Required = "" })
+                                <span class="input-group-addon"><i></i></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                            Tags: <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            @Html.TextBox("Tags", Model.Tags, new { @class = "tags form-control", Required = "", ID = "tags_1" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                            Nível: <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            @Html.DropDownList("Nivel", new SelectList(new List<Object>{
+                                    new { value = "Basica" , text = "Básica"  },
+                                    new { value = "Intermediaria" , text = "Intermediária" },
+                                    new { value = "Avancada" , text = "Avançada"}
+                                     },
+                                     "value",
+                                     "text", 2
+                                ), null, new { @class = "select2_multiple form-control", Required = "" })
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-default submit" type="submit">Salvar</button>
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">Fechar</button>
+                    </div>
+                }
+            </div>
+
+        </div>
+    </div>
+</div>
+@Scripts.Render("~/Badges/scripts")
+<!-- Bootstrap Colorpicker -->
+<script>
+    $(document).ready(function () {
+        $('.demo1').colorpicker();
+        $('.demo2').colorpicker();
+
+        $('#demo_forceformat').colorpicker({
+            format: 'rgba',
+            horizontal: true
+        });
+
+        $('#demo_forceformat3').colorpicker({
+            format: 'rgba',
+        });
+
+        $('.demo-auto').colorpicker();
+    });
+</script>
+<!-- /Bootstrap Colorpicker -->
+<!-- jQuery Tags Input -->
+<script>
+    function onAddTag(tag) {
+        alert("Adicionar uma tag: " + tag);
+    }
+
+    function onRemoveTag(tag) {
+        alert("Remover uma tag: " + tag);
+    }
+
+    function onChangeTag(input, tag) {
+        alert("Mudar uma tag: " + tag);
+    }
+
+    $(document).ready(function () {
+        $('#tags_1').tagsInput({
+            width: 'auto'
+        });
+    });
+</script>
+<!-- /jQuery Tags Input -->

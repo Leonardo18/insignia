@@ -72,6 +72,39 @@ namespace Insignia.DAO.Badges
         }
 
         /// <summary>
+        /// Edita uma badge no banco de dados.
+        /// </summary>
+        /// <param name="user">Badge contendo a badge a ser editada.</param>
+        /// <returns></returns>
+        public bool Editar(Badge badge)
+        {
+            bool resp = false;
+
+            List<ValidationResult> resultadoValidacao;
+
+            if (Validacao.ValidaModel(badge, out resultadoValidacao) && !String.IsNullOrEmpty(Convert.ToString(badge.ID)))
+            {
+                using (var sql = new SqlConnection(conStr))
+                {
+                    var queryResultado = sql.Execute(@" UPDATE Badges SET Titulo = @Titulo, Subtitulo = @Subtitulo, Cor = @Cor, Tags = @Tags, Nivel = @Nivel WHERE ID = @ID ",
+                                    new
+                                    {
+                                        ID = badge.ID,
+                                        Titulo = badge.Titulo,
+                                        Subtitulo = badge.Subtitulo,
+                                        Cor = badge.Cor,
+                                        Tags = badge.Tags,
+                                        Nivel = badge.Nivel,
+                                    });
+
+                    resp = Convert.ToBoolean(queryResultado);
+                }
+            }
+
+            return resp;
+        }
+
+        /// <summary>
         /// Carrega uma lista com todas as badges encontradas no banco de dados.
         /// </summary>
         /// <returns>Retornar uma List de Badges</returns>
@@ -84,6 +117,27 @@ namespace Insignia.DAO.Badges
                 list = sql.Query<Badge>(" SELECT ID, Titulo, Subtitulo, Cor, Nivel, Tags FROM Badges WHERE EmpresaID = @EmpresaID ", new { EmpresaID = HttpContext.Current.Session["EmpresaID"] }).ToList();
             }
             return list;
+        }
+
+        /// <summary>
+        /// Remove uma badge do banco de dados.
+        /// </summary>
+        /// <param name="id">ID da badge a ser removida.</param>
+        /// <returns>True se a badge foi encontrada e removida, false caso contrário.</returns>
+        public bool Remover(int id)
+        {
+            bool resp = false;
+
+            if (!string.IsNullOrWhiteSpace(Convert.ToString(id)))
+            {
+                using (var sql = new SqlConnection(conStr))
+                {
+                    int queryResultado = sql.Execute(" DELETE FROM Badges WHERE ID = @ID ", new { ID = id });
+
+                    resp = Convert.ToBoolean(queryResultado);
+                }
+            }
+            return resp;
         }
     }
 }
