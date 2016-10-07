@@ -7,22 +7,19 @@
 
 <!-- page content -->
 <div class="page-title">
-    <div class="title_left">
+    <div class="title_left" style="margin-bottom: 20px;">
         <h3>Badges</h3>
-    </div>
+    </div>   
 </div>
 <div class="clearfix"></div>
 <div class="col-md-12 col-sm-12 col-xs-12">
     <div class="x_panel">
         <div class="x_title">
             <h2>Badges Básicas</h2>
-            <ul class="nav navbar-right panel_toolbox">
+            <ul class="nav navbar-right panel_toolbox" style="min-width: 0px;">
                 <li>
                     <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                </li>
-                <li>
-                    <a data-toggle="modal" href=".bs-example-modal-lg" class="dropdown-toggle" role="button" aria-expanded="false"><i class="fa fa-plus" title="Adicionar Badge"></i></a>
-                </li>
+                </li>                
             </ul>
             <div class="clearfix"></div>
         </div>
@@ -48,13 +45,10 @@
     <div class="x_panel">
         <div class="x_title">
             <h2>Badges Intermediárias</h2>
-            <ul class="nav navbar-right panel_toolbox">
+            <ul class="nav navbar-right panel_toolbox" style="min-width: 0px;">
                 <li>
                     <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                </li>
-                <li>
-                    <a data-toggle="modal" href=".bs-example-modal-lg" class="dropdown-toggle" role="button" aria-expanded="false"><i class="fa fa-plus" title="Adicionar Badge"></i></a>
-                </li>
+                </li>                
             </ul>
             <div class="clearfix"></div>
         </div>
@@ -79,13 +73,10 @@
     <div class="x_panel">
         <div class="x_title">
             <h2>Badges Avançadas</h2>
-            <ul class="nav navbar-right panel_toolbox">
+            <ul class="nav navbar-right panel_toolbox" style="min-width: 0px;">
                 <li>
                     <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                </li>
-                <li>
-                    <a data-toggle="modal" href=".bs-example-modal-lg" class="dropdown-toggle" role="button" aria-expanded="false"><i class="fa fa-plus" title="Adicionar Badge"></i></a>
-                </li>
+                </li>               
             </ul>
             <div class="clearfix"></div>
         </div>
@@ -105,8 +96,9 @@
                     </a>
                 }
             }
-        </div>
+        </div>        
     </div>
+    <button data-toggle="modal" href=".bs-example-modal-lg" class="btn btn-success">Adicionar</button>
 </div>
 <!-- /page content -->
 @using (Html.BeginForm("Adicionar", "Badges", FormMethod.Post, new { @class = "form-horizontal form-label-left" }))
@@ -129,7 +121,7 @@
                             </label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 @Html.TextBox("Titulo", Model.Badge.Titulo, new { @class = "form-control col-md-7 col-xs-12", placeholder = "Título", Required = "" })
-                            </div>
+                            </div><span class="glyphicon glyphicon-info-sign" data-toggle="tooltip" data-placement="right" title="Este campo indica qual o titulo da bagde sendo ele a definição da conquista ou competência."></span>
                         </div>
                         <div class="form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">
@@ -137,7 +129,7 @@
                             </label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 @Html.TextBox("Subtitulo", Model.Badge.Subtitulo, new { @class = "form-control col-md-7 col-xs-12", placeholder = "Subtítulo", Required = "" })
-                            </div>
+                            </div><span class="glyphicon glyphicon-info-sign" data-toggle="tooltip" data-placement="right" title="Este campo indica uma breve descrição da badge."></span>
                         </div>
                         <div class="form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">
@@ -148,15 +140,15 @@
                                     @Html.TextBox("Cor", Model.Badge.Cor, new { @class = "form-control", placeholder = "Cor", Required = "", Value = "#213499" })
                                     <span class="input-group-addon"><i></i></span>
                                 </div>
-                            </div>
+                            </div><span class="glyphicon glyphicon-info-sign" data-toggle="tooltip" data-placement="right" title="Este campo indica qual a cor que a bagde terá."></span>
                         </div>
                         <div class="form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">
-                                Tags: <span class="required">*</span>
+                                Tipos de tarefas: <span class="required">*</span>
                             </label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 @Html.TextBox("Tags", Model.Badge.Tags, new { @class = "tags form-control", Required = "", ID = "tags_1" })
-                            </div>
+                            </div><span class="glyphicon glyphicon-info-sign" data-toggle="tooltip" data-placement="right" title="Este campo é em formato de tags que irão identificar o tipo de tarefa que esta badge irá se referir."></span>
                         </div>
                         <div class="form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">
@@ -171,12 +163,12 @@
                                      "value",
                                      "text", 2
                                 ), null, new { @class = "select2_multiple form-control", Required = "" })
-                            </div>
+                            </div><span class="glyphicon glyphicon-info-sign" data-toggle="tooltip" data-placement="right" title="Este campo indica qual o nível da bagde baseado na dificuldade de conquista-la."></span>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button class="btn btn-default submit" type="submit">Salvar</button>
-                        <button type="button" class="btn btn-primary" data-dismiss="modal">Fechar</button>
+                        <button class="btn btn-primary" type="submit">Salvar</button>
+                        <button type="button" class="btn btn-default submit" data-dismiss="modal">Fechar</button>
                     </div>
                 </div>
             </div>

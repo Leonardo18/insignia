@@ -2893,7 +2893,8 @@ ul.timeline li {
         pointer-events: none;
         border-top: 14px solid transparent;
         border-bottom: 14px solid transparent;
-        border-left: 11px solid #1ABB9C;
+        border-left: 11px solid #305c88;
+        display: none;
     }
 
 .timeline h2.title {
