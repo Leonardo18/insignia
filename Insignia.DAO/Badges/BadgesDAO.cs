@@ -32,7 +32,7 @@ namespace Insignia.DAO.Badges
             {
                 using (var sql = new SqlConnection(conStr))
                 {
-                    resp = sql.Query<Badge>(" SELECT ID, EmpresaID, Titulo, Subtitulo, Cor, Nivel, Tags FROM Badges WHERE ID = @ID ", new { ID = id }).SingleOrDefault();
+                    resp = sql.Query<Badge>(" SELECT ID, EmpresaID, Titulo, Subtitulo, Cor, CorFonte, Nivel, Tags FROM Badges WHERE ID = @ID ", new { ID = id }).SingleOrDefault();
                 }
             }
 
@@ -54,13 +54,14 @@ namespace Insignia.DAO.Badges
             {
                 using (var sql = new SqlConnection(conStr))
                 {
-                    int queryResultado = sql.Execute(" INSERT INTO Badges(EmpresaID, Titulo, Subtitulo, Cor, Nivel, Tags) VALUES (@EmpresaID, @Titulo, @Subtitulo, @Cor, @Nivel, @Tags) ",
+                    int queryResultado = sql.Execute(" INSERT INTO Badges(EmpresaID, Titulo, Subtitulo, Cor, CorFonte, Nivel, Tags) VALUES (@EmpresaID, @Titulo, @Subtitulo, @Cor, @CorFonte, @Nivel, @Tags) ",
                                     new
                                     {
                                         EmpresaID = HttpContext.Current.Session["EmpresaID"],
                                         Titulo = bagde.Titulo,
                                         Subtitulo = bagde.Subtitulo,
                                         Cor = bagde.Cor,
+                                        CorFonte = bagde.CorFonte,
                                         Nivel = bagde.Nivel,
                                         Tags = bagde.Tags,
                                     });
@@ -86,13 +87,14 @@ namespace Insignia.DAO.Badges
             {
                 using (var sql = new SqlConnection(conStr))
                 {
-                    var queryResultado = sql.Execute(@" UPDATE Badges SET Titulo = @Titulo, Subtitulo = @Subtitulo, Cor = @Cor, Tags = @Tags, Nivel = @Nivel WHERE ID = @ID ",
+                    var queryResultado = sql.Execute(@" UPDATE Badges SET Titulo = @Titulo, Subtitulo = @Subtitulo, Cor = @Cor, CorFonte = @CorFonte, Tags = @Tags, Nivel = @Nivel WHERE ID = @ID ",
                                     new
                                     {
                                         ID = badge.ID,
                                         Titulo = badge.Titulo,
                                         Subtitulo = badge.Subtitulo,
                                         Cor = badge.Cor,
+                                        CorFonte = badge.CorFonte,
                                         Tags = badge.Tags,
                                         Nivel = badge.Nivel,
                                     });
@@ -114,7 +116,7 @@ namespace Insignia.DAO.Badges
 
             using (var sql = new SqlConnection(conStr))
             {
-                list = sql.Query<Badge>(" SELECT ID, Titulo, Subtitulo, Cor, Nivel, Tags FROM Badges WHERE EmpresaID = @EmpresaID ", new { EmpresaID = HttpContext.Current.Session["EmpresaID"] }).ToList();
+                list = sql.Query<Badge>(" SELECT ID, Titulo, Subtitulo, Cor, CorFonte, Nivel, Tags FROM Badges WHERE EmpresaID = @EmpresaID ", new { EmpresaID = HttpContext.Current.Session["EmpresaID"] }).ToList();
             }
             return list;
         }

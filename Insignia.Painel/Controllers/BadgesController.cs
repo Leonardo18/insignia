@@ -1,6 +1,7 @@
 ﻿using Insignia.DAO.Badges;
 using Insignia.Model.Badge;
 using Insignia.Painel.Helpers.CustomAttributes;
+using Insignia.Painel.Helpers.Util;
 using Insignia.Painel.ViewModels;
 using System.Configuration;
 using System.Web.Mvc;
@@ -10,6 +11,7 @@ namespace Insignia.Painel.Controllers
     public class BadgesController : Controller
     {
         private BadgesDAO BadgesDAO = new BadgesDAO(ConfigurationManager.ConnectionStrings["strConMain"].ConnectionString);
+        public string teste;
 
         // GET: Badge Adicionar
         [IsLogged]
@@ -27,10 +29,15 @@ namespace Insignia.Painel.Controllers
         [HttpPost, IsLogged]
         public ActionResult Adicionar(Badge BadgeModel)
         {
+            //Objeto com funções de cores
+            BadgesCor cor = new BadgesCor();
+
             var ViewModel = new ViewModelBadge();
 
             if (ModelState.IsValid)
             {
+                BadgeModel.CorFonte = cor.HexToColor(BadgeModel.Cor);
+
                 if (BadgesDAO.Save(BadgeModel))
                 {
                     return RedirectToAction("../Badges/Adicionar");

@@ -13,9 +13,10 @@ namespace Insignia.Model.Badge
 
         [Required(ErrorMessage = "Informe o subtítulo da badge")]
         public string Subtitulo { get; set; }
-
-        //[Required(ErrorMessage = "Informe a cor da badge")]
+        
         public string Cor { get; set; }
+
+        public string CorFonte { get; set; }
 
         [Required(ErrorMessage = "Informe o nível da badge")]
         public string Nivel { get; set; }
