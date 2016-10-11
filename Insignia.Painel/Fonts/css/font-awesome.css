@@ -641,7 +641,7 @@ input:-ms-input-placeholder {
 
 .fa-plus:before {
     content: "\f067";
-    color: lightgreen;
+    color: #FFF;
 }
 
 .fa-minus:before {
