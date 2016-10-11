@@ -50,16 +50,6 @@ namespace Insignia.Painel.Controllers
             return View(ViewModel);
         }
 
-        // GET: Badge Exibir       
-        [IsLogged]
-        public ActionResult Exibir(int ID)
-        {
-            //Faz Load com o ID passado
-            Badge BadgeModel = BadgesDAO.Load(ID);
-
-            return View(BadgeModel);
-        }
-
         // GET: Badge Editar
         [IsLogged]
         public ActionResult Editar(int ID)
@@ -78,7 +68,7 @@ namespace Insignia.Painel.Controllers
             {
                 if (BadgesDAO.Editar(BadgeModel))
                 {
-                    return RedirectToAction("Exibir", new { ID = BadgeModel.ID });
+                    return RedirectToAction("Adicionar");
                 }
             }
             return View("Editar", BadgeModel);

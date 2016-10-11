@@ -17,7 +17,7 @@
                         <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                     </li>
                     <li class="dropdown">
-                        <a href="@Url.Action("Editar", null, new { ID = Model.ID, controller = "Badges" }, Request.Url.Scheme)"><i class="fa fa-wrench"></i></a>
+                        <a onclick="Javascript: Editar()"><i class="fa fa-wrench"></i></a>
                     </li>
                     <li>
                         <a href="@Url.Action("Remover", null, new { ID = Model.ID, controller = "Badges" }, Request.Url.Scheme)"><i class="fa fa-close"></i></a>
@@ -27,14 +27,14 @@
             </div>
             <div class="x_content">
                 <br />
-                @using (Html.BeginForm("Editar", "Badges", FormMethod.Post, new { @class = "form-horizontal form-label-left" }))
+                @using (Html.BeginForm("Editar", "Badges", FormMethod.Post, new { @class = "form-horizontal form-label-left", ID = "FormEditar" }))
                 {
                     <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">
                             Título: <span class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                            @Html.TextBox("Titulo", Model.Titulo, new { @class = "form-control col-md-7 col-xs-12", placeholder = "Título", Required = "" })
+                            @Html.TextBox("Titulo", Model.Titulo, new { @class = "form-control col-md-7 col-xs-12", placeholder = "Título", Required = "", @readonly = "readonly" })
                         </div>
                     </div>
                     <div class="form-group">
@@ -42,7 +42,7 @@
                             Subtítulo: <span class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                            @Html.TextBox("Subtitulo", Model.Subtitulo, new { @class = "form-control col-md-7 col-xs-12", placeholder = "Subtítulo", Required = "" })
+                            @Html.TextBox("Subtitulo", Model.Subtitulo, new { @class = "form-control col-md-7 col-xs-12", placeholder = "Subtítulo", Required = "", @readonly = "readonly" })
                         </div>
                     </div>
                     <div class="form-group">
@@ -50,8 +50,8 @@
                             Cor:
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                            <div class="input-group demo2">
-                                @Html.TextBox("Cor", Model.Cor, new { @class = "form-control", placeholder = "Cor", Required = "" })
+                            <div class="input-group demo2" style="width: 100%;">
+                                @Html.TextBox("Cor", Model.Cor, new { @class = "form-control", placeholder = "Cor", Required = "", @readonly = "readonly" })
                                 <span class="input-group-addon"><i></i></span>
                             </div>
                         </div>
@@ -61,7 +61,7 @@
                             Tags: <span class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                            @Html.TextBox("Tags", Model.Tags, new { @class = "tags form-control", Required = "", ID = "tags_1" })
+                            @Html.TextBox("Tags", Model.Tags, new { @class = "tags form-control", Required = "", ID = "tags_1", @readonly = "readonly" })
                         </div>
                     </div>
                     <div class="form-group">
@@ -76,11 +76,11 @@
                                      },
                                      "value",
                                      "text", 2
-                                ), null, new { @class = "select2_multiple form-control", Required = "" })
+                                ), null, new { @class = "select2_multiple form-control", Required = "", @readonly = "readonly", disabled = "disabled", ID = "Nivel" })
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button class="btn btn-primary" type="submit">Salvar</button>
+                        <button class="btn btn-primary" type="submit" disabled="disabled">Salvar</button>
                         <button type="button" class="btn btn-default submit" onclick="javascript:history.go(-1)" data-dismiss="modal">Voltar</button>
                     </div>
                 }
@@ -106,6 +106,9 @@
         });
 
         $('.demo-auto').colorpicker();
+
+        //Desabilita o span do colorpick
+        $(".input-group-addon").hide();
     });
 </script>
 <!-- /Bootstrap Colorpicker -->
@@ -127,6 +130,32 @@
         $('#tags_1').tagsInput({
             width: 'auto'
         });
+
+        //Desabilita o campo de tags e seta a cor para o cinza do readonly
+        $('#tags_1_tag').prop("disabled", true);
+        $("#tags_1_tagsinput *").attr("disabled", "disabled").off('click');
+        $("#tags_1_tagsinput").css("background-color", "#eee");
+
+        //Seta o cursor do dropdown d enivel para default
+        $("#Nivel").css("cursor", "default");
+
     });
 </script>
 <!-- /jQuery Tags Input -->
+<!-- Editar -->
+<script>
+    function Editar() {
+        //Habilita os campos do formulário para edição e o botão salvar
+        $("#FormEditar *").removeAttr("readonly");
+        $("#FormEditar *").removeAttr("disabled");
+
+        //Habilita o campo de tags e seta a cor para o cinza do readonly
+        $('#tags_1_tag').removeAttr("disabled");
+        $("#tags_1_tagsinput *").removeAttr("disabled");
+        $("#tags_1_tagsinput").css("background-color", "#fff");
+
+        //Habilita para mostrar o span do colorpick
+        $(".input-group-addon").show();
+    }
+</script>
+<!-- /Editar -->
