@@ -24,7 +24,7 @@ namespace Insignia.DAO.Badges
         /// </summary>
         /// <param name="id">ID da empresa desejada.</param>
         /// <returns>Retorna model com as informações da badge</returns>
-        public Badge Load(int id)
+        public Badge Carregar(int id)
         {
             Badge resp = null;
 
@@ -44,7 +44,7 @@ namespace Insignia.DAO.Badges
         /// </summary>
         /// <param name="user">Badge contendo os dados a serem salvos.</param>
         /// <returns>True se o registro foi criado com sucesso, false caso contrário.</returns>
-        public bool Save(Badge bagde)
+        public bool Salvar(Badge bagde)
         {
             bool resp = false;
 

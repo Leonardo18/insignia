@@ -38,7 +38,7 @@ namespace Insignia.Painel.Controllers
             {
                 BadgeModel.CorFonte = cor.HexToColor(BadgeModel.Cor);
 
-                if (BadgesDAO.Save(BadgeModel))
+                if (BadgesDAO.Salvar(BadgeModel))
                 {
                     return RedirectToAction("../Badges/Adicionar");
                 }
@@ -54,7 +54,7 @@ namespace Insignia.Painel.Controllers
         [IsLogged]
         public ActionResult Editar(int ID)
         {
-            Badge BadgeModel = BadgesDAO.Load(ID);
+            Badge BadgeModel = BadgesDAO.Carregar(ID);
 
 
             return View("Editar", BadgeModel);
@@ -79,7 +79,7 @@ namespace Insignia.Painel.Controllers
         public ActionResult Remover(int ID)
         {
             //Faz Load com o ID passado
-            Badge BadgeModel = BadgesDAO.Load(ID);
+            Badge BadgeModel = BadgesDAO.Carregar(ID);
 
             return View(BadgeModel);
         }

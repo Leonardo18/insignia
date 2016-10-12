@@ -11,13 +11,13 @@
     <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">
             <div class="x_title">
-                <h2>Editar Badge</h2>
+                <h2 id="TituloPagina">Exibir Badge</h2>
                 <ul class="nav navbar-right panel_toolbox">
                     <li>
                         <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                     </li>
                     <li class="dropdown">
-                        <a onclick="Javascript: Editar()"><i class="fa fa-wrench"></i></a>
+                        <a onclick="Javascript:Editar();"><i class="fa fa-wrench"></i></a>
                     </li>
                     <li>
                         <a href="@Url.Action("Remover", null, new { ID = Model.ID, controller = "Badges" }, Request.Url.Scheme)"><i class="fa fa-close"></i></a>
@@ -81,7 +81,7 @@
                     </div>
                     <div class="modal-footer">
                         <button class="btn btn-primary" type="submit" disabled="disabled">Salvar</button>
-                        <button type="button" class="btn btn-default submit" onclick="javascript:history.go(-1)" data-dismiss="modal">Voltar</button>
+                        <button type="button" class="btn btn-default submit" onclick="location.href='@Url.Action("Adicionar", "Badges")'" Badg data-dismiss="modal">Voltar</button>
                     </div>
                 }
             </div>
@@ -108,7 +108,7 @@
         $('.demo-auto').colorpicker();
 
         //Desabilita o span do colorpick
-        $(".input-group-addon").hide();
+        $(".input-group-addon").css("pointer-events", "none");
     });
 </script>
 <!-- /Bootstrap Colorpicker -->
@@ -145,17 +145,21 @@
 <!-- Editar -->
 <script>
     function Editar() {
+
+        //Muda titulo da página de Exibir Badges para Editar Badges
+        $('#TituloPagina').html("Editar Badge");
+
         //Habilita os campos do formulário para edição e o botão salvar
         $("#FormEditar *").removeAttr("readonly");
         $("#FormEditar *").removeAttr("disabled");
+
+        //Habilita para mostrar o span do colorpick
+        $(".input-group-addon").css("pointer-events", "auto");
 
         //Habilita o campo de tags e seta a cor para o cinza do readonly
         $('#tags_1_tag').removeAttr("disabled");
         $("#tags_1_tagsinput *").removeAttr("disabled");
         $("#tags_1_tagsinput").css("background-color", "#fff");
-
-        //Habilita para mostrar o span do colorpick
-        $(".input-group-addon").show();
     }
 </script>
 <!-- /Editar -->
