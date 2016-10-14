@@ -56,7 +56,6 @@ namespace Insignia.Painel.Controllers
         {
             Badge BadgeModel = BadgesDAO.Carregar(ID);
 
-
             return View("Editar", BadgeModel);
         }
 
@@ -64,8 +63,13 @@ namespace Insignia.Painel.Controllers
         [IsLogged, HttpPost]
         public ActionResult Editar(Badge BadgeModel)
         {
+            //Objeto com funções de cores
+            BadgesCor cor = new BadgesCor();
+
             if (ModelState.IsValid)
-            {
+            {               
+                BadgeModel.CorFonte = cor.HexToColor(BadgeModel.Cor);
+
                 if (BadgesDAO.Editar(BadgeModel))
                 {
                     return RedirectToAction("Adicionar");
