@@ -155,6 +155,7 @@
     <Content Include="Views\Badges\Adicionar.cshtml" />
     <Content Include="Views\Badges\Editar.cshtml" />
     <Content Include="Views\Badges\Remover.cshtml" />
+    <Content Include="Views\Tarefas\Adicionar.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -171,6 +172,7 @@
     <Compile Include="Controllers\BadgesController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\TarefasController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
