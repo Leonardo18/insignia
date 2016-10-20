@@ -39,35 +39,35 @@ body {
 .square1 {
     background: #222;
     z-index: 9;
-    border: solid 2px #238eb3;
+    border: solid 2px #00e7fb;
 }
 
 .square2 {
-    background: #c73475;
+    background: #01fdff;
     z-index: 8;
     transform: rotate(38deg);
 }
 
 .square3 {
-    background: #834c92;
+    background: #26bcbd;
     z-index: 7;
     transform: rotate(31deg);
 }
 
 .square4 {
-    background: #d27727;
+    background: #2ba2a2;
     z-index: 6;
     transform: rotate(24deg);
 }
 
 .square5 {
-    background: #e9b818;
+    background: #2d7b7b;
     z-index: 5;
     transform: rotate(17deg);
 }
 
 .square6 {
-    background: #b1b523;
+    background: #2b5454;
     z-index: 4;
     transform: rotate(10deg);
 }
