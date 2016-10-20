@@ -37,10 +37,10 @@
                             </div>
                         }
                         <div>
-                            @Html.TextBox("Email", "", new { @class = "form-control", placeholder = "E-mail", Required = "", type = "email" })
+                            @Html.TextBox("Email", "", new { @class = "form-control", placeholder = "E-mail", required = "", type = "email", autofocus = "true" })
                         </div>
                         <div>
-                            @Html.Password("Senha", "", new { @class = "form-control", placeholder = "Senha", Required = "" })
+                            @Html.Password("Senha", "", new { @class = "form-control", placeholder = "Senha", required = "" })
                         </div>
                         <div>
                             <button class="btn btn-default submit" type="submit">Acessar</button>
@@ -72,23 +72,23 @@
                         <h1>Cadastre sua empresa</h1>
                         <div>
                             @Html.ValidationMessageFor(modelItem => modelItem.RazaoSocial, null, new { @class = "text-danger" })
-                            @Html.TextBox("RazaoSocial", Model.RazaoSocial, new { @class = "form-control", placeholder = "Razão Social", Required = "" })
+                            @Html.TextBox("RazaoSocial", Model.RazaoSocial, new { @class = "form-control", placeholder = "Razão Social", required = "" })
                         </div>
                         <div>
                             @Html.ValidationMessageFor(modelItem => modelItem.CNPJ, null, new { @class = "text-danger" })
-                            @Html.TextBox("CNPJ", Model.CNPJ, new { @class = "form-control", placeholder = "CNPJ", Required = "", datainputmask = "'mask' : '99.999.999/9999-99'" })
+                            @Html.TextBox("CNPJ", Model.CNPJ, new { @class = "form-control", placeholder = "CNPJ", required = "", datainputmask = "'mask' : '99.999.999/9999-99'" })
                         </div>
                         <div>
                             @Html.ValidationMessageFor(modelItem => modelItem.Email, null, new { @class = "text-danger" })
-                            @Html.TextBox("Email", Model.Email, new { @class = "form-control", placeholder = "E-mail", Required = "", type = "email" })
+                            @Html.TextBox("Email", Model.Email, new { @class = "form-control", placeholder = "E-mail", required = "", type = "email" })
                         </div>
                         <div>
                             @Html.ValidationMessageFor(modelItem => modelItem.SenhaCadastro, null, new { @class = "text-danger" })
-                            @Html.Password("SenhaCadastro", Model.SenhaCadastro, new { @class = "form-control", placeholder = "Senha", Required = "", ID = "SenhaCadastro" })
+                            @Html.Password("SenhaCadastro", Model.SenhaCadastro, new { @class = "form-control", placeholder = "Senha", required = "", id = "SenhaCadastro" })
                         </div>
                         <div>
                             @Html.ValidationMessageFor(modelItem => modelItem.ConfirmaSenha, null, new { @class = "text-danger" })
-                            @Html.Password("ConfirmaSenha", Model.ConfirmaSenha, new { @class = "form-control", placeholder = "Redigite a Senha", Required = "", ID = "ConfirmaSenha" })
+                            @Html.Password("ConfirmaSenha", Model.ConfirmaSenha, new { @class = "form-control", placeholder = "Redigite a Senha", required = "", id = "ConfirmaSenha" })
                         </div>
                         <div>
                             <button class="btn btn-default submit" type="submit">Cadastrar</button>

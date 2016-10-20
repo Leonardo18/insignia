@@ -10,8 +10,7 @@ namespace Insignia.Painel.Controllers
 {
     public class BadgesController : Controller
     {
-        private BadgesDAO BadgesDAO = new BadgesDAO(ConfigurationManager.ConnectionStrings["strConMain"].ConnectionString);
-        public string teste;
+        private BadgesDAO BadgesDAO = new BadgesDAO(ConfigurationManager.ConnectionStrings["strConMain"].ConnectionString);        
 
         // GET: Badge Adicionar
         [IsLogged]

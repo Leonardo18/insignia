@@ -53,21 +53,16 @@ namespace Insignia.DAO.Empresas
             {
                 using (var sql = new SqlConnection(conStr))
                 {
-                    Random random = new Random();
-
-                    int id = random.Next();
-
-                    int queryResultado = sql.Execute(" INSERT INTO Empresas(ID, RazaoSocial, CNPJ, Email, Senha) VALUES (@ID, @RazaoSocial, @CNPJ, @Email, @Senha) ",
+                    int queryResultado = sql.Execute(" INSERT INTO Empresas(RazaoSocial, CNPJ, Email, Senha) OUTPUT INSERTED.ID VALUES (@RazaoSocial, @CNPJ, @Email, @Senha) ",
                                     new
                                     {
-                                        ID = id,
                                         RazaoSocial = empresa.RazaoSocial,
                                         CNPJ = empresa.CNPJ,
                                         Email = empresa.Email,
                                         Senha = Util.Autenticacao.Criptografar(empresa.SenhaCadastro)
                                     });
 
-                    empresa.ID = id;
+                    empresa.ID = (int)queryResultado;
                     resp = Convert.ToBoolean(queryResultado);
                 }
             }

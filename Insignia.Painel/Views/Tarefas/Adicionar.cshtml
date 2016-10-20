@@ -30,7 +30,8 @@
                             Título: <span class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                            @Html.TextBox("Titulo", Model.Titulo, new { @class = "form-control col-md-7 col-xs-12", placeholder = "Título", Required = "" })
+                            @Html.ValidationMessageFor(modelItem => modelItem.Titulo, null, new { @class = "text-danger" })
+                            @Html.TextBox("Titulo", Model.Titulo, new { @class = "form-control col-md-7 col-xs-12", placeholder = "Título", required = "", autofocus = "true" })
                         </div><span class="glyphicon glyphicon-info-sign" data-toggle="tooltip" data-placement="right" title="Este campo indica qual o titulo da tarefa."></span>
                     </div>
                     <div class="form-group">
@@ -38,7 +39,8 @@
                             Descrição: <span class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                            @Html.TextBox("Descricao", Model.Descricao, new { @class = "form-control col-md-7 col-xs-12", placeholder = "Descrição", Required = "" })
+                            @Html.ValidationMessageFor(modelItem => modelItem.Descricao, null, new { @class = "text-danger" })
+                            @Html.TextArea("Descricao", Model.Descricao, new { @class = "form-control col-md-7 col-xs-12", placeholder = "Descrição", required = "" })
                         </div><span class="glyphicon glyphicon-info-sign" data-toggle="tooltip" data-placement="right" title="Este campo indica a descrição do que deve ser feito na tarefa."></span>
                     </div>
                     <div class="form-group">
@@ -46,15 +48,27 @@
                             Tipo da tarefa: <span class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                            @Html.DropDownList("tipo", new SelectList(new List<Object>{
-                                    new { value = "Basica" , text = "Básica"  },
-                                    new { value = "Intermediaria" , text = "Intermediária" },
-                                    new { value = "Avancada" , text = "Avançada"}
-                                        },
-                                        "value",
-                                        "text", 2
-                                ), null, new { @class = "select2_multiple form-control", Required = "" })
+                            @Html.DropDownList("TipoID", (List<SelectListItem>)ViewBag.Tipos, null, new { @class = "select2_multiple form-control", required = "" })
                         </div><span class="glyphicon glyphicon-info-sign" data-toggle="tooltip" data-placement="right" title="Este campo indica qual o tipo ou segmento no qual a tarefa se refere."></span>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                            Tipo da tarefa: <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            @Html.ValidationMessageFor(modelItem => modelItem.Termino, null, new { @class = "text-danger" })
+                            @Html.TextBox("Termino", Model.Termino, new { @class = "form-control col-md-7 col-xs-12 has-feedback-left", placeholder = "Data de término", required = "", id = "single_cal4", ariadescribedby = "inputSuccess2Status4" })
+                            <span class="fa fa-calendar-o form-control-feedback left" aria-hidden="true"></span>
+                            <span id="inputSuccess2Status4" class="sr-only">(success)</span>
+                        </div><span class="glyphicon glyphicon-info-sign" data-toggle="tooltip" data-placement="right" title="Este campo indica qual a data término prevista para a tarefa."></span>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">
+                            Observações:
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            @Html.TextArea("Observacoes", Model.Observacoes, new { @class = "form-control col-md-7 col-xs-12", placeholder = "Observações" })
+                        </div><span class="glyphicon glyphicon-info-sign" data-toggle="tooltip" data-placement="right" title="Este campo indica as observações da tarefa."></span>
                     </div>
                     <div class="clearfix"></div>
                     <div class="modal-footer">
@@ -66,3 +80,22 @@
         </div>
     </div>
 </div>
+@Scripts.Render("~/Tarefas/scripts")
+<!-- bootstrap-daterangepicker -->
+<script>
+    $(document).ready(function () {
+        $('#single_cal4').daterangepicker({
+            singleDatePicker: true,
+            calender_style: "picker_4",
+            format: 'DD/MM/YYYY'
+        }, function (start, end, label) {
+        });
+    });
+</script>
+<script>
+    $(document).ready(function () {
+        $('#reservation').daterangepicker(null, function (start, end, label) {
+        });
+    });
+</script>
+<!-- /bootstrap-daterangepicker -->

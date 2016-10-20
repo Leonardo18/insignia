@@ -124,7 +124,8 @@
                                 Título: <span class="required">*</span>
                             </label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                @Html.TextBox("Titulo", Model.Badge.Titulo, new { @class = "form-control col-md-7 col-xs-12", placeholder = "Título", Required = "" })
+                                @Html.ValidationMessageFor(modelItem => modelItem.Badge.Titulo, null, new { @class = "text-danger" })
+                                @Html.TextBox("Titulo", Model.Badge.Titulo, new { @class = "form-control col-md-7 col-xs-12", placeholder = "Título", required = "", autofocus = "true" })
                             </div><span class="glyphicon glyphicon-info-sign" data-toggle="tooltip" data-placement="right" title="Este campo indica qual o titulo da bagde sendo ele a definição da conquista ou competência."></span>
                         </div>
                         <div class="form-group">
@@ -132,7 +133,8 @@
                                 Subtítulo: <span class="required">*</span>
                             </label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                @Html.TextBox("Subtitulo", Model.Badge.Subtitulo, new { @class = "form-control col-md-7 col-xs-12", placeholder = "Subtítulo", Required = "" })
+                                @Html.ValidationMessageFor(modelItem => modelItem.Badge.Subtitulo, null, new { @class = "text-danger" })
+                                @Html.TextBox("Subtitulo", Model.Badge.Subtitulo, new { @class = "form-control col-md-7 col-xs-12", placeholder = "Subtítulo", required = "" })
                             </div><span class="glyphicon glyphicon-info-sign" data-toggle="tooltip" data-placement="right" title="Este campo indica uma breve descrição da badge."></span>
                         </div>
                         <div class="form-group">
@@ -141,7 +143,8 @@
                             </label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <div class="input-group demo2">
-                                    @Html.TextBox("Cor", Model.Badge.Cor, new { @class = "form-control", placeholder = "Cor", Required = "", Value = "#213499" })
+                                    @Html.ValidationMessageFor(modelItem => modelItem.Badge.Cor, null, new { @class = "text-danger" })
+                                    @Html.TextBox("Cor", Model.Badge.Cor, new { @class = "form-control", placeholder = "Cor", required = "", Value = "#213499" })
                                     <span class="input-group-addon"><i></i></span>
                                 </div>
                             </div><span class="glyphicon glyphicon-info-sign" data-toggle="tooltip" data-placement="right" title="Este campo indica qual a cor que a bagde terá."></span>
@@ -151,7 +154,8 @@
                                 Tipos de tarefas: <span class="required">*</span>
                             </label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                @Html.TextBox("Tags", Model.Badge.Tags, new { @class = "tags form-control", Required = "", ID = "tags_1" })
+                                @Html.ValidationMessageFor(modelItem => modelItem.Badge.Tags, null, new { @class = "text-danger" })    
+                                @Html.TextBox("Tags", Model.Badge.Tags, new { @class = "tags form-control", required = "", id = "tags_1" })
                             </div><span class="glyphicon glyphicon-info-sign" data-toggle="tooltip" data-placement="right" title="Este campo é em formato de tags que irão identificar o tipo de tarefa que esta badge irá se referir."></span>
                         </div>
                         <div class="form-group">
@@ -159,6 +163,7 @@
                                 Nível: <span class="required">*</span>
                             </label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
+                                @Html.ValidationMessageFor(modelItem => modelItem.Badge.Nivel, null, new { @class = "text-danger" })    
                                 @Html.DropDownList("Nivel", new SelectList(new List<Object>{
                                     new { value = "Basica" , text = "Básica"  },
                                     new { value = "Intermediaria" , text = "Intermediária" },
@@ -166,7 +171,7 @@
                                      },
                                      "value",
                                      "text", 2
-                                ), null, new { @class = "select2_multiple form-control", Required = "" })
+                                ), null, new { @class = "select2_multiple form-control", required = "" })
                             </div><span class="glyphicon glyphicon-info-sign" data-toggle="tooltip" data-placement="right" title="Este campo indica qual o nível da bagde baseado na dificuldade de conquista-la."></span>
                         </div>
                     </div>

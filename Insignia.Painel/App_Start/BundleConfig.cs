@@ -48,6 +48,11 @@ namespace Insignia.Painel
                     "~/Scripts/js/colorpicker/bootstrap-colorpicker.js",
                     "~/Scripts/js/inputmask/jquery.inputmask.bundle.min.js",
                     "~/Scripts/js/tags/jquery.tagsinput.js"));
+
+            bundles.Add(new ScriptBundle("~/Tarefas/scripts").Include(
+                    "~/Scripts/js/moment/moment.min.js",
+                    "~/Scripts/js/daterangepicker/daterangepicker.js",
+                    "~/Scripts/js/inputmask/jquery.inputmask.bundle.min.js"));
         }
     }
 }

@@ -134,10 +134,12 @@
     <Content Include="Scripts\js\bootstrap\bootstrap.js" />
     <Content Include="Scripts\js\colorpicker\bootstrap-colorpicker.js" />
     <Content Include="Scripts\js\custom.js" />
+    <Content Include="Scripts\js\daterangepicker\daterangepicker.js" />
     <Content Include="Scripts\js\fastclick\fastclick.js" />
     <Content Include="Scripts\js\inputmask\jquery.inputmask.bundle.min.js" />
     <Content Include="Scripts\js\jquery.js" />
     <Content Include="Scripts\js\logo\index.js" />
+    <Content Include="Scripts\js\moment\moment.min.js" />
     <Content Include="Scripts\js\nprogress\nprogress.js" />
     <Content Include="Scripts\js\tags\jquery.tagsinput.js" />
     <Content Include="Views\web.config" />
