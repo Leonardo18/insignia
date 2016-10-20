@@ -163,6 +163,7 @@
     <Content Include="Views\Badges\Remover.cshtml" />
     <Content Include="Views\Tarefas\Adicionar.cshtml" />
     <Content Include="Views\Tarefas\Editar.cshtml" />
+    <Content Include="Views\Tarefas\Remover.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

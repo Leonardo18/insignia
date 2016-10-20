@@ -116,5 +116,32 @@ namespace Insignia.Painel.Controllers
 
             return View("Editar", TarefaModel);
         }
+
+        // GET: Tarefa Remover       
+        [IsLogged]
+        public ActionResult Remover(int ID)
+        {
+            //Faz Load com o ID passado
+            Tarefa TarefaModel = TarefasDAO.Carregar(ID);
+
+            return View(TarefaModel);
+        }
+
+        // POST: Tarefa Remover       
+        [IsLogged, HttpPost]
+        public ActionResult Remover(Tarefa TarefaModel)
+        {
+            //Faz Load com o ID passado
+            TarefaModel = TarefasDAO.Carregar(TarefaModel.ID);
+
+            if (TarefaModel != null)
+            {
+                if (TarefasDAO.Remover(TarefaModel.ID))
+                {
+                    return RedirectToAction("Adicionar");
+                }
+            }
+            return View(TarefaModel);
+        }
     }
 }

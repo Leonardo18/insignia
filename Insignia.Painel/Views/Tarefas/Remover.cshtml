@@ -1,0 +1,57 @@
+﻿@model Insignia.Model.Tarefa.Tarefa
+@{
+    ViewBag.Title = "Remover";
+    Layout = "~/Views/Shared/LayoutPrincipal.cshtml";
+}
+<div class="page-title">
+</div>
+<div class="clearfix"></div>
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>Remover Tarefa</h2>
+                <ul class="nav navbar-right panel_toolbox">
+                    <li>
+                        <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                    <li class="dropdown">
+                        <a href=""><i class="fa fa-wrench"></i></a>
+                    </li>
+                    <li>
+                        <a class="close-link"><i class="fa fa-close"></i></a>
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <br />
+                @using (Html.BeginForm("Remover", "Tarefas", FormMethod.Post, new { @class = "form-horizontal form-label-left" }))
+                {
+                    if (!string.IsNullOrWhiteSpace(ViewBag.Error))
+                    {
+                        <div class="alert alert-error alert-dismissible fade in" role="alert" style="text-align: center; margin-bottom: 14px; margin: 0 auto; width: 50%;">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                            @ViewBag.Error
+                        </div>
+                    }
+                    <div class="form-group" style="margin-top: 14px;">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12"></label>
+                        <div class="col-md-4 col-sm-6 col-xs-2">
+                            @Html.Label("", "Você deseja remover a tarefa " + Model.Titulo + "?", new { @class = "control-label label-value" })
+                        </div>
+                    </div>
+                    <div class="ln_solid"></div>
+                    <div class="col-md-3 col-sm-6 col-xs-12 col-md-offset-3">
+                        <button type="submit" class="btn btn-default submit">Sim</button>
+                        <button type="button" onclick="location.href='@Url.Action("Editar", null, new { ID = Model.ID, controller = "Tarefas" }, Request.Url.Scheme)'" class="btn btn-primary">Não</button>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+
