@@ -33,7 +33,7 @@ namespace Insignia.Painel.Controllers
             return View(TarefaModel);
         }
 
-        // POST: Badge Adicionar
+        // POST: Tarefa Adicionar
         [HttpPost, IsLogged]
         public ActionResult Adicionar(Tarefa TarefaModel)
         {
@@ -41,7 +41,7 @@ namespace Insignia.Painel.Controllers
             {
                 if (TarefasDAO.Salvar(TarefaModel))
                 {
-                    return RedirectToAction("../Tarefas/Exibir");
+                    return RedirectToAction("Editar", new { ID = TarefaModel.ID });
                 }
             }
 
@@ -58,6 +58,63 @@ namespace Insignia.Painel.Controllers
             ViewBag.TipoID = TipoID;
 
             return View(TarefaModel);
+        }
+
+        // GET: Tarefa Editar
+        [IsLogged]
+        public ActionResult Editar(int ID)
+        {
+            Tarefa TarefaModel = TarefasDAO.Carregar(ID);
+
+            List<SelectListItem> TipoID = new List<SelectListItem>();
+
+            //Busca os tipos de tarefa e retorna um dictionary contendo elas
+            var TarefasTipos = TarefasDAO.Tipos();
+
+            foreach (var item in TarefasTipos.Keys)
+            {
+                TipoID.Add(new SelectListItem { Text = TarefasTipos[item], Value = Convert.ToString(item) });
+            }
+
+            //Retorna na list o valor marcado atualmente para o cadastro
+            foreach (var item in TipoID)
+            {
+                if (item.Value == TarefaModel.TipoID)
+                {
+                    item.Selected = true;
+                    break;
+                }
+            }
+            ViewBag.TipoID = TipoID;
+
+            return View("Editar", TarefaModel);
+        }
+
+        // POST: Tarefa Editar           
+        [IsLogged, HttpPost]
+        public ActionResult Editar(Tarefa TarefaModel)
+        {
+            if (ModelState.IsValid)
+            {
+                if (TarefasDAO.Salvar(TarefaModel))
+                {
+                    return RedirectToAction("Adicionar");
+                }
+            }
+
+            List<SelectListItem> TipoID = new List<SelectListItem>();
+
+            //Busca os tipos de tarefa e retorna um dictionary contendo elas
+            var TarefasTipos = TarefasDAO.Tipos();
+
+            foreach (var item in TarefasTipos.Keys)
+            {
+                TipoID.Add(new SelectListItem { Text = TarefasTipos[item], Value = Convert.ToString(item) });
+            }
+
+            ViewBag.TipoID = TipoID;
+
+            return View("Editar", TarefaModel);
         }
     }
 }

@@ -49,7 +49,13 @@ namespace Insignia.Painel
                     "~/Scripts/js/inputmask/jquery.inputmask.bundle.min.js",
                     "~/Scripts/js/tags/jquery.tagsinput.js"));
 
+            bundles.Add(new ScriptBundle("~/Tarefas/styles").Include(
+                    "~/Content/css/google-code-prettify/prettify.css"));
+
             bundles.Add(new ScriptBundle("~/Tarefas/scripts").Include(
+                    "~/Scripts/js/google-code-prettify/prettify.js",
+                    "~/Scripts/js/hotkeys/jquery.hotkeys.js",
+                    "~/Scripts/js/wysiwyg/bootstrap-wysiwyg.min.js",
                     "~/Scripts/js/moment/moment.min.js",
                     "~/Scripts/js/daterangepicker/daterangepicker.js",
                     "~/Scripts/js/inputmask/jquery.inputmask.bundle.min.js"));

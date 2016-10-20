@@ -122,6 +122,27 @@ namespace Insignia.DAO.Badges
         }
 
         /// <summary>
+        /// Verifica se existe tarefas para a bagde cadastrada
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>Caso exista tarefas para a badge retorna true, se não false</returns>
+        public bool PodeRemover(int id)
+        {
+            bool resp = false;
+
+            if (!string.IsNullOrWhiteSpace(Convert.ToString(id)))
+            {
+                using (var sql = new SqlConnection(conStr))
+                {
+                    int queryResultado = sql.Query<int>(" SELECT Top 1 ID FROM Tarefas WHERE BadgeID = @BadgeID", new { BadgeID = id }).SingleOrDefault();
+
+                    resp = Convert.ToBoolean(queryResultado);
+                }
+            }
+            return resp;
+        }
+
+        /// <summary>
         /// Remove uma badge do banco de dados.
         /// </summary>
         /// <param name="id">ID da badge a ser removida.</param>

@@ -32,7 +32,7 @@ namespace Insignia.DAO.Tarefas
             {
                 using (var sql = new SqlConnection(conStr))
                 {
-                    resp = sql.Query<Tarefa>(" SELECT ID, EmpresaID, UsuarioID, Titulo, Descricao, Tipo, Termino, Observacoes FROM Tarefas WHERE ID = @ID ", new { ID = id }).SingleOrDefault();
+                    resp = sql.Query<Tarefa>(" SELECT ID, EmpresaID, UsuarioID, BadgeID AS TipoID, Titulo, Descricao, Termino, Observacoes FROM Tarefas WHERE ID = @ID ", new { ID = id }).SingleOrDefault();
                 }
             }
 

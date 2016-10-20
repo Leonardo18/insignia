@@ -10,7 +10,7 @@ namespace Insignia.Painel.Controllers
 {
     public class BadgesController : Controller
     {
-        private BadgesDAO BadgesDAO = new BadgesDAO(ConfigurationManager.ConnectionStrings["strConMain"].ConnectionString);        
+        private BadgesDAO BadgesDAO = new BadgesDAO(ConfigurationManager.ConnectionStrings["strConMain"].ConnectionString);
 
         // GET: Badge Adicionar
         [IsLogged]
@@ -66,7 +66,7 @@ namespace Insignia.Painel.Controllers
             BadgesCor cor = new BadgesCor();
 
             if (ModelState.IsValid)
-            {               
+            {
                 BadgeModel.CorFonte = cor.HexToColor(BadgeModel.Cor);
 
                 if (BadgesDAO.Editar(BadgeModel))
@@ -91,14 +91,24 @@ namespace Insignia.Painel.Controllers
         [IsLogged, HttpPost]
         public ActionResult Remover(Badge BadgeModel)
         {
+            //Faz Load com o ID passado
+            BadgeModel = BadgesDAO.Carregar(BadgeModel.ID);
+
             if (BadgeModel != null)
             {
-                if (BadgesDAO.Remover(BadgeModel.ID))
+                if (!BadgesDAO.PodeRemover(BadgeModel.ID))
                 {
-                    return RedirectToAction("Adicionar");
+                    if (BadgesDAO.Remover(BadgeModel.ID))
+                    {
+                        return RedirectToAction("Adicionar");
+                    }
+                }
+                else
+                {
+                    ViewBag.Error = "Não é possível remover a badge " + BadgeModel.Titulo + ", pois existem tarefas cadastras para a mesma.";
                 }
             }
-            return View();
+            return View(BadgeModel);
         }
     }
 }

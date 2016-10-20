@@ -1,0 +1,127 @@
+﻿@model Insignia.Model.Tarefa.Tarefa
+@{
+    ViewBag.Title = "Editar";
+    Layout = "~/Views/Shared/LayoutPrincipal.cshtml";
+}
+<div class="page-title">
+</div>
+<div class="clearfix"></div>
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2 id="TituloPagina">Exibir Tarefa</h2>
+                <ul class="nav navbar-right panel_toolbox">
+                    <li>
+                        <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                    <li class="dropdown">
+                        <a onclick="Javascript:Editar();"><i class="fa fa-wrench"></i></a>
+                    </li>
+                    <li>
+                        <a href="@Url.Action("Remover", null, new { ID = Model.ID, controller = "Tarefas" }, Request.Url.Scheme)"><i class="fa fa-close"></i></a>
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <br />
+                @using (Html.BeginForm("Editar", "Tarefas", FormMethod.Post, new { @class = "form-horizontal form-label-left", ID = "FormEditar" }))
+                {
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">
+                            Título: <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            @Html.ValidationMessageFor(modelItem => modelItem.Titulo, null, new { @class = "text-danger" })
+                            @Html.TextBox("Titulo", Model.Titulo, new { @class = "form-control col-md-7 col-xs-12", placeholder = "Título", Required = "", @readonly = "readonly" })
+                        </div><span class="glyphicon glyphicon-info-sign" data-toggle="tooltip" data-placement="right" title="Este campo indica qual o titulo da tarefa."></span>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">
+                            Descrição: <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            @Html.ValidationMessageFor(modelItem => modelItem.Descricao, null, new { @class = "text-danger" })
+                            @Html.TextArea("Descricao", Model.Descricao, new { @class = "form-control col-md-7 col-xs-12", placeholder = "Descrição", Required = "", @readonly = "readonly" })
+                        </div><span class="glyphicon glyphicon-info-sign" data-toggle="tooltip" data-placement="right" title="Este campo indica a descrição do que deve ser feito na tarefa."></span>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                            Data de término: <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            @Html.ValidationMessageFor(modelItem => modelItem.Termino, null, new { @class = "text-danger" })
+                            @Html.TextBox("Termino", Model.Termino, new { @class = "form-control col-md-7 col-xs-12 has-feedback-left", placeholder = "Data de término", required = "", id = "single_cal4", ariadescribedby = "inputSuccess2Status4", @readonly = "readonly" })
+                            <span class="fa fa-calendar-o form-control-feedback left" aria-hidden="true"></span>
+                            <span id="inputSuccess2Status4" class="sr-only">(success)</span>
+                        </div><span class="glyphicon glyphicon-info-sign" data-toggle="tooltip" data-placement="right" title="Este campo indica qual a data término prevista para a tarefa."></span>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                            Tipo da tarefa: <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            @Html.DropDownList("TipoID", (List<SelectListItem>)ViewBag.Tipos, null, new { @class = "select2_multiple form-control", required = "", @readonly = "readonly", disabled = "disabled", id = "TipoID" })
+                        </div><span class="glyphicon glyphicon-info-sign" data-toggle="tooltip" data-placement="right" title="Este campo indica qual o tipo ou segmento no qual a tarefa se refere."></span>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">
+                            Observações:
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            @Html.TextArea("Observacoes", Model.Observacoes, new { @class = "form-control col-md-7 col-xs-12", placeholder = "Observações", @readonly = "readonly" })
+                        </div><span class="glyphicon glyphicon-info-sign" data-toggle="tooltip" data-placement="right" title="Este campo indica as observações da tarefa."></span>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-primary" type="submit" disabled="disabled">Salvar</button>
+                        <button type="button" class="btn btn-default submit" onclick="location.href='@Url.Action("Adicionar", "Badges")'" Badg data-dismiss="modal">Voltar</button>
+                    </div>
+                }
+            </div>
+
+        </div>
+    </div>
+</div>
+@Scripts.Render("~/Tarefas/scripts")
+<!-- bootstrap-daterangepicker -->
+<script>
+    $(document).ready(function () {
+        $('#single_cal4').daterangepicker({
+            singleDatePicker: true,
+            calender_style: "picker_4",
+            format: 'DD/MM/YYYY'
+        }, function (start, end, label) {
+        });
+
+        //Desabilita o span do colorpick
+        $("#single_cal4").css("pointer-events", "none");
+    });
+</script>
+<script>
+    $(document).ready(function () {
+        $('#reservation').daterangepicker(null, function (start, end, label) {
+        });
+
+        //Seta o cursor do dropdown d enivel para default
+        $("#TipoID").css("cursor", "default");
+    });
+</script>
+<!-- /bootstrap-daterangepicker -->
+<!-- Editar -->
+<script>
+    function Editar() {
+
+        //Muda titulo da página de Exibir Badges para Editar Badges
+        $('#TituloPagina').html("Editar Badge");
+
+        //Habilita os campos do formulário para edição e o botão salvar
+        $("#FormEditar *").removeAttr("readonly");
+        $("#FormEditar *").removeAttr("disabled");
+
+        //Habilita para mostrar o span do colorpick
+        $("#single_cal4").css("pointer-events", "auto");
+
+    }
+</script>
+<!-- /Editar -->

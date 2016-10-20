@@ -27,14 +27,14 @@
             </div>
             <div class="x_content">
                 <br />
-                @using (Html.BeginForm("Editar", "Badges", FormMethod.Post, new { @class = "form-horizontal form-label-left", ID = "FormEditar" }))
+                @using (Html.BeginForm("Editar", "Badges", FormMethod.Post, new { @class = "form-horizontal form-label-left", id = "FormEditar" }))
                 {
                     <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">
                             Título: <span class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                            @Html.TextBox("Titulo", Model.Titulo, new { @class = "form-control col-md-7 col-xs-12", placeholder = "Título", Required = "", @readonly = "readonly" })
+                            @Html.TextBox("Titulo", Model.Titulo, new { @class = "form-control col-md-7 col-xs-12", placeholder = "Título", required = "", @readonly = "readonly" })
                         </div>
                     </div>
                     <div class="form-group">
@@ -42,7 +42,7 @@
                             Subtítulo: <span class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                            @Html.TextBox("Subtitulo", Model.Subtitulo, new { @class = "form-control col-md-7 col-xs-12", placeholder = "Subtítulo", Required = "", @readonly = "readonly" })
+                            @Html.TextBox("Subtitulo", Model.Subtitulo, new { @class = "form-control col-md-7 col-xs-12", placeholder = "Subtítulo", required = "", @readonly = "readonly" })
                         </div>
                     </div>
                     <div class="form-group">
@@ -51,7 +51,7 @@
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
                             <div class="input-group demo2" style="width: 100%;">
-                                @Html.TextBox("Cor", Model.Cor, new { @class = "form-control", placeholder = "Cor", Required = "", @readonly = "readonly" })
+                                @Html.TextBox("Cor", Model.Cor, new { @class = "form-control", placeholder = "Cor", required = "", @readonly = "readonly" })
                                 <span class="input-group-addon"><i></i></span>
                             </div>
                         </div>
@@ -61,7 +61,7 @@
                             Tags: <span class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                            @Html.TextBox("Tags", Model.Tags, new { @class = "tags form-control", Required = "", ID = "tags_1", @readonly = "readonly" })
+                            @Html.TextBox("Tags", Model.Tags, new { @class = "tags form-control", required = "", id = "tags_1", @readonly = "readonly" })
                         </div>
                     </div>
                     <div class="form-group">
@@ -76,7 +76,7 @@
                                      },
                                      "value",
                                      "text", 2
-                                ), null, new { @class = "select2_multiple form-control", Required = "", @readonly = "readonly", disabled = "disabled", ID = "Nivel" })
+                                ), null, new { @class = "select2_multiple form-control", required = "", @readonly = "readonly", disabled = "disabled", id = "Nivel" })
                         </div>
                     </div>
                     <div class="modal-footer">
