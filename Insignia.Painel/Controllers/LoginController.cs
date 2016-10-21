@@ -1,7 +1,7 @@
 ﻿using Insignia.DAO.Autenticacao;
 using Insignia.DAO.Empresas;
 using Insignia.Model.Empresa;
-using Insignia.Painel.Helpers.CustomAttributes;
+using Insignia.Painel.Helpers.Email;
 using System.Configuration;
 using System.Web.Mvc;
 

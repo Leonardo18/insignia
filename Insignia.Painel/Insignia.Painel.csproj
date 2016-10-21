@@ -153,6 +153,9 @@
     <Content Include="Content\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="Fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Helpers\Email\Template.cshtml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="Properties\PublishProfiles\web.pubxml" />
     <Content Include="Views\Shared\LayoutPrincipal.cshtml" />
     <Content Include="Views\Dashboard\Dashboard.cshtml" />
@@ -184,7 +187,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\CustomAttributes\IsLogged.cs" />
-    <Compile Include="Helpers\CustomAttributes\SendMail.cs" />
+    <Compile Include="Helpers\Email\SendMail.cs" />
     <Compile Include="Helpers\Util\BadgesCor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\ViewModelBadge.cs" />
