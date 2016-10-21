@@ -162,6 +162,7 @@
     <Content Include="Views\Tarefas\Adicionar.cshtml" />
     <Content Include="Views\Tarefas\Editar.cshtml" />
     <Content Include="Views\Tarefas\Remover.cshtml" />
+    <Content Include="Views\Login\Login.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -183,13 +184,13 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\CustomAttributes\IsLogged.cs" />
+    <Compile Include="Helpers\CustomAttributes\SendMail.cs" />
     <Compile Include="Helpers\Util\BadgesCor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\ViewModelBadge.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Login\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Insignia.DAO\Insignia.DAO.csproj">

@@ -1,6 +1,7 @@
 ﻿using Insignia.DAO.Autenticacao;
 using Insignia.DAO.Empresas;
 using Insignia.Model.Empresa;
+using Insignia.Painel.Helpers.CustomAttributes;
 using System.Configuration;
 using System.Web.Mvc;
 
@@ -60,7 +61,16 @@ namespace Insignia.Painel.Controllers
                         Session["UsuarioNome"] = EmpresaModel.RazaoSocial;
                         Session["UsuarioEmail"] = EmpresaModel.Email;
 
-                        return RedirectToAction("../Dashboard/Dashboard");
+                        SendMail Email = new SendMail();
+
+                        if (Email.EnviaEmail(EmpresaModel.RazaoSocial, EmpresaModel.Email, "Você efetuou um cadatrado no sistema Insígnia."))
+                        {
+                            return RedirectToAction("../Dashboard/Dashboard");
+                        }
+                        else
+                        {
+                            ViewBag.Error = "Não foi possível enviar um e-mail de validação para: " + EmpresaModel.Email + ", verifique o e-mail informado no cadastro.";
+                        }
                     }
                 }
                 else
