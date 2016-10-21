@@ -141,13 +141,11 @@
     <Content Include="Scripts\js\hotkeys\jquery.hotkeys.js" />
     <Content Include="Scripts\js\inputmask\jquery.inputmask.bundle.min.js" />
     <Content Include="Scripts\js\jquery.js" />
-    <Content Include="Scripts\js\logo\index.js" />
     <Content Include="Scripts\js\moment\moment.min.js" />
     <Content Include="Scripts\js\nprogress\nprogress.js" />
     <Content Include="Scripts\js\tags\jquery.tagsinput.js" />
     <Content Include="Scripts\js\wysiwyg\bootstrap-wysiwyg.min.js" />
     <Content Include="Views\web.config" />
-    <Content Include="Views\Login\Login.cshtml" />
     <Content Include="Fonts\fonts\fontawesome-webfont.ttf" />
     <Content Include="Fonts\fonts\fontawesome-webfont.woff" />
     <Content Include="Fonts\fonts\fontawesome-webfont.woff2" />
@@ -191,6 +189,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Login\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Insignia.DAO\Insignia.DAO.csproj">

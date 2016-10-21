@@ -13,7 +13,7 @@ namespace Insignia.Painel.Helpers.Util
         /// <returns></returns>
         public string HexToColor(string hexColor)
         {
-            //Remove # if present
+            //Remove se contém #
             if (hexColor.IndexOf('#') != -1)
                 hexColor = hexColor.Replace("#", "");
 

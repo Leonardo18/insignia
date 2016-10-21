@@ -64,7 +64,7 @@ namespace Insignia.DAO.Util
         }
 
         /// <summary>
-        /// Método que decriptograma uma senha
+        /// Método que decriptografa uma senha
         /// </summary>
         /// <param name="Message"></param>
         /// <returns>a senha decriptografada</returns>

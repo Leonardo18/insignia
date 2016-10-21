@@ -53,7 +53,7 @@ namespace Insignia.DAO.Empresas
             {
                 using (var sql = new SqlConnection(conStr))
                 {
-                    int queryResultado = sql.Execute(" INSERT INTO Empresas(RazaoSocial, CNPJ, Email, Senha) OUTPUT INSERTED.ID VALUES (@RazaoSocial, @CNPJ, @Email, @Senha) ",
+                    int queryResultado = sql.ExecuteScalar<int>(" INSERT INTO Empresas(RazaoSocial, CNPJ, Email, Senha) OUTPUT INSERTED.ID VALUES (@RazaoSocial, @CNPJ, @Email, @Senha) ",
                                     new
                                     {
                                         RazaoSocial = empresa.RazaoSocial,
