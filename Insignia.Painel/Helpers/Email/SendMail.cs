@@ -18,6 +18,7 @@ namespace Insignia.Painel.Helpers.Email
         public bool EnviaEmail(string DestinatarioNome, string DestinatarioEmail, string DestinatarioMensagem)
         {
             bool resp;
+            string body = string.Empty;
 
             SmtpClient client = new SmtpClient();
 
@@ -25,7 +26,6 @@ namespace Insignia.Painel.Helpers.Email
             client.EnableSsl = true;
             client.Credentials = new System.Net.NetworkCredential(ConfigurationManager.AppSettings["EmailUser"], ConfigurationManager.AppSettings["EmailPass"]);
 
-            string body;
             //Read template file from the App_Data folder
             using (var sr = new StreamReader(HttpContext.Current.Server.MapPath(@"~/Helpers/Email/") + "Template.cshtml"))
             {
