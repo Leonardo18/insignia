@@ -27,7 +27,7 @@ namespace Insignia.Painel.Helpers.Email
             client.Credentials = new System.Net.NetworkCredential(ConfigurationManager.AppSettings["EmailUser"], ConfigurationManager.AppSettings["EmailPass"]);
 
             //Read template file from the App_Data folder
-            using (var sr = new StreamReader(HttpContext.Current.Server.MapPath(@"~/Helpers/Email/") + "Template.cshtml"))
+            using (var sr = new StreamReader(HttpContext.Current.Server.MapPath(@"~/Helpers/Email/") + "Template.html"))
             {
                 body = sr.ReadToEnd();
             }
@@ -40,6 +40,7 @@ namespace Insignia.Painel.Helpers.Email
             mail.From = new MailAddress(ConfigurationManager.AppSettings["EmailUser"], "Insígnia");
             mail.To.Add(new MailAddress(DestinatarioEmail, DestinatarioNome));
             mail.Subject = "Contato";
+            mail.IsBodyHtml = true;            
             mail.Body = body;
             mail.IsBodyHtml = true;
             mail.Priority = MailPriority.High;

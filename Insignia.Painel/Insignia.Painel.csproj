@@ -127,6 +127,8 @@
     <Content Include="Content\images\Background.jpg" />
     <Content Include="Content\images\BackgroundLozange.png" />
     <Content Include="Content\images\dark_embroidery.png" />
+    <Content Include="Content\images\favicon.ico" />
+    <Content Include="Content\images\logo.png" />
     <Content Include="Fonts\css\font-awesome.css" />
     <Content Include="Fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -153,7 +155,7 @@
     <Content Include="Content\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="Fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="Helpers\Email\Template.cshtml">
+    <Content Include="Helpers\Email\Template.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="Properties\PublishProfiles\web.pubxml" />
