@@ -50,14 +50,14 @@ namespace Insignia.Painel.Helpers.Email
 
             try
             {
-                //Thread T1 = new Thread(delegate ()
-                //{
-                //    client.Send(mail);
-                //});
+                Thread EnviaEmail = new Thread(delegate ()
+                {
+                    client.Send(mail);
+                });
 
-                //T1.Start();
+                EnviaEmail.Start();
 
-                client.Send(mail);
+                resp = true;
             }
             catch (Exception ex)
             {
