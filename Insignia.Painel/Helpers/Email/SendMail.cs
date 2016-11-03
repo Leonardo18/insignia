@@ -2,6 +2,8 @@
 using System.Configuration;
 using System.IO;
 using System.Net.Mail;
+using System.Text;
+using System.Threading;
 using System.Web;
 
 namespace Insignia.Painel.Helpers.Email
@@ -17,7 +19,7 @@ namespace Insignia.Painel.Helpers.Email
         /// <returns>True se conseguiu enviar o e-mail com sucesso, false caso de algum erro ou o e-mail seja inválido</returns>
         public bool EnviaEmail(string DestinatarioNome, string DestinatarioEmail, string DestinatarioMensagem)
         {
-            bool resp;
+            bool resp = false;
             string body = string.Empty;
 
             SmtpClient client = new SmtpClient();
@@ -40,24 +42,26 @@ namespace Insignia.Painel.Helpers.Email
             mail.From = new MailAddress(ConfigurationManager.AppSettings["EmailUser"], "Insígnia");
             mail.To.Add(new MailAddress(DestinatarioEmail, DestinatarioNome));
             mail.Subject = "Contato";
-            mail.IsBodyHtml = true;            
+            mail.IsBodyHtml = true;
             mail.Body = body;
             mail.IsBodyHtml = true;
-            mail.Priority = MailPriority.High;
+            mail.Priority = MailPriority.Normal;
+            mail.BodyEncoding = Encoding.GetEncoding("ISO-8859-1");
 
             try
             {
-                client.Send(mail);
+                //Thread T1 = new Thread(delegate ()
+                //{
+                //    client.Send(mail);
+                //});
 
-                resp = true;
+                //T1.Start();
+
+                client.Send(mail);
             }
             catch (Exception ex)
             {
                 resp = false;
-            }
-            finally
-            {
-                mail = null;
             }
 
             return resp;

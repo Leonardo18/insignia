@@ -23,7 +23,7 @@ namespace Insignia.DAO.Empresas
         /// </summary>
         /// <param name="id">ID da empresa desejada.</param>
         /// <returns>Retorna model com as informações da empresa</returns>
-        public Empresa Load(int id)
+        public Empresa Carregar(int id)
         {
             Empresa resp = null;
 
@@ -43,7 +43,7 @@ namespace Insignia.DAO.Empresas
         /// </summary>
         /// <param name="user">Empresa contendo os dados a serem salvos.</param>
         /// <returns>True se o registro foi criado com sucesso, false caso contrário.</returns>
-        public bool Save(Empresa empresa)
+        public bool Salvar(Empresa empresa)
         {
             bool resp = false;
 
@@ -106,7 +106,7 @@ namespace Insignia.DAO.Empresas
         /// </summary>
         /// <param name="id">ID da empresa a ser removida.</param>
         /// <returns>True se a empresa foi encontrada e removida, false caso contrário.</returns>
-        public bool Remove(int id)
+        public bool Remover(int id)
         {
             bool resp = false;
 

@@ -53,7 +53,7 @@ namespace Insignia.Painel.Controllers
             {
                 if (EmpresaDAO.VerificaEmpresa(EmpresaModel.Email))
                 {
-                    if (EmpresaDAO.Save(EmpresaModel))
+                    if (EmpresaDAO.Salvar(EmpresaModel))
                     {
                         Session["SessionID"] = Session.SessionID;
                         Session["EmpresaID"] = EmpresaModel.ID;
@@ -70,7 +70,7 @@ namespace Insignia.Painel.Controllers
                         else
                         {
                             ViewBag.Error = "Não foi possível enviar um e-mail de validação para: " + EmpresaModel.Email + ", verifique o e-mail informado no cadastro.";
-                            EmpresaDAO.Remove(EmpresaModel.ID);
+                            EmpresaDAO.Remover(EmpresaModel.ID);
                         }
                     }
                 }
