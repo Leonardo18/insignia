@@ -70,6 +70,7 @@ namespace Insignia.Painel.Controllers
                         else
                         {
                             ViewBag.Error = "Não foi possível enviar um e-mail de validação para: " + EmpresaModel.Email + ", verifique o e-mail informado no cadastro.";
+                            EmpresaDAO.Remove(EmpresaModel.ID);
                         }
                     }
                 }

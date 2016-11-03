@@ -23,11 +23,11 @@ namespace Insignia.DAO.Empresas
         /// </summary>
         /// <param name="id">ID da empresa desejada.</param>
         /// <returns>Retorna model com as informações da empresa</returns>
-        public Empresa Load(string id)
+        public Empresa Load(int id)
         {
             Empresa resp = null;
 
-            if (!string.IsNullOrWhiteSpace(id))
+            if (!string.IsNullOrWhiteSpace(Convert.ToString(id)))
             {
                 using (var sql = new SqlConnection(conStr))
                 {
@@ -106,11 +106,11 @@ namespace Insignia.DAO.Empresas
         /// </summary>
         /// <param name="id">ID da empresa a ser removida.</param>
         /// <returns>True se a empresa foi encontrada e removida, false caso contrário.</returns>
-        public bool Remove(string id)
+        public bool Remove(int id)
         {
             bool resp = false;
 
-            if (!string.IsNullOrWhiteSpace(id))
+            if (!string.IsNullOrWhiteSpace(Convert.ToString(id)))
             {
                 using (var sql = new SqlConnection(conStr))
                 {
