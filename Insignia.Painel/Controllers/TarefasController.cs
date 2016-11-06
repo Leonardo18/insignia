@@ -96,7 +96,7 @@ namespace Insignia.Painel.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (TarefasDAO.Salvar(TarefaModel))
+                if (TarefasDAO.Editar(TarefaModel))
                 {
                     return RedirectToAction("Adicionar");
                 }

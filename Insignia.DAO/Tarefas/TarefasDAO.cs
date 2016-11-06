@@ -74,6 +74,39 @@ namespace Insignia.DAO.Tarefas
         }
 
         /// <summary>
+        /// Edita dados de uma tarefa no banco de dado
+        /// </summary>
+        /// <param name="tarefa"></param>
+        /// <returns>Retorna true caso tenha salvo com sucesso, false caso tenha dado erro</returns>
+        public bool Editar(Tarefa tarefa)
+        {
+            bool resp = false;
+
+            List<ValidationResult> resultadoValidacao;
+
+            if (Validacao.ValidaModel(tarefa, out resultadoValidacao) && !string.IsNullOrEmpty(Convert.ToString(tarefa.ID)))
+            {
+                using (var sql = new SqlConnection(conStr))
+                {
+                    var queryResultado = sql.Execute(@" UPDATE Tarefas SET BadgeID = @BadgeID, Titulo = @Titulo, Descricao = @Descricao, Termino = @Termino, Observacoes = @Observacoes WHERE ID = @ID ",
+                                    new
+                                    {
+                                        ID = tarefa.ID,
+                                        BadgeID = tarefa.TipoID,
+                                        Titulo = tarefa.Titulo,
+                                        Descricao = tarefa.Descricao,
+                                        Termino = tarefa.Termino,
+                                        Observacoes = tarefa.Observacoes,
+                                    });
+
+                    resp = Convert.ToBoolean(queryResultado);
+                }
+            }
+
+            return resp;
+        }
+
+        /// <summary>
         /// Remove uma tarefa do banco de dados.
         /// </summary>
         /// <param name="id">ID da badge a ser removida.</param>
