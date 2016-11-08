@@ -39,11 +39,79 @@
                     </div>
                     <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">
+                            Resumo:
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            @Html.TextArea("Resumo", Model.Resumo, new { @class = "form-control col-md-7 col-xs-12", placeholder = "Resumo", @readonly = "readonly" })
+                        </div><span class="glyphicon glyphicon-info-sign" data-toggle="tooltip" data-placement="right" title="Este campo indica um breve resumo da tarefa."></span>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">
                             Descrição: <span class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
+                            <div id="alerts"></div>
+                            <div class="btn-toolbar editor" data-role="editor-toolbar" data-target="#editor" id="ferramentas">
+                                <div class="btn-group">
+                                    <a class="btn dropdown-toggle" data-toggle="dropdown" title="Fonte"><i class="fa fa-font"></i><b class="caret"></b></a>
+                                    <ul class="dropdown-menu"></ul>
+                                </div>
+                                <div class="btn-group">
+                                    <a class="btn dropdown-toggle" data-toggle="dropdown" title="Tamanho da Fonte"><i class="fa fa-text-height"></i>&nbsp;<b class="caret"></b></a>
+                                    <ul class="dropdown-menu">
+                                        <li>
+                                            <a data-edit="fontSize 5">
+                                                <p style="font-size:17px">Grande</p>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a data-edit="fontSize 3">
+                                                <p style="font-size:14px">Normal</p>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a data-edit="fontSize 1">
+                                                <p style="font-size:11px">Pequena</p>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="btn-group">
+                                    <a class="btn" data-edit="bold" title="Negrito (Ctrl/Cmd+B)"><i class="fa fa-bold"></i></a>
+                                    <a class="btn" data-edit="italic" title="Itálico (Ctrl/Cmd+I)"><i class="fa fa-italic"></i></a>
+                                    <a class="btn" data-edit="strikethrough" title="Sublinhado"><i class="fa fa-strikethrough"></i></a>
+                                    <a class="btn" data-edit="underline" title="Underline (Ctrl/Cmd+U)"><i class="fa fa-underline"></i></a>
+                                </div>
+                                <div class="btn-group">
+                                    <a class="btn" data-edit="insertunorderedlist" title="Bullet list"><i class="fa fa-list-ul"></i></a>
+                                    <a class="btn" data-edit="insertorderedlist" title="Number list"><i class="fa fa-list-ol"></i></a>
+                                    <a class="btn" data-edit="outdent" title="Reduce indent (Shift+Tab)"><i class="fa fa-dedent"></i></a>
+                                    <a class="btn" data-edit="indent" title="Indent (Tab)"><i class="fa fa-indent"></i></a>
+                                </div>
+                                <div class="btn-group">
+                                    <a class="btn" data-edit="justifyleft" title="Alinhar a Esquerda (Ctrl/Cmd+L)"><i class="fa fa-align-left"></i></a>
+                                    <a class="btn" data-edit="justifycenter" title="Centralizar (Ctrl/Cmd+E)"><i class="fa fa-align-center"></i></a>
+                                    <a class="btn" data-edit="justifyright" title="Alinhar a Direita (Ctrl/Cmd+R)"><i class="fa fa-align-right"></i></a>
+                                    <a class="btn" data-edit="justifyfull" title="Justificar (Ctrl/Cmd+J)"><i class="fa fa-align-justify"></i></a>
+                                </div>
+                                <div class="btn-group">
+                                    <a class="btn dropdown-toggle" data-toggle="dropdown" title="Link"><i class="fa fa-link"></i></a>
+                                    <div class="dropdown-menu input-append">
+                                        <input class="span2" placeholder="URL" type="text" data-edit="createLink" />
+                                        <button class="btn" type="button">Add</button>
+                                    </div>
+                                    <a class="btn" data-edit="unlink" title="Remover Link"><i class="fa fa-cut"></i></a>
+                                </div>
+                                <div class="btn-group">
+                                    <a class="btn" data-edit="undo" title="Dezfazer (Ctrl/Cmd+Z)"><i class="fa fa-undo"></i></a>
+                                    <a class="btn" data-edit="redo" title="Refazer (Ctrl/Cmd+Y)"><i class="fa fa-repeat"></i></a>
+                                </div>
+                            </div>
+                            <div id="editor" class="editor-wrapper"></div>
                             @Html.ValidationMessageFor(modelItem => modelItem.Descricao, null, new { @class = "text-danger" })
-                            @Html.TextArea("Descricao", Model.Descricao, new { @class = "form-control col-md-7 col-xs-12", placeholder = "Descrição", Required = "", @readonly = "readonly" })
+                            @Html.TextArea("Descricao", Model.Descricao, new { placeholder = "Descrição", name = "descr", id = "descr", style = "display:none;" })
+
+                            <br />
                         </div><span class="glyphicon glyphicon-info-sign" data-toggle="tooltip" data-placement="right" title="Este campo indica a descrição do que deve ser feito na tarefa."></span>
                     </div>
                     <div class="form-group">
@@ -74,7 +142,7 @@
                         </div><span class="glyphicon glyphicon-info-sign" data-toggle="tooltip" data-placement="right" title="Este campo indica as observações da tarefa."></span>
                     </div>
                     <div class="modal-footer">
-                        <button class="btn btn-primary" type="submit" disabled="disabled">Salvar</button>
+                        <button class="btn btn-primary" type="submit" disabled="disabled" onclick="GetDescricao();">Salvar</button>
                         <button type="button" class="btn btn-default submit" onclick="location.href='@Url.Action("Adicionar", "Badges")'" Badg data-dismiss="modal">Voltar</button>
                     </div>
                 }
@@ -93,22 +161,34 @@
             format: 'DD/MM/YYYY'
         }, function (start, end, label) {
         });
-
-        //Desabilita o span do colorpick
-        $("#single_cal4").css("pointer-events", "none");
     });
 </script>
 <script>
     $(document).ready(function () {
         $('#reservation').daterangepicker(null, function (start, end, label) {
         });
-
-        //Seta o cursor do dropdown d enivel para default
-        $("#TipoID").css("cursor", "default");
     });
 </script>
 <!-- /bootstrap-daterangepicker -->
-<!-- Editar -->
+<!-- Desabilita Editar -->
+<script>
+    $(document).ready(function () {
+        //Desabilita o span do calendario
+        $("#single_cal4").css("pointer-events", "none");
+
+        //Seta o cursor do dropdown de Tipo para default
+        $("#TipoID").css("cursor", "default");
+
+        //Desabilita o campo descrição
+        $("#editor").css("pointer-events", "none");
+        $("#editor").css("background-color", "#eeeeee");
+
+        //Desabilita as ferramentas do campo descrição
+        $("#ferramentas").css("pointer-events", "none");
+    });
+</script>
+<!-- /Desabitilia Editar -->
+<!-- Habilita Editar -->
 <script>
     function Editar() {
 
@@ -119,9 +199,95 @@
         $("#FormEditar *").removeAttr("readonly");
         $("#FormEditar *").removeAttr("disabled");
 
-        //Habilita para mostrar o span do colorpick
+        //Habilita para mostrar o span do datepicker
         $("#single_cal4").css("pointer-events", "auto");
 
+        //Habilita a descrição
+        $("#editor").css("pointer-events", "auto");
+        $("#editor").css("background-color", "#ffffff");
+
+        //Habilita as ferrasmentas da descrição
+        $("#ferramentas").css("pointer-events", "auto");
     }
 </script>
-<!-- /Editar -->
+<!-- /Habilita Editar -->
+<!-- bootstrap-wysiwyg -->
+<script>
+    $(document).ready(function () {
+        function initToolbarBootstrapBindings() {
+            var fonts = ['Serif', 'Sans', 'Arial', 'Arial Black', 'Courier',
+                'Courier New', 'Comic Sans MS', 'Helvetica', 'Impact', 'Lucida Grande', 'Lucida Sans', 'Tahoma', 'Times',
+                'Times New Roman', 'Verdana'
+            ],
+              fontTarget = $('[title=Font]').siblings('.dropdown-menu');
+            $.each(fonts, function (idx, fontName) {
+                fontTarget.append($('<li><a data-edit="fontName ' + fontName + '" style="font-family:\'' + fontName + '\'">' + fontName + '</a></li>'));
+            });
+            $('a[title]').tooltip({
+                container: 'body'
+            });
+            $('.dropdown-menu input').click(function () {
+                return false;
+            })
+              .change(function () {
+                  $(this).parent('.dropdown-menu').siblings('.dropdown-toggle').dropdown('toggle');
+              })
+              .keydown('esc', function () {
+                  this.value = '';
+                  $(this).change();
+              });
+
+            $('[data-role=magic-overlay]').each(function () {
+                var overlay = $(this),
+                  target = $(overlay.data('target'));
+                overlay.css('opacity', 0).css('position', 'absolute').offset(target.offset()).width(target.outerWidth()).height(target.outerHeight());
+            });
+
+            if ("onwebkitspeechchange" in document.createElement("input")) {
+                var editorOffset = $('#editor').offset();
+
+                $('.voiceBtn').css('position', 'absolute').offset({
+                    top: editorOffset.top,
+                    left: editorOffset.left + $('#editor').innerWidth() - 35
+                });
+            } else {
+                $('.voiceBtn').hide();
+            }
+        }
+
+        function showErrorAlert(reason, detail) {
+            var msg = '';
+            if (reason === 'unsupported-file-type') {
+                msg = "Unsupported format " + detail;
+            } else {
+                console.log("error uploading file", reason, detail);
+            }
+            $('<div class="alert"> <button type="button" class="close" data-dismiss="alert">&times;</button>' +
+              '<strong>File upload error</strong> ' + msg + ' </div>').prependTo('#alerts');
+        }
+
+        initToolbarBootstrapBindings();
+
+        $('#editor').wysiwyg({
+            fileUploadError: showErrorAlert
+        });
+
+        window.prettyPrint;
+        prettyPrint();
+    });
+</script>
+<!-- /bootstrap-wysiwyg -->
+<!-- Carrega o campo descritivo -->
+<script>
+    $(document).ready(function () {
+        document.getElementById('editor').innerHTML = document.getElementById('descr').innerText;
+    });
+</script>
+<!-- /Carrega o campo descritivo -->
+<!-- Campo descrição -->
+<script>
+    function GetDescricao() {
+        document.getElementById('descr').innerText = document.getElementById('editor').innerHTML;
+    }
+</script>
+<!-- /Campo descrição -->

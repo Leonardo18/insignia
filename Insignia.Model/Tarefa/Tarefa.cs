@@ -17,6 +17,8 @@ namespace Insignia.Model.Tarefa
         [Required(ErrorMessage = "Informe o título da tarefa")]
         public string Titulo { get; set; }
 
+        public string Resumo { get; set; }
+
         [Required(ErrorMessage = "Informe a descrição da tarefa")]
         public string Descricao { get; set; }
 

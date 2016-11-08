@@ -34,7 +34,7 @@ namespace Insignia.Painel.Controllers
         }
 
         // POST: Tarefa Adicionar
-        [HttpPost, IsLogged]
+        [HttpPost, IsLogged, ValidateInput(false)]
         public ActionResult Adicionar(Tarefa TarefaModel)
         {
             if (ModelState.IsValid)
@@ -91,7 +91,7 @@ namespace Insignia.Painel.Controllers
         }
 
         // POST: Tarefa Editar           
-        [IsLogged, HttpPost]
+        [IsLogged, HttpPost, ValidateInput(false)]
         public ActionResult Editar(Tarefa TarefaModel)
         {
             if (ModelState.IsValid)

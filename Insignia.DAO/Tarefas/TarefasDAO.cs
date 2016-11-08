@@ -32,7 +32,7 @@ namespace Insignia.DAO.Tarefas
             {
                 using (var sql = new SqlConnection(conStr))
                 {
-                    resp = sql.Query<Tarefa>(" SELECT ID, EmpresaID, UsuarioID, BadgeID AS TipoID, Titulo, Descricao, Termino, Observacoes FROM Tarefas WHERE ID = @ID ", new { ID = id }).SingleOrDefault();
+                    resp = sql.Query<Tarefa>(" SELECT ID, EmpresaID, UsuarioID, BadgeID AS TipoID, Titulo, Resumo, Descricao, Termino, Observacoes FROM Tarefas WHERE ID = @ID ", new { ID = id }).SingleOrDefault();
                 }
             }
 
@@ -54,13 +54,14 @@ namespace Insignia.DAO.Tarefas
             {
                 using (var sql = new SqlConnection(conStr))
                 {
-                    int queryResultado = sql.ExecuteScalar<int>(" INSERT INTO Tarefas(EmpresaID, UsuarioID, BadgeID, Titulo, Descricao, Termino, Observacoes) OUTPUT INSERTED.ID VALUES (@EmpresaID, @UsuarioID, @BadgeID, @Titulo, @Descricao, @Termino, @Observacoes) ",
+                    int queryResultado = sql.ExecuteScalar<int>(" INSERT INTO Tarefas(EmpresaID, UsuarioID, BadgeID, Titulo, Resumo, Descricao, Termino, Observacoes) OUTPUT INSERTED.ID VALUES (@EmpresaID, @UsuarioID, @BadgeID, @Titulo, @Resumo, @Descricao, @Termino, @Observacoes) ",
                                     new
                                     {
                                         EmpresaID = HttpContext.Current.Session["EmpresaID"],
                                         UsuarioID = HttpContext.Current.Session["UsuarioID"],
                                         BadgeID = tarefa.TipoID,
                                         Titulo = tarefa.Titulo,
+                                        Resumo = tarefa.Resumo,
                                         Descricao = tarefa.Descricao,
                                         Termino = tarefa.Termino,
                                         Observacoes = tarefa.Observacoes,
@@ -88,12 +89,13 @@ namespace Insignia.DAO.Tarefas
             {
                 using (var sql = new SqlConnection(conStr))
                 {
-                    var queryResultado = sql.Execute(@" UPDATE Tarefas SET BadgeID = @BadgeID, Titulo = @Titulo, Descricao = @Descricao, Termino = @Termino, Observacoes = @Observacoes WHERE ID = @ID ",
+                    var queryResultado = sql.Execute(@" UPDATE Tarefas SET BadgeID = @BadgeID, Titulo = @Titulo, Resumo = @Resumo, Descricao = @Descricao, Termino = @Termino, Observacoes = @Observacoes WHERE ID = @ID ",
                                     new
                                     {
                                         ID = tarefa.ID,
                                         BadgeID = tarefa.TipoID,
                                         Titulo = tarefa.Titulo,
+                                        Resumo = tarefa.Resumo,
                                         Descricao = tarefa.Descricao,
                                         Termino = tarefa.Termino,
                                         Observacoes = tarefa.Observacoes,
