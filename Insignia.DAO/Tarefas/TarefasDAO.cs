@@ -20,10 +20,10 @@ namespace Insignia.DAO.Tarefas
         }
 
         /// <summary>
-        /// Recupera as informações de uma badge no banco de dados.
+        /// Recupera as informações de uma tarefa no banco de dados.
         /// </summary>
-        /// <param name="id">ID da empresa desejada.</param>
-        /// <returns>Retorna model com as informações da badge</returns>
+        /// <param name="id">ID da tarefa desejada.</param>
+        /// <returns>Retorna model com as informações da tarefa</returns>
         public Tarefa Carregar(int id)
         {
             Tarefa resp = null;
@@ -40,9 +40,9 @@ namespace Insignia.DAO.Tarefas
         }
 
         /// <summary>
-        /// Cria uma nova badge no banco de dados.
+        /// Cria uma nova tarefa no banco de dados.
         /// </summary>
-        /// <param name="user">Badge contendo os dados a serem salvos.</param>
+        /// <param name="user">Tarefa contendo os dados a serem salvos.</param>
         /// <returns>True se o registro foi criado com sucesso, false caso contrário.</returns>
         public bool Salvar(Tarefa tarefa)
         {
@@ -77,7 +77,7 @@ namespace Insignia.DAO.Tarefas
         /// <summary>
         /// Edita dados de uma tarefa no banco de dado
         /// </summary>
-        /// <param name="tarefa"></param>
+        /// <param name="tarefa">Tarefa contendo os dados a serem salvos.</param>
         /// <returns>Retorna true caso tenha salvo com sucesso, false caso tenha dado erro</returns>
         public bool Editar(Tarefa tarefa)
         {

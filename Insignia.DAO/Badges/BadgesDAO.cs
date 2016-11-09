@@ -22,7 +22,7 @@ namespace Insignia.DAO.Badges
         /// <summary>
         /// Recupera as informações de uma badge no banco de dados.
         /// </summary>
-        /// <param name="id">ID da empresa desejada.</param>
+        /// <param name="id">ID da badge desejada.</param>
         /// <returns>Retorna model com as informações da badge</returns>
         public Badge Carregar(int id)
         {
@@ -124,7 +124,7 @@ namespace Insignia.DAO.Badges
         /// <summary>
         /// Verifica se existe tarefas para a bagde cadastrada
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="id">Id da badge</param>
         /// <returns>Caso exista tarefas para a badge retorna true, se não false</returns>
         public bool PodeRemover(int id)
         {
