@@ -8,6 +8,5 @@ namespace Insignia.Painel.ViewModels
         public Badge Badge { get; set; }
 
         public List<Badge> ListBadge { get; set; }
-
     }
 }
