@@ -127,17 +127,14 @@ namespace Insignia.DAO.Empresas
         /// </summary>
         /// <param name="email"></param>
         /// <returns>True se não existe e false caso já exista</returns>
-        public bool VerificaEmpresa(string Email)
+        public bool VerificaEmpresa(string email, string cnpj)
         {
             bool resp = true;
             Empresa empresa = null;
 
-            if (!string.IsNullOrWhiteSpace(Email))
+            using (var sql = new SqlConnection(conStr))
             {
-                using (var sql = new SqlConnection(conStr))
-                {
-                    empresa = sql.Query<Empresa>(" SELECT ID FROM Empresas WHERE Email = @Email ", new { Email = Email }).SingleOrDefault();
-                }
+                empresa = sql.Query<Empresa>(" SELECT ID FROM Empresas WHERE Email = @Email OR CNPJ = @CNPJ ", new { Email = email, CNPJ = cnpj }).FirstOrDefault();
             }
 
             if (empresa != null)

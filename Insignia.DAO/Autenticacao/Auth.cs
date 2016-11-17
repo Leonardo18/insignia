@@ -50,14 +50,13 @@ namespace Insignia.DAO.Autenticacao
         /// <param name="userID"></param>
         /// <param name="areaID"></param>
         /// <returns>Retorna true se tiver permissão e false para não tem permissão</returns>
-        public bool VerificaPermissao(string userID, string areaID)
+        public bool VerificaPermissao(string usuarioID, string areaID)
         {
             int result = 0;
 
-
             using (var sql = new SqlConnection(conStr))
             {
-                result = sql.ExecuteScalar<int>(" SELECT COUNT(*) FROM UsuariosXAreas WHERE UsuarioID = @UsuarioID AND AreaID = @AreaID", new { UsuarioID = userID, AreaID = areaID });
+                result = sql.ExecuteScalar<int>(" SELECT COUNT(*) FROM UsuariosXAreas WHERE UsuarioID = @UsuarioID AND AreaID = @AreaID", new { UsuarioID = usuarioID, AreaID = areaID });
             }
 
             return Convert.ToBoolean(result);

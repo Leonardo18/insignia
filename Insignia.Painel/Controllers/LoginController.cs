@@ -51,7 +51,7 @@ namespace Insignia.Painel.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (EmpresaDAO.VerificaEmpresa(EmpresaModel.Email))
+                if (EmpresaDAO.VerificaEmpresa(EmpresaModel.Email, EmpresaModel.CNPJ))
                 {
                     if (EmpresaDAO.Salvar(EmpresaModel))
                     {
