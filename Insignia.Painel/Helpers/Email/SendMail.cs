@@ -28,7 +28,7 @@ namespace Insignia.Painel.Helpers.Email
             client.EnableSsl = true;
             client.Credentials = new System.Net.NetworkCredential(ConfigurationManager.AppSettings["EmailUser"], ConfigurationManager.AppSettings["EmailPass"]);
 
-            //Read template file from the App_Data folder
+            //Lê o template de e-mail
             using (var sr = new StreamReader(HttpContext.Current.Server.MapPath(@"~/Helpers/Email/") + "Template.html"))
             {
                 body = sr.ReadToEnd();
