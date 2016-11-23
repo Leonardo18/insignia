@@ -17,11 +17,11 @@ namespace Insignia.DAO.Autenticacao
         }
 
         /// <summary>
-        /// Verifica se a empresa existe e recupera os dados dela.
+        /// Verifica se a empresa existe e recupera os dados dela
         /// </summary>
-        /// <param name="usuario"></param>
-        /// <param name="senha"></param>
-        /// <returns>Model contendo os dados do usuário ou null.</returns>
+        /// <param name="usuario">Nome do usuário de login</param>
+        /// <param name="senha">Senha de acesso do usuário</param>
+        /// <returns>Model contendo os dados do usuário ou null</returns>
         public Empresa LoginEmpresa(string email, string senha)
         {
             Empresa model = null;
@@ -45,10 +45,10 @@ namespace Insignia.DAO.Autenticacao
 
 
         /// <summary>
-        /// Verifica se o usuário atual possui permissões 
+        /// Verifica se o usuário atual possui permissões
         /// </summary>
-        /// <param name="userID"></param>
-        /// <param name="areaID"></param>
+        /// <param name="userID">ID do usuário</param>
+        /// <param name="areaID">ID da área de acesso</param>
         /// <returns>Retorna true se tiver permissão e false para não tem permissão</returns>
         public bool VerificaPermissao(string usuarioID, string areaID)
         {

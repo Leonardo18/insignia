@@ -11,13 +11,22 @@ namespace Insignia.Painel.Controllers
     {
         private EmpresasDAO EmpresaDAO = new EmpresasDAO(ConfigurationManager.ConnectionStrings["strConMain"].ConnectionString);
 
-        // GET: Login
+        /// <summary>
+        /// GET: Login 
+        /// </summary>
+        /// <returns>Retorna a view de login</returns>
+        [HttpGet]
         public ActionResult Login()
         {
             return View(new Empresa());
         }
 
-        //POST: Login
+        /// <summary>
+        /// POST: Login 
+        /// </summary>
+        /// <param name="Email">Email de acesso</param>
+        /// <param name="Senha">Senha de acesso</param>
+        /// <returns>Caso consiga fazer login com os dados informados redireciona, caso contrário retorna a view com mensagem</returns>
         [HttpPost]
         public ActionResult Login(string Email, string Senha)
         {
@@ -44,8 +53,11 @@ namespace Insignia.Painel.Controllers
             return View(new Empresa());
         }
 
-
-        // POST: NovaConta
+        /// <summary>
+        /// POST: NovaConta 
+        /// </summary>
+        /// <param name="EmpresaModel">Model contendo os dados da Empresa</param>
+        /// <returns>Caso consiga validar os dados e salvar o cadastro, redireciona, caso contrário retorna a view com menssagem</returns>
         [HttpPost]
         public ActionResult NovaConta(Empresa EmpresaModel)
         {
@@ -82,14 +94,21 @@ namespace Insignia.Painel.Controllers
             return View("Login", EmpresaModel);
         }
 
-        // POST: RecuperarSenha
+        /// <summary>
+        /// POST: RecuperarSenha 
+        /// </summary>
+        /// <param name="email">Email cadastrado no sistema</param>
         [HttpPost]
         public void RecuperarSenha(string email)
         {
             Response.Write("Email enviado para " + email);
         }
-
-        // GET: Logout
+        
+        /// <summary>
+        /// GET: Logout 
+        /// </summary>
+        /// <returns>Limpa a sessão de acesso e faz redirecionamento</returns>
+        [HttpGet]
         public ActionResult Sair()
         {
             Session.Clear();

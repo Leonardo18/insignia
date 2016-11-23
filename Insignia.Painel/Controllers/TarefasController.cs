@@ -12,8 +12,11 @@ namespace Insignia.Painel.Controllers
     {
         private TarefasDAO TarefasDAO = new TarefasDAO(ConfigurationManager.ConnectionStrings["strConMain"].ConnectionString);
 
-        // GET: Tarefas Adicionar       
-        [IsLogged]
+        /// <summary>
+        /// GET: Tarefas Adicionar 
+        /// </summary>
+        /// <returns>Retorna a view de adicionar tarefa</returns>
+        [HttpGet, IsLogged]
         public ActionResult Adicionar()
         {
             var TarefaModel = new Tarefa();
@@ -33,7 +36,11 @@ namespace Insignia.Painel.Controllers
             return View(TarefaModel);
         }
 
-        // POST: Tarefa Adicionar
+        /// <summary>
+        /// POST: Tarefa Adicionar 
+        /// </summary>
+        /// <param name="TarefaModel"></param>
+        /// <returns>Caso consiga validar e salvar a tarefa faz redirecionamento, se não retorna a view com mensagem</returns>
         [HttpPost, IsLogged, ValidateInput(false)]
         public ActionResult Adicionar(Tarefa TarefaModel)
         {
@@ -60,8 +67,12 @@ namespace Insignia.Painel.Controllers
             return View(TarefaModel);
         }
 
-        // GET: Tarefa Editar
-        [IsLogged]
+        /// <summary>
+        /// GET: Tarefa Editar 
+        /// </summary>
+        /// <param name="ID">ID da tarefa a ser editada</param>
+        /// <returns>Retorna a view com os dados da tarefa a serem editados</returns>
+        [HttpGet, IsLogged]
         public ActionResult Editar(int ID)
         {
             Tarefa TarefaModel = TarefasDAO.Carregar(ID);
@@ -90,8 +101,12 @@ namespace Insignia.Painel.Controllers
             return View("Editar", TarefaModel);
         }
 
-        // POST: Tarefa Editar           
-        [IsLogged, HttpPost, ValidateInput(false)]
+        /// <summary>
+        /// POST: Tarefa Editar
+        /// </summary>
+        /// <param name="TarefaModel">Model contendo os dados da Tarefa</param>
+        /// <returns>Caso consiga validar os dados e atualizar a tarefa faz redirecionamento, caso contrário retorna a view novamente para ajuste de dados inválidos</returns>
+        [HttpPost, IsLogged, ValidateInput(false)]
         public ActionResult Editar(Tarefa TarefaModel)
         {
             if (ModelState.IsValid)
@@ -117,8 +132,12 @@ namespace Insignia.Painel.Controllers
             return View("Editar", TarefaModel);
         }
 
-        // GET: Tarefa Remover       
-        [IsLogged]
+        /// <summary>
+        /// GET: Tarefa Remover
+        /// </summary>
+        /// <param name="ID">ID da tarefa a ser removida</param>
+        /// <returns>Retorna a view com dados da tarefa que será removida</returns>
+        [HttpGet, IsLogged]
         public ActionResult Remover(int ID)
         {
             //Faz Load com o ID passado
@@ -127,8 +146,12 @@ namespace Insignia.Painel.Controllers
             return View(TarefaModel);
         }
 
-        // POST: Tarefa Remover       
-        [IsLogged, HttpPost]
+        /// <summary>
+        /// POST: Tarefa Remover
+        /// </summary>
+        /// <param name="TarefaModel">Model contendo os dados da tarefa</param>
+        /// <returns>Caso consiga remover a tarefa do sistema faz redirecionamento, caso contrário retorna a view com mensagem</returns>
+        [HttpPost, IsLogged]
         public ActionResult Remover(Tarefa TarefaModel)
         {
             //Faz Load com o ID passado

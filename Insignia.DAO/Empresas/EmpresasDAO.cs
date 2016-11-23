@@ -19,9 +19,9 @@ namespace Insignia.DAO.Empresas
         }
 
         /// <summary>
-        /// Recupera as informações de uma empresa no banco de dados.
+        /// Recupera as informações de uma empresa no banco de dados
         /// </summary>
-        /// <param name="id">ID da empresa desejada.</param>
+        /// <param name="id">ID da empresa desejada</param>
         /// <returns>Retorna model com as informações da empresa</returns>
         public Empresa Carregar(int id)
         {
@@ -39,10 +39,10 @@ namespace Insignia.DAO.Empresas
         }
 
         /// <summary>
-        /// Cria uma nova empresa no banco de dados.
+        /// Cria uma nova empresa no banco de dados
         /// </summary>
-        /// <param name="user">Empresa contendo os dados a serem salvos.</param>
-        /// <returns>True se o registro foi criado com sucesso, false caso contrário.</returns>
+        /// <param name="user">Empresa contendo os dados a serem salvos</param>
+        /// <returns>True se o registro foi criado com sucesso, false caso contrário</returns>
         public bool Salvar(Empresa empresa)
         {
             bool resp = false;
@@ -70,10 +70,10 @@ namespace Insignia.DAO.Empresas
         }
 
         /// <summary>
-        /// Edita uma empresa no banco de dados.
+        /// Edita uma empresa no banco de dados
         /// </summary>
-        /// <param name="user">Empresa contendo a empresa a ser editada.</param>
-        /// <returns>True se a empresa foi encontrada e editada, false caso contrário.</returns>
+        /// <param name="user">Empresa contendo a empresa a ser editada</param>
+        /// <returns>True se a empresa foi encontrada e editada, false caso contrário</returns>
         public bool Editar(Empresa empresa)
         {
             bool resp = false;
@@ -102,10 +102,10 @@ namespace Insignia.DAO.Empresas
         }
 
         /// <summary>
-        /// Remove uma empresa do banco de dados.
+        /// Remove uma empresa do banco de dados
         /// </summary>
-        /// <param name="id">ID da empresa a ser removida.</param>
-        /// <returns>True se a empresa foi encontrada e removida, false caso contrário.</returns>
+        /// <param name="id">ID da empresa a ser removida</param>
+        /// <returns>True se a empresa foi encontrada e removida, false caso contrário</returns>
         public bool Remover(int id)
         {
             bool resp = false;
@@ -125,7 +125,8 @@ namespace Insignia.DAO.Empresas
         /// <summary>
         /// Verifica se a empresa já existe no sistema
         /// </summary>
-        /// <param name="email"></param>
+        /// <param name="email">Email que está sendo cadastrado</param>
+        /// <param name="cnpj">Cnpj que está sendo cadastrado</param>
         /// <returns>True se não existe e false caso já exista</returns>
         public bool VerificaEmpresa(string email, string cnpj)
         {

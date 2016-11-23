@@ -13,8 +13,8 @@ namespace Insignia.DAO.Util
         /// <summary>
         /// Salva Log recebendo a conexão e a mensagem a ser inserida
         /// </summary>
-        /// <param name="conStr"></param>
-        /// <param name="mensagem"></param>
+        /// <param name="conStr">Conexão com banco de dados</param>
+        /// <param name="mensagem">Mensagem a ser gravada</param>
         public static void Log(string conStr, string mensagem)
         {
             if (!String.IsNullOrEmpty(conStr) && !String.IsNullOrEmpty(mensagem))
@@ -29,8 +29,8 @@ namespace Insignia.DAO.Util
         /// <summary>
         /// Encriptografa uma senha
         /// </summary>
-        /// <param name="Message"></param>
-        /// <returns>retorna uma senha encriptografada</returns>
+        /// <param name="senha">Senha a ser criptografada</param>
+        /// <returns>Retorna uma senha encriptografada</returns>
         public static string Criptografar(string senha)
         {
             byte[] Results;
@@ -66,8 +66,8 @@ namespace Insignia.DAO.Util
         /// <summary>
         /// Método que decriptografa uma senha
         /// </summary>
-        /// <param name="Message"></param>
-        /// <returns>a senha decriptografada</returns>
+        /// <param name="senha">Senha a ser descriptografada</param>
+        /// <returns>A senha decriptografada</returns>
         public static string Descriptografar(string senha)
         {
             byte[] Results;

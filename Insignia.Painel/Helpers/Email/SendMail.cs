@@ -13,9 +13,9 @@ namespace Insignia.Painel.Helpers.Email
         /// <summary>
         /// Método de envio de e-mail do sistema
         /// </summary>
-        /// <param name="DestinatarioNome"></param>
-        /// <param name="DestinatarioEmail"></param>
-        /// <param name="DestinatarioMensagem"></param>
+        /// <param name="DestinatarioNome">Nome do destinatário</param>
+        /// <param name="DestinatarioEmail">Email do destinatário</param>
+        /// <param name="DestinatarioMensagem">Mensagem ao destinatário</param>
         /// <returns>True se conseguiu enviar o e-mail com sucesso, false caso de algum erro ou o e-mail seja inválido</returns>
         public bool EnviaEmail(string DestinatarioNome, string DestinatarioEmail, string DestinatarioMensagem)
         {

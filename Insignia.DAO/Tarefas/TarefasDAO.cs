@@ -20,9 +20,9 @@ namespace Insignia.DAO.Tarefas
         }
 
         /// <summary>
-        /// Recupera as informações de uma tarefa no banco de dados.
+        /// Recupera as informações de uma tarefa no banco de dados
         /// </summary>
-        /// <param name="id">ID da tarefa desejada.</param>
+        /// <param name="id">ID da tarefa desejada</param>
         /// <returns>Retorna model com as informações da tarefa</returns>
         public Tarefa Carregar(int id)
         {
@@ -40,10 +40,10 @@ namespace Insignia.DAO.Tarefas
         }
 
         /// <summary>
-        /// Cria uma nova tarefa no banco de dados.
+        /// Cria uma nova tarefa no banco de dados
         /// </summary>
-        /// <param name="user">Tarefa contendo os dados a serem salvos.</param>
-        /// <returns>True se o registro foi criado com sucesso, false caso contrário.</returns>
+        /// <param name="user">Tarefa contendo os dados a serem salvos</param>
+        /// <returns>True se o registro foi criado com sucesso, false caso contrário</returns>
         public bool Salvar(Tarefa tarefa)
         {
             bool resp = false;
@@ -75,9 +75,9 @@ namespace Insignia.DAO.Tarefas
         }
 
         /// <summary>
-        /// Edita dados de uma tarefa no banco de dado
+        /// Edita dados de uma tarefa no banco de dados
         /// </summary>
-        /// <param name="tarefa">Tarefa contendo os dados a serem salvos.</param>
+        /// <param name="tarefa">Tarefa contendo os dados a serem salvos</param>
         /// <returns>Retorna true caso tenha salvo com sucesso, false caso tenha dado erro</returns>
         public bool Editar(Tarefa tarefa)
         {
@@ -109,10 +109,10 @@ namespace Insignia.DAO.Tarefas
         }
 
         /// <summary>
-        /// Remove uma tarefa do banco de dados.
+        /// Remove uma tarefa do banco de dados
         /// </summary>
-        /// <param name="id">ID da badge a ser removida.</param>
-        /// <returns>True se a tarefa foi encontrada e removida, false caso contrário.</returns>
+        /// <param name="id">ID da badge a ser removida</param>
+        /// <returns>True se a tarefa foi encontrada e removida, false caso contrário</returns>
         public bool Remover(int id)
         {
             bool resp = false;
@@ -130,9 +130,9 @@ namespace Insignia.DAO.Tarefas
         }
 
         /// <summary>
-        /// Carrega todos os tipos sendo eles as tags das bagdes.
+        /// Carrega todos os tipos sendo eles as tags das bagdes
         /// </summary>
-        /// <returns>Dictionary contendo ID e tags de cada badges.</returns>
+        /// <returns>Dictionary contendo ID e tags de cada badges</returns>
         public Dictionary<int, string> Tipos()
         {
             Dictionary<int, string> dict = new Dictionary<int, string>();

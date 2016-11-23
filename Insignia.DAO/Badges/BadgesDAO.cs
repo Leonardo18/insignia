@@ -20,9 +20,9 @@ namespace Insignia.DAO.Badges
         }
 
         /// <summary>
-        /// Recupera as informações de uma badge no banco de dados.
+        /// Recupera as informações de uma badge no banco de dados
         /// </summary>
-        /// <param name="id">ID da badge desejada.</param>
+        /// <param name="id">ID da badge desejada</param>
         /// <returns>Retorna model com as informações da badge</returns>
         public Badge Carregar(int id)
         {
@@ -40,10 +40,10 @@ namespace Insignia.DAO.Badges
         }
 
         /// <summary>
-        /// Cria uma nova badge no banco de dados.
+        /// Cria uma nova badge no banco de dados
         /// </summary>
-        /// <param name="user">Badge contendo os dados a serem salvos.</param>
-        /// <returns>True se o registro foi criado com sucesso, false caso contrário.</returns>
+        /// <param name="user">Badge contendo os dados a serem salvos</param>
+        /// <returns>True se o registro foi criado com sucesso, false caso contrário</returns>
         public bool Salvar(Badge bagde)
         {
             bool resp = false;
@@ -73,10 +73,10 @@ namespace Insignia.DAO.Badges
         }
 
         /// <summary>
-        /// Edita uma badge no banco de dados.
+        /// Edita uma badge no banco de dados
         /// </summary>
-        /// <param name="user">Badge contendo a badge a ser editada.</param>
-        /// <returns></returns>
+        /// <param name="user">Badge contendo a badge a ser editada</param>
+        /// <returns>True se o registro foi editado com sucesso, false caso contrário</returns>
         public bool Editar(Badge badge)
         {
             bool resp = false;
@@ -107,7 +107,7 @@ namespace Insignia.DAO.Badges
         }
 
         /// <summary>
-        /// Carrega uma lista com todas as badges encontradas no banco de dados.
+        /// Carrega uma lista com todas as badges encontradas no banco de dados
         /// </summary>
         /// <returns>Retornar uma List de Badges</returns>
         public List<Badge> Listar()
@@ -124,7 +124,7 @@ namespace Insignia.DAO.Badges
         /// <summary>
         /// Verifica se existe tarefas para a bagde cadastrada
         /// </summary>
-        /// <param name="id">Id da badge</param>
+        /// <param name="id">Id da badge.</param>
         /// <returns>Caso exista tarefas para a badge retorna true, se não false</returns>
         public bool PodeRemover(int id)
         {
@@ -145,8 +145,8 @@ namespace Insignia.DAO.Badges
         /// <summary>
         /// Remove uma badge do banco de dados.
         /// </summary>
-        /// <param name="id">ID da badge a ser removida.</param>
-        /// <returns>True se a badge foi encontrada e removida, false caso contrário.</returns>
+        /// <param name="id">ID da badge a ser removida</param>
+        /// <returns>True se a badge foi encontrada e removida, false caso contrário</returns>
         public bool Remover(int id)
         {
             bool resp = false;

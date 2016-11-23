@@ -12,10 +12,10 @@ namespace Insignia.Painel.Helpers.AmazonS3
         /// <summary>
         /// Efetua o upload de arquivos na Amazon S3
         /// </summary>
-        /// <param name="CaminhoArquivo"></param>
-        /// <param name="BucketNome"></param>
-        /// <param name="SubDiretorio"></param>
-        /// <param name="NomeDoArquivo"></param>
+        /// <param name="CaminhoArquivo">Caminho de onde o arquivo está</param>
+        /// <param name="BucketNome">Nome do bucket no S3</param>
+        /// <param name="SubDiretorio">Nome do diretório dentro do bucket no S3</param>
+        /// <param name="NomeDoArquivo">Nome do arquivo</param>
         /// <returns>Retorna true caso tenha conseguido efetuar o upload, caso contrário retorna false</returns>
         public bool EnviaArquivoS3(string CaminhoArquivo, string BucketNome, string SubDiretorio, string NomeDoArquivo)
         {
@@ -60,9 +60,9 @@ namespace Insignia.Painel.Helpers.AmazonS3
         /// <summary>
         /// Busca a Url de um arquivo em um bucket do S3 na amazon
         /// </summary>
-        /// <param name="BucketNome"></param>
-        /// <param name="CaminhoDoArquivo"></param>
-        /// <param name="NomeArquivo"></param>
+        /// <param name="BucketNome">Nome do bucket no S3</param>
+        /// <param name="CaminhoDoArquivo">Caminho de onde o arquivo está</param>
+        /// <param name="NomeArquivo">Nome do arquivo</param>
         /// <returns>Retorna a url contendo o endereço par ao arquivo</returns>
         public string BuscaUrlArquivo(string BucketNome, string CaminhoDoArquivo, string NomeArquivo)
         {

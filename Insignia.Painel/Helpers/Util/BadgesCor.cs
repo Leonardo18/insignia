@@ -9,8 +9,8 @@ namespace Insignia.Painel.Helpers.Util
         /// <summary>
         /// Converte cor de Hex para RGB e retorna brano ou preto para a cor da fonte por contraste
         /// </summary>
-        /// <param name="hexColor"></param>
-        /// <returns></returns>
+        /// <param name="hexColor">Hexadecimal da cor</param>
+        /// <returns>Retorna string com qual cor a letra deve ter</returns>
         public string HexToColor(string hexColor)
         {
             //Remove se contém #
@@ -44,8 +44,8 @@ namespace Insignia.Painel.Helpers.Util
         /// <summary>
         /// Calcula o brilho da cor
         /// </summary>
-        /// <param name="c"></param>
-        /// <returns></returns>
+        /// <param name="c">Contém a cor a ser verificada</param>
+        /// <returns>Retorna um valor para o contraste</returns>
         private int PerceivedBrightness(Color c)
         {
             return (int)Math.Sqrt(
