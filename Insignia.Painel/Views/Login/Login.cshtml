@@ -91,7 +91,7 @@
                         </div>
                         <div>
                             @Html.ValidationMessageFor(modelItem => modelItem.CNPJ, null, new { @class = "text-danger" })
-                            @Html.TextBox("CNPJ", Model.CNPJ, new { @class = "form-control", placeholder = "CNPJ", required = "", datainputmask = "'mask' : '99.999.999/9999-99'" })
+                            @Html.TextBox("CNPJ", Model.CNPJ, new { @class = "form-control", placeholder = "CNPJ", required = "", id = "CNPJ", datainputmask = "'mask' : '99.999.999/9999-99'" })
                         </div>
                         <div>
                             @Html.ValidationMessageFor(modelItem => modelItem.Email, null, new { @class = "text-danger" })
@@ -168,7 +168,6 @@
     </script>
     <!-- /jquery.inputmask -->
     <!-- ConfirmPassword-->
-
     <script>
         var password = document.getElementById("SenhaCadastro"), confirm_password = document.getElementById("ConfirmaSenha");
 
@@ -183,5 +182,73 @@
         confirm_password.onkeyup = validatePassword;
     </script>
     <!-- /ConfirmPassword -->
+    <script>
+        var cnpjObject = document.getElementById("CNPJ");
+        var cnpj = "";
+        function validateCNPJ() {
+            cnpj = cnpjObject.value.replace(/[^\d]+/g, '');
+
+            if (cnpj == '') cnpjObject.setCustomValidity("CNPJ inválido");
+
+            if (cnpj.length != 14)
+                cnpjObject.setCustomValidity("CNPJ inválido");
+
+            // Elimina CNPJs invalidos conhecidos
+            if (cnpj == "00000000000000" ||
+            cnpj == "11111111111111" ||
+            cnpj == "22222222222222" ||
+            cnpj == "33333333333333" ||
+            cnpj == "44444444444444" ||
+            cnpj == "55555555555555" ||
+            cnpj == "66666666666666" ||
+            cnpj == "77777777777777" ||
+            cnpj == "88888888888888" ||
+            cnpj == "99999999999999") {
+                cnpjObject.setCustomValidity("CNPJ inválido");
+            }
+            else {
+                cnpjObject.setCustomValidity('');
+            }
+
+            // Valida DVs
+            tamanho = cnpj.length - 2
+            numeros = cnpj.substring(0, tamanho);
+            digitos = cnpj.substring(tamanho);
+            soma = 0;
+            pos = tamanho - 7;
+            for (i = tamanho; i >= 1; i--) {
+                soma += numeros.charAt(tamanho - i) * pos--;
+                if (pos < 2)
+                    pos = 9;
+            }
+            resultado = soma % 11 < 2 ? 0 : 11 - soma % 11;
+            if (resultado != digitos.charAt(0)) {
+                cnpjObject.setCustomValidity("CNPJ inválido");
+            }
+            else {
+                cnpjObject.setCustomValidity('');
+            }
+
+            tamanho = tamanho + 1;
+            numeros = cnpj.substring(0, tamanho);
+            soma = 0;
+            pos = tamanho - 7;
+            for (i = tamanho; i >= 1; i--) {
+                soma += numeros.charAt(tamanho - i) * pos--;
+                if (pos < 2)
+                    pos = 9;
+            }
+            resultado = soma % 11 < 2 ? 0 : 11 - soma % 11;
+            if (resultado != digitos.charAt(1)) {
+                cnpjObject.setCustomValidity("CNPJ inválido");
+            }
+            else {
+                cnpjObject.setCustomValidity('');
+            }
+        }
+
+        cnpj.onchange = validateCNPJ;
+        cnpjObject.onkeyup = validateCNPJ;
+    </script>
 </body>
 </html>
