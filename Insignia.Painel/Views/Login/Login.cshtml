@@ -130,7 +130,7 @@
     <!-- /modal -->
     <!-- Small modal -->
     @using (Html.BeginForm("RecuperarSenha", "Login"))
-            {
+    {
         <div class="x_content">
             <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-hidden="true">
                 <div class="modal-dialog modal-sm">
@@ -194,17 +194,18 @@
                 cnpjObject.setCustomValidity("CNPJ inválido");
 
             // Elimina CNPJs invalidos conhecidos
-            if (cnpj == "00000000000000" ||
-            cnpj == "11111111111111" ||
-            cnpj == "22222222222222" ||
-            cnpj == "33333333333333" ||
-            cnpj == "44444444444444" ||
-            cnpj == "55555555555555" ||
-            cnpj == "66666666666666" ||
-            cnpj == "77777777777777" ||
-            cnpj == "88888888888888" ||
-            cnpj == "99999999999999") {
-                cnpjObject.setCustomValidity("CNPJ inválido");
+            if (
+                cnpj == "00000000000000" ||
+                cnpj == "11111111111111" ||
+                cnpj == "22222222222222" ||
+                cnpj == "33333333333333" ||
+                cnpj == "44444444444444" ||
+                cnpj == "55555555555555" ||
+                cnpj == "66666666666666" ||
+                cnpj == "77777777777777" ||
+                cnpj == "88888888888888" ||
+                cnpj == "99999999999999") {
+                    cnpjObject.setCustomValidity("CNPJ inválido");
             }
             else {
                 cnpjObject.setCustomValidity('');
