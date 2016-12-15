@@ -134,6 +134,7 @@
     <Content Include="Content\images\dark_embroidery.png" />
     <Content Include="Content\images\favicon.ico" />
     <Content Include="Content\images\logo.png" />
+    <Content Include="Content\Uploads\ReadMe.txt" />
     <Content Include="Fonts\css\font-awesome.css" />
     <Content Include="Fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -151,6 +152,7 @@
     <Content Include="Scripts\js\moment\moment.min.js" />
     <Content Include="Scripts\js\nprogress\nprogress.js" />
     <Content Include="Scripts\js\tags\jquery.tagsinput.js" />
+    <Content Include="Scripts\js\Upload\bootstrap-filestyle.js" />
     <Content Include="Scripts\js\wysiwyg\bootstrap-wysiwyg.min.js" />
     <Content Include="Views\web.config" />
     <Content Include="Fonts\fonts\fontawesome-webfont.ttf" />

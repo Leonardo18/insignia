@@ -1,9 +1,12 @@
 ﻿using Insignia.DAO.Tarefas;
 using Insignia.Model.Tarefa;
+using Insignia.Painel.Helpers.AmazonS3;
 using Insignia.Painel.Helpers.CustomAttributes;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.IO;
+using System.Web;
 using System.Web.Mvc;
 
 namespace Insignia.Painel.Controllers
@@ -42,10 +45,36 @@ namespace Insignia.Painel.Controllers
         /// <param name="TarefaModel"></param>
         /// <returns>Caso consiga validar e salvar a tarefa faz redirecionamento, se não retorna a view com mensagem</returns>
         [HttpPost, IsLogged, ValidateInput(false)]
-        public ActionResult Adicionar(Tarefa TarefaModel)
+        public ActionResult Adicionar(Tarefa TarefaModel, HttpPostedFileBase Arquivo)
         {
             if (ModelState.IsValid)
             {
+                // Verifica se existe um arquivo escolhido
+                if (Arquivo != null && Arquivo.ContentLength > 0)
+                {
+                    AmazonUpload AmazonS3 = new AmazonUpload();
+
+                    // Pega o nome do arquivo
+                    TarefaModel.Anexo = Path.GetFileName(Arquivo.FileName);
+
+                    // Grava o arquivo em uma pasta local
+                    var Caminho = Path.Combine(Server.MapPath("~/Content/Uploads"), TarefaModel.Anexo);
+
+                    Arquivo.SaveAs(Caminho);
+
+                    //Verifica se existe a pasta da empresa no Bucket
+                    if (!AmazonS3.ExistePasta(Convert.ToString(Session["EmpresaNome"]), ConfigurationManager.AppSettings["BucketName"]))
+                    {
+                        //Cria uma pasta no Bucket com o nome da empresa
+                        AmazonS3.CriaPasta(Convert.ToString(Session["EmpresaNome"]), ConfigurationManager.AppSettings["BucketName"]);
+                    }
+
+                    //Faz Upload do arquivo para o S3
+                    AmazonS3.EnviaArquivoS3(Caminho, ConfigurationManager.AppSettings["BucketName"], Convert.ToString(Session["EmpresaNome"]), TarefaModel.Anexo);
+
+                    System.IO.File.Delete(Caminho);
+                }
+
                 if (TarefasDAO.Salvar(TarefaModel))
                 {
                     return RedirectToAction("Editar", new { ID = TarefaModel.ID });

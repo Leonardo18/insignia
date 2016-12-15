@@ -63,6 +63,7 @@ namespace Insignia.Painel
 
             //Arquivos de javascript usados nas tarefas
             bundles.Add(new ScriptBundle("~/Tarefas/scripts").Include(
+                    "~/Scripts/js/Upload/bootstrap-filestyle.js",
                     "~/Scripts/js/google-code-prettify/prettify.js",
                     "~/Scripts/js/hotkeys/jquery.hotkeys.js",
                     "~/Scripts/js/wysiwyg/bootstrap-wysiwyg.min.js",

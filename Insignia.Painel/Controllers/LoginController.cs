@@ -40,6 +40,7 @@ namespace Insignia.Painel.Controllers
             {
                 Session["SessionID"] = Session.SessionID;
                 Session["EmpresaID"] = EmpresaModel.ID;
+                Session["EmpresaNome"] = EmpresaModel.RazaoSocial;
                 Session["UsuarioID"] = EmpresaModel.ID;
                 Session["UsuarioNome"] = EmpresaModel.RazaoSocial;
                 Session["UsuarioEmail"] = EmpresaModel.Email;
@@ -69,6 +70,7 @@ namespace Insignia.Painel.Controllers
                     {
                         Session["SessionID"] = Session.SessionID;
                         Session["EmpresaID"] = EmpresaModel.ID;
+                        Session["EmpresaNome"] = EmpresaModel.RazaoSocial;
                         Session["UsuarioID"] = EmpresaModel.ID;
                         Session["UsuarioNome"] = EmpresaModel.RazaoSocial;
                         Session["UsuarioEmail"] = EmpresaModel.Email;

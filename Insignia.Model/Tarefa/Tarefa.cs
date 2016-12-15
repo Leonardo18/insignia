@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.Web;
 
 namespace Insignia.Model.Tarefa
 {
@@ -42,6 +43,11 @@ namespace Insignia.Model.Tarefa
         /// </summary>
         [Required(ErrorMessage = "Informe a descrição da tarefa")]
         public string Descricao { get; set; }
+
+        /// <summary>
+        /// Anexo de algum arquivo referente a tarefa
+        /// </summary>
+        public string Anexo { get; set; }
 
         /// <summary>
         /// Data para término da tarefa

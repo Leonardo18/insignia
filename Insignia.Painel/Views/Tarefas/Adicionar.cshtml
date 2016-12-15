@@ -23,7 +23,7 @@
             <div class="x_content">
                 <br />
                 <!-- /page content -->
-                @using (Html.BeginForm("Adicionar", "Tarefas", FormMethod.Post, new { @class = "form-horizontal form-label-left" }))
+                @using (Html.BeginForm("Adicionar", "Tarefas", FormMethod.Post, new { @class = "form-horizontal form-label-left", enctype = "multipart/form-data" }))
                 {
                     <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">
@@ -98,7 +98,7 @@
                                         <button class="btn" type="button">Add</button>
                                     </div>
                                     <a class="btn" data-edit="unlink" title="Remove Hyperlink"><i class="fa fa-cut"></i></a>
-                                </div>                                
+                                </div>
                                 <div class="btn-group">
                                     <a class="btn" data-edit="undo" title="Undo (Ctrl/Cmd+Z)"><i class="fa fa-undo"></i></a>
                                     <a class="btn" data-edit="redo" title="Redo (Ctrl/Cmd+Y)"><i class="fa fa-repeat"></i></a>
@@ -110,6 +110,14 @@
 
                             <br />
                         </div><span class="glyphicon glyphicon-info-sign" data-toggle="tooltip" data-placement="right" title="Este campo indica a descrição do que deve ser feito na tarefa."></span>
+                    </div>
+                    <div class="item form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="file">
+                            Anexo:
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            @Html.TextBox("Arquivo", Model.Anexo, new { @class = "filestyle", type = "file", name = "Arquivo" })
+                        </div><span class="glyphicon glyphicon-info-sign" data-toggle="tooltip" data-placement="right" title="Este campo serve para anexar um arquivo à tarefa."></span>
                     </div>
                     <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">
@@ -236,7 +244,7 @@
 <!-- Campo descrição -->
 <script>
     function GetDescricao() {
-        document.getElementById('descr').innerText = document.getElementById('editor').innerHTML;        
+        document.getElementById('descr').innerText = document.getElementById('editor').innerHTML;
     }
 </script>
 <!-- /Campo descrição -->

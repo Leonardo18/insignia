@@ -54,7 +54,7 @@ namespace Insignia.DAO.Tarefas
             {
                 using (var sql = new SqlConnection(conStr))
                 {
-                    int queryResultado = sql.ExecuteScalar<int>(" INSERT INTO Tarefas(EmpresaID, UsuarioID, BadgeID, Titulo, Resumo, Descricao, Termino, Observacoes) OUTPUT INSERTED.ID VALUES (@EmpresaID, @UsuarioID, @BadgeID, @Titulo, @Resumo, @Descricao, @Termino, @Observacoes) ",
+                    int queryResultado = sql.ExecuteScalar<int>(" INSERT INTO Tarefas(EmpresaID, UsuarioID, BadgeID, Titulo, Resumo, Descricao, Anexo, Termino, Observacoes) OUTPUT INSERTED.ID VALUES (@EmpresaID, @UsuarioID, @BadgeID, @Titulo, @Resumo, @Descricao, @Anexo, @Termino, @Observacoes) ",
                                     new
                                     {
                                         EmpresaID = HttpContext.Current.Session["EmpresaID"],
@@ -63,6 +63,7 @@ namespace Insignia.DAO.Tarefas
                                         Titulo = tarefa.Titulo,
                                         Resumo = tarefa.Resumo,
                                         Descricao = tarefa.Descricao,
+                                        Anexo = tarefa.Anexo,
                                         Termino = tarefa.Termino,
                                         Observacoes = tarefa.Observacoes,
                                     });
@@ -89,7 +90,7 @@ namespace Insignia.DAO.Tarefas
             {
                 using (var sql = new SqlConnection(conStr))
                 {
-                    var queryResultado = sql.Execute(@" UPDATE Tarefas SET BadgeID = @BadgeID, Titulo = @Titulo, Resumo = @Resumo, Descricao = @Descricao, Termino = @Termino, Observacoes = @Observacoes WHERE ID = @ID ",
+                    var queryResultado = sql.Execute(@" UPDATE Tarefas SET BadgeID = @BadgeID, Titulo = @Titulo, Resumo = @Resumo, Descricao = @Descricao, Anexo = @Anexo, Termino = @Termino, Observacoes = @Observacoes WHERE ID = @ID ",
                                     new
                                     {
                                         ID = tarefa.ID,
@@ -97,6 +98,7 @@ namespace Insignia.DAO.Tarefas
                                         Titulo = tarefa.Titulo,
                                         Resumo = tarefa.Resumo,
                                         Descricao = tarefa.Descricao,
+                                        Anexo = tarefa.Anexo,
                                         Termino = tarefa.Termino,
                                         Observacoes = tarefa.Observacoes,
                                     });
