@@ -227,7 +227,7 @@ namespace Insignia.Painel.Controllers
                 AmazonUpload AmazonS3 = new AmazonUpload();
 
                 //Apaga arquivo antes de apagar a tarefa
-                if (AmazonS3.ApagaArquivo(ConfigurationManager.AppSettings["BucketName"], Convert.ToString(Session["EmpresaNome"]), TarefaModel.Anexo);)
+                if (AmazonS3.ApagaArquivo(ConfigurationManager.AppSettings["BucketName"], Convert.ToString(Session["EmpresaNome"]), TarefaModel.Anexo))
                 {
                     if (TarefasDAO.Remover(TarefaModel.ID))
                     {
