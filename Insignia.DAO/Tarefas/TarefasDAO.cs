@@ -32,7 +32,7 @@ namespace Insignia.DAO.Tarefas
             {
                 using (var sql = new SqlConnection(conStr))
                 {
-                    resp = sql.Query<Tarefa>(" SELECT ID, EmpresaID, UsuarioID, BadgeID AS TipoID, Titulo, Resumo, Descricao, Termino, Observacoes FROM Tarefas WHERE ID = @ID ", new { ID = id }).SingleOrDefault();
+                    resp = sql.Query<Tarefa>(" SELECT ID, EmpresaID, UsuarioID, BadgeID AS TipoID, Titulo, Resumo, Descricao, Anexo, Termino, Observacoes FROM Tarefas WHERE ID = @ID ", new { ID = id }).SingleOrDefault();
                 }
             }
 
@@ -145,6 +145,26 @@ namespace Insignia.DAO.Tarefas
             }
 
             return dict;
+        }
+
+        /// <summary>
+        /// Recupera as informações de um arquivo no banco de dados
+        /// </summary>
+        /// <param name="id">ID da tarefa</param>
+        /// <returns>Retorna string contendo o nome do arquivo</returns>
+        public string BuscaArquivo(int id)
+        {
+            string resp = string.Empty;
+
+            if (!string.IsNullOrWhiteSpace(Convert.ToString(id)))
+            {
+                using (var sql = new SqlConnection(conStr))
+                {
+                    resp = sql.Query<string>(" SELECT Anexo FROM Tarefas WHERE ID = @ID ", new { ID = id }).SingleOrDefault();
+                }
+            }
+
+            return resp;
         }
     }
 }

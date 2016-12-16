@@ -136,10 +136,46 @@ namespace Insignia.Painel.Controllers
         /// <param name="TarefaModel">Model contendo os dados da Tarefa</param>
         /// <returns>Caso consiga validar os dados e atualizar a tarefa faz redirecionamento, caso contrário retorna a view novamente para ajuste de dados inválidos</returns>
         [HttpPost, IsLogged, ValidateInput(false)]
-        public ActionResult Editar(Tarefa TarefaModel)
+        public ActionResult Editar(Tarefa TarefaModel, HttpPostedFileBase Arquivo)
         {
             if (ModelState.IsValid)
             {
+                // Verifica se existe um arquivo escolhido
+                if (Arquivo != null && Arquivo.ContentLength > 0)
+                {
+                    AmazonUpload AmazonS3 = new AmazonUpload();
+
+                    string ArquivoAntigo = TarefasDAO.BuscaArquivo(TarefaModel.ID);
+
+                    // Pega o nome do arquivo
+                    TarefaModel.Anexo = Path.GetFileName(Arquivo.FileName);
+
+                    // Grava o arquivo em uma pasta local
+                    var Caminho = Path.Combine(Server.MapPath("~/Content/Uploads"), TarefaModel.Anexo);
+
+                    Arquivo.SaveAs(Caminho);
+
+                    //Verifica se existe a pasta da empresa no Bucket
+                    if (!AmazonS3.ExistePasta(Convert.ToString(Session["EmpresaNome"]), ConfigurationManager.AppSettings["BucketName"]))
+                    {
+                        //Cria uma pasta no Bucket com o nome da empresa
+                        AmazonS3.CriaPasta(Convert.ToString(Session["EmpresaNome"]), ConfigurationManager.AppSettings["BucketName"]);
+                    }
+
+                    //Apaga arquivo antigo para fazer upload de um novo
+                    AmazonS3.ApagaArquivo(ConfigurationManager.AppSettings["BucketName"], Convert.ToString(Session["EmpresaNome"]), ArquivoAntigo);
+
+                    //Faz Upload do arquivo para o S3
+                    AmazonS3.EnviaArquivoS3(Caminho, ConfigurationManager.AppSettings["BucketName"], Convert.ToString(Session["EmpresaNome"]), TarefaModel.Anexo);
+
+                    System.IO.File.Delete(Caminho);
+                }
+                else
+                {
+                    //Se não tem arquivo nome, mantém o antigo
+                    TarefaModel.Anexo = TarefasDAO.BuscaArquivo(TarefaModel.ID);
+                }
+
                 if (TarefasDAO.Editar(TarefaModel))
                 {
                     return RedirectToAction("Adicionar");
@@ -188,9 +224,15 @@ namespace Insignia.Painel.Controllers
 
             if (TarefaModel != null)
             {
-                if (TarefasDAO.Remover(TarefaModel.ID))
+                AmazonUpload AmazonS3 = new AmazonUpload();
+
+                //Apaga arquivo antes de apagar a tarefa
+                if (AmazonS3.ApagaArquivo(ConfigurationManager.AppSettings["BucketName"], Convert.ToString(Session["EmpresaNome"]), TarefaModel.Anexo);)
                 {
-                    return RedirectToAction("Adicionar");
+                    if (TarefasDAO.Remover(TarefaModel.ID))
+                    {
+                        return RedirectToAction("Adicionar");
+                    }
                 }
             }
             return View(TarefaModel);

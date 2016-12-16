@@ -26,7 +26,7 @@
             </div>
             <div class="x_content">
                 <br />
-                @using (Html.BeginForm("Editar", "Tarefas", FormMethod.Post, new { @class = "form-horizontal form-label-left", ID = "FormEditar" }))
+                @using (Html.BeginForm("Editar", "Tarefas", FormMethod.Post, new { @class = "form-horizontal form-label-left", ID = "FormEditar", enctype = "multipart/form-data" }))
                 {
                     <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">
@@ -114,6 +114,22 @@
                             <br />
                         </div><span class="glyphicon glyphicon-info-sign" data-toggle="tooltip" data-placement="right" title="Este campo indica a descrição do que deve ser feito na tarefa."></span>
                     </div>
+                    <div class="item form-group" id="Anexo" style="display:none;">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="file">
+                            Anexo:
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            @Html.TextBox("Arquivo", Model.Anexo, new { @class = "filestyle", type = "file", name = "Arquivo" })
+                        </div><span class="glyphicon glyphicon-info-sign" data-toggle="tooltip" data-placement="right" title="Este campo serve para anexar um arquivo à tarefa."></span>
+                    </div>
+                    <div class="item form-group" id="Link">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="file">
+                            Anexo:
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12" style="margin-top: 8px;">
+                            <a target="_blank" href="https://s3-sa-east-1.amazonaws.com/insigniagamify/@Session["EmpresaNome"]/@Model.Anexo">@Model.Anexo</a>
+                        </div><span class="glyphicon glyphicon-info-sign" data-toggle="tooltip" data-placement="right" title="Este campo serve para anexar um arquivo à tarefa."></span>
+                    </div>
                     <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">
                             Data de término: <span class="required">*</span>
@@ -147,7 +163,6 @@
                     </div>
                 }
             </div>
-
         </div>
     </div>
 </div>
@@ -185,6 +200,9 @@
 
         //Desabilita as ferramentas do campo descrição
         $("#ferramentas").css("pointer-events", "none");
+
+        //Seta nome do arquivo de anexo no campo de upload
+        $('input#Arquivo + div input').val('@(Model.Anexo)');
     });
 </script>
 <!-- /Desabitilia Editar -->
@@ -208,6 +226,12 @@
 
         //Habilita as ferrasmentas da descrição
         $("#ferramentas").css("pointer-events", "auto");
+
+        //Esconde label com link do arquivo
+        $("#Link").css("display", "none");
+
+        //Mostra campo para fazer upload de arquivo
+        $("#Anexo").css("display", "block");
     }
 </script>
 <!-- /Habilita Editar -->
