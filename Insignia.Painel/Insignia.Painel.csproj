@@ -175,6 +175,7 @@
     <Content Include="Views\Tarefas\Editar.cshtml" />
     <Content Include="Views\Tarefas\Remover.cshtml" />
     <Content Include="Views\Login\Login.cshtml" />
+    <Content Include="Views\Tarefas\Listar.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

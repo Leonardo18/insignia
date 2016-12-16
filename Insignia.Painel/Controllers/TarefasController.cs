@@ -15,6 +15,12 @@ namespace Insignia.Painel.Controllers
     {
         private TarefasDAO TarefasDAO = new TarefasDAO(ConfigurationManager.ConnectionStrings["strConMain"].ConnectionString);
 
+        [HttpGet]
+        public ActionResult Listar()
+        {
+            return View();
+        }
+
         /// <summary>
         /// GET: Tarefas Adicionar 
         /// </summary>
