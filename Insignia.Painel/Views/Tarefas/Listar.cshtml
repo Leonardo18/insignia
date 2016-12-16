@@ -51,7 +51,7 @@
                                                     <a>@item.Titulo</a>
                                                 </h2>
                                                 <div class="byline">
-                                                    <span>As @Convert.ToDateTime(item.CriadoEm).Hour Horas</span> por <a>@Session["UsuarioNome"]</a>
+                                                    <span>Criado as @Convert.ToDateTime(item.CriadoEm).Hour Horas</span> por <a>@Session["UsuarioNome"]</a>
                                                 </div>
                                                 <p class="excerpt">
                                                     @item.Resumo<a href="@Url.Action("../Tarefas/Editar", null, new { ID = item.ID, controller = "Tarefas" }, Request.Url.Scheme)">&nbsp;Ler&nbsp;Mais</a>
@@ -78,7 +78,7 @@
                                                     <a>@item.Titulo</a>
                                                 </h2>
                                                 <div class="byline">
-                                                    <span>As @Convert.ToDateTime(item.CriadoEm).Hour Horas</span> por <a>@Session["UsuarioNome"]</a>
+                                                    <span>Criado as @Convert.ToDateTime(item.CriadoEm).Hour Horas</span> por <a>@Session["UsuarioNome"]</a>
                                                 </div>
                                                 <p class="excerpt">
                                                     @item.Resumo<a>&nbsp;Ler&nbsp;Mais</a>
@@ -105,7 +105,7 @@
                                                     <a>@item.Titulo</a>
                                                 </h2>
                                                 <div class="byline">
-                                                    <span>As @Convert.ToDateTime(item.CriadoEm).Hour Horas</span> por <a>@Session["UsuarioNome"]</a>
+                                                    <span>Criado as @Convert.ToDateTime(item.CriadoEm).Hour Horas</span> por <a>@Session["UsuarioNome"]</a>
                                                 </div>
                                                 <p class="excerpt">
                                                     @item.Resumo<a>&nbsp;Ler&nbsp;Mais</a>

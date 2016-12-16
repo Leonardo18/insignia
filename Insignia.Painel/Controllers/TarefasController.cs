@@ -128,7 +128,7 @@ namespace Insignia.Painel.Controllers
         [HttpGet, IsLogged]
         public ActionResult Editar(int ID)
         {
-            Tarefa TarefaModel = TarefasDAO.Carregar(ID);
+            Tarefa TarefaModel = TarefasDAO.Carregar(ID);            
 
             List<SelectListItem> TipoID = new List<SelectListItem>();
 
