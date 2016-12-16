@@ -65,5 +65,10 @@ namespace Insignia.Model.Tarefa
         /// Observações referente a tarefa
         /// </summary>
         public string Observacoes { get; set; }
+
+        /// <summary>
+        /// Observações referente a tarefa
+        /// </summary>
+        public DateTime? CriadoEm { get; set; }
     }
 }

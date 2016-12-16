@@ -2,6 +2,7 @@
 using Insignia.Model.Tarefa;
 using Insignia.Painel.Helpers.AmazonS3;
 using Insignia.Painel.Helpers.CustomAttributes;
+using Insignia.Painel.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -15,12 +16,25 @@ namespace Insignia.Painel.Controllers
     {
         private TarefasDAO TarefasDAO = new TarefasDAO(ConfigurationManager.ConnectionStrings["strConMain"].ConnectionString);
 
-        [HttpGet]
+        /// <summary>
+        /// get: Tarefas Listar
+        /// </summary>
+        /// <returns>Retorna a view de listar tarefas com os dados</returns>
+        [HttpGet, IsLogged]
         public ActionResult Listar()
         {
-            var TarefaModel = new Tarefa();
+            var ViewModel = new ViewModelTarefa();
 
-            return View(TarefaModel);
+            //Busca as tarefa com status a fazer
+            ViewModel.ListFazer = TarefasDAO.Listar(ConfigurationManager.AppSettings["Fazer"]);
+
+            //Busca as tarefa com status em andamento
+            ViewModel.ListAndamento = TarefasDAO.Listar(ConfigurationManager.AppSettings["Andamento"]);
+
+            //Busca as tarefa com status finalizada
+            ViewModel.ListFinalizadas = TarefasDAO.Listar(ConfigurationManager.AppSettings["Finalizada"]);
+
+            return View(ViewModel);
         }
 
         /// <summary>
@@ -83,7 +97,7 @@ namespace Insignia.Painel.Controllers
                     System.IO.File.Delete(Caminho);
                 }
 
-                TarefaModel.Status = "Fazer";
+                TarefaModel.Status = ConfigurationManager.AppSettings["Fazer"];
 
                 if (TarefasDAO.Salvar(TarefaModel))
                 {

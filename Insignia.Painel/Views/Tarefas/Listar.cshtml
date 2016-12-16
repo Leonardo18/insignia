@@ -1,4 +1,4 @@
-﻿@model Insignia.Model.Tarefa.Tarefa
+﻿@model Insignia.Painel.ViewModels.ViewModelTarefa
 @{
     ViewBag.Title = "Listar";
     Layout = "~/Views/Shared/LayoutPrincipal.cshtml";
@@ -36,76 +36,85 @@
                     </ul>
                     <div id="myTabContent" class="tab-content">
                         <div role="tabpanel" class="tab-pane fade active in" id="tab_content1" aria-labelledby="fazer-tab">
-                            <ul class="list-unstyled timeline">
-                                <li>
-                                    <div class="block">
-                                        <div class="tags">
-                                            <a href="" class="tag">
-                                                <span>Entertainment</span>
-                                            </a>
-                                        </div>
-                                        <div class="block_content">
-                                            <h2 class="title">
-                                                <a>Who Needs Sundance When You’ve Got&nbsp;Crowdfunding?</a>
-                                            </h2>
-                                            <div class="byline">
-                                                <span>13 hours ago</span> by <a>Jane Smith</a>
+                            @foreach (var item in Model.ListFazer)
+                            {
+                                <ul class="list-unstyled timeline">
+                                    <li>
+                                        <div class="block">
+                                            <div class="tags">
+                                                <a href="@Url.Action("../Tarefas/Editar", null, new { ID = item.ID, controller = "Tarefas" }, Request.Url.Scheme)" class="tag">
+                                                    <span title="Data prevista de término">@item.Termino</span>
+                                                </a>
                                             </div>
-                                            <p class="excerpt">
-                                                used to be do-or-die moments for movie makers. They were where you met the producers that could fund your project, and if the buyers liked your flick, they’d pay to Fast-forward and… <a>Read&nbsp;More</a>
-                                            </p>
+                                            <div class="block_content">
+                                                <h2 class="title">
+                                                    <a>@item.Titulo</a>
+                                                </h2>
+                                                <div class="byline">
+                                                    <span>As @Convert.ToDateTime(item.CriadoEm).Hour Horas</span> por <a>@Session["UsuarioNome"]</a>
+                                                </div>
+                                                <p class="excerpt">
+                                                    @item.Resumo<a href="@Url.Action("../Tarefas/Editar", null, new { ID = item.ID, controller = "Tarefas" }, Request.Url.Scheme)">&nbsp;Ler&nbsp;Mais</a>
+                                                </p>
+                                            </div>
                                         </div>
-                                    </div>
-                                </li>
-                            </ul>
+                                    </li>
+                                </ul>
+                            }
                         </div>
                         <div role="tabpanel" class="tab-pane fade" id="tab_content2" aria-labelledby="andamento-tab">
-                            <ul class="list-unstyled timeline">
-                                <li>
-                                    <div class="block">
-                                        <div class="tags">
-                                            <a href="" class="tag">
-                                                <span>Entertainment</span>
-                                            </a>
-                                        </div>
-                                        <div class="block_content">
-                                            <h2 class="title">
-                                                <a>Who Needs Sundance When You’ve Got&nbsp;Crowdfunding?</a>
-                                            </h2>
-                                            <div class="byline">
-                                                <span>13 hours ago</span> by <a>Jane Smith</a>
+                            @foreach (var item in Model.ListAndamento)
+                            {
+                                <ul class="list-unstyled timeline">
+                                    <li>
+                                        <div class="block">
+                                            <div class="tags">
+                                                <a href="" class="tag">
+                                                    <span title="Data prevista de término">@item.Termino</span>
+                                                </a>
                                             </div>
-                                            <p class="excerpt">
-                                                Film festivals used to be do-or-die moments for movie makers. They were where you met the producers that could fund your project, and if the buyers liked your flick, they’d pay to Fast-forward and… <a>Read&nbsp;More</a>
-                                            </p>
+                                            <div class="block_content">
+                                                <h2 class="title">
+                                                    <a>@item.Titulo</a>
+                                                </h2>
+                                                <div class="byline">
+                                                    <span>As @Convert.ToDateTime(item.CriadoEm).Hour Horas</span> por <a>@Session["UsuarioNome"]</a>
+                                                </div>
+                                                <p class="excerpt">
+                                                    @item.Resumo<a>&nbsp;Ler&nbsp;Mais</a>
+                                                </p>
+                                            </div>
                                         </div>
-                                    </div>
-                                </li>
-                            </ul>
+                                    </li>
+                                </ul>
+                            }
                         </div>
                         <div role="tabpanel" class="tab-pane fade" id="tab_content3" aria-labelledby="finalizadas-tab">
-                            <ul class="list-unstyled timeline">
-                                <li>
-                                    <div class="block">
-                                        <div class="tags">
-                                            <a href="" class="tag">
-                                                <span>Entertainment</span>
-                                            </a>
-                                        </div>
-                                        <div class="block_content">
-                                            <h2 class="title">
-                                                <a>Who Needs Sundance When You’ve Got&nbsp;Crowdfunding?</a>
-                                            </h2>
-                                            <div class="byline">
-                                                <span>13 hours ago</span> by <a>Jane Smith</a>
+                            @foreach (var item in Model.ListFinalizadas)
+                            {
+                                <ul class="list-unstyled timeline">
+                                    <li>
+                                        <div class="block">
+                                            <div class="tags">
+                                                <a href="" class="tag">
+                                                    <span title="Data prevista de término">@item.Termino</span>
+                                                </a>
                                             </div>
-                                            <p class="excerpt">
-                                                festivals used to be do-or-die moments for movie makers. They were where you met the producers that could fund your project, and if the buyers liked your flick, they’d pay to Fast-forward and… <a>Read&nbsp;More</a>
-                                            </p>
+                                            <div class="block_content">
+                                                <h2 class="title">
+                                                    <a>@item.Titulo</a>
+                                                </h2>
+                                                <div class="byline">
+                                                    <span>As @Convert.ToDateTime(item.CriadoEm).Hour Horas</span> por <a>@Session["UsuarioNome"]</a>
+                                                </div>
+                                                <p class="excerpt">
+                                                    @item.Resumo<a>&nbsp;Ler&nbsp;Mais</a>
+                                                </p>
+                                            </div>
                                         </div>
-                                    </div>
-                                </li>
-                            </ul>
+                                    </li>
+                                </ul>
+                            }
                         </div>
                     </div>
                 </div>

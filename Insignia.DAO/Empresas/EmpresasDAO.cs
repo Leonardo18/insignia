@@ -66,6 +66,7 @@ namespace Insignia.DAO.Empresas
                     resp = Convert.ToBoolean(queryResultado);
                 }
             }
+
             return resp;
         }
 
@@ -119,6 +120,7 @@ namespace Insignia.DAO.Empresas
                     resp = Convert.ToBoolean(queryResultado);
                 }
             }
+
             return resp;
         }
 

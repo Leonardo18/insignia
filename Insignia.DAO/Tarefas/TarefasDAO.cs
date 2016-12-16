@@ -32,7 +32,7 @@ namespace Insignia.DAO.Tarefas
             {
                 using (var sql = new SqlConnection(conStr))
                 {
-                    resp = sql.Query<Tarefa>(" SELECT ID, EmpresaID, UsuarioID, BadgeID AS TipoID, Titulo, Resumo, Descricao, Anexo, Termino, Observacoes FROM Tarefas WHERE ID = @ID ", new { ID = id }).SingleOrDefault();
+                    resp = sql.Query<Tarefa>(" SELECT ID, EmpresaID, UsuarioID, BadgeID AS TipoID, Titulo, Resumo, Descricao, Anexo, Termino, Observacoes, CriadoEm FROM Tarefas WHERE ID = @ID ", new { ID = id }).SingleOrDefault();
                 }
             }
 
@@ -54,7 +54,7 @@ namespace Insignia.DAO.Tarefas
             {
                 using (var sql = new SqlConnection(conStr))
                 {
-                    int queryResultado = sql.ExecuteScalar<int>(" INSERT INTO Tarefas(EmpresaID, UsuarioID, BadgeID, Status, Titulo, Resumo, Descricao, Anexo, Termino, Observacoes) OUTPUT INSERTED.ID VALUES (@EmpresaID, @UsuarioID, @BadgeID, @Status, @Titulo, @Resumo, @Descricao, @Anexo, @Termino, @Observacoes) ",
+                    int queryResultado = sql.ExecuteScalar<int>(" INSERT INTO Tarefas(EmpresaID, UsuarioID, BadgeID, Status, Titulo, Resumo, Descricao, Anexo, Termino, Observacoes, CriadoEm) OUTPUT INSERTED.ID VALUES (@EmpresaID, @UsuarioID, @BadgeID, @Status, @Titulo, @Resumo, @Descricao, @Anexo, @Termino, @Observacoes, @CriadoEm) ",
                                     new
                                     {
                                         EmpresaID = HttpContext.Current.Session["EmpresaID"],
@@ -67,12 +67,14 @@ namespace Insignia.DAO.Tarefas
                                         Anexo = tarefa.Anexo,
                                         Termino = tarefa.Termino,
                                         Observacoes = tarefa.Observacoes,
+                                        CriadoEm = DateTime.Now
                                     });
                     tarefa.ID = (int)queryResultado;
 
                     resp = Convert.ToBoolean(queryResultado);
                 }
             }
+
             return resp;
         }
 
@@ -112,6 +114,22 @@ namespace Insignia.DAO.Tarefas
         }
 
         /// <summary>
+        /// Carrega uma lista com todas as tarefas encontradas no banco de dados por status
+        /// </summary>
+        /// <returns>Retornar uma List de Tarefas</returns>
+        public List<Tarefa> Listar(string status)
+        {
+            List<Tarefa> list;
+
+            using (var sql = new SqlConnection(conStr))
+            {
+                list = sql.Query<Tarefa>(" SELECT ID, EmpresaID, UsuarioID, BadgeID AS TipoID, Titulo, Resumo, Descricao, Anexo, Termino, Observacoes, CriadoEm FROM Tarefas WHERE EmpresaID = @EmpresaID AND Status = @Status ", new { EmpresaID = HttpContext.Current.Session["EmpresaID"], Status = status }).ToList();
+            }
+
+            return list;
+        }
+
+        /// <summary>
         /// Remove uma tarefa do banco de dados
         /// </summary>
         /// <param name="id">ID da badge a ser removida</param>
@@ -129,6 +147,7 @@ namespace Insignia.DAO.Tarefas
                     resp = Convert.ToBoolean(queryResultado);
                 }
             }
+
             return resp;
         }
 

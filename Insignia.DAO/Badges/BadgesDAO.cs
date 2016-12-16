@@ -69,6 +69,7 @@ namespace Insignia.DAO.Badges
                     resp = Convert.ToBoolean(queryResultado);
                 }
             }
+
             return resp;
         }
 
@@ -118,6 +119,7 @@ namespace Insignia.DAO.Badges
             {
                 list = sql.Query<Badge>(" SELECT ID, Titulo, Subtitulo, Cor, CorFonte, Nivel, Tags FROM Badges WHERE EmpresaID = @EmpresaID ", new { EmpresaID = HttpContext.Current.Session["EmpresaID"] }).ToList();
             }
+
             return list;
         }
 
@@ -139,6 +141,7 @@ namespace Insignia.DAO.Badges
                     resp = Convert.ToBoolean(queryResultado);
                 }
             }
+
             return resp;
         }
 
@@ -160,6 +163,7 @@ namespace Insignia.DAO.Badges
                     resp = Convert.ToBoolean(queryResultado);
                 }
             }
+
             return resp;
         }
     }
