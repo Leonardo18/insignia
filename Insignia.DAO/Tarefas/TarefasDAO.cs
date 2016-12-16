@@ -54,12 +54,13 @@ namespace Insignia.DAO.Tarefas
             {
                 using (var sql = new SqlConnection(conStr))
                 {
-                    int queryResultado = sql.ExecuteScalar<int>(" INSERT INTO Tarefas(EmpresaID, UsuarioID, BadgeID, Titulo, Resumo, Descricao, Anexo, Termino, Observacoes) OUTPUT INSERTED.ID VALUES (@EmpresaID, @UsuarioID, @BadgeID, @Titulo, @Resumo, @Descricao, @Anexo, @Termino, @Observacoes) ",
+                    int queryResultado = sql.ExecuteScalar<int>(" INSERT INTO Tarefas(EmpresaID, UsuarioID, BadgeID, Status, Titulo, Resumo, Descricao, Anexo, Termino, Observacoes) OUTPUT INSERTED.ID VALUES (@EmpresaID, @UsuarioID, @BadgeID, @Status, @Titulo, @Resumo, @Descricao, @Anexo, @Termino, @Observacoes) ",
                                     new
                                     {
                                         EmpresaID = HttpContext.Current.Session["EmpresaID"],
                                         UsuarioID = HttpContext.Current.Session["UsuarioID"],
                                         BadgeID = tarefa.TipoID,
+                                        Status = tarefa.Status,
                                         Titulo = tarefa.Titulo,
                                         Resumo = tarefa.Resumo,
                                         Descricao = tarefa.Descricao,

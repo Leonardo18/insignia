@@ -18,7 +18,9 @@ namespace Insignia.Painel.Controllers
         [HttpGet]
         public ActionResult Listar()
         {
-            return View();
+            var TarefaModel = new Tarefa();
+
+            return View(TarefaModel);
         }
 
         /// <summary>
@@ -80,6 +82,8 @@ namespace Insignia.Painel.Controllers
 
                     System.IO.File.Delete(Caminho);
                 }
+
+                TarefaModel.Status = "Fazer";
 
                 if (TarefasDAO.Salvar(TarefaModel))
                 {

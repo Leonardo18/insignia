@@ -28,6 +28,11 @@ namespace Insignia.Model.Tarefa
         public string TipoID { get; set; }
 
         /// <summary>
+        /// Status da tarefa
+        /// </summary>        
+        public string Status { get; set; }
+
+        /// <summary>
         /// Titulo da tarefa
         /// </summary>
         [Required(ErrorMessage = "Informe o título da tarefa")]
