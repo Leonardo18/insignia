@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Insignia.DAO.Empresas;
+using System;
 using System.Configuration;
 using System.IO;
 using System.Net.Mail;
@@ -10,6 +11,8 @@ namespace Insignia.Painel.Helpers.Email
 {
     public class SendMail
     {
+        private EmpresasDAO EmpresaDAO = new EmpresasDAO(ConfigurationManager.ConnectionStrings["strConMain"].ConnectionString);
+
         /// <summary>
         /// Método de envio de e-mail do sistema
         /// </summary>
@@ -17,7 +20,7 @@ namespace Insignia.Painel.Helpers.Email
         /// <param name="DestinatarioEmail">Email do destinatário</param>
         /// <param name="DestinatarioMensagem">Mensagem ao destinatário</param>
         /// <returns>True se conseguiu enviar o e-mail com sucesso, false caso de algum erro ou o e-mail seja inválido</returns>
-        public bool EnviaEmail(string DestinatarioNome, string DestinatarioEmail, string DestinatarioMensagem)
+        public bool EnviaEmail(string DestinatarioNome, string DestinatarioEmail, string DestinatarioMensagem, string Template)
         {
             bool resp = false;
             string body = string.Empty;
@@ -29,7 +32,7 @@ namespace Insignia.Painel.Helpers.Email
             client.Credentials = new System.Net.NetworkCredential(ConfigurationManager.AppSettings["EmailUser"], ConfigurationManager.AppSettings["EmailPass"]);
 
             //Lê o template de e-mail
-            using (var sr = new StreamReader(HttpContext.Current.Server.MapPath(@"~/Helpers/Email/") + "Template.html"))
+            using (var sr = new StreamReader(HttpContext.Current.Server.MapPath(@"~/Helpers/Email/") + Template))
             {
                 body = sr.ReadToEnd();
             }
@@ -43,7 +46,7 @@ namespace Insignia.Painel.Helpers.Email
             mail.To.Add(new MailAddress(DestinatarioEmail, DestinatarioNome));
             mail.Subject = "Contato";
             mail.IsBodyHtml = true;
-            mail.Body = body;
+            mail.Body = body.Replace("[Email]", EmpresaDAO.Criptografar(DestinatarioEmail));
             mail.IsBodyHtml = true;
             mail.Priority = MailPriority.Normal;
             mail.BodyEncoding = Encoding.GetEncoding("ISO-8859-1");

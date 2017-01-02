@@ -31,7 +31,7 @@ namespace Insignia.DAO.Empresas
             {
                 using (var sql = new SqlConnection(conStr))
                 {
-                    resp = sql.Query<Empresa>(" SELECT ID, RazaoSocial, CNPJ, Email FROM Empresas WHERE ID = @ID ", new { ID = id }).SingleOrDefault();
+                    resp = sql.Query<Empresa>(" SELECT ID, RazaoSocial, CNPJ, Email, Senha AS SenhaCadastro FROM Empresas WHERE ID = @ID ", new { ID = id }).SingleOrDefault();
                 }
             }
 
@@ -146,6 +146,40 @@ namespace Insignia.DAO.Empresas
                 {
                     resp = false;
                 }
+            }
+
+            return resp;
+        }
+
+        /// <summary>
+        /// Criptografa um valor
+        /// </summary>
+        /// <param name="valor">Valor que deverá ser criptografado</param>
+        /// <returns>Retorna o valor criptografado</returns>
+        public string Criptografar(string valor)
+        {
+            string resp = string.Empty;
+
+            if (!string.IsNullOrEmpty(valor))
+            {
+                resp = Util.Autenticacao.Criptografar(valor);
+            }
+
+            return resp;
+        }
+
+        /// <summary>
+        /// Descriptografa um valor
+        /// </summary>
+        /// <param name="valor">Valor que deverá ser Descriptografado</param>
+        /// <returns>Retorna o valor Descriptografado</returns>
+        public string Descriptografar(string valor)
+        {
+            string resp = string.Empty;
+
+            if (!string.IsNullOrEmpty(valor))
+            {
+                resp = Util.Autenticacao.Descriptografar(valor);
             }
 
             return resp;

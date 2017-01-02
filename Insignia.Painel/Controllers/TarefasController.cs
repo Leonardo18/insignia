@@ -222,11 +222,11 @@ namespace Insignia.Painel.Controllers
         }
 
         /// <summary>
-        /// POST: Tarefa AtualizarStatus
+        /// GET: Tarefa AtualizarStatus
         /// </summary>
         /// <param name="TarefaModel">ID da Tarefa no qual o status será atualizado</param>
         /// <returns>Busca a tarefa e atualiza seu status</returns>
-        [IsLogged]
+        [HttpGet, IsLogged]
         public ActionResult AtualizaStatus(int ID, string Status)
         {
             if (TarefasDAO.AtualizaStatus(ID, Status))

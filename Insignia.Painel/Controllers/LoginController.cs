@@ -77,7 +77,7 @@ namespace Insignia.Painel.Controllers
 
                         SendMail Email = new SendMail();
 
-                        if (Email.EnviaEmail(EmpresaModel.RazaoSocial, EmpresaModel.Email, "Você efetuou um cadatrado no sistema Insígnia."))
+                        if (Email.EnviaEmail(EmpresaModel.RazaoSocial, EmpresaModel.Email, "Você efetuou um cadatrado no sistema Insígnia.", "NovoCadastro.html"))
                         {
                             return RedirectToAction("../Dashboard/Dashboard");
                         }
@@ -101,11 +101,31 @@ namespace Insignia.Painel.Controllers
         /// </summary>
         /// <param name="email">Email cadastrado no sistema</param>
         [HttpPost]
-        public void RecuperarSenha(string email)
+        public ActionResult RecuperarSenha(string email)
         {
-            Response.Write("Email enviado para " + email);
+            SendMail Email = new SendMail();
+
+            if (Email.EnviaEmail(email, email, "Foi solicitado uma recuperação de senha no sistema Insígnia.", "RecuperarSenha.html"))
+            {
+                ViewBag.Error = "Foi enviado um e-mail para " + email + ", verifique o e-mail informado para visualizar a senha cadastrada.";
+            }
+            return RedirectToAction("Login");
         }
-        
+
+        /// <summary>
+        /// GET: ResetarSenha 
+        /// </summary>
+        /// <param name="email">Email cadastrado no sistema e para recuperação de senha</param>
+        [HttpGet]
+        public ActionResult ResetarSenha(string email)
+        {
+            if (!string.IsNullOrEmpty(email))
+            {
+
+            }
+            return View();
+        }
+
         /// <summary>
         /// GET: Logout 
         /// </summary>

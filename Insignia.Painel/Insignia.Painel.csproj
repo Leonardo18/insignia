@@ -138,6 +138,7 @@
     <Content Include="Fonts\css\font-awesome.css" />
     <Content Include="Fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
+    <Content Include="Helpers\Email\RecuperarSenha.html" />
     <Content Include="packages.config" />
     <Content Include="Scripts\js\badges\badge.min.js" />
     <Content Include="Scripts\js\bootstrap\bootstrap.js" />
@@ -162,7 +163,7 @@
     <Content Include="Content\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="Fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="Helpers\Email\Template.html">
+    <Content Include="Helpers\Email\NovoCadastro.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="Properties\PublishProfiles\web.pubxml" />
