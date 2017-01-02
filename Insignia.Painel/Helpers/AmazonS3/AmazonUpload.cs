@@ -153,7 +153,7 @@ namespace Insignia.Painel.Helpers.AmazonS3
         /// <returns></returns>
         public bool ApagaArquivo(string BucketNome, string PastaNome, string NomeArquivo)
         {
-            bool resp = false;
+            bool resp = true;
 
             IAmazonS3 client = new AmazonS3Client(ConfigurationManager.AppSettings["AWSAccessKey"], ConfigurationManager.AppSettings["AWSSecretKey"], RegionEndpoint.SAEast1);
 
