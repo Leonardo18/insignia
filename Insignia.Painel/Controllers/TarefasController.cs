@@ -128,7 +128,7 @@ namespace Insignia.Painel.Controllers
         [HttpGet, IsLogged]
         public ActionResult Editar(int ID)
         {
-            Tarefa TarefaModel = TarefasDAO.Carregar(ID);            
+            Tarefa TarefaModel = TarefasDAO.Carregar(ID);
 
             List<SelectListItem> TipoID = new List<SelectListItem>();
 
@@ -219,6 +219,21 @@ namespace Insignia.Painel.Controllers
             ViewBag.TipoID = TipoID;
 
             return View("Editar", TarefaModel);
+        }
+
+        /// <summary>
+        /// POST: Tarefa AtualizarStatus
+        /// </summary>
+        /// <param name="TarefaModel">ID da Tarefa no qual o status será atualizado</param>
+        /// <returns>Busca a tarefa e atualiza seu status</returns>
+        [IsLogged]
+        public ActionResult AtualizaStatus(int ID, string Status)
+        {
+            if (TarefasDAO.AtualizaStatus(ID, Status))
+            {
+                return RedirectToAction("Editar", new { ID = ID });
+            }
+            return RedirectToAction("Editar", new { ID = ID });
         }
 
         /// <summary>

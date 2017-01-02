@@ -32,7 +32,7 @@ namespace Insignia.DAO.Tarefas
             {
                 using (var sql = new SqlConnection(conStr))
                 {
-                    resp = sql.Query<Tarefa>(" SELECT ID, EmpresaID, UsuarioID, BadgeID AS TipoID, Titulo, Resumo, Descricao, Anexo, Termino, Observacoes, CriadoEm FROM Tarefas WHERE ID = @ID ", new { ID = id }).SingleOrDefault();
+                    resp = sql.Query<Tarefa>(" SELECT ID, EmpresaID, UsuarioID, BadgeID AS TipoID, Status, Titulo, Resumo, Descricao, Anexo, Termino, Observacoes, CriadoEm FROM Tarefas WHERE ID = @ID ", new { ID = id }).SingleOrDefault();
                 }
             }
 
@@ -181,6 +181,29 @@ namespace Insignia.DAO.Tarefas
                 using (var sql = new SqlConnection(conStr))
                 {
                     resp = sql.Query<string>(" SELECT Anexo FROM Tarefas WHERE ID = @ID ", new { ID = id }).SingleOrDefault();
+                }
+            }
+
+            return resp;
+        }
+
+        /// <summary>
+        /// Atualiza o status de uma tarefa para em andamento ou finalizada
+        /// </summary>
+        /// <param name="id">ID da tarefa na qual o status será atualizado</param>
+        /// <param name="status">Status que será definido pra tarefa</param>
+        /// <returns>Caso consiga atulizar com sucesso retorna true, caso contrario retorna false</returns>
+        public bool AtualizaStatus(int id, string status)
+        {
+            bool resp = false;
+
+            if (!string.IsNullOrWhiteSpace(Convert.ToString(id)) && !string.IsNullOrWhiteSpace(status))
+            {
+                using (var sql = new SqlConnection(conStr))
+                {
+                    int queryResultado = sql.Execute(" UPDATE Tarefas SET Status = @status WHERE ID = @ID ", new { ID = id, Status = status });
+
+                    resp = Convert.ToBoolean(queryResultado);
                 }
             }
 

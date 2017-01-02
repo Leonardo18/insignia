@@ -168,8 +168,10 @@
                         </div><span class="glyphicon glyphicon-info-sign" data-toggle="tooltip" data-placement="right" title="Este campo indica as observações da tarefa."></span>
                     </div>
                     <div class="modal-footer">
-                        <button class="btn btn-primary" type="submit" disabled="disabled" onclick="GetDescricao();">Salvar</button>
-                        <button type="button" class="btn btn-default submit" onclick="location.href='@Url.Action("Listar", "Tarefas")'" Badg data-dismiss="modal">Voltar</button>
+                        <button class="btn btn-dark" type="button" id="Finalizar" onclick="location.href='@Url.Action("AtualizaStatus", null, new { ID = Model.ID, Status = "Finalizada", controller = "Tarefas" }, Request.Url.Scheme)'">Finalizar</button>
+                        <button class="btn btn-primary" type="button" id="EmAndamento" onclick="location.href='@Url.Action("AtualizaStatus", null, new { ID = Model.ID, Status = "Andamento", controller = "Tarefas" }, Request.Url.Scheme)'">Em Andamento</button>
+                        <button class="btn btn-primary" type="submit" id="Salvar" onclick="GetDescricao();">Salvar</button>
+                        <button class="btn btn-default submit" type="button" onclick="location.href='@Url.Action("Listar", "Tarefas")'" Badg data-dismiss="modal">Voltar</button>
                     </div>
                 }
             </div>
@@ -213,6 +215,25 @@
 
         //Seta nome do arquivo de anexo no campo de upload
         $('input#Arquivo + div input').val('@(Model.Anexo)');
+
+        //Some o botão de salvar
+        $("#Salvar").css("display", "none")
+
+        if ("@Model.Status" == "Andamento") {
+
+            //Some o botão de "Em Andamento" pois a tarefa já está em andamento ou está finalizada
+            $("#EmAndamento").css("display", "none")
+        }
+
+        if ("@Model.Status" == "Finalizada") {
+
+            //Some o botão de "Em Andamento" pois a tarefa já está finalizada
+            $("#EmAndamento").css("display", "none")
+
+            //Some o botão de "Finalizar" pois a tarefa já está finalizada
+            $("#Finalizar").css("display", "none")
+        }
+
     });
 </script>
 <!-- /Desabitilia Editar -->
@@ -242,6 +263,14 @@
 
         //Mostra campo para fazer upload de arquivo
         $("#Anexo").css("display", "block");
+
+        //Mostra o botão para salvar alterações
+        $("#Salvar").css("display", "block");
+
+        //Some os botões que alteram o status da tarefa
+        $("#EmAndamento").css("display", "none")
+        $("#Finalizar").css("display", "none")
+
     }
 </script>
 <!-- /Habilita Editar -->

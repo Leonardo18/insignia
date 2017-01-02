@@ -69,7 +69,7 @@
                                     <li>
                                         <div class="block">
                                             <div class="tags">
-                                                <a href="" class="tag">
+                                                <a href="@Url.Action("../Tarefas/Editar", null, new { ID = item.ID, controller = "Tarefas" }, Request.Url.Scheme)" class="tag">
                                                     <span title="Data prevista de término">@item.Termino</span>
                                                 </a>
                                             </div>
@@ -81,7 +81,7 @@
                                                     <span>Criado as @Convert.ToDateTime(item.CriadoEm).Hour Horas</span> por <a>@Session["UsuarioNome"]</a>
                                                 </div>
                                                 <p class="excerpt">
-                                                    @item.Resumo<a>&nbsp;Ler&nbsp;Mais</a>
+                                                    @item.Resumo<a href="@Url.Action("../Tarefas/Editar", null, new { ID = item.ID, controller = "Tarefas" }, Request.Url.Scheme)">&nbsp;Ler&nbsp;Mais</a>
                                                 </p>
                                             </div>
                                         </div>
@@ -96,7 +96,7 @@
                                     <li>
                                         <div class="block">
                                             <div class="tags">
-                                                <a href="" class="tag">
+                                                <a href="@Url.Action("../Tarefas/Editar", null, new { ID = item.ID, controller = "Tarefas" }, Request.Url.Scheme)" class="tag">
                                                     <span title="Data prevista de término">@item.Termino</span>
                                                 </a>
                                             </div>
@@ -108,7 +108,7 @@
                                                     <span>Criado as @Convert.ToDateTime(item.CriadoEm).Hour Horas</span> por <a>@Session["UsuarioNome"]</a>
                                                 </div>
                                                 <p class="excerpt">
-                                                    @item.Resumo<a>&nbsp;Ler&nbsp;Mais</a>
+                                                    @item.Resumo<a href="@Url.Action("../Tarefas/Editar", null, new { ID = item.ID, controller = "Tarefas" }, Request.Url.Scheme)">&nbsp;Ler&nbsp;Mais</a>
                                                 </p>
                                             </div>
                                         </div>
@@ -122,4 +122,3 @@
         </div>
     </div>
 </div>
-<!-- /page content -->
