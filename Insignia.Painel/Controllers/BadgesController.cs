@@ -23,7 +23,10 @@ namespace Insignia.Painel.Controllers
 
             ViewModel.Badge = new Badge();
             ViewModel.Badge.Quantidade = 1;
-            ViewModel.ListBadge = BadgesDAO.Listar();
+
+            ViewModel.ListBadgeBasicas = BadgesDAO.Listar("Basica");
+            ViewModel.ListBadgeIntermediarias = BadgesDAO.Listar("Intermediaria");
+            ViewModel.ListBadgeAvancadas = BadgesDAO.Listar("avancada");
 
             return View(ViewModel);
         }
@@ -52,7 +55,10 @@ namespace Insignia.Painel.Controllers
             }
 
             ViewModel.Badge = new Badge();
-            ViewModel.ListBadge = BadgesDAO.Listar();
+
+            ViewModel.ListBadgeBasicas = BadgesDAO.Listar("Basica");
+            ViewModel.ListBadgeIntermediarias = BadgesDAO.Listar("Intermediaria");
+            ViewModel.ListBadgeAvancadas = BadgesDAO.Listar("avancada");
 
             return View(ViewModel);
         }

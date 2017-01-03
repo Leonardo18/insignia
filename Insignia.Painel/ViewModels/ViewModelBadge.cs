@@ -7,6 +7,10 @@ namespace Insignia.Painel.ViewModels
     {
         public Badge Badge { get; set; }
 
-        public List<Badge> ListBadge { get; set; }
+        public List<Badge> ListBadgeBasicas { get; set; }
+
+        public List<Badge> ListBadgeIntermediarias { get; set; }
+
+        public List<Badge> ListBadgeAvancadas { get; set; }
     }
 }

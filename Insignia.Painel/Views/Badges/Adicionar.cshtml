@@ -24,7 +24,7 @@
             <div class="clearfix"></div>
         </div>
         <div class="x_content">
-            @foreach (var item in Model.ListBadge)
+            @foreach (var item in Model.ListBadgeBasicas)
             {
                 if (item.Nivel == "Basica")
                 {
@@ -53,7 +53,7 @@
             <div class="clearfix"></div>
         </div>
         <div class="x_content">
-            @foreach (var item in Model.ListBadge)
+            @foreach (var item in Model.ListBadgeIntermediarias)
             {
                 if (item.Nivel == "Intermediaria")
                 {
@@ -81,7 +81,7 @@
             <div class="clearfix"></div>
         </div>
         <div class="x_content">
-            @foreach (var item in Model.ListBadge)
+            @foreach (var item in Model.ListBadgeAvancadas)
             {
                 if (item.Nivel == "Avancada")
                 {

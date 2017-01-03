@@ -112,13 +112,13 @@ namespace Insignia.DAO.Badges
         /// Carrega uma lista com todas as badges encontradas no banco de dados
         /// </summary>
         /// <returns>Retornar uma List de Badges</returns>
-        public List<Badge> Listar()
+        public List<Badge> Listar(string nivel)
         {
             List<Badge> list;
 
             using (var sql = new SqlConnection(conStr))
             {
-                list = sql.Query<Badge>(" SELECT ID, Titulo, Subtitulo, Cor, CorFonte, Nivel, Tags, Quantidade FROM Badges WHERE EmpresaID = @EmpresaID ", new { EmpresaID = HttpContext.Current.Session["EmpresaID"] }).ToList();
+                list = sql.Query<Badge>(" SELECT ID, Titulo, Subtitulo, Cor, CorFonte, Nivel, Tags, Quantidade FROM Badges WHERE EmpresaID = @EmpresaID AND Nivel = @Nivel ", new { EmpresaID = HttpContext.Current.Session["EmpresaID"], Nivel = nivel }).ToList();
             }
 
             return list;

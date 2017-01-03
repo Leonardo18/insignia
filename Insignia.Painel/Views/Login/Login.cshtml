@@ -43,24 +43,19 @@
                             <div class="square square6"></div>
                         </div>
                         <!--<h1><img src = "~/Content/Images/.png" width="200" /></h1>-->
-                        if (!string.IsNullOrWhiteSpace(ViewBag.Error))
-                        {
-                            <div class="alert alert-warning alert-dismissible fade in" role="alert">
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                    <span aria-hidden="true">×</span>
-                                </button>
-                                @ViewBag.Error
-                            </div>
-                        }
-                        if (!string.IsNullOrWhiteSpace(ViewBag.Success))
-                        {
-                            <div class="alert alert-success alert-dismissible fade in" role="alert">
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                    <span aria-hidden="true">×</span>
-                                </button>
-                                @ViewBag.Success
-                            </div>
-                        }
+                        <div style="display: none" class="alert alert-warning alert-dismissible fade in" role="alert" id="Error">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                            @ViewBag.Error
+                        </div>
+                        <div style="display: none" class="alert alert-success alert-dismissible fade in" role="alert" id="Success">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                            @ViewBag.Success
+                        </div>
+
                         <div>
                             @Html.TextBox("Email", "", new { @class = "form-control", placeholder = "E-mail", required = "", type = "email", autofocus = "true" })
                         </div>
@@ -176,7 +171,19 @@
             $(":input").inputmask();
         });
     </script>
-    <!-- /jquery.inputmask -->
+    <!-- Error or Success -->
+    <script>
+        $(document).ready(function () {
+            if ("@ViewBag.Error" != "") {
+                $("#Error").css("display", "block");
+            }
+
+            if ("@ViewBag.Success" != "") {
+                $("#Success").css("display", "block");
+            }
+        });
+    </script>
+    <!-- /Erroror Success -->
     <!-- ConfirmPassword-->
     <script>
         var password = document.getElementById("SenhaCadastro"), confirm_password = document.getElementById("ConfirmaSenha");
