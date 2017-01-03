@@ -52,6 +52,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tarefas\TarefasDAO.cs" />
     <Compile Include="Util\Autenticacao.cs" />
+    <Compile Include="Util\Utilitarios.cs" />
     <Compile Include="Util\Validacao.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -1,7 +1,9 @@
 ﻿using Insignia.DAO.Autenticacao;
 using Insignia.DAO.Empresas;
+using Insignia.DAO.Util;
 using Insignia.Model.Empresa;
 using Insignia.Painel.Helpers.Email;
+using System;
 using System.Configuration;
 using System.Web.Mvc;
 
@@ -119,9 +121,43 @@ namespace Insignia.Painel.Controllers
         [HttpGet]
         public ActionResult ResetarSenha(string email)
         {
-            if (!string.IsNullOrEmpty(email))
-            {
+            //Salvo o e-mail criptografado em uma session
+            Session["EmailRecuperacao"] = email;
 
+            return View();
+        }
+
+        /// <summary>
+        /// POST: ResetarSenha 
+        /// </summary>        
+        /// <param name="senhaCadastro">Nova senha do usuário</param>
+        /// <param name="confirmaSenha">Confirmação da nova senha do usuário</param>
+        [HttpPost]
+        public ActionResult ResetarSenha(string senhaCadastro, string confirmaSenha)
+        {
+            string email = Convert.ToString(Session["EmailRecuperacao"]);
+
+            if (!string.IsNullOrEmpty(email) && !string.IsNullOrEmpty(senhaCadastro) && !string.IsNullOrEmpty(confirmaSenha))
+            {
+                if (senhaCadastro == confirmaSenha)
+                {
+                    Utilitarios Util = new Utilitarios();
+
+                    email = Util.Descriptografar(email);
+
+                    if (EmpresaDAO.AtualizaSenha(email, senhaCadastro))
+                    {
+                        return RedirectToAction("Sair");
+                    }
+                    else
+                    {
+                        ViewBag.Error = "Ocorreu um problema ao tentar atualizar a senha, verifique o e-mail informado para recuperação de senha ou entre em contato com o administrador do sistema.";
+                    }
+                }
+                else
+                {
+                    ViewBag.Error = "As senhas digitadas diferem.";
+                }
             }
             return View();
         }

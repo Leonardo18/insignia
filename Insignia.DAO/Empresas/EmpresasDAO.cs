@@ -152,36 +152,24 @@ namespace Insignia.DAO.Empresas
         }
 
         /// <summary>
-        /// Criptografa um valor
+        /// Atualiza a senha em um cadastro
         /// </summary>
-        /// <param name="valor">Valor que deverá ser criptografado</param>
-        /// <returns>Retorna o valor criptografado</returns>
-        public string Criptografar(string valor)
+        /// <param name="email"></param>
+        /// <param name="senha"></param>
+        /// <returns></returns>
+        public bool AtualizaSenha(string email, string senha)
         {
-            string resp = string.Empty;
+            bool resp = false;
 
-            if (!string.IsNullOrEmpty(valor))
+            if (!string.IsNullOrWhiteSpace(email) && !string.IsNullOrWhiteSpace(senha))
             {
-                resp = Util.Autenticacao.Criptografar(valor);
+                using (var sql = new SqlConnection(conStr))
+                {
+                    int queryResultado = sql.Execute(" UPDATE Empresas SET Senha = @Senha WHERE Email = @Email ", new { Email = email, Senha = Util.Autenticacao.Criptografar(senha) });
+
+                    resp = Convert.ToBoolean(queryResultado);
+                }
             }
-
-            return resp;
-        }
-
-        /// <summary>
-        /// Descriptografa um valor
-        /// </summary>
-        /// <param name="valor">Valor que deverá ser Descriptografado</param>
-        /// <returns>Retorna o valor Descriptografado</returns>
-        public string Descriptografar(string valor)
-        {
-            string resp = string.Empty;
-
-            if (!string.IsNullOrEmpty(valor))
-            {
-                resp = Util.Autenticacao.Descriptografar(valor);
-            }
-
             return resp;
         }
     }

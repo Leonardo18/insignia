@@ -1,4 +1,4 @@
-﻿using Insignia.DAO.Empresas;
+﻿using Insignia.DAO.Util;
 using System;
 using System.Configuration;
 using System.IO;
@@ -11,7 +11,7 @@ namespace Insignia.Painel.Helpers.Email
 {
     public class SendMail
     {
-        private EmpresasDAO EmpresaDAO = new EmpresasDAO(ConfigurationManager.ConnectionStrings["strConMain"].ConnectionString);
+        private Utilitarios Util = new Utilitarios();
 
         /// <summary>
         /// Método de envio de e-mail do sistema
@@ -46,7 +46,7 @@ namespace Insignia.Painel.Helpers.Email
             mail.To.Add(new MailAddress(DestinatarioEmail, DestinatarioNome));
             mail.Subject = "Contato";
             mail.IsBodyHtml = true;
-            mail.Body = body.Replace("[Email]", EmpresaDAO.Criptografar(DestinatarioEmail));
+            mail.Body = body.Replace("[Email]", Util.Criptografar(DestinatarioEmail));
             mail.IsBodyHtml = true;
             mail.Priority = MailPriority.Normal;
             mail.BodyEncoding = Encoding.GetEncoding("ISO-8859-1");
