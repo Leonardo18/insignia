@@ -20,6 +20,10 @@ namespace Insignia.Painel.Controllers
         [HttpGet]
         public ActionResult Login()
         {
+            if (!string.IsNullOrEmpty(Convert.ToString(Session["Error"])))
+            {
+                ViewBag.Error = Convert.ToString(Session["Error"]);
+            }
             return View(new Empresa());
         }
 
@@ -105,11 +109,18 @@ namespace Insignia.Painel.Controllers
         [HttpPost]
         public ActionResult RecuperarSenha(string email)
         {
-            SendMail Email = new SendMail();
-
-            if (Email.EnviaEmail(email, email, "Foi solicitado uma recuperação de senha no sistema Insígnia.", "RecuperarSenha.html"))
+            if (EmpresaDAO.VerificaEmpresa(email, null))
             {
-                ViewBag.Error = "Foi enviado um e-mail para " + email + ", verifique o e-mail informado para visualizar a senha cadastrada.";
+                SendMail Email = new SendMail();
+
+                if (Email.EnviaEmail(email, email, "Foi solicitado uma recuperação de senha no sistema Insígnia.", "RecuperarSenha.html"))
+                {
+                    ViewBag.Error = "Foi enviado um e-mail para " + email + ", verifique o e-mail informado para visualizar a senha cadastrada.";
+                }
+            }
+            else
+            {
+                Session["Error"] = "O e-mail informado não existe no sistema insígnia.";
             }
             return RedirectToAction("Login");
         }
