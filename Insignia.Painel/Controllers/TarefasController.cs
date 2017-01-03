@@ -53,7 +53,7 @@ namespace Insignia.Painel.Controllers
 
             foreach (var item in TarefasTipos.Keys)
             {
-                TipoID.Add(new SelectListItem { Text = TarefasTipos[item], Value = Convert.ToString(item) });
+                TipoID.Add(new SelectListItem { Text = TarefasTipos[item].Replace(",", ", "), Value = Convert.ToString(item) });
             }
 
             ViewBag.TipoID = TipoID;
@@ -202,7 +202,7 @@ namespace Insignia.Painel.Controllers
 
                 if (TarefasDAO.Editar(TarefaModel))
                 {
-                    return RedirectToAction("Adicionar");
+                    return RedirectToAction("Editar", new { ID = TarefaModel.ID });
                 }
             }
 

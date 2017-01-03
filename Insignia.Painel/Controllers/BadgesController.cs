@@ -22,6 +22,7 @@ namespace Insignia.Painel.Controllers
             var ViewModel = new ViewModelBadge();
 
             ViewModel.Badge = new Badge();
+            ViewModel.Badge.Quantidade = 1;
             ViewModel.ListBadge = BadgesDAO.Listar();
 
             return View(ViewModel);
