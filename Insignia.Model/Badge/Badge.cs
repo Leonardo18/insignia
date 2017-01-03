@@ -25,7 +25,7 @@ namespace Insignia.Model.Badge
         /// </summary>
         [Required(ErrorMessage = "Informe o subtítulo da badge")]
         public string Subtitulo { get; set; }
-        
+
         /// <summary>
         /// Cor em hexadecimal que a badge terá
         /// </summary>
@@ -47,5 +47,11 @@ namespace Insignia.Model.Badge
         /// </summary>
         [Required(ErrorMessage = "Informe as tags da badge")]
         public string Tags { get; set; }
+
+        /// <summary>
+        /// Quantidade de vezes que uma tarefa tem de ser executada para desbloqueio de badge
+        /// </summary>
+        [Required(ErrorMessage = "Informe a quantidade")]
+        public int Quantidade { get; set; }
     }
 }

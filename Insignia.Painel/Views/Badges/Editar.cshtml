@@ -61,15 +61,6 @@
                     </div>
                     <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">
-                            Tags: <span class="required">*</span>
-                        </label>
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                            @Html.TextBox("Tags", Model.Tags, new { @class = "tags form-control", required = "", id = "tags_1", @readonly = "readonly" })
-                            @Html.ValidationMessageFor(modelItem => Model.Tags, null, new { @class = "text-danger" })
-                        </div><span class="glyphicon glyphicon-info-sign" data-toggle="tooltip" data-placement="right" title="Este campo é em formato de tags que irão identificar o tipo de tarefa que esta badge irá se referir."></span>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12">
                             Nível: <span class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
@@ -83,6 +74,24 @@
                                 ), null, new { @class = "select2_multiple form-control", required = "", @readonly = "readonly", disabled = "disabled", id = "Nivel" })
                             @Html.ValidationMessageFor(modelItem => Model.Nivel, null, new { @class = "text-danger" })
                         </div><span class="glyphicon glyphicon-info-sign" data-toggle="tooltip" data-placement="right" title="Este campo indica qual o nível da bagde baseado na dificuldade de conquista-la."></span>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                            Tags: <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            @Html.TextBox("Tags", Model.Tags, new { @class = "tags form-control", required = "", id = "tags_1", @readonly = "readonly" })
+                            @Html.ValidationMessageFor(modelItem => Model.Tags, null, new { @class = "text-danger" })
+                        </div><span class="glyphicon glyphicon-info-sign" data-toggle="tooltip" data-placement="right" title="Este campo é em formato de tags que irão identificar o tipo de tarefa que esta badge irá se referir."></span>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">
+                            Quantidade: <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            @Html.TextBox("Quantidade", Model.Quantidade, new { @class = "form-control col-md-7 col-xs-12", placeholder = "Quantidade", required = "", type = "number", min = "1", step = "any", @readonly = "readonly" })
+                            @Html.ValidationMessageFor(modelItem => modelItem.Quantidade, null, new { @class = "text-danger" })
+                        </div><span class="glyphicon glyphicon-info-sign" data-toggle="tooltip" data-placement="right" title="Este campo indica a quantidade de vezes que a tarefa tem que ser executada para desbloqueio da badge."></span>
                     </div>
                     <div class="modal-footer">
                         <button class="btn btn-primary" type="submit" disabled="disabled">Salvar</button>
