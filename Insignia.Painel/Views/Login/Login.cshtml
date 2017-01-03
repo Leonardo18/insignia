@@ -52,6 +52,15 @@
                                 @ViewBag.Error
                             </div>
                         }
+                        if (!string.IsNullOrWhiteSpace(ViewBag.Success))
+                        {
+                            <div class="alert alert-success alert-dismissible fade in" role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                                @ViewBag.Success
+                            </div>
+                        }
                         <div>
                             @Html.TextBox("Email", "", new { @class = "form-control", placeholder = "E-mail", required = "", type = "email", autofocus = "true" })
                         </div>
@@ -146,7 +155,7 @@
                         <div class="modal-body">
                             <h4>@*Text in a modal*@</h4>
                             <p>Informe o e-mail utilizado no cadastro para iniciar o processo de recuperação de senha.</p>
-                            @Html.TextBox("email", "", new { @class = "form-control", placeholder = "E-mail", required = "" })
+                            @Html.TextBox("email", "", new { @class = "form-control", placeholder = "E-mail", required = "", type = "email" })
                         </div>
                         <div class="modal-footer">
                             <button type="submit" class="btn btn-default">Enviar</button>

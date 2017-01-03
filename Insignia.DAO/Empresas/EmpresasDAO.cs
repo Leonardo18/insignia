@@ -140,12 +140,17 @@ namespace Insignia.DAO.Empresas
                 empresa = sql.Query<Empresa>(" SELECT ID FROM Empresas WHERE Email = @Email OR CNPJ = @CNPJ ", new { Email = email, CNPJ = cnpj }).FirstOrDefault();
             }
 
-            if (empresa != null)
+            if (empresa != null && !string.IsNullOrEmpty(email) && !string.IsNullOrEmpty(cnpj))
             {
                 if (!string.IsNullOrEmpty(Convert.ToString(empresa.ID)))
                 {
                     resp = false;
                 }
+            }
+
+            if (!string.IsNullOrEmpty(email) && string.IsNullOrEmpty(cnpj) && empresa == null)
+            {
+                resp = false;
             }
 
             return resp;

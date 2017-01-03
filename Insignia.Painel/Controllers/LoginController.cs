@@ -22,8 +22,16 @@ namespace Insignia.Painel.Controllers
         {
             if (!string.IsNullOrEmpty(Convert.ToString(Session["Error"])))
             {
+                ViewBag.Success = string.Empty;
                 ViewBag.Error = Convert.ToString(Session["Error"]);
             }
+
+            if (!string.IsNullOrEmpty(Convert.ToString(Session["Success"])))
+            {
+                ViewBag.Error = string.Empty;
+                ViewBag.Success = Convert.ToString(Session["Success"]);
+            }
+
             return View(new Empresa());
         }
 
@@ -115,7 +123,7 @@ namespace Insignia.Painel.Controllers
 
                 if (Email.EnviaEmail(email, email, "Foi solicitado uma recuperação de senha no sistema Insígnia.", "RecuperarSenha.html"))
                 {
-                    ViewBag.Error = "Foi enviado um e-mail para " + email + ", verifique o e-mail informado para visualizar a senha cadastrada.";
+                    Session["Success"] = "Foi enviado um e-mail para " + email + ", verifique o e-mail informado para redefinir sua senha.";
                 }
             }
             else
