@@ -32,7 +32,7 @@ namespace Insignia.DAO.Badges
             {
                 using (var sql = new SqlConnection(conStr))
                 {
-                    resp = sql.Query<Badge>(" SELECT ID, EmpresaID, Titulo, Subtitulo, Cor, CorFonte, Nivel, Tags, Quantidade FROM Badges WHERE ID = @ID ", new { ID = id }).SingleOrDefault();
+                    resp = sql.Query<Badge>(" SELECT ID, EmpresaID, Titulo, Subtitulo, Cor, CorFonte, Nivel, Tags, Quantidade FROM Badges WHERE ID = @ID AND EmpresaID = @EmpresaID ", new { ID = id, EmpresaID = HttpContext.Current.Session["EmpresaID"] }).SingleOrDefault();
                 }
             }
 
@@ -137,7 +137,7 @@ namespace Insignia.DAO.Badges
             {
                 using (var sql = new SqlConnection(conStr))
                 {
-                    int queryResultado = sql.Query<int>(" SELECT Top 1 ID FROM Tarefas WHERE BadgeID = @BadgeID", new { BadgeID = id }).SingleOrDefault();
+                    int queryResultado = sql.Query<int>(" SELECT Top 1 ID FROM Tarefas WHERE BadgeID = @BadgeID AND EmpresaID = @EmpresaID", new { BadgeID = id, EmpresaID = HttpContext.Current.Session["EmpresaID"] }).SingleOrDefault();
 
                     resp = Convert.ToBoolean(queryResultado);
                 }
@@ -159,7 +159,7 @@ namespace Insignia.DAO.Badges
             {
                 using (var sql = new SqlConnection(conStr))
                 {
-                    int queryResultado = sql.Execute(" DELETE FROM Badges WHERE ID = @ID ", new { ID = id });
+                    int queryResultado = sql.Execute(" DELETE FROM Badges WHERE ID = @ID AND EmpresaID = @EmpresaID ", new { ID = id, EmpresaID = HttpContext.Current.Session["EmpresaID"] });
 
                     resp = Convert.ToBoolean(queryResultado);
                 }

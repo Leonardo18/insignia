@@ -17,7 +17,7 @@ namespace Insignia.Painel.Controllers
         private TarefasDAO TarefasDAO = new TarefasDAO(ConfigurationManager.ConnectionStrings["strConMain"].ConnectionString);
 
         /// <summary>
-        /// get: Tarefas Listar
+        /// GET: Tarefas Listar
         /// </summary>
         /// <returns>Retorna a view de listar tarefas com os dados</returns>
         [HttpGet, IsLogged]
@@ -38,7 +38,7 @@ namespace Insignia.Painel.Controllers
         }
 
         /// <summary>
-        /// GET: Tarefas Adicionar 
+        /// GET: Tarefas Adicionar
         /// </summary>
         /// <returns>Retorna a view de adicionar tarefa</returns>
         [HttpGet, IsLogged]
@@ -64,7 +64,7 @@ namespace Insignia.Painel.Controllers
         /// <summary>
         /// POST: Tarefa Adicionar 
         /// </summary>
-        /// <param name="TarefaModel"></param>
+        /// <param name="TarefaModel">Objeto Model da tarefa contendo os dados inseridos para cadastro</param>
         /// <returns>Caso consiga validar e salvar a tarefa faz redirecionamento, se não retorna a view com mensagem</returns>
         [HttpPost, IsLogged, ValidateInput(false)]
         public ActionResult Adicionar(Tarefa TarefaModel, HttpPostedFileBase Arquivo)
@@ -229,19 +229,17 @@ namespace Insignia.Painel.Controllers
         [HttpGet, IsLogged]
         public ActionResult AtualizaStatus(int ID, string Status)
         {
-            if (Status == ConfigurationManager.AppSettings["Finalizada"])
-            {
-                Tarefa TarefaModel = TarefasDAO.Carregar(ID);
-
-                if (!string.IsNullOrEmpty(TarefaModel.TipoID))
-                {
-                    TarefasDAO.VerificaBadge(TarefaModel.TipoID, TarefaModel.UsuarioID);
-                }
-            }
-
             if (TarefasDAO.AtualizaStatus(ID, Status))
             {
-                return RedirectToAction("Editar", new { ID = ID });
+                if (Status == ConfigurationManager.AppSettings["Finalizada"])
+                {
+                    Tarefa TarefaModel = TarefasDAO.Carregar(ID);
+
+                    if (!string.IsNullOrEmpty(TarefaModel.TipoID))
+                    {
+                        TarefasDAO.VerificaBadge(TarefaModel.TipoID, TarefaModel.UsuarioID);
+                    }
+                }
             }
             return RedirectToAction("Editar", new { ID = ID });
         }
@@ -280,7 +278,7 @@ namespace Insignia.Painel.Controllers
                 {
                     if (TarefasDAO.Remover(TarefaModel.ID))
                     {
-                        return RedirectToAction("Adicionar");
+                        return RedirectToAction("Listar");
                     }
                 }
             }

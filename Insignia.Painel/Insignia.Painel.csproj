@@ -114,6 +114,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\css\datatables\buttons.bootstrap.min.css" />
+    <Content Include="Content\css\datatables\fixedHeader.bootstrap.min.css" />
+    <Content Include="Content\css\datatables\jquery.dataTables.min.css" />
+    <Content Include="Content\css\datatables\responsive.bootstrap.min.css" />
+    <Content Include="Content\css\datatables\scroller.bootstrap.min.css" />
     <Content Include="Content\images\eu.jpg" />
     <Content Include="Content\css\animate\animate.css" />
     <Content Include="Content\css\badges\badge.css" />
@@ -144,6 +149,20 @@
     <Content Include="Scripts\js\bootstrap\bootstrap.js" />
     <Content Include="Scripts\js\colorpicker\bootstrap-colorpicker.js" />
     <Content Include="Scripts\js\custom.js" />
+    <Content Include="Scripts\js\datatables\buttons.bootstrap.min.js" />
+    <Content Include="Scripts\js\datatables\buttons.html5.min.js" />
+    <Content Include="Scripts\js\datatables\buttons.print.min.js" />
+    <Content Include="Scripts\js\datatables\dataTables.bootstrap.js" />
+    <Content Include="Scripts\js\datatables\dataTables.buttons.min.js" />
+    <Content Include="Scripts\js\datatables\dataTables.fixedHeader.min.js" />
+    <Content Include="Scripts\js\datatables\dataTables.keyTable.min.js" />
+    <Content Include="Scripts\js\datatables\dataTables.responsive.min.js" />
+    <Content Include="Scripts\js\datatables\dataTables.scroller.min.js" />
+    <Content Include="Scripts\js\datatables\jquery.dataTables.js" />
+    <Content Include="Scripts\js\datatables\jszip.min.js" />
+    <Content Include="Scripts\js\datatables\pdfmake.min.js" />
+    <Content Include="Scripts\js\datatables\responsive.bootstrap.min.js" />
+    <Content Include="Scripts\js\datatables\vfs_fonts.js" />
     <Content Include="Scripts\js\daterangepicker\daterangepicker.js" />
     <Content Include="Scripts\js\fastclick\fastclick.js" />
     <Content Include="Scripts\js\google-code-prettify\prettify.js" />
@@ -179,6 +198,10 @@
     <Content Include="Views\Tarefas\Listar.cshtml" />
     <Content Include="Views\Login\ResetarSenha.cshtml" />
     <Content Include="Views\Badges\Adquiridas.cshtml" />
+    <Content Include="Views\Competencias\Adicionar.cshtml" />
+    <Content Include="Views\Competencias\Editar.cshtml" />
+    <Content Include="Views\Competencias\Remover.cshtml" />
+    <Content Include="Views\Competencias\Listar.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -193,6 +216,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\BadgesController.cs" />
+    <Compile Include="Controllers\CompetenciasController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\TarefasController.cs" />

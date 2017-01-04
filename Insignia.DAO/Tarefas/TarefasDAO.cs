@@ -244,7 +244,7 @@ namespace Insignia.DAO.Tarefas
         }
 
         /// <summary>
-        /// Busca a quantidade de tarefas executados de um tipo especifico
+        /// Busca a quantidade de tarefas executadas de um tipo especifico
         /// </summary>
         /// <param name="BadgeID"></param>
         /// <returns></returns>

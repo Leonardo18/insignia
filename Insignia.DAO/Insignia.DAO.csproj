@@ -49,6 +49,7 @@
   <ItemGroup>
     <Compile Include="Autenticacao\Auth.cs" />
     <Compile Include="Badges\BadgesDAO.cs" />
+    <Compile Include="Competencias\CompetenciasDAO.cs" />
     <Compile Include="Empresas\EmpresasDAO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tarefas\TarefasDAO.cs" />
