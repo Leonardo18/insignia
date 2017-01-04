@@ -32,7 +32,7 @@ namespace Insignia.DAO.Tarefas
             {
                 using (var sql = new SqlConnection(conStr))
                 {
-                    resp = sql.Query<Tarefa>(" SELECT ID, EmpresaID, UsuarioID, BadgeID AS TipoID, Status, Titulo, Resumo, Descricao, Anexo, Termino, Observacoes, CriadoEm FROM Tarefas WHERE ID = @ID ", new { ID = id }).SingleOrDefault();
+                    resp = sql.Query<Tarefa>("SELECT ID, EmpresaID, UsuarioID, BadgeID AS TipoID, Status, Titulo, Resumo, Descricao, Anexo, Termino, Observacoes, CriadoEm FROM Tarefas WHERE ID = @ID AND EmpresaID = @EmpresaID AND UsuarioID = @UsuarioID ", new { ID = id, EmpresaID = HttpContext.Current.Session["EmpresaID"], UsuarioID = HttpContext.Current.Session["UsuarioID"] }).SingleOrDefault();
                 }
             }
 
@@ -123,7 +123,7 @@ namespace Insignia.DAO.Tarefas
 
             using (var sql = new SqlConnection(conStr))
             {
-                list = sql.Query<Tarefa>(" SELECT ID, EmpresaID, UsuarioID, BadgeID AS TipoID, Titulo, Resumo, Descricao, Anexo, Termino, Observacoes, CriadoEm FROM Tarefas WHERE EmpresaID = @EmpresaID AND Status = @Status ", new { EmpresaID = HttpContext.Current.Session["EmpresaID"], Status = status }).ToList();
+                list = sql.Query<Tarefa>(" SELECT ID, EmpresaID, UsuarioID, BadgeID AS TipoID, Titulo, Resumo, Descricao, Anexo, Termino, Observacoes, CriadoEm FROM Tarefas WHERE EmpresaID = @EmpresaID AND UsuarioID = @UsuarioID AND Status = @Status ", new { EmpresaID = HttpContext.Current.Session["EmpresaID"], UsuarioID = HttpContext.Current.Session["UsuarioID"], Status = status }).ToList();
             }
 
             return list;
@@ -142,7 +142,7 @@ namespace Insignia.DAO.Tarefas
             {
                 using (var sql = new SqlConnection(conStr))
                 {
-                    int queryResultado = sql.Execute(" DELETE FROM Tarefas WHERE ID = @ID ", new { ID = id });
+                    int queryResultado = sql.Execute(" DELETE FROM Tarefas WHERE ID = @ID AND EmpresaID = @EmpresaID AND UsuarioID = @UsuarioID ", new { ID = id, EmpresaID = HttpContext.Current.Session["EmpresaID"], UsuarioID = HttpContext.Current.Session["UsuarioID"] });
 
                     resp = Convert.ToBoolean(queryResultado);
                 }
