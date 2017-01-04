@@ -229,6 +229,16 @@ namespace Insignia.Painel.Controllers
         [HttpGet, IsLogged]
         public ActionResult AtualizaStatus(int ID, string Status)
         {
+            if (Status == ConfigurationManager.AppSettings["Finalizada"])
+            {
+                Tarefa TarefaModel = TarefasDAO.Carregar(ID);
+
+                if (!string.IsNullOrEmpty(TarefaModel.TipoID))
+                {
+                    TarefasDAO.VerificaBadge(TarefaModel.TipoID, TarefaModel.UsuarioID);
+                }
+            }
+
             if (TarefasDAO.AtualizaStatus(ID, Status))
             {
                 return RedirectToAction("Editar", new { ID = ID });

@@ -1,9 +1,11 @@
 ﻿using Dapper;
+using Insignia.DAO.Badges;
 using Insignia.DAO.Util;
 using Insignia.Model.Tarefa;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Configuration;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
@@ -208,6 +210,56 @@ namespace Insignia.DAO.Tarefas
             }
 
             return resp;
+        }
+
+        /// <summary>
+        /// Verifica se a tarefa que está sendo finalizada desbloqueia uma badge
+        /// </summary>
+        /// <param name="TipoID">ID da badge em questão</param>
+        /// <param name="UsuarioID">ID do usuário da tarefa</param>
+        public void VerificaBadge(string tipoID, int usuarioID)
+        {
+            int Quantidade = QuantidadeTarefas(Convert.ToInt32(tipoID));
+
+            if (Quantidade > 0)
+            {
+                BadgesDAO BadgesDAO = new BadgesDAO(ConfigurationManager.ConnectionStrings["strConMain"].ConnectionString);
+
+                var Badges = BadgesDAO.Carregar(Convert.ToInt32(tipoID));
+
+                if (Badges.Quantidade >= Quantidade)
+                {
+                    using (var sql = new SqlConnection(conStr))
+                    {
+                        int queryResultado = sql.ExecuteScalar<int>(" INSERT INTO BadgesAdquiridas(UsuarioID, BadgeID, ConquistadoEm) OUTPUT INSERTED.ID VALUES (@UsuarioID, @BadgeID, @ConquistadoEm) ",
+                                        new
+                                        {
+                                            UsuarioID = HttpContext.Current.Session["UsuarioID"],
+                                            BadgeID = Badges.ID,
+                                            ConquistadoEm = DateTime.Now
+                                        });
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Busca a quantidade de tarefas executados de um tipo especifico
+        /// </summary>
+        /// <param name="BadgeID"></param>
+        /// <returns></returns>
+        private int QuantidadeTarefas(int tipoID)
+        {
+            int Quantidade = 0;
+
+            if (!string.IsNullOrEmpty(Convert.ToString(tipoID)))
+            {
+                using (var sql = new SqlConnection(conStr))
+                {
+                    Quantidade = sql.ExecuteScalar<int>(" SELECT Count(ID) FROM Tarefas WHERE BadgeID = @BadgeID AND Status = @Status ", new { BadgeID = tipoID, Status = ConfigurationManager.AppSettings["Finalizada"] });
+                }
+            }
+            return Quantidade;
         }
     }
 }
