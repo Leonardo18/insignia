@@ -167,5 +167,23 @@ namespace Insignia.DAO.Badges
 
             return resp;
         }
+
+        /// <summary>
+        /// Lista as badges conquistadas de um usuário
+        /// </summary>
+        /// <param name="UsuarioID">ID do usuário</param>
+        /// <param name="nivel">Nível da badge a buscar</param>
+        /// <returns>Retornar uma List de Badges adquiridas por um usuário</returns>
+        public List<Badge> ListarAdquiridas(int usuarioID, string nivel)
+        {
+            List<Badge> list;
+
+            using (var sql = new SqlConnection(conStr))
+            {
+                list = sql.Query<Badge>(" SELECT Badges.ID AS ID, Titulo, Subtitulo, Cor, CorFonte, Nivel, Tags, Quantidade FROM Badges INNER JOIN BadgesAdquiridas ON Badges.ID = BadgesAdquiridas.BadgeID WHERE Badges.EmpresaID = @EmpresaID AND Badges.Nivel = @Nivel AND BadgesAdquiridas.UsuarioID = @UsuarioID ", new { EmpresaID = HttpContext.Current.Session["EmpresaID"], Nivel = nivel, UsuarioID = usuarioID }).ToList();
+            }
+
+            return list;
+        }
     }
 }

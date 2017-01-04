@@ -3,6 +3,7 @@ using Insignia.Model.Badge;
 using Insignia.Painel.Helpers.CustomAttributes;
 using Insignia.Painel.Helpers.Util;
 using Insignia.Painel.ViewModels;
+using System;
 using System.Configuration;
 using System.Web.Mvc;
 
@@ -139,6 +140,22 @@ namespace Insignia.Painel.Controllers
                 }
             }
             return View(BadgeModel);
+        }
+
+        /// <summary>
+        /// GET: Badges Adquiridas
+        /// </summary>        
+        /// <returns>Retorna a view com dados das badges adquiridas</returns>
+        [HttpGet, IsLogged]
+        public ActionResult Adquiridas()
+        {
+            var ViewModel = new ViewModelBadge();
+
+            ViewModel.ListBadgeBasicas = BadgesDAO.ListarAdquiridas(Convert.ToInt32(Session["UsuarioID"]), "Basica");
+            ViewModel.ListBadgeIntermediarias = BadgesDAO.ListarAdquiridas(Convert.ToInt32(Session["UsuarioID"]), "Intermediaria");
+            ViewModel.ListBadgeAvancadas = BadgesDAO.ListarAdquiridas(Convert.ToInt32(Session["UsuarioID"]), "avancada");
+
+            return View(ViewModel);
         }
     }
 }
