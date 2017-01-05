@@ -136,6 +136,7 @@
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
                             @Html.DropDownList("TipoID", (List<SelectListItem>)ViewBag.Tipos, null, new { @class = "select2_multiple form-control", required = "" })
+                            @Html.ValidationMessageFor(modelItem => modelItem.TipoID, null, new { @class = "text-danger" })
                         </div><span class="glyphicon glyphicon-info-sign" data-toggle="tooltip" data-placement="right" title="Este campo indica qual o tipo ou segmento no qual a tarefa se refere."></span>
                     </div>
                     <div class="form-group">

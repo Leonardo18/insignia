@@ -42,7 +42,7 @@ namespace Insignia.DAO.Setores
         /// <summary>
         /// Cria um novo setor no banco de dados
         /// </summary>
-        /// <param name="user">Setor contendo os dados a serem salvos</param>
+        /// <param name="setor">Setor contendo os dados a serem salvos</param>
         /// <returns>True se o registro foi criado com sucesso, false caso contrário</returns>
         public bool Salvar(Setor setor)
         {
@@ -72,7 +72,7 @@ namespace Insignia.DAO.Setores
         /// <summary>
         /// Edita um setor no banco de dados
         /// </summary>
-        /// <param name="user">Setor contendo a empresa a ser editada</param>
+        /// <param name="setor">Setor contendo a empresa a ser editada</param>
         /// <returns>True se o setor foi encontrado e editada, false caso contrário</returns>
         public bool Editar(Setor setor)
         {

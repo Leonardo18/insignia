@@ -206,6 +206,7 @@
     <Content Include="Views\Setores\Editar.cshtml" />
     <Content Include="Views\Setores\Listar.cshtml" />
     <Content Include="Views\Setores\Remover.cshtml" />
+    <Content Include="Views\Usuarios\Adicionar.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -225,6 +226,7 @@
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\SetoresController.cs" />
     <Compile Include="Controllers\TarefasController.cs" />
+    <Compile Include="Controllers\UsuariosController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

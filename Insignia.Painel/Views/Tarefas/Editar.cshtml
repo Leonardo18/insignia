@@ -34,7 +34,7 @@
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">
                             Título: <span class="required">*</span>
                         </label>
-                        <div class="col-md-6 col-sm-6 col-xs-12">                            
+                        <div class="col-md-6 col-sm-6 col-xs-12">
                             @Html.TextBox("Titulo", Model.Titulo, new { @class = "form-control col-md-7 col-xs-12", placeholder = "Título", Required = "", @readonly = "readonly" })
                             @Html.ValidationMessageFor(modelItem => modelItem.Titulo, null, new { @class = "text-danger" })
                         </div><span class="glyphicon glyphicon-info-sign" data-toggle="tooltip" data-placement="right" title="Este campo indica qual o titulo da tarefa."></span>
@@ -109,7 +109,7 @@
                                     <a class="btn" data-edit="redo" title="Refazer (Ctrl/Cmd+Y)"><i class="fa fa-repeat"></i></a>
                                 </div>
                             </div>
-                            <div id="editor" class="editor-wrapper"></div>                            
+                            <div id="editor" class="editor-wrapper"></div>
                             @Html.TextArea("Descricao", Model.Descricao, new { placeholder = "Descrição", name = "descr", id = "descr", style = "display:none;" })
                             @Html.ValidationMessageFor(modelItem => modelItem.Descricao, null, new { @class = "text-danger" })
 
@@ -145,7 +145,7 @@
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">
                             Data de término: <span class="required">*</span>
                         </label>
-                        <div class="col-md-6 col-sm-6 col-xs-12">                            
+                        <div class="col-md-6 col-sm-6 col-xs-12">
                             @Html.TextBox("Termino", Model.Termino, new { @class = "form-control col-md-7 col-xs-12 has-feedback-left", placeholder = "Data de término", required = "", id = "single_cal4", ariadescribedby = "inputSuccess2Status4", @readonly = "readonly" })
                             @Html.ValidationMessageFor(modelItem => modelItem.Termino, null, new { @class = "text-danger" })
                             <span class="fa fa-calendar-o form-control-feedback left" aria-hidden="true"></span>
@@ -158,6 +158,7 @@
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
                             @Html.DropDownList("TipoID", (List<SelectListItem>)ViewBag.Tipos, null, new { @class = "select2_multiple form-control", required = "", @readonly = "readonly", disabled = "disabled", id = "TipoID" })
+                            @Html.ValidationMessageFor(modelItem => modelItem.TipoID, null, new { @class = "text-danger" })
                         </div><span class="glyphicon glyphicon-info-sign" data-toggle="tooltip" data-placement="right" title="Este campo indica qual o tipo ou segmento no qual a tarefa se refere."></span>
                     </div>
                     <div class="form-group">

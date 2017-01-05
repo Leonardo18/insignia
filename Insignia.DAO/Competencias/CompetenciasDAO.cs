@@ -42,7 +42,7 @@ namespace Insignia.DAO.Competencias
         /// <summary>
         /// Cria uma nova competência no banco de dados
         /// </summary>
-        /// <param name="user">Competência contendo os dados a serem salvos</param>
+        /// <param name="competencia">Competência contendo os dados a serem salvos</param>
         /// <returns>True se o registro foi criado com sucesso, false caso contrário</returns>
         public bool Salvar(Competencia competencia)
         {
@@ -72,7 +72,7 @@ namespace Insignia.DAO.Competencias
         /// <summary>
         /// Edita uma competência no banco de dados
         /// </summary>
-        /// <param name="user">Competência contendo a empresa a ser editada</param>
+        /// <param name="competencia">Competência contendo a empresa a ser editada</param>
         /// <returns>True se a competência foi encontrada e editada, false caso contrário</returns>
         public bool Editar(Competencia competencia)
         {
