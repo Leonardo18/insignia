@@ -41,7 +41,7 @@ namespace Insignia.DAO.Empresas
         /// <summary>
         /// Cria uma nova empresa no banco de dados
         /// </summary>
-        /// <param name="user">Empresa contendo os dados a serem salvos</param>
+        /// <param name="empresa">Empresa contendo os dados a serem salvos</param>
         /// <returns>True se o registro foi criado com sucesso, false caso contrário</returns>
         public bool Salvar(Empresa empresa)
         {
@@ -73,7 +73,7 @@ namespace Insignia.DAO.Empresas
         /// <summary>
         /// Edita uma empresa no banco de dados
         /// </summary>
-        /// <param name="user">Empresa contendo a empresa a ser editada</param>
+        /// <param name="empresa">Empresa contendo a empresa a ser editada</param>
         /// <returns>True se a empresa foi encontrada e editada, false caso contrário</returns>
         public bool Editar(Empresa empresa)
         {
@@ -159,9 +159,9 @@ namespace Insignia.DAO.Empresas
         /// <summary>
         /// Atualiza a senha em um cadastro
         /// </summary>
-        /// <param name="email"></param>
-        /// <param name="senha"></param>
-        /// <returns></returns>
+        /// <param name="email">email na qual será atualizado a senha</param>
+        /// <param name="senha">senha nova</param>
+        /// <returns>Retorna true caso tenha alterado com sucesso, false caso contrário</returns>
         public bool AtualizaSenha(string email, string senha)
         {
             bool resp = false;

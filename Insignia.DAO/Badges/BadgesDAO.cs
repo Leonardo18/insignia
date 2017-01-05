@@ -42,7 +42,7 @@ namespace Insignia.DAO.Badges
         /// <summary>
         /// Cria uma nova badge no banco de dados
         /// </summary>
-        /// <param name="user">Badge contendo os dados a serem salvos</param>
+        /// <param name="bagde">Badge contendo os dados a serem salvos</param>
         /// <returns>True se o registro foi criado com sucesso, false caso contrário</returns>
         public bool Salvar(Badge bagde)
         {
@@ -77,7 +77,7 @@ namespace Insignia.DAO.Badges
         /// <summary>
         /// Edita uma badge no banco de dados
         /// </summary>
-        /// <param name="user">Badge contendo a badge a ser editada</param>
+        /// <param name="bagde">Badge contendo a badge a ser editada</param>
         /// <returns>True se o registro foi editado com sucesso, false caso contrário</returns>
         public bool Editar(Badge badge)
         {

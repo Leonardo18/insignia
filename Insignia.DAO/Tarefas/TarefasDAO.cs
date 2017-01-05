@@ -44,7 +44,7 @@ namespace Insignia.DAO.Tarefas
         /// <summary>
         /// Cria uma nova tarefa no banco de dados
         /// </summary>
-        /// <param name="user">Tarefa contendo os dados a serem salvos</param>
+        /// <param name="tarefa">Tarefa contendo os dados a serem salvos</param>
         /// <returns>True se o registro foi criado com sucesso, false caso contrário</returns>
         public bool Salvar(Tarefa tarefa)
         {
@@ -247,7 +247,7 @@ namespace Insignia.DAO.Tarefas
         /// Busca a quantidade de tarefas executadas de um tipo especifico
         /// </summary>
         /// <param name="BadgeID"></param>
-        /// <returns></returns>
+        /// <returns>Retorna a quantidade de tarefas de um tipo especifico, caos não ache retorna 0</returns>
         private int QuantidadeTarefas(int tipoID)
         {
             int Quantidade = 0;
