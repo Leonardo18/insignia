@@ -227,7 +227,7 @@ namespace Insignia.DAO.Tarefas
 
                 var Badges = BadgesDAO.Carregar(Convert.ToInt32(tipoID));
 
-                if (Badges.Quantidade >= Quantidade)
+                if (Quantidade >= Badges.Quantidade)
                 {
                     using (var sql = new SqlConnection(conStr))
                     {
