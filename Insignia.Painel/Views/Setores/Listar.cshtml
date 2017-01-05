@@ -1,0 +1,80 @@
+﻿@model IEnumerable<Insignia.Model.Setor.Setor>
+@{
+    ViewBag.Title = "Listar";
+    Layout = "~/Views/Shared/LayoutPrincipal.cshtml";
+}
+
+@Styles.Render("~/DataTables/styles")
+
+<div class="page-title">
+</div>
+<div class="clearfix"></div>
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>Listar Setores</h2>
+                <ul class="nav navbar-right panel_toolbox" style="min-width: 0px;">
+                    <li>
+                        <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <br />
+                @using (Html.BeginForm("Listar", "Setores", FormMethod.Post, new { @class = "form-horizontal form-label-left" }))
+                {
+                    <table id="datatable" class="table table-striped table-bordered">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nome</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td><a href="@Url.Action("Editar", null, new { ID = item.ID, controller = "Setores" }, Request.Url.Scheme)"><b>@item.ID</b></a></td>
+                                    <td>@item.Nome</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                }
+                <div class="ln_solid"></div>
+                <div class="Adicionar-Fixo">
+                    <a href="@Url.Action("../Setores/Adicionar", null, new { controller = "Setores" }, Request.Url.Scheme)" style="display: table-cell; vertical-align: middle;">
+                        <i class="fa fa-plus" title="Adicionar Setor" style="font-size: 2em; vertical-align: middle;"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@Scripts.Render("~/DataTables/scripts")
+
+<!-- DataTables -->
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#datatable').dataTable();
+        $('#datatable-keytable').DataTable({
+            keys: true
+        });
+        $('#datatable-responsive').DataTable();
+        $('#datatable-scroller').DataTable({
+            ajax: "js/datatables/json/scroller-demo.json",
+            deferRender: true,
+            scrollY: 380,
+            scrollCollapse: true,
+            scroller: true
+        });
+        var table = $('#datatable-fixed-header').DataTable({
+            fixedHeader: true
+        });
+    });
+    //TableManageButtons.init();
+</script>
+<!-- /DataTables -->

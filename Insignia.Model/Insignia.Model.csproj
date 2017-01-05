@@ -46,6 +46,7 @@
     <Compile Include="Competencia\Competencia.cs" />
     <Compile Include="Empresa\Empresa.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Setor\Setor.cs" />
     <Compile Include="Tarefa\Tarefa.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

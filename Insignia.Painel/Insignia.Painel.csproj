@@ -202,6 +202,10 @@
     <Content Include="Views\Competencias\Editar.cshtml" />
     <Content Include="Views\Competencias\Remover.cshtml" />
     <Content Include="Views\Competencias\Listar.cshtml" />
+    <Content Include="Views\Setores\Adicionar.cshtml" />
+    <Content Include="Views\Setores\Editar.cshtml" />
+    <Content Include="Views\Setores\Listar.cshtml" />
+    <Content Include="Views\Setores\Remover.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -219,6 +223,7 @@
     <Compile Include="Controllers\CompetenciasController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\SetoresController.cs" />
     <Compile Include="Controllers\TarefasController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

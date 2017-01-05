@@ -1,0 +1,49 @@
+﻿@model Insignia.Model.Setor.Setor
+@{
+    ViewBag.Title = "Adicionar";
+    Layout = "~/Views/Shared/LayoutPrincipal.cshtml";
+}
+
+<!-- page content -->
+<div class="page-title">
+</div>
+<div class="clearfix"></div>
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2 id="TituloPagina">Setor Adicionar</h2>
+                <ul class="nav navbar-right panel_toolbox" style="min-width: 0px;">
+                    <li>
+                        <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <br />
+                <!-- /page content -->
+                @using (Html.BeginForm("Adicionar", "Setores", FormMethod.Post, new { @class = "form-horizontal form-label-left" }))
+                {
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">
+                            Nome: <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            @Html.TextBox("Nome", Model.Nome, new { @class = "form-control col-md-7 col-xs-12", placeholder = "Nome", required = "", autofocus = "true" })
+                            @Html.ValidationMessageFor(modelItem => modelItem.Nome, null, new { @class = "text-danger" })
+                        </div><span class="glyphicon glyphicon-info-sign" data-toggle="tooltip" data-placement="right" title="Este campo indica qual o nome do setor."></span>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="modal-footer">
+                        <button class="btn btn-primary" type="submit">Salvar</button>
+                        <button type="button" class="btn btn-default submit" onclick="location.href='@Url.Action("Listar", "Setores")'" B Badg data-dismiss="modal">Voltar</button>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /page content -->
+
+

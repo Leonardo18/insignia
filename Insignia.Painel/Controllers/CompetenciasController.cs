@@ -24,7 +24,7 @@ namespace Insignia.Painel.Controllers
         }
 
         /// <summary>
-        /// GET: Competencias
+        /// GET: Competencias Adicionar
         /// </summary>
         /// <returns>Retorna a view de adicionar competência</returns>
         [HttpGet, IsLogged]
@@ -72,7 +72,7 @@ namespace Insignia.Painel.Controllers
         /// </summary>
         /// <param name="CompetenciaModel">Model contendo os dados da Competencia</param>
         /// <returns>Caso consiga validar os dados e atualizar a competência faz redirecionamento, caso contrário retorna a view novamente para ajuste de dados inválidos</returns>
-        [HttpPost, IsLogged, ValidateInput(false)]
+        [HttpPost, IsLogged]
         public ActionResult Editar(Competencia CompetenciaModel)
         {
             if (ModelState.IsValid)
