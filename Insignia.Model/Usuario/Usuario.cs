@@ -30,8 +30,12 @@ namespace Insignia.Model.Usuario
         /// Email do usuário
         /// </summary>
         [Required(ErrorMessage = "Informe o e-mail do usuário")]
-        [RegularExpression("/^ (([^<> ()\\[\\]\\.,;:\\s@\"]+(\\.[^<>()\\[\\]\\.,;:\\s@\"]+)*)|(\".+\"))@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$/", ErrorMessage = "O e-mail informado não é valido")]
         public string Email { get; set; }
+
+        /// <summary>
+        /// Nome do Setor
+        /// </summary>
+        public string Setor { get; set; }
 
         /// <summary>
         /// Tipo do usuário sendo eles: Funcionário e Gestor

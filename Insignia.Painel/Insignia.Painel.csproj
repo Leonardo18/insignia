@@ -207,6 +207,9 @@
     <Content Include="Views\Setores\Listar.cshtml" />
     <Content Include="Views\Setores\Remover.cshtml" />
     <Content Include="Views\Usuarios\Adicionar.cshtml" />
+    <Content Include="Views\Usuarios\Editar.cshtml" />
+    <Content Include="Views\Usuarios\Listar.cshtml" />
+    <Content Include="Views\Usuarios\Remover.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

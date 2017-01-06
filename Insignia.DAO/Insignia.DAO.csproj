@@ -57,6 +57,7 @@
     <Compile Include="Usuarios\UsuariosDAO.cs" />
     <Compile Include="Util\Autenticacao.cs" />
     <Compile Include="Util\Database.cs" />
+    <Compile Include="Util\Hash.cs" />
     <Compile Include="Util\Utilitarios.cs" />
     <Compile Include="Util\Validacao.cs" />
   </ItemGroup>

@@ -60,6 +60,6 @@ namespace Insignia.DAO.Autenticacao
             }
 
             return Convert.ToBoolean(result);
-        }
+        }        
     }
 }

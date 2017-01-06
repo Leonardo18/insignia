@@ -32,7 +32,7 @@ namespace Insignia.DAO.Usuarios
             {
                 using (var sql = new SqlConnection(conStr))
                 {
-                    resp = sql.Query<Usuario>(" SELECT ID, EmpresaID, SetorID, Nome, Email, Tipo FROM Usuarios WHERE ID = @ID AND EmpresaID = @EmpresaID AND SetorID = @SetorID ", new { ID = id, EmpresaID = HttpContext.Current.Session["EmpresaID"], SetorID = HttpContext.Current.Session["SetorID"] }).SingleOrDefault();
+                    resp = sql.Query<Usuario>(" SELECT ID, EmpresaID, SetorID, Nome, Email, Tipo FROM Usuarios WHERE ID = @ID AND EmpresaID = @EmpresaID ", new { ID = id, EmpresaID = HttpContext.Current.Session["EmpresaID"] }).SingleOrDefault();
                 }
             }
 
@@ -54,14 +54,15 @@ namespace Insignia.DAO.Usuarios
             {
                 using (var sql = new SqlConnection(conStr))
                 {
-                    int queryResultado = sql.ExecuteScalar<int>(" INSERT INTO Usuarios(EmpresaID, SetorID, Nome, Email, Tipo) OUTPUT INSERTED.ID VALUES (@EmpresaID, @SetorID, @Nome, @Email, @Tipo) ",
+                    int queryResultado = sql.ExecuteScalar<int>(" INSERT INTO Usuarios(EmpresaID, SetorID, Nome, Email, Tipo, Token) OUTPUT INSERTED.ID VALUES (@EmpresaID, @SetorID, @Nome, @Email, @Tipo, @Token) ",
                                     new
                                     {
                                         EmpresaID = HttpContext.Current.Session["EmpresaID"],
-                                        SetorID = HttpContext.Current.Session["SetorID"],
+                                        SetorID = usuario.SetorID,
                                         Nome = usuario.Nome,
                                         Email = usuario.Email,
-                                        Tipo = usuario.Tipo
+                                        Tipo = usuario.Tipo,
+                                        Token = Hash.ValidHash("ID", "Usuarios", "Token"),                                       
                                     });
 
                     usuario.ID = (int)queryResultado;
@@ -87,12 +88,12 @@ namespace Insignia.DAO.Usuarios
             {
                 using (var sql = new SqlConnection(conStr))
                 {
-                    var queryResultado = sql.Execute(" UPDATE Usuarios SET EmpresaID = @EmpresaID, SetorID = @SetorID, Nome = @Nome, Email = @Email WHERE ID = @ID AND Empresa = @EmpresaID AND SetorID = @SetorID",
+                    var queryResultado = sql.Execute(" UPDATE Usuarios SET EmpresaID = @EmpresaID, SetorID = @SetorID, Nome = @Nome, Email = @Email WHERE ID = @ID AND EmpresaID = @EmpresaID",
                                     new
                                     {
                                         ID = usuario.ID,
                                         EmpresaID = HttpContext.Current.Session["EmpresaID"],
-                                        SetorID = HttpContext.Current.Session["SetorID"],
+                                        SetorID = usuario.SetorID,
                                         Nome = usuario.Nome,
                                         Email = usuario.Email,
                                         Tipo = usuario.Tipo
@@ -133,7 +134,7 @@ namespace Insignia.DAO.Usuarios
             {
                 using (var sql = new SqlConnection(conStr))
                 {
-                    int queryResultado = sql.Execute(" DELETE FROM Usuarios WHERE ID = @ID AND EmpresaID = @EmpresaID AND SetorID = @SetorID ", new { ID = id, EmpresaID = HttpContext.Current.Session["EmpresaID"], SetorID = HttpContext.Current.Session["SetorID"] });
+                    int queryResultado = sql.Execute(" DELETE FROM Usuarios WHERE ID = @ID AND EmpresaID = @EmpresaID ", new { ID = id, EmpresaID = HttpContext.Current.Session["EmpresaID"] });
 
                     resp = Convert.ToBoolean(queryResultado);
                 }

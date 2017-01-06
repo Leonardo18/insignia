@@ -97,7 +97,7 @@ namespace Insignia.DAO.Util
                 HashProvider.Clear();
             }
             return UTF8.GetString(Results);
-        }
+        }        
     }
 }
 
