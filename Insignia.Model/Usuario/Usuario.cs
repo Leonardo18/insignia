@@ -33,6 +33,16 @@ namespace Insignia.Model.Usuario
         public string Email { get; set; }
 
         /// <summary>
+        /// Senha de acesso ao sistema
+        /// </summary>        
+        public string SenhaCadastro { get; set; }
+
+        /// <summary>
+        /// Confirmação da senha digitada
+        /// </summary>        
+        public string ConfirmaSenha { get; set; }
+
+        /// <summary>
         /// Nome do Setor
         /// </summary>
         public string Setor { get; set; }

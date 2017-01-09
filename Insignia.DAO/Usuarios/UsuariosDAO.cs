@@ -62,7 +62,7 @@ namespace Insignia.DAO.Usuarios
                                         Nome = usuario.Nome,
                                         Email = usuario.Email,
                                         Tipo = usuario.Tipo,
-                                        Token = Hash.ValidHash("ID", "Usuarios", "Token"),                                       
+                                        Token = Hash.ValidHash("ID", "Usuarios", "Token"),
                                     });
 
                     usuario.ID = (int)queryResultado;
@@ -118,6 +118,7 @@ namespace Insignia.DAO.Usuarios
             {
                 list = sql.Query<Usuario>(" SELECT ID, EmpresaID, SetorID, Nome, Email, Tipo FROM Usuarios ORDER BY Nome ").ToList();
             }
+
             return list;
         }
 
@@ -157,6 +158,32 @@ namespace Insignia.DAO.Usuarios
             }
 
             return dict;
+        }
+
+        /// <summary>
+        /// Verifica se o usuário já existe no sistema
+        /// </summary>
+        /// <param name="email">Email que está sendo cadastrado</param>        
+        /// <returns>True se não existe e false caso já exista</returns>
+        public bool VerificaUsuario(string email)
+        {
+            bool resp = true;
+            Usuario usuario = null;
+
+            using (var sql = new SqlConnection(conStr))
+            {
+                usuario = sql.Query<Usuario>(" SELECT ID FROM Usuarios WHERE Email = @Email AND EmpresaID = @EmpresaID", new { Email = email, EmpresaID = HttpContext.Current.Session["EmpresaID"] }).FirstOrDefault();
+            }
+
+            if (usuario != null && !string.IsNullOrEmpty(email))
+            {
+                if (!string.IsNullOrEmpty(Convert.ToString(usuario.ID)))
+                {
+                    resp = false;
+                }
+            }
+
+            return resp;
         }
     }
 }

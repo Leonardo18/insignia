@@ -1,7 +1,9 @@
 ﻿using Insignia.DAO.Autenticacao;
 using Insignia.DAO.Empresas;
+using Insignia.DAO.Usuarios;
 using Insignia.DAO.Util;
 using Insignia.Model.Empresa;
+using Insignia.Model.Usuario;
 using Insignia.Painel.Helpers.Email;
 using System;
 using System.Configuration;
@@ -12,6 +14,7 @@ namespace Insignia.Painel.Controllers
     public class LoginController : Controller
     {
         private EmpresasDAO EmpresaDAO = new EmpresasDAO(ConfigurationManager.ConnectionStrings["strConMain"].ConnectionString);
+        private UsuariosDAO UsuarioDAO = new UsuariosDAO(ConfigurationManager.ConnectionStrings["strConMain"].ConnectionString);
 
         /// <summary>
         /// GET: Login 
@@ -50,6 +53,8 @@ namespace Insignia.Painel.Controllers
             //Tenta efeutar login com os dados passados e retorna um dictionary
             Empresa EmpresaModel = auth.LoginEmpresa(Email, Senha);
 
+            Usuario UsuarioModel = auth.LoginUsuario(Email, Senha);
+
             if (EmpresaModel != null)
             {
                 Session["SessionID"] = Session.SessionID;
@@ -61,10 +66,22 @@ namespace Insignia.Painel.Controllers
 
                 return RedirectToAction("../Dashboard/Dashboard");
             }
+            else if (UsuarioModel != null)
+            {
+                Session["SessionID"] = Session.SessionID;
+                Session["EmpresaID"] = UsuarioModel.EmpresaID;
+                Session["SetorID"] = UsuarioModel.SetorID;
+                Session["UsuarioID"] = UsuarioModel.ID;
+                Session["UsuarioNome"] = UsuarioModel.Nome;
+                Session["UsuarioEmail"] = UsuarioModel.Email;
+
+                return RedirectToAction("../Dashboard/Dashboard");
+            }
             else
             {
                 ViewBag.Error = "E-mail ou senha incorretos.";
             }
+
             return View(new Empresa());
         }
 
@@ -107,6 +124,7 @@ namespace Insignia.Painel.Controllers
                     ViewBag.Error = "A empresa " + EmpresaModel.RazaoSocial + " já possui um cadastro.";
                 }
             }
+
             return View("Login", EmpresaModel);
         }
 
@@ -117,7 +135,7 @@ namespace Insignia.Painel.Controllers
         [HttpPost]
         public ActionResult RecuperarSenha(string email)
         {
-            if (EmpresaDAO.VerificaEmpresa(email, null))
+            if (EmpresaDAO.VerificaEmpresa(email, null) || UsuarioDAO.VerificaUsuario(email))
             {
                 SendMail Email = new SendMail();
 
@@ -130,6 +148,7 @@ namespace Insignia.Painel.Controllers
             {
                 Session["Error"] = "O e-mail informado não existe no sistema insígnia.";
             }
+
             return RedirectToAction("Login");
         }
 
@@ -178,6 +197,7 @@ namespace Insignia.Painel.Controllers
                     ViewBag.Error = "As senhas digitadas diferem.";
                 }
             }
+
             return View();
         }
 

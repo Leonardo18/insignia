@@ -15,6 +15,7 @@
             {
                 resp = Autenticacao.Criptografar(valor);
             }
+
             return resp;
         }
 
@@ -31,6 +32,7 @@
             {
                 resp = Autenticacao.Descriptografar(valor);
             }
+
             return resp;
         }
     }

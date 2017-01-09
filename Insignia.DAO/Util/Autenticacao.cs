@@ -60,6 +60,7 @@ namespace Insignia.DAO.Util
                 HashProvider.Clear();
 
             }
+
             return Convert.ToBase64String(Results);
         }
 
@@ -96,6 +97,7 @@ namespace Insignia.DAO.Util
                 TDESAlgorithm.Clear();
                 HashProvider.Clear();
             }
+
             return UTF8.GetString(Results);
         }        
     }

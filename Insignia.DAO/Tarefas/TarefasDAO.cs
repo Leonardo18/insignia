@@ -259,6 +259,7 @@ namespace Insignia.DAO.Tarefas
                     Quantidade = sql.ExecuteScalar<int>(" SELECT Count(ID) FROM Tarefas WHERE BadgeID = @BadgeID AND Status = @Status ", new { BadgeID = tipoID, Status = ConfigurationManager.AppSettings["Finalizada"] });
                 }
             }
+
             return Quantidade;
         }
     }

@@ -110,6 +110,7 @@ namespace Insignia.DAO.Setores
             {
                 list = sql.Query<Setor>(" SELECT ID, EmpresaID, Nome FROM Setores ORDER BY Nome ").ToList();
             }
+
             return list;
         }
 

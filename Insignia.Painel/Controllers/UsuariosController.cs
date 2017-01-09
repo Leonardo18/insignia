@@ -64,9 +64,16 @@ namespace Insignia.Painel.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (UsuariosDAO.Salvar(UsuarioModel))
+                if (UsuariosDAO.VerificaUsuario(UsuarioModel.Email) && string.IsNullOrEmpty(Database.DBBuscaInfo("Empresas", "Email", UsuarioModel.Email, "ID")))
                 {
-                    return RedirectToAction("Editar", new { ID = UsuarioModel.ID });
+                    if (UsuariosDAO.Salvar(UsuarioModel))
+                    {
+                        return RedirectToAction("Editar", new { ID = UsuarioModel.ID });
+                    }
+                }
+                else
+                {
+                    ViewBag.Error = "O Usuário " + UsuarioModel.Nome + " já possui um cadastro.";
                 }
             }
 
@@ -130,9 +137,12 @@ namespace Insignia.Painel.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (UsuariosDAO.Editar(UsuarioModel))
+                if (UsuariosDAO.VerificaUsuario(UsuarioModel.Email) && string.IsNullOrEmpty(Database.DBBuscaInfo("Empresas", "Email", UsuarioModel.Email, "ID")))
                 {
-                    return RedirectToAction("Editar", new { ID = UsuarioModel.ID });
+                    if (UsuariosDAO.Editar(UsuarioModel))
+                    {
+                        return RedirectToAction("Editar", new { ID = UsuarioModel.ID });
+                    }
                 }
             }
 

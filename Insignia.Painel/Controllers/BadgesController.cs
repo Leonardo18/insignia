@@ -97,6 +97,7 @@ namespace Insignia.Painel.Controllers
                     return RedirectToAction("Adicionar");
                 }
             }
+
             return View("Editar", BadgeModel);
         }
 
@@ -139,6 +140,7 @@ namespace Insignia.Painel.Controllers
                     ViewBag.Error = "Não é possível remover a badge " + BadgeModel.Titulo + ", pois existem tarefas cadastras para a mesma.";
                 }
             }
+
             return View(BadgeModel);
         }
 

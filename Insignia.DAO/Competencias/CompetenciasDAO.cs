@@ -110,6 +110,7 @@ namespace Insignia.DAO.Competencias
             {
                 list = sql.Query<Competencia>(" SELECT ID, EmpresaID, Nome FROM Competencias ORDER BY Nome ").ToList();
             }
+
             return list;
         }
 

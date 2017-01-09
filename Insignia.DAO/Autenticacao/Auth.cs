@@ -4,6 +4,7 @@ using Authe = Insignia.DAO.Util.Autenticacao;
 using System;
 using System.Data.SqlClient;
 using System.Linq;
+using Insignia.Model.Usuario;
 
 namespace Insignia.DAO.Autenticacao
 {
@@ -21,7 +22,7 @@ namespace Insignia.DAO.Autenticacao
         /// </summary>
         /// <param name="usuario">Nome do usuário de login</param>
         /// <param name="senha">Senha de acesso do usuário</param>
-        /// <returns>Model contendo os dados do usuário ou null</returns>
+        /// <returns>Model contendo os dados da empresa ou null</returns>
         public Empresa LoginEmpresa(string email, string senha)
         {
             Empresa model = null;
@@ -40,6 +41,35 @@ namespace Insignia.DAO.Autenticacao
                     model = null;
                 }
             }
+
+            return model;
+        }
+
+        /// <summary>
+        /// Verifica se o usuário existe e recupera os dados dele
+        /// </summary>
+        /// <param name="usuario">Nome do usuário de login</param>
+        /// <param name="senha">Senha de acesso do usuário</param>
+        /// <returns>Model contendo os dados do usuário ou null</returns>
+        public Usuario LoginUsuario(string email, string senha)
+        {
+            Usuario model = null;
+
+            using (var sql = new SqlConnection(conStr))
+            {
+                model = sql.Query<Usuario>(" SELECT ID, EmpresaID, SetorID, Nome, Email, Senha AS SenhaCadastro FROM Usuarios WHERE Email = @Email ", new { Email = email }).SingleOrDefault();
+            }
+
+            if (model != null)
+            {
+                string senhaDB = model.SenhaCadastro;
+
+                if (senhaDB != Authe.Criptografar(senha))
+                {
+                    model = null;
+                }
+            }
+
             return model;
         }
 
@@ -60,6 +90,6 @@ namespace Insignia.DAO.Autenticacao
             }
 
             return Convert.ToBoolean(result);
-        }        
+        }
     }
 }
