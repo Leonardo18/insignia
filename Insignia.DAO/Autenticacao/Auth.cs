@@ -1,10 +1,10 @@
 ﻿using Dapper;
 using Insignia.Model.Empresa;
 using Authe = Insignia.DAO.Util.Autenticacao;
-using System;
 using System.Data.SqlClient;
 using System.Linq;
 using Insignia.Model.Usuario;
+using static System.Convert;
 
 namespace Insignia.DAO.Autenticacao
 {
@@ -89,7 +89,7 @@ namespace Insignia.DAO.Autenticacao
                 result = sql.ExecuteScalar<int>(" SELECT COUNT(*) FROM UsuariosXAreas WHERE UsuarioID = @UsuarioID AND AreaID = @AreaID", new { UsuarioID = usuarioID, AreaID = areaID });
             }
 
-            return Convert.ToBoolean(result);
+            return ToBoolean(result);
         }
     }
 }

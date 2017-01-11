@@ -7,6 +7,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
+using static System.Convert;
 
 namespace Insignia.DAO.Competencias
 {
@@ -62,7 +63,7 @@ namespace Insignia.DAO.Competencias
                                     });
 
                     competencia.ID = (int)queryResultado;
-                    resp = Convert.ToBoolean(queryResultado);
+                    resp = ToBoolean(queryResultado);
                 }
             }
 
@@ -91,7 +92,7 @@ namespace Insignia.DAO.Competencias
                                         Nome = competencia.Nome
                                     });
 
-                    resp = Convert.ToBoolean(queryResultado);
+                    resp = ToBoolean(queryResultado);
                 }
             }
 
@@ -129,7 +130,7 @@ namespace Insignia.DAO.Competencias
                 {
                     int queryResultado = sql.Execute(" DELETE FROM Competencias WHERE ID = @ID AND EmpresaID = @EmpresaID ", new { ID = id, EmpresaID = HttpContext.Current.Session["EmpresaID"] });
 
-                    resp = Convert.ToBoolean(queryResultado);
+                    resp = ToBoolean(queryResultado);
                 }
             }
 

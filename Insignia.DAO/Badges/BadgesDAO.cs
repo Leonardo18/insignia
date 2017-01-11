@@ -7,6 +7,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
+using static System.Convert;
 
 namespace Insignia.DAO.Badges
 {
@@ -67,7 +68,7 @@ namespace Insignia.DAO.Badges
                                         Quantidade = bagde.Quantidade,
                                     });
 
-                    resp = Convert.ToBoolean(queryResultado);
+                    resp = ToBoolean(queryResultado);
                 }
             }
 
@@ -101,7 +102,7 @@ namespace Insignia.DAO.Badges
                                         Tags = badge.Tags,
                                         Quantidade = badge.Quantidade,
                                     });
-                    resp = Convert.ToBoolean(queryResultado);
+                    resp = ToBoolean(queryResultado);
                 }
             }
 
@@ -139,7 +140,7 @@ namespace Insignia.DAO.Badges
                 {
                     int queryResultado = sql.Query<int>(" SELECT Top 1 ID FROM Tarefas WHERE BadgeID = @BadgeID AND EmpresaID = @EmpresaID", new { BadgeID = id, EmpresaID = HttpContext.Current.Session["EmpresaID"] }).SingleOrDefault();
 
-                    resp = Convert.ToBoolean(queryResultado);
+                    resp = ToBoolean(queryResultado);
                 }
             }
 
@@ -161,7 +162,7 @@ namespace Insignia.DAO.Badges
                 {
                     int queryResultado = sql.Execute(" DELETE FROM Badges WHERE ID = @ID AND EmpresaID = @EmpresaID ", new { ID = id, EmpresaID = HttpContext.Current.Session["EmpresaID"] });
 
-                    resp = Convert.ToBoolean(queryResultado);
+                    resp = ToBoolean(queryResultado);
                 }
             }
 

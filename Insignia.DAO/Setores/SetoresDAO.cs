@@ -7,6 +7,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
+using static System.Convert;
 
 namespace Insignia.DAO.Setores
 {
@@ -62,7 +63,7 @@ namespace Insignia.DAO.Setores
                                     });
 
                     setor.ID = (int)queryResultado;
-                    resp = Convert.ToBoolean(queryResultado);
+                    resp = ToBoolean(queryResultado);
                 }
             }
 
@@ -91,7 +92,7 @@ namespace Insignia.DAO.Setores
                                         Nome = setor.Nome
                                     });
 
-                    resp = Convert.ToBoolean(queryResultado);
+                    resp = ToBoolean(queryResultado);
                 }
             }
 
@@ -129,7 +130,7 @@ namespace Insignia.DAO.Setores
                 {
                     int queryResultado = sql.Execute(" DELETE FROM Setores WHERE ID = @ID AND EmpresaID = @EmpresaID ", new { ID = id, EmpresaID = HttpContext.Current.Session["EmpresaID"] });
 
-                    resp = Convert.ToBoolean(queryResultado);
+                    resp = ToBoolean(queryResultado);
                 }
             }
 

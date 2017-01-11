@@ -9,6 +9,7 @@ using System.Configuration;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
+using static System.Convert;
 
 namespace Insignia.DAO.Tarefas
 {
@@ -73,7 +74,7 @@ namespace Insignia.DAO.Tarefas
                                     });
                     tarefa.ID = (int)queryResultado;
 
-                    resp = Convert.ToBoolean(queryResultado);
+                    resp = ToBoolean(queryResultado);
                 }
             }
 
@@ -108,7 +109,7 @@ namespace Insignia.DAO.Tarefas
                                         Observacoes = tarefa.Observacoes,
                                     });
 
-                    resp = Convert.ToBoolean(queryResultado);
+                    resp = ToBoolean(queryResultado);
                 }
             }
 
@@ -146,7 +147,7 @@ namespace Insignia.DAO.Tarefas
                 {
                     int queryResultado = sql.Execute(" DELETE FROM Tarefas WHERE ID = @ID AND EmpresaID = @EmpresaID AND UsuarioID = @UsuarioID ", new { ID = id, EmpresaID = HttpContext.Current.Session["EmpresaID"], UsuarioID = HttpContext.Current.Session["UsuarioID"] });
 
-                    resp = Convert.ToBoolean(queryResultado);
+                    resp = ToBoolean(queryResultado);
                 }
             }
 
@@ -205,7 +206,7 @@ namespace Insignia.DAO.Tarefas
                 {
                     int queryResultado = sql.Execute(" UPDATE Tarefas SET Status = @status WHERE ID = @ID ", new { ID = id, Status = status });
 
-                    resp = Convert.ToBoolean(queryResultado);
+                    resp = ToBoolean(queryResultado);
                 }
             }
 
@@ -219,21 +220,22 @@ namespace Insignia.DAO.Tarefas
         /// <param name="UsuarioID">ID do usuário da tarefa</param>
         public void VerificaBadge(string tipoID, int usuarioID)
         {
-            int Quantidade = QuantidadeTarefas(Convert.ToInt32(tipoID));
+            int Quantidade = QuantidadeTarefas(ToInt32(tipoID));
 
             if (Quantidade > 0)
             {
                 BadgesDAO BadgesDAO = new BadgesDAO(ConfigurationManager.ConnectionStrings["strConMain"].ConnectionString);
 
-                var Badges = BadgesDAO.Carregar(Convert.ToInt32(tipoID));
+                var Badges = BadgesDAO.Carregar(ToInt32(tipoID));
 
                 if (Quantidade >= Badges.Quantidade)
                 {
                     using (var sql = new SqlConnection(conStr))
                     {
-                        int queryResultado = sql.ExecuteScalar<int>(" INSERT INTO BadgesAdquiridas(UsuarioID, BadgeID, ConquistadoEm) OUTPUT INSERTED.ID VALUES (@UsuarioID, @BadgeID, @ConquistadoEm) ",
+                        int queryResultado = sql.ExecuteScalar<int>(" INSERT INTO BadgesAdquiridas(EmpresaID, UsuarioID, BadgeID, ConquistadoEm) OUTPUT INSERTED.ID VALUES (@EmpresaID, @UsuarioID, @BadgeID, @ConquistadoEm) ",
                                         new
                                         {
+                                            EmpresaID = HttpContext.Current.Session["EmpresaID"],
                                             UsuarioID = HttpContext.Current.Session["UsuarioID"],
                                             BadgeID = Badges.ID,
                                             ConquistadoEm = DateTime.Now

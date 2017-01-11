@@ -3,9 +3,9 @@ using Insignia.Model.Badge;
 using Insignia.Painel.Helpers.CustomAttributes;
 using Insignia.Painel.Helpers.Util;
 using Insignia.Painel.ViewModels;
-using System;
 using System.Configuration;
 using System.Web.Mvc;
+using static System.Convert;
 
 namespace Insignia.Painel.Controllers
 {
@@ -153,9 +153,9 @@ namespace Insignia.Painel.Controllers
         {
             var ViewModel = new ViewModelBadge();
 
-            ViewModel.ListBadgeBasicas = BadgesDAO.ListarAdquiridas(Convert.ToInt32(Session["UsuarioID"]), "Basica");
-            ViewModel.ListBadgeIntermediarias = BadgesDAO.ListarAdquiridas(Convert.ToInt32(Session["UsuarioID"]), "Intermediaria");
-            ViewModel.ListBadgeAvancadas = BadgesDAO.ListarAdquiridas(Convert.ToInt32(Session["UsuarioID"]), "avancada");
+            ViewModel.ListBadgeBasicas = BadgesDAO.ListarAdquiridas(ToInt32(Session["UsuarioID"]), "Basica");
+            ViewModel.ListBadgeIntermediarias = BadgesDAO.ListarAdquiridas(ToInt32(Session["UsuarioID"]), "Intermediaria");
+            ViewModel.ListBadgeAvancadas = BadgesDAO.ListarAdquiridas(ToInt32(Session["UsuarioID"]), "avancada");
 
             return View(ViewModel);
         }

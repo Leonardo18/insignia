@@ -7,6 +7,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
+using static System.Convert;
 
 namespace Insignia.DAO.Usuarios
 {
@@ -66,7 +67,7 @@ namespace Insignia.DAO.Usuarios
                                     });
 
                     usuario.ID = (int)queryResultado;
-                    resp = Convert.ToBoolean(queryResultado);
+                    resp = ToBoolean(queryResultado);
                 }
             }
 
@@ -99,7 +100,7 @@ namespace Insignia.DAO.Usuarios
                                         Tipo = usuario.Tipo
                                     });
 
-                    resp = Convert.ToBoolean(queryResultado);
+                    resp = ToBoolean(queryResultado);
                 }
             }
 
@@ -137,7 +138,14 @@ namespace Insignia.DAO.Usuarios
                 {
                     int queryResultado = sql.Execute(" DELETE FROM Usuarios WHERE ID = @ID AND EmpresaID = @EmpresaID ", new { ID = id, EmpresaID = HttpContext.Current.Session["EmpresaID"] });
 
-                    resp = Convert.ToBoolean(queryResultado);
+                    if (ToBoolean(queryResultado))
+                    {
+                        sql.Execute(" DELETE FROM BadgesAdquiridas WHERE UsuarioID = @UsuarioID AND EmpresaID = @EmpresaID ", new { UsuarioID = id, EmpresaID = HttpContext.Current.Session["EmpresaID"] });
+
+                        sql.Execute(" DELETE FROM Tarefas WHERE UsuarioID = @UsuarioID AND EmpresaID = @EmpresaID ", new { UsuarioID = id, EmpresaID = HttpContext.Current.Session["EmpresaID"] });
+                    }
+
+                    resp = ToBoolean(queryResultado);
                 }
             }
 

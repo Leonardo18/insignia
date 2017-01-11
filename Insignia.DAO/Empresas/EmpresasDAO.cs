@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Data.SqlClient;
 using System.Linq;
+using static System.Convert;
 
 namespace Insignia.DAO.Empresas
 {
@@ -63,7 +64,7 @@ namespace Insignia.DAO.Empresas
                                     });
 
                     empresa.ID = (int)queryResultado;
-                    resp = Convert.ToBoolean(queryResultado);
+                    resp = ToBoolean(queryResultado);
                 }
             }
 
@@ -95,7 +96,7 @@ namespace Insignia.DAO.Empresas
                                         Senha = Util.Autenticacao.Criptografar(empresa.SenhaCadastro)
                                     });
 
-                    resp = Convert.ToBoolean(queryResultado);
+                    resp = ToBoolean(queryResultado);
                 }
             }
 
@@ -117,7 +118,7 @@ namespace Insignia.DAO.Empresas
                 {
                     int queryResultado = sql.Execute(" DELETE FROM Empresas WHERE ID = @ID ", new { ID = id });
 
-                    resp = Convert.ToBoolean(queryResultado);
+                    resp = ToBoolean(queryResultado);
                 }
             }
 
@@ -172,7 +173,7 @@ namespace Insignia.DAO.Empresas
                 {
                     int queryResultado = sql.Execute(" UPDATE Empresas SET Senha = @Senha WHERE Email = @Email ", new { Email = email, Senha = Util.Autenticacao.Criptografar(senha) });
 
-                    resp = Convert.ToBoolean(queryResultado);
+                    resp = ToBoolean(queryResultado);
                 }
             }
 
