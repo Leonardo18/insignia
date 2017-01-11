@@ -71,6 +71,15 @@ namespace Insignia.Painel
                     "~/Scripts/js/daterangepicker/daterangepicker.js",
                     "~/Scripts/js/inputmask/jquery.inputmask.bundle.min.js"));
 
+            //Arquivos de css usados para tables
+            bundles.Add(new StyleBundle("~/DataTables/styles").Include(
+                "~/Content/css/datatables/jquery.dataTables.min.css",
+                "~/Content/css/datatables/buttons.bootstrap.min.css",
+                "~/Content/css/datatables/fixedHeader.bootstrap.min.css",
+                "~/Content/css/datatables/responsive.bootstrap.min.css",
+                "~/Content/css/datatables/scroller.bootstrap.min.css"));
+
+            //Arquivos de javascript usados para tables
             bundles.Add(new ScriptBundle("~/DataTables/scripts").Include(
                 "~/Scripts/js/datatables/jquery.dataTables.js",
                 "~/Scripts/js/datatables/dataTables.bootstrap.js",
@@ -87,13 +96,12 @@ namespace Insignia.Painel
                 "~/Scripts/js/datatables/responsive.bootstrap.min.js",
                 "~/Scripts/js/datatables/dataTables.scroller.min.js"));
 
-
-            bundles.Add(new StyleBundle("~/DataTables/styles").Include(
-                "~/Content/css/datatables/jquery.dataTables.min.css",
-                "~/Content/css/datatables/buttons.bootstrap.min.css",
-                "~/Content/css/datatables/fixedHeader.bootstrap.min.css",
-                "~/Content/css/datatables/responsive.bootstrap.min.css",
-                "~/Content/css/datatables/scroller.bootstrap.min.css"));
+            //Arquivos de javascript usados nos perfil
+            bundles.Add(new ScriptBundle("~/Perfil/scripts").Include(
+                    "~/Scripts/js/raphael/raphael.js",
+                    "~/Scripts/js/morris/morris.js",
+                    "~/Scripts/js/bootstrap-progressbar/bootstrap-progressbar.js",
+                    "~/Scripts/js/fastclick/fastclick.js"));
         }
     }
 }

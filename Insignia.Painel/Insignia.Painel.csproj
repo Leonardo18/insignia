@@ -170,7 +170,10 @@
     <Content Include="Scripts\js\inputmask\jquery.inputmask.bundle.min.js" />
     <Content Include="Scripts\js\jquery.js" />
     <Content Include="Scripts\js\moment\moment.min.js" />
+    <Content Include="Scripts\js\morris\morris.js" />
     <Content Include="Scripts\js\nprogress\nprogress.js" />
+    <Content Include="Scripts\js\bootstrap-progressbar\bootstrap-progressbar.js" />
+    <Content Include="Scripts\js\raphael\raphael.js" />
     <Content Include="Scripts\js\tags\jquery.tagsinput.js" />
     <Content Include="Scripts\js\Upload\bootstrap-filestyle.js" />
     <Content Include="Scripts\js\wysiwyg\bootstrap-wysiwyg.min.js" />
@@ -210,6 +213,7 @@
     <Content Include="Views\Usuarios\Editar.cshtml" />
     <Content Include="Views\Usuarios\Listar.cshtml" />
     <Content Include="Views\Usuarios\Remover.cshtml" />
+    <Content Include="Views\Usuarios\Perfil.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

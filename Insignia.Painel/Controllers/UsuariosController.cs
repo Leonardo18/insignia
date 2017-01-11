@@ -196,5 +196,22 @@ namespace Insignia.Painel.Controllers
 
             return View(UsuarioModel);
         }
+
+        /// <summary>
+        /// GET: Usuário Perfil
+        /// </summary>        
+        /// <returns>Retorna a view com os dados do usuário</returns>
+        [HttpGet]
+        public ActionResult Perfil(int id)
+        {
+            var UsuarioModel = UsuariosDAO.Carregar(id);
+
+            if (UsuarioModel == null)
+            {
+                UsuarioModel = new Usuario();
+            }
+
+            return View(UsuarioModel);
+        }
     }
 }
