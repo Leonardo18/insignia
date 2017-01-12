@@ -3,11 +3,14 @@ using Insignia.DAO.Tarefas;
 using Insignia.DAO.Usuarios;
 using Insignia.DAO.Util;
 using Insignia.Model.Usuario;
+using Insignia.Painel.Helpers.AmazonS3;
 using Insignia.Painel.Helpers.CustomAttributes;
 using Insignia.Painel.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.IO;
+using System.Web;
 using System.Web.Mvc;
 
 namespace Insignia.Painel.Controllers
@@ -225,6 +228,102 @@ namespace Insignia.Painel.Controllers
             ViewModel.ListCompetencias = CompetenciasDAO.Listar();
 
             return View(ViewModel);
+        }
+
+        /// <summary>
+        /// GET: Usuário PerfilEditar
+        /// </summary>        
+        /// <returns>Retorna a view com os dados do usuário para edição</returns>
+        [HttpGet, IsLogged]
+        public ActionResult PerfilEditar(int id)
+        {
+            var UsuarioModel = UsuariosDAO.Carregar(id);
+
+            List<SelectListItem> Estados = new List<SelectListItem>();
+
+            //Busca os  e retorna um dictionary contendo os dados
+            var TodosEstados = UsuariosDAO.Estados();
+
+            foreach (var item in TodosEstados.Keys)
+            {
+                Estados.Add(new SelectListItem { Text = TodosEstados[item], Value = Convert.ToString(item) });
+            }
+
+            //Retorna na list o valor marcado atualmente para o cadastro
+            foreach (var item in Estados)
+            {
+                if (item.Text == UsuarioModel.Estado)
+                {
+                    item.Selected = true;
+                    break;
+                }
+            }
+            ViewBag.Estados = Estados;
+
+            return View(UsuarioModel);
+        }
+
+        /// <summary>
+        /// POST: Usuário PerfilEditar
+        /// </summary>        
+        /// <returns>Retorna a view com os dados do usuário para edição</returns>
+        [HttpPost, IsLogged]
+        public ActionResult PerfilEditar(Usuario UsuarioModel, HttpPostedFileBase Foto)
+        {
+            // Verifica se existe um arquivo escolhido
+            if (Foto != null && Foto.ContentLength > 0)
+            {
+                AmazonUpload AmazonS3 = new AmazonUpload();
+
+                string ArquivoAntigo = Database.DBBuscaInfo("Usuarios", "ID", Convert.ToString(UsuarioModel.ID), "Foto");
+
+                // Pega o nome do arquivo
+                UsuarioModel.Foto = Path.GetFileName(Foto.FileName);
+
+                // Grava o arquivo em uma pasta local
+                var Caminho = Path.Combine(Server.MapPath("~/Content/Uploads"), UsuarioModel.Foto);
+
+                Foto.SaveAs(Caminho);
+
+                //Verifica se existe a pasta da empresa no Bucket
+                if (!AmazonS3.ExistePasta(Convert.ToString(Session["EmpresaNome"]), "Fotos", ConfigurationManager.AppSettings["BucketName"]))
+                {
+                    //Cria uma pasta no Bucket com o nome da empresa
+                    AmazonS3.CriaPasta(Convert.ToString(Session["EmpresaNome"]), "Fotos", ConfigurationManager.AppSettings["BucketName"]);
+                }
+
+                //Apaga arquivo antigo para fazer upload de um novo
+                AmazonS3.ApagaArquivo(ConfigurationManager.AppSettings["BucketName"], Convert.ToString(Session["EmpresaNome"]), "Fotos", ArquivoAntigo);
+
+                //Faz Upload do arquivo para o S3
+                AmazonS3.EnviaArquivoS3(Caminho, ConfigurationManager.AppSettings["BucketName"], Convert.ToString(Session["EmpresaNome"]), "Fotos", UsuarioModel.Foto);
+
+                System.IO.File.Delete(Caminho);
+            }
+            else
+            {
+                //Se não tem arquivo nome, mantém o antigo
+                UsuarioModel.Foto = Database.DBBuscaInfo("Usuarios", "ID", Convert.ToString(UsuarioModel.ID), "Foto");
+            }
+
+            if (UsuariosDAO.EditarPerfil(UsuarioModel))
+            {
+                return RedirectToAction("Perfil", new { ID = UsuarioModel.ID });
+            }
+
+            List<SelectListItem> Estados = new List<SelectListItem>();
+
+            //Busca e retorna um dictionary contendo os dados
+            var TodosEstados = UsuariosDAO.Estados();
+
+            foreach (var item in TodosEstados.Keys)
+            {
+                Estados.Add(new SelectListItem { Text = TodosEstados[item], Value = Convert.ToString(item) });
+            }
+
+            ViewBag.Estados = Estados;
+
+            return RedirectToAction("PerfilEditar", UsuarioModel);
         }
     }
 }

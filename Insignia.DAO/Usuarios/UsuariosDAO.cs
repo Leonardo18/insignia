@@ -108,6 +108,36 @@ namespace Insignia.DAO.Usuarios
         }
 
         /// <summary>
+        /// Edita o perfil um usuário no banco de dados
+        /// </summary>
+        /// <param name="usuario">Model contendo o usuário a ser editado</param>
+        /// <returns>True se o usuario foi encontrado e editado, false caso contrário</returns>
+        public bool EditarPerfil(Usuario usuario)
+        {
+            bool resp = false;
+
+            using (var sql = new SqlConnection(conStr))
+            {
+                var queryResultado = sql.Execute(" UPDATE Usuarios SET Cidade = @Cidade, Estado = @Estado, Pais = @Pais, Site = @Site, Foto = @Foto, Cargo = @Cargo WHERE ID = @ID AND EmpresaID = @EmpresaID",
+                                new
+                                {
+                                    ID = usuario.ID,
+                                    EmpresaID = HttpContext.Current.Session["EmpresaID"],
+                                    Cidade = usuario.cidade,
+                                    Estado = usuario.Estado,
+                                    Pais = usuario.Pais,
+                                    Site = usuario.Site,
+                                    Foto = usuario.Foto,
+                                    Cargo = usuario.Cargo
+                                });
+
+                resp = ToBoolean(queryResultado);
+            }
+
+            return resp;
+        }
+
+        /// <summary>
         /// Carrega uma lista com todos os usuários encontrados no banco de dados.
         /// </summary>
         /// <returns>Retornar uma List de usuários</returns>
@@ -192,6 +222,22 @@ namespace Insignia.DAO.Usuarios
             }
 
             return resp;
+        }
+
+        /// <summary>
+        /// Carrega todos os estados do banco
+        /// </summary>
+        /// <returns>Dictionary contendo a Sigla e nome de cada estado</returns>
+        public Dictionary<string, string> Estados()
+        {
+            Dictionary<string, string> dict = new Dictionary<string, string>();
+
+            using (var sql = new SqlConnection(conStr))
+            {
+                dict = sql.Query(" SELECT Sigla, Nome FROM Estados ORDER BY Nome ASC ").ToDictionary(row => (string)row.Sigla, row => (string)row.Nome);
+            }
+
+            return dict;
         }
     }
 }

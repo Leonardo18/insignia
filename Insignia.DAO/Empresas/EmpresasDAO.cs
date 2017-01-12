@@ -179,5 +179,21 @@ namespace Insignia.DAO.Empresas
 
             return resp;
         }
+
+        /// <summary>
+        /// Carrega todos os estados do banco
+        /// </summary>
+        /// <returns>Dictionary contendo a Sigla e nome de cada estado</returns>
+        public Dictionary<string, string> Estados()
+        {
+            Dictionary<string, string> dict = new Dictionary<string, string>();
+
+            using (var sql = new SqlConnection(conStr))
+            {
+                dict = sql.Query(" SELECT Sigla, Nome FROM Estados ORDER BY Nome ASC ").ToDictionary(row => (string)row.Sigla, row => (string)row.Nome);
+            }
+
+            return dict;
+        }
     }
 }

@@ -1,0 +1,96 @@
+﻿@model Insignia.Model.Usuario.Usuario
+@{
+    ViewBag.Title = "PerfilEditar";
+    Layout = "~/Views/Shared/LayoutPrincipal.cshtml";
+}
+
+<!-- page content -->
+<div class="page-title">
+</div>
+<div class="clearfix"></div>
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2 id="TituloPagina">Perfil Editar</h2>
+                <ul class="nav navbar-right panel_toolbox" style="min-width: 0px;">
+                    <li>
+                        <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <br />
+                <!-- /page content -->
+                @using (Html.BeginForm("PerfilEditar", "Usuarios", FormMethod.Post, new { @class = "form-horizontal form-label-left", enctype = "multipart/form-data" }))
+                {
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">
+                            País:
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            @Html.TextBox("Pais", Model.Pais, new { @class = "form-control col-md-7 col-xs-12", placeholder = "País" })
+                        </div><span class="glyphicon glyphicon-info-sign" data-toggle="tooltip" data-placement="right" title="Este campo indica qual o país do usuário."></span>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                            Estado:
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            @Html.DropDownList("Estado", (List<SelectListItem>)ViewBag.Estados, null, new { @class = "select2_multiple form-control" })
+                        </div><span class="glyphicon glyphicon-info-sign" data-toggle="tooltip" data-placement="right" title="Este campo indica qual o estado do usuário."></span>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">
+                            Cidade:
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            @Html.TextBox("Cidade", Model.cidade, new { @class = "form-control col-md-7 col-xs-12", placeholder = "Cidade", autofocus = "true" })
+                        </div><span class="glyphicon glyphicon-info-sign" data-toggle="tooltip" data-placement="right" title="Este campo indica qual a cidade do usuário."></span>
+                    </div>
+                    <div class="item form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="website">
+                            Site:
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            @Html.TextBox("Site", Model.Site, new { @class = "form-control col-md-7 col-xs-12", placeholder = "http://www.website.com.br", type = "url" })
+                        </div><span class="glyphicon glyphicon-info-sign" data-toggle="tooltip" data-placement="right" title="Este campo defini um site ao usuário."></span>
+                    </div>
+                    <div class="item form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="file">
+                            Foto:
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            @Html.TextBox("Foto", Model.Foto, new { @class = "filestyle", type = "file", name = "Foto" })
+                        </div><span class="glyphicon glyphicon-info-sign" data-toggle="tooltip" data-placement="right" title="Este campo defini uma foto ao usuário."></span>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">
+                            Cargo:
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            @Html.TextBox("Cargo", Model.Cargo, new { @class = "form-control col-md-7 col-xs-12", placeholder = "Cargo" })
+                        </div><span class="glyphicon glyphicon-info-sign" data-toggle="tooltip" data-placement="right" title="Este campo indica qual o cargo do usuário."></span>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="modal-footer">
+                        <button class="btn btn-primary" type="submit">Salvar</button>
+                        <button type="button" class="btn btn-default submit" onclick="location.href='@Url.Action("Perfil", null, new { ID = Model.ID, controller = "Usuarios" }, Request.Url.Scheme)'" B Badg data-dismiss="modal">Voltar</button>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /page content -->
+
+@Scripts.Render("~/PerfilEditar/scripts")
+<!-- Carrega nome do arquivo no campo -->
+<script>
+    $(document).ready(function () {
+        //Seta nome do arquivo de anexo no campo de upload
+        $('input#Foto + div input').val('@(Model.Foto)');
+    })
+</script>
+<!-- /Carrega nome do arquivo no campo -->

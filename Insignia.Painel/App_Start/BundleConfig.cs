@@ -102,6 +102,11 @@ namespace Insignia.Painel
                     "~/Scripts/js/morris/morris.js",
                     "~/Scripts/js/bootstrap-progressbar/bootstrap-progressbar.js",
                     "~/Scripts/js/fastclick/fastclick.js"));
+
+
+            //Arquivos de javascript usados no editar do perfil
+            bundles.Add(new ScriptBundle("~/PerfilEditar/scripts").Include(
+                    "~/Scripts/js/Upload/bootstrap-filestyle.js"));
         }
     }
 }

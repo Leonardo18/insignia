@@ -215,6 +215,7 @@
     <Content Include="Views\Usuarios\Remover.cshtml" />
     <Content Include="Views\Usuarios\Perfil.cshtml" />
     <Content Include="Views\Empresas\Perfil.cshtml" />
+    <Content Include="Views\Usuarios\PerfilEditar.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -249,7 +250,7 @@
     <Compile Include="ViewModels\ViewModelPerfil.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
+    <Folder Include="App_Start\App_Data\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Insignia.DAO\Insignia.DAO.csproj">
