@@ -244,7 +244,7 @@ namespace Insignia.DAO.Tarefas
 
                 var Badges = BadgesDAO.Carregar(ToInt32(tipoID));
 
-                if (Quantidade >= Badges.Quantidade)
+                if (Quantidade == Badges.Quantidade)
                 {
                     using (var sql = new SqlConnection(conStr))
                     {
@@ -264,8 +264,8 @@ namespace Insignia.DAO.Tarefas
         /// <summary>
         /// Busca a quantidade de tarefas executadas de um tipo especifico
         /// </summary>
-        /// <param name="BadgeID"></param>
-        /// <returns>Retorna a quantidade de tarefas de um tipo especifico, caos não ache retorna 0</returns>
+        /// <param name="tipID">Tipo da tarefa a ser pesquisado</param>
+        /// <returns>Retorna a quantidade de tarefas de um tipo especifico, caso não ache retorna 0</returns>
         private int QuantidadeTarefas(int tipoID)
         {
             int Quantidade = 0;
@@ -279,6 +279,26 @@ namespace Insignia.DAO.Tarefas
             }
 
             return Quantidade;
-        }        
+        }
+
+        /// <summary>
+        /// Busca a quantidade de tarefas finalizadas em um mês especifico
+        /// </summary>
+        /// <param name="mes">Mes que será consultado</param>
+        /// <returns>Retorna a quantidade de tarefas finalizadas em um mês especifico, caso não ache retorna 0</returns>
+        public int QuantidadeTarefasMes(int mes)
+        {
+            int Quantidade = 0;
+
+            if (!string.IsNullOrEmpty(Convert.ToString(mes)))
+            {
+                using (var sql = new SqlConnection(conStr))
+                {
+                    Quantidade = sql.ExecuteScalar<int>(" SELECT Count(ID) FROM Tarefas WHERE Status = @Status AND Month(CriadoEm) = @Mes AND Year(CriadoEm) = Year(GetDate()) ", new { Mes = mes, Status = ConfigurationManager.AppSettings["Finalizada"] });
+                }
+            }
+
+            return Quantidade;
+        }
     }
 }

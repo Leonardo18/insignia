@@ -208,16 +208,20 @@ namespace Insignia.Painel.Controllers
         public ActionResult Perfil(int id)
         {
             var ViewModel = new ViewModelPerfil();
-
             ViewModel.Usuario = UsuariosDAO.Carregar(id);
 
             TarefasDAO TarefasDAO = new TarefasDAO(ConfigurationManager.ConnectionStrings["strConMain"].ConnectionString);
-
             //Busca as tarefa com status finalizada
             ViewModel.ListFinalizadas = TarefasDAO.ListarTop(ConfigurationManager.AppSettings["Finalizada"], 5);
 
-            CompetenciasDAO CompetenciasDAO = new CompetenciasDAO(ConfigurationManager.ConnectionStrings["strConMain"].ConnectionString);
+            ViewModel.TarefasMes = new List<int>();
 
+            for (int i = 1; i <= 12; i++)
+            {
+                ViewModel.TarefasMes.Add(TarefasDAO.QuantidadeTarefasMes(i));
+            }
+
+            CompetenciasDAO CompetenciasDAO = new CompetenciasDAO(ConfigurationManager.ConnectionStrings["strConMain"].ConnectionString);
             ViewModel.ListCompetencias = CompetenciasDAO.Listar();
 
             return View(ViewModel);

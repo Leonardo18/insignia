@@ -132,16 +132,18 @@
         Morris.Bar({
             element: 'graph_bar',
             data: [
-              { "periodo": "Jan", "Tarefas Trabalhadas": 80 },
-              { "periodo": "Feb", "Tarefas Trabalhadas": 125 },
-              { "periodo": "Mar", "Tarefas Trabalhadas": 176 },
-              { "periodo": "Apr", "Tarefas Trabalhadas": 224 },
-              { "periodo": "May", "Tarefas Trabalhadas": 265 },
-              { "periodo": "Jun", "Tarefas Trabalhadas": 314 },
-              { "periodo": "Jul", "Tarefas Trabalhadas": 347 },
-              { "periodo": "Aug", "Tarefas Trabalhadas": 287 },
-              { "periodo": "Sep", "Tarefas Trabalhadas": 240 },
-              { "periodo": "Oct", "Tarefas Trabalhadas": 211 }
+              { "periodo": "Jan", "Tarefas Trabalhadas": @Model.TarefasMes[0] },
+              { "periodo": "Fev", "Tarefas Trabalhadas": @Model.TarefasMes[1] },
+              { "periodo": "Mar", "Tarefas Trabalhadas": @Model.TarefasMes[2] },
+              { "periodo": "Abr", "Tarefas Trabalhadas": @Model.TarefasMes[3] },
+              { "periodo": "Mai", "Tarefas Trabalhadas": @Model.TarefasMes[4] },
+              { "periodo": "Jun", "Tarefas Trabalhadas": @Model.TarefasMes[5] },
+              { "periodo": "Jul", "Tarefas Trabalhadas": @Model.TarefasMes[6] },
+              { "periodo": "Ago", "Tarefas Trabalhadas": @Model.TarefasMes[7] },
+              { "periodo": "Set", "Tarefas Trabalhadas": @Model.TarefasMes[8] },
+              { "periodo": "Out", "Tarefas Trabalhadas": @Model.TarefasMes[9] },
+              { "periodo": "Nov", "Tarefas Trabalhadas": @Model.TarefasMes[10] },
+              { "periodo": "Dez", "Tarefas Trabalhadas": @Model.TarefasMes[11] }
             ],
             xkey: 'periodo',
             hideHover: 'auto',

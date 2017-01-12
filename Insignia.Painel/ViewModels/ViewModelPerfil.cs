@@ -12,6 +12,8 @@ namespace Insignia.Painel.ViewModels
 
         public List<Competencia> ListCompetencias { get; set; }
 
+        public List<int> TarefasMes { get; set; }
+
         public Usuario Usuario { get; set; }
 
         public Empresa Empresa { get; set; }
