@@ -204,7 +204,7 @@ namespace Insignia.Painel.Controllers
         /// GET: Usuário Perfil
         /// </summary>        
         /// <returns>Retorna a view com os dados do usuário</returns>
-        [HttpGet]
+        [HttpGet, IsLogged]
         public ActionResult Perfil(int id)
         {
             var ViewModel = new ViewModelPerfil();

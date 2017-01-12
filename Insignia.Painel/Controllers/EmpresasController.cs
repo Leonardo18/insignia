@@ -1,6 +1,7 @@
 ﻿using Insignia.DAO.Competencias;
 using Insignia.DAO.Empresas;
 using Insignia.DAO.Tarefas;
+using Insignia.Painel.Helpers.CustomAttributes;
 using Insignia.Painel.ViewModels;
 using System.Configuration;
 using System.Web.Mvc;
@@ -15,7 +16,7 @@ namespace Insignia.Painel.Controllers
         /// GET: Empresa Perfil
         /// </summary>        
         /// <returns>Retorna a view com os dados da empresa</returns>
-        [HttpGet]
+        [HttpGet, IsLogged]
         public ActionResult Perfil(int id)
         {
             var ViewModel = new ViewModelPerfil();
