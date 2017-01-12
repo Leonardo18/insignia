@@ -19,5 +19,10 @@ namespace Insignia.Model.Competencia
         /// </summary>
         [Required(ErrorMessage = "Informe o nome da competência")]
         public string Nome { get; set; }
+
+        /// <summary>
+        /// Pontos da competência
+        /// </summary>        
+        public int Pontos { get; set; }
     }
 }

@@ -1,7 +1,10 @@
-﻿using Insignia.DAO.Usuarios;
+﻿using Insignia.DAO.Competencias;
+using Insignia.DAO.Tarefas;
+using Insignia.DAO.Usuarios;
 using Insignia.DAO.Util;
 using Insignia.Model.Usuario;
 using Insignia.Painel.Helpers.CustomAttributes;
+using Insignia.Painel.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -204,14 +207,20 @@ namespace Insignia.Painel.Controllers
         [HttpGet]
         public ActionResult Perfil(int id)
         {
-            var UsuarioModel = UsuariosDAO.Carregar(id);
+            var ViewModel = new ViewModelPerfil();
 
-            if (UsuarioModel == null)
-            {
-                UsuarioModel = new Usuario();
-            }
+            ViewModel.Usuario = UsuariosDAO.Carregar(id);
 
-            return View(UsuarioModel);
+            TarefasDAO TarefasDAO = new TarefasDAO(ConfigurationManager.ConnectionStrings["strConMain"].ConnectionString);
+
+            //Busca as tarefa com status finalizada
+            ViewModel.ListFinalizadas = TarefasDAO.ListarTop(ConfigurationManager.AppSettings["Finalizada"], 5);
+
+            CompetenciasDAO CompetenciasDAO = new CompetenciasDAO(ConfigurationManager.ConnectionStrings["strConMain"].ConnectionString);
+
+            ViewModel.ListCompetencias = CompetenciasDAO.Listar();
+
+            return View(ViewModel);
         }
     }
 }

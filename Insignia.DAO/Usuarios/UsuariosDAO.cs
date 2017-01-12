@@ -33,7 +33,7 @@ namespace Insignia.DAO.Usuarios
             {
                 using (var sql = new SqlConnection(conStr))
                 {
-                    resp = sql.Query<Usuario>(" SELECT ID, EmpresaID, SetorID, Nome, Email, Tipo FROM Usuarios WHERE ID = @ID AND EmpresaID = @EmpresaID ", new { ID = id, EmpresaID = HttpContext.Current.Session["EmpresaID"] }).SingleOrDefault();
+                    resp = sql.Query<Usuario>(" SELECT ID, EmpresaID, SetorID, Nome, Email, Cidade, Estado, Pais, Site, Foto, Cargo, Tipo FROM Usuarios WHERE ID = @ID AND EmpresaID = @EmpresaID ", new { ID = id, EmpresaID = HttpContext.Current.Session["EmpresaID"] }).SingleOrDefault();
                 }
             }
 

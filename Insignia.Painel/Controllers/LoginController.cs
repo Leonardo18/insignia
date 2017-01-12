@@ -63,6 +63,7 @@ namespace Insignia.Painel.Controllers
                 Session["UsuarioID"] = EmpresaModel.ID;
                 Session["UsuarioNome"] = EmpresaModel.RazaoSocial;
                 Session["UsuarioEmail"] = EmpresaModel.Email;
+                Session["UsuarioFoto"] = EmpresaModel.Foto;
 
                 return RedirectToAction("../Dashboard/Dashboard");
             }
@@ -70,10 +71,12 @@ namespace Insignia.Painel.Controllers
             {
                 Session["SessionID"] = Session.SessionID;
                 Session["EmpresaID"] = UsuarioModel.EmpresaID;
+                Session["EmpresaNome"] = Database.DBBuscaInfo("Empresas", "ID", Convert.ToString(UsuarioModel.EmpresaID), "RazaoSocial");
                 Session["SetorID"] = UsuarioModel.SetorID;
                 Session["UsuarioID"] = UsuarioModel.ID;
                 Session["UsuarioNome"] = UsuarioModel.Nome;
                 Session["UsuarioEmail"] = UsuarioModel.Email;
+                Session["UsuarioFoto"] = UsuarioModel.Foto;
 
                 return RedirectToAction("../Dashboard/Dashboard");
             }

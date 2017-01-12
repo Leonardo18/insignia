@@ -52,5 +52,35 @@ namespace Insignia.Model.Usuario
         /// </summary>
         [Required(ErrorMessage = "Informe o tipo do usuário")]
         public string Tipo { get; set; }
+
+        /// <summary>
+        /// Cidade do usuário
+        /// </summary>       
+        public string cidade { get; set; }
+
+        /// <summary>
+        /// Estado do usuário
+        /// </summary>       
+        public string Estado { get; set; }
+
+        /// <summary>
+        /// País do usuário
+        /// </summary>       
+        public string Pais { get; set; }
+
+        /// <summary>
+        /// Site do usuário
+        /// </summary>       
+        public string Site { get; set; }
+
+        /// <summary>
+        /// Foto do usuário
+        /// </summary>       
+        public string Foto { get; set; }
+
+        /// <summary>
+        /// Cargo do usuário
+        /// </summary>       
+        public string Cargo { get; set; }
     }
 }

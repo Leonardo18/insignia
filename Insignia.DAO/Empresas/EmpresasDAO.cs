@@ -32,7 +32,7 @@ namespace Insignia.DAO.Empresas
             {
                 using (var sql = new SqlConnection(conStr))
                 {
-                    resp = sql.Query<Empresa>(" SELECT ID, RazaoSocial, CNPJ, Email, Senha AS SenhaCadastro FROM Empresas WHERE ID = @ID ", new { ID = id }).SingleOrDefault();
+                    resp = sql.Query<Empresa>(" SELECT ID, RazaoSocial, CNPJ, Email, Senha AS SenhaCadastro, Cidade, Estado, Pais, Site, Foto FROM Empresas WHERE ID = @ID ", new { ID = id }).SingleOrDefault();
                 }
             }
 

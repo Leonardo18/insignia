@@ -40,5 +40,35 @@ namespace Insignia.Model.Empresa
         /// </summary>
         [Required(ErrorMessage = "As senhas não conferem"), Compare("SenhaCadastro")]
         public string ConfirmaSenha { get; set; }
+
+        /// <summary>
+        /// Cidade da empresa
+        /// </summary>       
+        public string cidade { get; set; }
+
+        /// <summary>
+        /// Estado da empresa
+        /// </summary>       
+        public string Estado { get; set; }
+
+        /// <summary>
+        /// País da empresa
+        /// </summary>       
+        public string Pais { get; set; }
+
+        /// <summary>
+        /// Site da empresa
+        /// </summary>       
+        public string Site { get; set; }
+
+        /// <summary>
+        /// Foto da empresa
+        /// </summary>       
+        public string Foto { get; set; }
+
+        /// <summary>
+        /// Cargo da empresa
+        /// </summary>       
+        public string Cargo { get; set; }
     }
 }

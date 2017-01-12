@@ -29,7 +29,7 @@ namespace Insignia.DAO.Autenticacao
 
             using (var sql = new SqlConnection(conStr))
             {
-                model = sql.Query<Empresa>(" SELECT ID, RazaoSocial, CNPJ, Email, Senha As SenhaCadastro FROM Empresas WHERE Email = @Email ", new { Email = email }).SingleOrDefault();
+                model = sql.Query<Empresa>(" SELECT ID, RazaoSocial, CNPJ, Email, Senha As SenhaCadastro, Foto FROM Empresas WHERE Email = @Email ", new { Email = email }).SingleOrDefault();
             }
 
             if (model != null)
@@ -57,7 +57,7 @@ namespace Insignia.DAO.Autenticacao
 
             using (var sql = new SqlConnection(conStr))
             {
-                model = sql.Query<Usuario>(" SELECT ID, EmpresaID, SetorID, Nome, Email, Senha AS SenhaCadastro FROM Usuarios WHERE Email = @Email ", new { Email = email }).SingleOrDefault();
+                model = sql.Query<Usuario>(" SELECT ID, EmpresaID, SetorID, Nome, Email, Senha AS SenhaCadastro, Foto FROM Usuarios WHERE Email = @Email ", new { Email = email }).SingleOrDefault();
             }
 
             if (model != null)

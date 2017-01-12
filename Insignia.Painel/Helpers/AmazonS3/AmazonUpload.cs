@@ -18,7 +18,7 @@ namespace Insignia.Painel.Helpers.AmazonS3
         /// <param name="SubDiretorio">Nome do diretório dentro do bucket no S3</param>
         /// <param name="NomeDoArquivo">Nome do arquivo</param>
         /// <returns>Retorna true caso tenha conseguido efetuar o upload, caso contrário retorna false</returns>
-        public bool EnviaArquivoS3(string CaminhoArquivo, string BucketNome, string SubDiretorio, string NomeDoArquivo)
+        public bool EnviaArquivoS3(string CaminhoArquivo, string BucketNome, string SubDiretorio, string SubPasta, string NomeDoArquivo)
         {
             bool resp = false;
 
@@ -38,7 +38,7 @@ namespace Insignia.Painel.Helpers.AmazonS3
             }
             else
             {   //Nome do bucket com o diretorio
-                request.BucketName = BucketNome + @"/" + SubDiretorio;
+                request.BucketName = BucketNome + @"/" + SubDiretorio + "/" + SubPasta;
             }
 
             //Nome do arquivo no S3
@@ -95,7 +95,7 @@ namespace Insignia.Painel.Helpers.AmazonS3
         /// <param name="Pasta">Nome da pasta</param>
         /// <param name="BucketNome">Nome do bucket que a pasta deve estar</param>
         /// <returns>Retorna true caso a pasta existe e retorna false caso ela não exista</returns>
-        public bool ExistePasta(string Pasta, string BucketNome)
+        public bool ExistePasta(string Pasta, string SubPasta, string BucketNome)
         {
             bool resp = false;
 
@@ -105,7 +105,7 @@ namespace Insignia.Painel.Helpers.AmazonS3
             ListObjectsRequest findFolderRequest = new ListObjectsRequest();
 
             findFolderRequest.BucketName = BucketNome;
-            findFolderRequest.Prefix = Pasta;
+            findFolderRequest.Prefix = Pasta + "/" + SubPasta;
 
             ListObjectsResponse findFolderResponse = cliente.ListObjects(findFolderRequest);
 
@@ -121,7 +121,7 @@ namespace Insignia.Painel.Helpers.AmazonS3
         /// <param name="PastaNome">Nome da Pasta</param>
         /// /// <param name="BucketNome">Nome do Bucket no qual será criado a pasta</param>
         /// <returns>Retorna true caso consiga criar com sucesso e false caso não consiga</returns>
-        public bool CriaPasta(string PastaNome, string BucketNome)
+        public bool CriaPasta(string PastaNome, string SubpastaNome, string BucketNome)
         {
             bool resp = false;
 
@@ -130,7 +130,7 @@ namespace Insignia.Painel.Helpers.AmazonS3
 
             PutObjectRequest request = new PutObjectRequest();
 
-            request.Key = PastaNome + "/";
+            request.Key = PastaNome + "/" + SubpastaNome + "/";
             request.BucketName = BucketNome;
             request.CannedACL = S3CannedACL.PublicRead;
             request.StorageClass = S3StorageClass.Standard;
@@ -151,7 +151,7 @@ namespace Insignia.Painel.Helpers.AmazonS3
         /// <param name="PastaNome">Nome da pasta em que está o arquivo</param>
         /// <param name="NomeArquivo">Nome do arquivo</param>
         /// <returns></returns>
-        public bool ApagaArquivo(string BucketNome, string PastaNome, string NomeArquivo)
+        public bool ApagaArquivo(string BucketNome, string PastaNome, string SubPastaNome, string NomeArquivo)
         {
             bool resp = true;
 
@@ -159,7 +159,7 @@ namespace Insignia.Painel.Helpers.AmazonS3
 
             DeleteObjectRequest request = new DeleteObjectRequest();
             request.BucketName = BucketNome;
-            request.Key = PastaNome + "/" + NomeArquivo;
+            request.Key = PastaNome + "/" + SubPastaNome + "/" + NomeArquivo;
 
             client.DeleteObject(request);
 

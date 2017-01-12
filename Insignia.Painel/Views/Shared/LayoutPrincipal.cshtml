@@ -19,7 +19,7 @@
             <div class="col-md-3 left_col">
                 <div class="left_col scroll-view">
                     <div class="navbar nav_title" style="border: 0;">
-                        <a href="~/Dashboard/Dashboard" class="site_title"><i class="fa fa-paw"></i><span style="margin-left: 10px;">Insígnia</span></a>
+                        <a href="~/Dashboard/Dashboard" class="site_title"><span style="margin-left: 10px;">Insígnia</span></a>
                     </div>
 
                     <div class="clearfix"></div>
@@ -27,7 +27,16 @@
                     <!-- menu profile quick info -->
                     <div class="profile">
                         <div class="profile_pic">
-                            <img src="~/Content/images/eu.jpg" alt="..." class="img-circle profile_img">
+                            @if (!string.IsNullOrEmpty(Convert.ToString(Session["UsuarioFoto"])))
+                            {
+                                <!-- Foto do usuário -->
+                                <img src="https://s3-sa-east-1.amazonaws.com/insigniagamify/@Session["EmpresaNome"]/Fotos/@Session["UsuarioFoto"]" alt="..." class="img-circle profile_img">
+                            }
+                            else
+                            {
+                                <!-- Foto padrão -->
+                                <img src="https://s3-sa-east-1.amazonaws.com/insigniagamify/images/Default.png" alt="..." class="img-circle profile_img">
+                            }
                         </div>
                         <div class="profile_info">
                             <span>Bem-Vindo,</span>
@@ -41,7 +50,7 @@
                     <!-- sidebar menu -->
                     <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
                         <div class="menu_section">
-                            <h3>General</h3>
+                            <h3>Geral</h3>
                             <ul class="nav side-menu">
                                 <li>
                                     <a><i class="fa fa-edit"></i> Cadastros <span class="fa fa-chevron-down"></span></a>
@@ -56,7 +65,7 @@
                             </ul>
                             <ul class="nav side-menu">
                                 <li>
-                                    <a><i class="fa fa-certificate"></i> Conquistas <span class="fa fa-chevron-down"></span></a>
+                                    <a><i class="fa fa-trophy"></i> Conquistas <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
                                         <li><a href="~/Badges/Adquiridas">Badges Adquiridas</a></li>
                                         <li><a href="~/Competencias/Adquiridas">Competências</a></li>
@@ -71,6 +80,21 @@
                                         <li><a href="~/Badges/Grafico">Competências</a></li>
                                         <li><a href="~/Competencias/Grafico">Setores</a></li>
                                         <li><a href="~/Competencias/Grafico">Tarefas</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <ul class="nav side-menu">
+                                <li>
+                                    <a><i class="fa fa-user"></i> Informações <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        @if (Convert.ToString(Session["EmpresaID"]) == Convert.ToString(Session["UsuarioID"]))
+                                        {
+                                            <li><a href="~/Empresas/Perfil/@Session["EmpresaID"])">Perfil</a></li>
+                                        }
+                                        else
+                                        {
+                                            <li><a href="~/Usuarios/Perfil/@Session["UsuarioID"]">Perfil</a></li>
+                                        }
                                     </ul>
                                 </li>
                             </ul>

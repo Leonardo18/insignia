@@ -117,6 +117,22 @@ namespace Insignia.DAO.Tarefas
         }
 
         /// <summary>
+        /// Carrega uma list de tarefas conforme o número passado no top e o status
+        /// </summary>
+        /// <returns>Retornar uma List de Tarefas</returns>
+        public List<Tarefa> ListarTop(string status, int top)
+        {
+            List<Tarefa> list;
+
+            using (var sql = new SqlConnection(conStr))
+            {
+                list = sql.Query<Tarefa>(" SELECT Top " + top + " ID, EmpresaID, UsuarioID, BadgeID AS TipoID, Titulo, Resumo, Descricao, Anexo, Termino, Observacoes, CriadoEm FROM Tarefas WHERE EmpresaID = @EmpresaID AND UsuarioID = @UsuarioID AND Status = @Status ", new { EmpresaID = HttpContext.Current.Session["EmpresaID"], UsuarioID = HttpContext.Current.Session["UsuarioID"], Status = status }).ToList();
+            }
+
+            return list;
+        }
+
+        /// <summary>
         /// Carrega uma lista com todas as tarefas encontradas no banco de dados por status
         /// </summary>
         /// <returns>Retornar uma List de Tarefas</returns>
@@ -263,6 +279,6 @@ namespace Insignia.DAO.Tarefas
             }
 
             return Quantidade;
-        }
+        }        
     }
 }

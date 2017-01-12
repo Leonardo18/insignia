@@ -85,14 +85,14 @@ namespace Insignia.Painel.Controllers
                     Arquivo.SaveAs(Caminho);
 
                     //Verifica se existe a pasta da empresa no Bucket
-                    if (!AmazonS3.ExistePasta(Convert.ToString(Session["EmpresaNome"]), ConfigurationManager.AppSettings["BucketName"]))
+                    if (!AmazonS3.ExistePasta(Convert.ToString(Session["EmpresaNome"]), "Arquivos", ConfigurationManager.AppSettings["BucketName"]))
                     {
                         //Cria uma pasta no Bucket com o nome da empresa
-                        AmazonS3.CriaPasta(Convert.ToString(Session["EmpresaNome"]), ConfigurationManager.AppSettings["BucketName"]);
+                        AmazonS3.CriaPasta(Convert.ToString(Session["EmpresaNome"]), "Arquivos", ConfigurationManager.AppSettings["BucketName"]);
                     }
 
                     //Faz Upload do arquivo para o S3
-                    AmazonS3.EnviaArquivoS3(Caminho, ConfigurationManager.AppSettings["BucketName"], Convert.ToString(Session["EmpresaNome"]), TarefaModel.Anexo);
+                    AmazonS3.EnviaArquivoS3(Caminho, ConfigurationManager.AppSettings["BucketName"], Convert.ToString(Session["EmpresaNome"]), "Arquivos", TarefaModel.Anexo);
 
                     System.IO.File.Delete(Caminho);
                 }
@@ -180,17 +180,17 @@ namespace Insignia.Painel.Controllers
                     Arquivo.SaveAs(Caminho);
 
                     //Verifica se existe a pasta da empresa no Bucket
-                    if (!AmazonS3.ExistePasta(Convert.ToString(Session["EmpresaNome"]), ConfigurationManager.AppSettings["BucketName"]))
+                    if (!AmazonS3.ExistePasta(Convert.ToString(Session["EmpresaNome"]), "Arquivos", ConfigurationManager.AppSettings["BucketName"]))
                     {
                         //Cria uma pasta no Bucket com o nome da empresa
-                        AmazonS3.CriaPasta(Convert.ToString(Session["EmpresaNome"]), ConfigurationManager.AppSettings["BucketName"]);
+                        AmazonS3.CriaPasta(Convert.ToString(Session["EmpresaNome"]), "Arquivos", ConfigurationManager.AppSettings["BucketName"]);
                     }
 
                     //Apaga arquivo antigo para fazer upload de um novo
-                    AmazonS3.ApagaArquivo(ConfigurationManager.AppSettings["BucketName"], Convert.ToString(Session["EmpresaNome"]), ArquivoAntigo);
+                    AmazonS3.ApagaArquivo(ConfigurationManager.AppSettings["BucketName"], Convert.ToString(Session["EmpresaNome"]), "Arquivos", ArquivoAntigo);
 
                     //Faz Upload do arquivo para o S3
-                    AmazonS3.EnviaArquivoS3(Caminho, ConfigurationManager.AppSettings["BucketName"], Convert.ToString(Session["EmpresaNome"]), TarefaModel.Anexo);
+                    AmazonS3.EnviaArquivoS3(Caminho, ConfigurationManager.AppSettings["BucketName"], Convert.ToString(Session["EmpresaNome"]), "Arquivos", TarefaModel.Anexo);
 
                     System.IO.File.Delete(Caminho);
                 }
@@ -274,7 +274,7 @@ namespace Insignia.Painel.Controllers
                 AmazonUpload AmazonS3 = new AmazonUpload();
 
                 //Apaga arquivo antes de apagar a tarefa
-                if (AmazonS3.ApagaArquivo(ConfigurationManager.AppSettings["BucketName"], Convert.ToString(Session["EmpresaNome"]), TarefaModel.Anexo))
+                if (AmazonS3.ApagaArquivo(ConfigurationManager.AppSettings["BucketName"], Convert.ToString(Session["EmpresaNome"]), "Arquivos", TarefaModel.Anexo))
                 {
                     if (TarefasDAO.Remover(TarefaModel.ID))
                     {

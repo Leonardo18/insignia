@@ -3,6 +3,7 @@
     ViewBag.Title = "Perfil";
     Layout = "~/Views/Shared/LayoutPrincipal.cshtml";
 }
+
 @Styles.Render("~/Perfil/styles")
 
 <!-- page content -->
@@ -25,10 +26,10 @@
                 <div class="col-md-3 col-sm-3 col-xs-12 profile_left">
                     <div class="profile_img">
                         <div id="crop-avatar">
-                            @if (!string.IsNullOrEmpty(Model.Usuario.Foto))
+                            @if (!string.IsNullOrEmpty(Model.Empresa.Foto))
                             {
                                 <!-- Foto do usuário -->
-                                <img class="img-responsive avatar-view" src="https://s3-sa-east-1.amazonaws.com/insigniagamify/@Session["EmpresaNome"]/Fotos/@Model.Usuario.Foto" alt="Foto">
+                                <img class="img-responsive avatar-view" src="https://s3-sa-east-1.amazonaws.com/insigniagamify/@Session["EmpresaNome"]/Fotos/@Model.Empresa.Foto" alt="Foto">
                             }
                             else
                             {
@@ -37,20 +38,20 @@
                             }
                         </div>
                     </div>
-                    <h3>@Model.Usuario.Nome</h3>
+                    <h3>@Model.Empresa.RazaoSocial</h3>
                     <ul class="list-unstyled user_data">
                         <li>
-                            <i class="fa fa-map-marker user-profile-icon"></i> @Model.Usuario.cidade, @Model.Usuario.Estado, @Model.Usuario.Pais
+                            <i class="fa fa-map-marker user-profile-icon"></i> @Model.Empresa.cidade, @Model.Empresa.Estado, @Model.Empresa.Pais
                         </li>
                         <li>
-                            <i class="fa fa-briefcase user-profile-icon"></i> @Model.Usuario.Cargo
+                            <i class="fa fa-briefcase user-profile-icon"></i> @Model.Empresa.Cargo
                         </li>
                         <li class="m-top-xs">
                             <i class="fa fa-external-link user-profile-icon"></i>
-                            <a href="@Model.Usuario.Site" target="_blank"> @Model.Usuario.Site</a>
+                            <a href="@Model.Empresa.Site" target="_blank"> @Model.Empresa.Site</a>
                         </li>
                     </ul>
-                    <button type="button" style="float: left; margin-bottom: auto;" class="btn btn-primary" onclick="location.href='@Url.Action("PerfilEditar", "Usuarios")'">
+                    <button type="button" style="float: left; margin-bottom: auto;" class="btn btn-primary" onclick="location.href='@Url.Action("PerfilEditar", "Empresa")'">
                         <i class="fa fa-edit m-right-xs"></i>Editar Perfil
                     </button>
                     <br /><br />
@@ -90,10 +91,10 @@
                                     @foreach (var item in Model.ListFinalizadas)
                                     {
                                         <li>
-                                            @if (!string.IsNullOrEmpty(Model.Usuario.Foto))
+                                            @if (!string.IsNullOrEmpty(Model.Empresa.Foto))
                                             {
                                             <!-- Foto do usuário -->
-                                                <img class="avatar" src="https://s3-sa-east-1.amazonaws.com/insigniagamify/@Session["EmpresaNome"]/Fotos/@Model.Usuario.Foto" alt="Foto">
+                                                <img class="avatar" src="https://s3-sa-east-1.amazonaws.com/insigniagamify/@Session["EmpresaNome"]/Fotos/@Model.Empresa.Foto" alt="Foto">
                                             }
                                             else
                                             {
@@ -101,7 +102,7 @@
                                                 <img class="avatar" src="https://s3-sa-east-1.amazonaws.com/insigniagamify/images/Default.png" alt="Foto">
                                             }
                                             <div class="message_wrapper">
-                                                <h4 class="heading">@Model.Usuario.Nome</h4>
+                                                <h4 class="heading">@Model.Empresa.RazaoSocial</h4>
                                                 <blockquote class="message">@item.Resumo</blockquote>
                                                 <br />
                                                 <p class="url">
