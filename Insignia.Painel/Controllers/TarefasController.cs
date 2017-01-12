@@ -80,7 +80,7 @@ namespace Insignia.Painel.Controllers
                     TarefaModel.Anexo = Path.GetFileName(Arquivo.FileName);
 
                     // Grava o arquivo em uma pasta local
-                    var Caminho = Path.Combine(Server.MapPath("~/Content/Uploads"), TarefaModel.Anexo);
+                    var Caminho = Path.Combine(Server.MapPath("~/Content/uploads"), TarefaModel.Anexo);
 
                     Arquivo.SaveAs(Caminho);
 
@@ -175,7 +175,7 @@ namespace Insignia.Painel.Controllers
                     TarefaModel.Anexo = Path.GetFileName(Arquivo.FileName);
 
                     // Grava o arquivo em uma pasta local
-                    var Caminho = Path.Combine(Server.MapPath("~/Content/Uploads"), TarefaModel.Anexo);
+                    var Caminho = Path.Combine(Server.MapPath("~/Content/uploads"), TarefaModel.Anexo);
 
                     Arquivo.SaveAs(Caminho);
 

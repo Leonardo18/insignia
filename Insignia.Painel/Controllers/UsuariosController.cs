@@ -281,7 +281,7 @@ namespace Insignia.Painel.Controllers
                 UsuarioModel.Foto = Path.GetFileName(Foto.FileName);
 
                 // Grava o arquivo em uma pasta local
-                var Caminho = Path.Combine(Server.MapPath("~/Content/Uploads"), UsuarioModel.Foto);
+                var Caminho = Path.Combine(Server.MapPath("~/Content/uploads"), UsuarioModel.Foto);
 
                 Foto.SaveAs(Caminho);
 
