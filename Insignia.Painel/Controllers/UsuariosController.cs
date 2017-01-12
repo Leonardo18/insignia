@@ -308,6 +308,8 @@ namespace Insignia.Painel.Controllers
 
             if (UsuariosDAO.EditarPerfil(UsuarioModel))
             {
+                Session["UsuarioFoto"] = UsuarioModel.Foto;
+
                 return RedirectToAction("Perfil", new { ID = UsuarioModel.ID });
             }
 

@@ -41,7 +41,7 @@
                     <h3>@Model.Empresa.RazaoSocial</h3>
                     <ul class="list-unstyled user_data">
                         <li>
-                            <i class="fa fa-map-marker user-profile-icon"></i> @Model.Empresa.cidade, @Model.Empresa.Estado, @Model.Empresa.Pais
+                            <i class="fa fa-map-marker user-profile-icon"></i> @Model.Empresa.Cidade, @Model.Empresa.Estado, @Model.Empresa.Pais
                         </li>
                         <li>
                             <i class="fa fa-briefcase user-profile-icon"></i> @Model.Empresa.Cargo
@@ -51,7 +51,7 @@
                             <a href="@Model.Empresa.Site" target="_blank"> @Model.Empresa.Site</a>
                         </li>
                     </ul>
-                    <button type="button" style="float: left; margin-bottom: auto;" class="btn btn-primary" onclick="location.href='@Url.Action("PerfilEditar", "Empresa")'">
+                    <button type="button" style="float: left; margin-bottom: auto;" class="btn btn-primary" onclick="location.href='@Url.Action("PerfilEditar", null, new { ID = Model.Empresa.ID, controller = "Empresas" }, Request.Url.Scheme)'">
                         <i class="fa fa-edit m-right-xs"></i>Editar Perfil
                     </button>
                     <br /><br />

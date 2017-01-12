@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Web;
 using static System.Convert;
 
 namespace Insignia.DAO.Empresas
@@ -98,6 +99,35 @@ namespace Insignia.DAO.Empresas
 
                     resp = ToBoolean(queryResultado);
                 }
+            }
+
+            return resp;
+        }
+
+        /// <summary>
+        /// Edita o perfil de uma empresa no banco de dados
+        /// </summary>
+        /// <param name="empresa">Model contendo a empresa a ser editado</param>
+        /// <returns>True se a empresa foi encontrada e editada, false caso contrário</returns>
+        public bool EditarPerfil(Empresa empresa)
+        {
+            bool resp = false;
+
+            using (var sql = new SqlConnection(conStr))
+            {
+                var queryResultado = sql.Execute(" UPDATE Empresas SET Cidade = @Cidade, Estado = @Estado, Pais = @Pais, Site = @Site, Foto = @Foto, Cargo = @Cargo WHERE ID = @ID",
+                                new
+                                {
+                                    ID = empresa.ID,
+                                    Cidade = empresa.Cidade,
+                                    Estado = empresa.Estado,
+                                    Pais = empresa.Pais,
+                                    Site = empresa.Site,
+                                    Foto = empresa.Foto,
+                                    Cargo = empresa.Cargo
+                                });
+
+                resp = ToBoolean(queryResultado);
             }
 
             return resp;

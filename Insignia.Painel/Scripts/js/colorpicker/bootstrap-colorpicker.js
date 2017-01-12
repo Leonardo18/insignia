@@ -841,8 +841,8 @@
                 'left': this.color.value.s * sl.saturation.maxLeft
             });
             this.picker.find('.colorpicker-saturation').css('backgroundColor', this.color.toHex(this.color.value.h, 1, 1, 1));
-            this.picker.find('.colorpicker-alpha').css('backgroundColor', this.color.toHex());
-            this.picker.find('.colorpicker-color, .colorpicker-color div').css('backgroundColor', this.color.toString(this.format));
+            this.picker.find('.colorpicker-alpha').css('backgroundColor', this.color.toHex()).css('display', 'none');
+            this.picker.find('.colorpicker-color, .colorpicker-color div').css('backgroundColor', this.color.toString(this.format)).css('display','none');
             return val;
         },
         updateComponent: function (val) {

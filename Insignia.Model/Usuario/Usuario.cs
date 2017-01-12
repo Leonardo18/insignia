@@ -56,7 +56,7 @@ namespace Insignia.Model.Usuario
         /// <summary>
         /// Cidade do usuário
         /// </summary>       
-        public string cidade { get; set; }
+        public string Cidade { get; set; }
 
         /// <summary>
         /// Estado do usuário

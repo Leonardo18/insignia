@@ -44,7 +44,7 @@ namespace Insignia.Model.Empresa
         /// <summary>
         /// Cidade da empresa
         /// </summary>       
-        public string cidade { get; set; }
+        public string Cidade { get; set; }
 
         /// <summary>
         /// Estado da empresa

@@ -108,7 +108,7 @@ namespace Insignia.DAO.Usuarios
         }
 
         /// <summary>
-        /// Edita o perfil um usuário no banco de dados
+        /// Edita o perfil de um usuário no banco de dados
         /// </summary>
         /// <param name="usuario">Model contendo o usuário a ser editado</param>
         /// <returns>True se o usuario foi encontrado e editado, false caso contrário</returns>
@@ -123,7 +123,7 @@ namespace Insignia.DAO.Usuarios
                                 {
                                     ID = usuario.ID,
                                     EmpresaID = HttpContext.Current.Session["EmpresaID"],
-                                    Cidade = usuario.cidade,
+                                    Cidade = usuario.Cidade,
                                     Estado = usuario.Estado,
                                     Pais = usuario.Pais,
                                     Site = usuario.Site,

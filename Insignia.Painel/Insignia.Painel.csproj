@@ -216,6 +216,7 @@
     <Content Include="Views\Usuarios\Perfil.cshtml" />
     <Content Include="Views\Empresas\Perfil.cshtml" />
     <Content Include="Views\Usuarios\PerfilEditar.cshtml" />
+    <Content Include="Views\Empresas\PerfilEditar.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
