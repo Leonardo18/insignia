@@ -3,7 +3,6 @@
     ViewBag.Title = "Perfil";
     Layout = "~/Views/Shared/LayoutPrincipal.cshtml";
 }
-@Styles.Render("~/Perfil/styles")
 
 <!-- page content -->
 <div class="page-title">
@@ -28,12 +27,12 @@
                             @if (!string.IsNullOrEmpty(Model.Usuario.Foto))
                             {
                                 <!-- Foto do usuário -->
-                                <img class="img-responsive avatar-view" src="https://s3-sa-east-1.amazonaws.com/insigniagamify/@Session["EmpresaNome"]/Fotos/@Model.Usuario.Foto" alt="Foto">
+                                <img style="width: 200px; height: 200px;" class="img-responsive avatar-view" src="https://s3-sa-east-1.amazonaws.com/insigniagamify/@Session["EmpresaNome"]/Fotos/@Model.Usuario.Foto" alt="Foto">
                             }
                             else
                             {
                                 <!-- Foto padrão -->
-                                <img class="img-responsive avatar-view" src="https://s3-sa-east-1.amazonaws.com/insigniagamify/images/Default.png" alt="Foto">
+                                <img style="width: 200px; height: 200px;" class="img-responsive avatar-view" src="https://s3-sa-east-1.amazonaws.com/insigniagamify/images/Default.png" alt="Foto">
                             }
                         </div>
                     </div>
