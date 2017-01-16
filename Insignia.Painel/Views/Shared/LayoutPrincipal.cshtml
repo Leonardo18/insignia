@@ -126,6 +126,35 @@
                         <div class="nav toggle">
                             <a id="menu_toggle"><i class="fa fa-bars"></i></a>
                         </div>
+                        <ul class="nav navbar-nav navbar-right">
+                            <li class="">
+                                <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                    @if (!string.IsNullOrEmpty(Convert.ToString(Session["UsuarioFoto"])))
+                                    {
+                                                <!-- Foto do usuário -->
+                                        <img src="https://s3-sa-east-1.amazonaws.com/insigniagamify/@Session["EmpresaNome"]/Fotos/@Session["UsuarioFoto"]" alt="">@Session["UsuarioNome"]
+                                        <span class="fa fa-angle-down"></span>
+                                    }
+                                    else
+                                    {
+                                                <!-- Foto padrão -->
+                                        <img src="https://s3-sa-east-1.amazonaws.com/insigniagamify/images/Default.png" alt="">@Session["UsuarioNome"]
+                                        <span class="fa fa-angle-down"></span>
+                                    }
+                                </a>
+                                <ul class="dropdown-menu dropdown-usermenu pull-right">
+                                    @if (Convert.ToString(Session["EmpresaID"]) == Convert.ToString(Session["UsuarioID"]))
+                                    {
+                                        <li><a href="~/Empresas/Perfil/@Session["EmpresaID"]"> Perfil</a></li>
+                                    }
+                                    else
+                                    {
+                                        <li><a href="~/Empresas/Perfil/@Session["UsuarioID"]"> Perfil</a></li>
+                                    }
+                                    <li><a href="~/Login/Sair"><i class="fa fa-sign-out pull-right"></i> Sair</a></li>
+                                </ul>
+                            </li>
+                        </ul>
                     </nav>
                 </div>
             </div>

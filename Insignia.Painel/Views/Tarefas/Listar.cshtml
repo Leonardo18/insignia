@@ -52,7 +52,7 @@
                                                     <a>@item.Titulo</a>
                                                 </h2>
                                                 <div class="byline">
-                                                    <span>Criado as @Convert.ToDateTime(item.CriadoEm).Hour Horas</span> por <a>@Session["UsuarioNome"]</a>
+                                                    <span>Criado as @Convert.ToDateTime(item.CriadoEm).Hour Horas</span> por <a>@Session["UsuarioNome"] </a> <span>no dia @Convert.ToDateTime(item.CriadoEm).Day / @Convert.ToDateTime(item.CriadoEm).Month / @Convert.ToDateTime(item.CriadoEm).Year</span>
                                                 </div>
                                                 <p class="excerpt">
                                                     @item.Resumo<a href="@Url.Action("../Tarefas/Editar", null, new { ID = item.ID, controller = "Tarefas" }, Request.Url.Scheme)">&nbsp;Ler&nbsp;Mais</a>
@@ -79,7 +79,7 @@
                                                     <a>@item.Titulo</a>
                                                 </h2>
                                                 <div class="byline">
-                                                    <span>Criado as @Convert.ToDateTime(item.CriadoEm).Hour Horas</span> por <a>@Session["UsuarioNome"]</a>
+                                                    <span>Criado as @Convert.ToDateTime(item.CriadoEm).Hour Horas</span> por <a>@Session["UsuarioNome"]</a> <span>no dia @Convert.ToDateTime(item.CriadoEm).Day / @Convert.ToDateTime(item.CriadoEm).Month / @Convert.ToDateTime(item.CriadoEm).Year</span>
                                                 </div>
                                                 <p class="excerpt">
                                                     @item.Resumo<a href="@Url.Action("../Tarefas/Editar", null, new { ID = item.ID, controller = "Tarefas" }, Request.Url.Scheme)">&nbsp;Ler&nbsp;Mais</a>
@@ -106,7 +106,7 @@
                                                     <a>@item.Titulo</a>
                                                 </h2>
                                                 <div class="byline">
-                                                    <span>Criado as @Convert.ToDateTime(item.CriadoEm).Hour Horas</span> por <a>@Session["UsuarioNome"]</a>
+                                                    <span>Criado as @Convert.ToDateTime(item.CriadoEm).Hour Horas</span> por <a>@Session["UsuarioNome"]</a> <span>no dia @Convert.ToDateTime(item.CriadoEm).Day / @Convert.ToDateTime(item.CriadoEm).Month / @Convert.ToDateTime(item.CriadoEm).Year</span>
                                                 </div>
                                                 <p class="excerpt">
                                                     @item.Resumo<a href="@Url.Action("../Tarefas/Editar", null, new { ID = item.ID, controller = "Tarefas" }, Request.Url.Scheme)">&nbsp;Ler&nbsp;Mais</a>
