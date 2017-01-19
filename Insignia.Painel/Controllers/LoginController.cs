@@ -190,6 +190,10 @@ namespace Insignia.Painel.Controllers
                     {
                         return RedirectToAction("Sair");
                     }
+                    else if (UsuarioDAO.AtualizaSenha(email, senhaCadastro))
+                    {
+                        return RedirectToAction("Sair");
+                    }
                     else
                     {
                         ViewBag.Error = "Ocorreu um problema ao tentar atualizar a senha, verifique o e-mail informado para recuperação de senha ou entre em contato com o administrador do sistema.";

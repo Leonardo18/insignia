@@ -239,5 +239,28 @@ namespace Insignia.DAO.Usuarios
 
             return dict;
         }
+
+        /// <summary>
+        /// Atualiza a senha em um cadastro
+        /// </summary>
+        /// <param name="email">email na qual será atualizado a senha</param>
+        /// <param name="senha">senha nova</param>
+        /// <returns>Retorna true caso tenha alterado com sucesso, false caso contrário</returns>
+        public bool AtualizaSenha(string email, string senha)
+        {
+            bool resp = false;
+
+            if (!string.IsNullOrWhiteSpace(email) && !string.IsNullOrWhiteSpace(senha))
+            {
+                using (var sql = new SqlConnection(conStr))
+                {
+                    int queryResultado = sql.Execute(" UPDATE Usuarios SET Senha = @Senha WHERE Email = @Email ", new { Email = email, Senha = Util.Autenticacao.Criptografar(senha) });
+
+                    resp = ToBoolean(queryResultado);
+                }
+            }
+
+            return resp;
+        }
     }
 }

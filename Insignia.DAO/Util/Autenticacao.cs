@@ -85,6 +85,12 @@ namespace Insignia.DAO.Util
             TDESAlgorithm.Mode = CipherMode.ECB;
             TDESAlgorithm.Padding = PaddingMode.PKCS7;
 
+            int mod4 = senha.Length % 4;
+            if (mod4 > 0)
+            {
+                senha += new string('=', 4 - mod4);
+            }
+
             byte[] DataToDecrypt = Convert.FromBase64String(senha);
 
             try
@@ -99,7 +105,7 @@ namespace Insignia.DAO.Util
             }
 
             return UTF8.GetString(Results);
-        }        
+        }
     }
 }
 
