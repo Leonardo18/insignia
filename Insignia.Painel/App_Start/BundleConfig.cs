@@ -73,28 +73,28 @@ namespace Insignia.Painel
 
             //Arquivos de css usados para tables
             bundles.Add(new StyleBundle("~/DataTables/styles").Include(
-                "~/Content/css/datatables/jquery.dataTables.min.css",
-                "~/Content/css/datatables/buttons.bootstrap.min.css",
-                "~/Content/css/datatables/fixedHeader.bootstrap.min.css",
-                "~/Content/css/datatables/responsive.bootstrap.min.css",
-                "~/Content/css/datatables/scroller.bootstrap.min.css"));
+                    "~/Content/css/datatables/jquery.dataTables.min.css",
+                    "~/Content/css/datatables/buttons.bootstrap.min.css",
+                    "~/Content/css/datatables/fixedHeader.bootstrap.min.css",
+                    "~/Content/css/datatables/responsive.bootstrap.min.css",
+                    "~/Content/css/datatables/scroller.bootstrap.min.css"));
 
             //Arquivos de javascript usados para tables
             bundles.Add(new ScriptBundle("~/DataTables/scripts").Include(
-                "~/Scripts/js/datatables/jquery.dataTables.js",
-                "~/Scripts/js/datatables/dataTables.bootstrap.js",
-                "~/Scripts/js/datatables/dataTables.buttons.min.js",
-                "~/Scripts/js/datatables/buttons.bootstrap.min.js",
-                "~/Scripts/js/datatables/jszip.min.js",
-                "~/Scripts/js/datatables/pdfmake.min.js",
-                "~/Scripts/js/datatables/vfs_fonts.js",
-                "~/Scripts/js/datatables/buttons.html5.min.js",
-                "~/Scripts/js/datatables/buttons.print.min.js",
-                "~/Scripts/js/datatables/dataTables.fixedHeader.min.js",
-                "~/Scripts/js/datatables/dataTables.keyTable.min.js",
-                "~/Scripts/js/datatables/dataTables.responsive.min.js",
-                "~/Scripts/js/datatables/responsive.bootstrap.min.js",
-                "~/Scripts/js/datatables/dataTables.scroller.min.js"));
+                    "~/Scripts/js/datatables/jquery.dataTables.js",
+                    "~/Scripts/js/datatables/dataTables.bootstrap.js",
+                    "~/Scripts/js/datatables/dataTables.buttons.min.js",
+                    "~/Scripts/js/datatables/buttons.bootstrap.min.js",
+                    "~/Scripts/js/datatables/jszip.min.js",
+                    "~/Scripts/js/datatables/pdfmake.min.js",
+                    "~/Scripts/js/datatables/vfs_fonts.js",
+                    "~/Scripts/js/datatables/buttons.html5.min.js",
+                    "~/Scripts/js/datatables/buttons.print.min.js",
+                    "~/Scripts/js/datatables/dataTables.fixedHeader.min.js",
+                    "~/Scripts/js/datatables/dataTables.keyTable.min.js",
+                    "~/Scripts/js/datatables/dataTables.responsive.min.js",
+                    "~/Scripts/js/datatables/responsive.bootstrap.min.js",
+                    "~/Scripts/js/datatables/dataTables.scroller.min.js"));
 
             //Arquivos de javascript usados nos perfil
             bundles.Add(new ScriptBundle("~/Perfil/scripts").Include(
