@@ -1,7 +1,7 @@
 ﻿@charset "UTF-8";
 
 .left_col {
-    background: url(../images/BackgroundLozange.png);
+    background: url(https://s3-sa-east-1.amazonaws.com/insigniagamify/images/Background-Lozange.jpg);
 }
 
 .nav-sm .container.body .col-md-3.left_col {
@@ -3797,7 +3797,7 @@ ul.project_files li {
 /* *********  /ecommerce  **************************** */
 /** login **/
 .login {
-    background: url('../images/BackgroundLozange.png');
+    background: url('https://s3-sa-east-1.amazonaws.com/insigniagamify/images/Background-PC.jpg');
 }
 
     .login .fa-paw {

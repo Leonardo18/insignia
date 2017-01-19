@@ -119,7 +119,6 @@
     <Content Include="Content\css\datatables\jquery.dataTables.min.css" />
     <Content Include="Content\css\datatables\responsive.bootstrap.min.css" />
     <Content Include="Content\css\datatables\scroller.bootstrap.min.css" />
-    <Content Include="Content\images\eu.jpg" />
     <Content Include="Content\css\animate\animate.css" />
     <Content Include="Content\css\badges\badge.css" />
     <Content Include="Content\css\bootstrap\bootstrap.css" />
@@ -134,11 +133,7 @@
     <Content Include="Content\css\logo\logo.css" />
     <Content Include="Content\css\nprogress\nprogress.css" />
     <Content Include="Content\css\tags\jquery.tagsinput.css" />
-    <Content Include="Content\images\Background.jpg" />
-    <Content Include="Content\images\BackgroundLozange.png" />
-    <Content Include="Content\images\dark_embroidery.png" />
     <Content Include="Content\images\favicon.ico" />
-    <Content Include="Content\images\logo.png" />
     <Content Include="Content\uploads\ReadMe.txt" />
     <Content Include="Fonts\css\font-awesome.css" />
     <Content Include="Fonts\glyphicons-halflings-regular.svg" />
