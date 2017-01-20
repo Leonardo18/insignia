@@ -77,6 +77,7 @@ namespace Insignia.Painel.Controllers
                 Session["UsuarioNome"] = UsuarioModel.Nome;
                 Session["UsuarioEmail"] = UsuarioModel.Email;
                 Session["UsuarioFoto"] = UsuarioModel.Foto;
+                Session["UsuarioTipo"] = UsuarioModel.Tipo;
 
                 return RedirectToAction("../Dashboard/Dashboard");
             }

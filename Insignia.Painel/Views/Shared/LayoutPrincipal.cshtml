@@ -144,11 +144,11 @@
                                 <ul class="dropdown-menu dropdown-usermenu pull-right">
                                     @if (Convert.ToString(Session["EmpresaID"]) == Convert.ToString(Session["UsuarioID"]))
                                     {
-                                        <li><a href="~/Empresas/Perfil/@Session["EmpresaID"]"> Perfil</a></li>
+                                        <li><a href="~/Empresas/Perfil/@Session[" EmpresaID"]"> Perfil</a></li>
                                     }
                                     else
                                     {
-                                        <li><a href="~/Usuarios/Perfil/@Session["UsuarioID"]"> Perfil</a></li>
+                                        <li><a href="~/Usuarios/Perfil/@Session[" UsuarioID"]"> Perfil</a></li>
                                     }
                                     <li><a href="~/Login/Sair"><i class="fa fa-sign-out pull-right"></i> Sair</a></li>
                                 </ul>
