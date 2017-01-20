@@ -177,7 +177,7 @@ namespace Insignia.Painel.Controllers
         [HttpPost]
         public ActionResult ResetarSenha(string senhaCadastro, string confirmaSenha)
         {
-            string email = Convert.ToString(Session["EmailRecuperacao"]);
+            string email = Convert.ToString(Session["EmailRecuperacao"]).Replace(" ", "+");
 
             if (!string.IsNullOrEmpty(email) && !string.IsNullOrEmpty(senhaCadastro) && !string.IsNullOrEmpty(confirmaSenha))
             {

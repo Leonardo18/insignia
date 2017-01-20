@@ -8,7 +8,7 @@ namespace Insignia.DAO.Util
 {
     public static class Autenticacao
     {
-        const string Senha = "E!09#x*&aTe$";
+        const string Hash = "E!09#x*&aTe$";
 
         /// <summary>
         /// Salva Log recebendo a conexão e a mensagem a ser inserida
@@ -39,13 +39,13 @@ namespace Insignia.DAO.Util
 
             MD5CryptoServiceProvider HashProvider = new MD5CryptoServiceProvider();
 
-            byte[] TDESKey = HashProvider.ComputeHash(UTF8.GetBytes(Senha));
+            byte[] TDESKey = HashProvider.ComputeHash(UTF8.GetBytes(Hash));
 
             TripleDESCryptoServiceProvider TDESAlgorithm = new TripleDESCryptoServiceProvider();
 
             TDESAlgorithm.Key = TDESKey;
             TDESAlgorithm.Mode = CipherMode.ECB;
-            TDESAlgorithm.Padding = PaddingMode.PKCS7;
+            TDESAlgorithm.Padding = PaddingMode.PKCS7;            
 
             byte[] DataToEncrypt = UTF8.GetBytes(senha);
 
@@ -77,7 +77,7 @@ namespace Insignia.DAO.Util
 
             MD5CryptoServiceProvider HashProvider = new MD5CryptoServiceProvider();
 
-            byte[] TDESKey = HashProvider.ComputeHash(UTF8.GetBytes(Senha));
+            byte[] TDESKey = HashProvider.ComputeHash(UTF8.GetBytes(Hash));
 
             TripleDESCryptoServiceProvider TDESAlgorithm = new TripleDESCryptoServiceProvider();
 
