@@ -231,48 +231,47 @@
                 cnpjObject.setCustomValidity("CNPJ inválido");
             }
             else {
-                cnpjObject.setCustomValidity('');
-            }
+                // Valida DVs
+                tamanho = cnpj.length - 2
+                numeros = cnpj.substring(0, tamanho);
+                digitos = cnpj.substring(tamanho);
+                soma = 0;
+                pos = tamanho - 7;
+                for (i = tamanho; i >= 1; i--) {
+                    soma += numeros.charAt(tamanho - i) * pos--;
+                    if (pos < 2)
+                        pos = 9;
+                }
+                resultado = soma % 11 < 2 ? 0 : 11 - soma % 11;
+                if (resultado != digitos.charAt(0)) {
+                    cnpjObject.setCustomValidity("CNPJ inválido");
+                }
+                else {
+                    cnpjObject.setCustomValidity('');
+                }
 
-            // Valida DVs
-            tamanho = cnpj.length - 2
-            numeros = cnpj.substring(0, tamanho);
-            digitos = cnpj.substring(tamanho);
-            soma = 0;
-            pos = tamanho - 7;
-            for (i = tamanho; i >= 1; i--) {
-                soma += numeros.charAt(tamanho - i) * pos--;
-                if (pos < 2)
-                    pos = 9;
-            }
-            resultado = soma % 11 < 2 ? 0 : 11 - soma % 11;
-            if (resultado != digitos.charAt(0)) {
-                cnpjObject.setCustomValidity("CNPJ inválido");
-            }
-            else {
-                cnpjObject.setCustomValidity('');
-            }
-
-            tamanho = tamanho + 1;
-            numeros = cnpj.substring(0, tamanho);
-            soma = 0;
-            pos = tamanho - 7;
-            for (i = tamanho; i >= 1; i--) {
-                soma += numeros.charAt(tamanho - i) * pos--;
-                if (pos < 2)
-                    pos = 9;
-            }
-            resultado = soma % 11 < 2 ? 0 : 11 - soma % 11;
-            if (resultado != digitos.charAt(1)) {
-                cnpjObject.setCustomValidity("CNPJ inválido");
-            }
-            else {
-                cnpjObject.setCustomValidity('');
+                tamanho = tamanho + 1;
+                numeros = cnpj.substring(0, tamanho);
+                soma = 0;
+                pos = tamanho - 7;
+                for (i = tamanho; i >= 1; i--) {
+                    soma += numeros.charAt(tamanho - i) * pos--;
+                    if (pos < 2)
+                        pos = 9;
+                }
+                resultado = soma % 11 < 2 ? 0 : 11 - soma % 11;
+                if (resultado != digitos.charAt(1)) {
+                    cnpjObject.setCustomValidity("CNPJ inválido");
+                }
+                else {
+                    cnpjObject.setCustomValidity('');
+                }
             }
         }
 
-        cnpj.onchange = validateCNPJ;
+        cnpjObject.onchange = validateCNPJ;
         cnpjObject.onkeyup = validateCNPJ;
+        cnpjObject.onkeypress = validateCNPJ;
         cnpjObject.onkeypress = validateCNPJ;
     </script>
     <!-- /ValidacaoCNPJ -->
