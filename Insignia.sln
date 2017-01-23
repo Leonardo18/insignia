@@ -1,11 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.25618.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Insignia.Painel", "Insignia.Painel\Insignia.Painel.csproj", "{4766A539-3AC4-49E9-A674-8F2EBBC41E86}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Insignia.Painel.Tests", "Insignia.Painel.Tests\Insignia.Painel.Tests.csproj", "{31F59410-FDC8-40E6-9173-8FC76E7AD6DE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Insignia.DAO", "Insignia.DAO\Insignia.DAO.csproj", "{360149C7-07FE-47B9-B7A0-2B27B6BEDE2A}"
 EndProject
@@ -21,10 +19,6 @@ Global
 		{4766A539-3AC4-49E9-A674-8F2EBBC41E86}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4766A539-3AC4-49E9-A674-8F2EBBC41E86}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4766A539-3AC4-49E9-A674-8F2EBBC41E86}.Release|Any CPU.Build.0 = Release|Any CPU
-		{31F59410-FDC8-40E6-9173-8FC76E7AD6DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{31F59410-FDC8-40E6-9173-8FC76E7AD6DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{31F59410-FDC8-40E6-9173-8FC76E7AD6DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{31F59410-FDC8-40E6-9173-8FC76E7AD6DE}.Release|Any CPU.Build.0 = Release|Any CPU
 		{360149C7-07FE-47B9-B7A0-2B27B6BEDE2A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{360149C7-07FE-47B9-B7A0-2B27B6BEDE2A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{360149C7-07FE-47B9-B7A0-2B27B6BEDE2A}.Release|Any CPU.ActiveCfg = Release|Any CPU
