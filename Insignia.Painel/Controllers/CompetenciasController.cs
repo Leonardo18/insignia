@@ -117,6 +117,10 @@ namespace Insignia.Painel.Controllers
                 {
                     return RedirectToAction("Listar");
                 }
+                else
+                {
+                    ViewBag.Error = "Ocorreu um erro ao tentar excluir o resgistro, favor entrar em contato com o administrador do sistema";
+                }
             }
 
             return View(CompetenciaModel);
