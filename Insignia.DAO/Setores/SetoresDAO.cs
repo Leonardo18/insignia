@@ -33,7 +33,12 @@ namespace Insignia.DAO.Setores
             {
                 using (var sql = new SqlConnection(conStr))
                 {
-                    resp = sql.Query<Setor>(" SELECT ID, EmpresaID, Nome FROM Setores WHERE ID = @ID AND EmpresaID = @EmpresaID ", new { ID = id, EmpresaID = HttpContext.Current.Session["EmpresaID"] }).SingleOrDefault();
+                    resp = sql.Query<Setor>(" SELECT ID, EmpresaID, Nome FROM Setores WHERE ID = @ID AND EmpresaID = @EmpresaID ", 
+                        new
+                        {
+                            ID = id,
+                            EmpresaID = HttpContext.Current.Session["EmpresaID"]
+                        }).SingleOrDefault();
                 }
             }
 
@@ -128,7 +133,12 @@ namespace Insignia.DAO.Setores
             {
                 using (var sql = new SqlConnection(conStr))
                 {
-                    int queryResultado = sql.Execute(" DELETE FROM Setores WHERE ID = @ID AND EmpresaID = @EmpresaID ", new { ID = id, EmpresaID = HttpContext.Current.Session["EmpresaID"] });
+                    int queryResultado = sql.Execute(" DELETE FROM Setores WHERE ID = @ID AND EmpresaID = @EmpresaID ", 
+                        new
+                        {
+                            ID = id,
+                            EmpresaID = HttpContext.Current.Session["EmpresaID"]
+                        });
 
                     resp = ToBoolean(queryResultado);
                 }

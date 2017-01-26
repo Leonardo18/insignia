@@ -17,7 +17,7 @@ namespace Insignia.Model.Usuario
         /// <summary>
         /// ID do setor no qual o usuário pertence
         /// </summary>
-        [Required(ErrorMessage = "Informe o setor do usuários")]
+        [Required(ErrorMessage = "Informe o setor do usuário")]
         public int SetorID { get; set; }
 
         /// <summary>

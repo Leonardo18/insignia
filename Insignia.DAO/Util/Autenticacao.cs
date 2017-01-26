@@ -21,7 +21,11 @@ namespace Insignia.DAO.Util
             {
                 using (var sql = new SqlConnection(conStr))
                 {
-                    sql.Query(" INSERT INTO Log(Mensagem) VALUES (@Mensagem) ", new { Mensagem = mensagem }).SingleOrDefault();
+                    sql.Query(" INSERT INTO Log(Mensagem) VALUES (@Mensagem) ", 
+                        new
+                        {
+                            Mensagem = mensagem
+                        }).SingleOrDefault();
                 }
             }
         }

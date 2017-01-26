@@ -33,7 +33,12 @@ namespace Insignia.DAO.Usuarios
             {
                 using (var sql = new SqlConnection(conStr))
                 {
-                    resp = sql.Query<Usuario>(" SELECT ID, EmpresaID, SetorID, Nome, Email, Cidade, Estado, Pais, Site, Foto, Cargo, Tipo FROM Usuarios WHERE ID = @ID AND EmpresaID = @EmpresaID ", new { ID = id, EmpresaID = HttpContext.Current.Session["EmpresaID"] }).SingleOrDefault();
+                    resp = sql.Query<Usuario>(" SELECT ID, EmpresaID, SetorID, Nome, Email, Cidade, Estado, Pais, Site, Foto, Cargo, Tipo FROM Usuarios WHERE ID = @ID AND EmpresaID = @EmpresaID ",
+                        new
+                        {
+                            ID = id,
+                            EmpresaID = HttpContext.Current.Session["EmpresaID"]
+                        }).SingleOrDefault();
                 }
             }
 
@@ -166,13 +171,28 @@ namespace Insignia.DAO.Usuarios
             {
                 using (var sql = new SqlConnection(conStr))
                 {
-                    int queryResultado = sql.Execute(" DELETE FROM Usuarios WHERE ID = @ID AND EmpresaID = @EmpresaID ", new { ID = id, EmpresaID = HttpContext.Current.Session["EmpresaID"] });
+                    int queryResultado = sql.Execute(" DELETE FROM Usuarios WHERE ID = @ID AND EmpresaID = @EmpresaID ",
+                        new
+                        {
+                            ID = id,
+                            EmpresaID = HttpContext.Current.Session["EmpresaID"]
+                        });
 
                     if (ToBoolean(queryResultado))
                     {
-                        sql.Execute(" DELETE FROM BadgesAdquiridas WHERE UsuarioID = @UsuarioID AND EmpresaID = @EmpresaID ", new { UsuarioID = id, EmpresaID = HttpContext.Current.Session["EmpresaID"] });
+                        sql.Execute(" DELETE FROM BadgesAdquiridas WHERE UsuarioID = @UsuarioID AND EmpresaID = @EmpresaID ",
+                            new
+                            {
+                                UsuarioID = id,
+                                EmpresaID = HttpContext.Current.Session["EmpresaID"]
+                            });
 
-                        sql.Execute(" DELETE FROM Tarefas WHERE UsuarioID = @UsuarioID AND EmpresaID = @EmpresaID ", new { UsuarioID = id, EmpresaID = HttpContext.Current.Session["EmpresaID"] });
+                        sql.Execute(" DELETE FROM Tarefas WHERE UsuarioID = @UsuarioID AND EmpresaID = @EmpresaID ",
+                            new
+                            {
+                                UsuarioID = id,
+                                EmpresaID = HttpContext.Current.Session["EmpresaID"]
+                            });
                     }
 
                     resp = ToBoolean(queryResultado);
@@ -192,7 +212,11 @@ namespace Insignia.DAO.Usuarios
 
             using (var sql = new SqlConnection(conStr))
             {
-                dict = sql.Query(" SELECT ID, Nome FROM Setores WHERE EmpresaID = @EmpresaID ORDER BY Nome ASC ", new { EmpresaID = HttpContext.Current.Session["EmpresaID"] }).ToDictionary(row => (int)row.ID, row => (string)row.Nome);
+                dict = sql.Query(" SELECT ID, Nome FROM Setores WHERE EmpresaID = @EmpresaID ORDER BY Nome ASC ",
+                    new
+                    {
+                        EmpresaID = HttpContext.Current.Session["EmpresaID"]
+                    }).ToDictionary(row => (int)row.ID, row => (string)row.Nome);
             }
 
             return dict;
@@ -210,7 +234,12 @@ namespace Insignia.DAO.Usuarios
 
             using (var sql = new SqlConnection(conStr))
             {
-                usuario = sql.Query<Usuario>(" SELECT ID FROM Usuarios WHERE Email = @Email AND EmpresaID = @EmpresaID", new { Email = email, EmpresaID = HttpContext.Current.Session["EmpresaID"] }).FirstOrDefault();
+                usuario = sql.Query<Usuario>(" SELECT ID FROM Usuarios WHERE Email = @Email AND EmpresaID = @EmpresaID",
+                    new
+                    {
+                        Email = email,
+                        EmpresaID = HttpContext.Current.Session["EmpresaID"]
+                    }).FirstOrDefault();
             }
 
             if (usuario != null && !string.IsNullOrEmpty(email))
@@ -254,7 +283,12 @@ namespace Insignia.DAO.Usuarios
             {
                 using (var sql = new SqlConnection(conStr))
                 {
-                    int queryResultado = sql.Execute(" UPDATE Usuarios SET Senha = @Senha WHERE Email = @Email ", new { Email = email, Senha = Util.Autenticacao.Criptografar(senha) });
+                    int queryResultado = sql.Execute(" UPDATE Usuarios SET Senha = @Senha WHERE Email = @Email ", 
+                        new
+                        {
+                            Email = email,
+                            Senha = Util.Autenticacao.Criptografar(senha)
+                        });
 
                     resp = ToBoolean(queryResultado);
                 }

@@ -47,7 +47,11 @@ namespace Insignia.DAO.Util
 
                 using (var sql = new SqlConnection(ConfigurationManager.ConnectionStrings["strConMain"].ConnectionString))
                 {
-                    queryResultado = sql.ExecuteScalar<int>(" SELECT " + campo + " FROM " + tabela + " WHERE " + campo2 + " = @Hash ", new { Hash = hash });
+                    queryResultado = sql.ExecuteScalar<int>(" SELECT " + campo + " FROM " + tabela + " WHERE " + campo2 + " = @Hash ", 
+                        new
+                        {
+                            Hash = hash
+                        });
                 }
 
             } while (Convert.ToBoolean(queryResultado));

@@ -33,7 +33,12 @@ namespace Insignia.DAO.Badges
             {
                 using (var sql = new SqlConnection(conStr))
                 {
-                    resp = sql.Query<Badge>(" SELECT ID, EmpresaID, Titulo, Subtitulo, Cor, CorFonte, Nivel, Tags, Quantidade FROM Badges WHERE ID = @ID AND EmpresaID = @EmpresaID ", new { ID = id, EmpresaID = HttpContext.Current.Session["EmpresaID"] }).SingleOrDefault();
+                    resp = sql.Query<Badge>(" SELECT ID, EmpresaID, Titulo, Subtitulo, Cor, CorFonte, Nivel, Tags, Quantidade FROM Badges WHERE ID = @ID AND EmpresaID = @EmpresaID ",
+                        new
+                        {
+                            ID = id,
+                            EmpresaID = HttpContext.Current.Session["EmpresaID"]
+                        }).SingleOrDefault();
                 }
             }
 
@@ -119,7 +124,12 @@ namespace Insignia.DAO.Badges
 
             using (var sql = new SqlConnection(conStr))
             {
-                list = sql.Query<Badge>(" SELECT ID, Titulo, Subtitulo, Cor, CorFonte, Nivel, Tags, Quantidade FROM Badges WHERE EmpresaID = @EmpresaID AND Nivel = @Nivel ", new { EmpresaID = HttpContext.Current.Session["EmpresaID"], Nivel = nivel }).ToList();
+                list = sql.Query<Badge>(" SELECT ID, Titulo, Subtitulo, Cor, CorFonte, Nivel, Tags, Quantidade FROM Badges WHERE EmpresaID = @EmpresaID AND Nivel = @Nivel ",
+                    new
+                    {
+                        EmpresaID = HttpContext.Current.Session["EmpresaID"],
+                        Nivel = nivel
+                    }).ToList();
             }
 
             return list;
@@ -138,7 +148,12 @@ namespace Insignia.DAO.Badges
             {
                 using (var sql = new SqlConnection(conStr))
                 {
-                    int queryResultado = sql.Query<int>(" SELECT Top 1 ID FROM Tarefas WHERE BadgeID = @BadgeID AND EmpresaID = @EmpresaID", new { BadgeID = id, EmpresaID = HttpContext.Current.Session["EmpresaID"] }).SingleOrDefault();
+                    int queryResultado = sql.Query<int>(" SELECT Top 1 ID FROM Tarefas WHERE BadgeID = @BadgeID AND EmpresaID = @EmpresaID",
+                        new
+                        {
+                            BadgeID = id,
+                            EmpresaID = HttpContext.Current.Session["EmpresaID"]
+                        }).SingleOrDefault();
 
                     resp = ToBoolean(queryResultado);
                 }
@@ -160,7 +175,12 @@ namespace Insignia.DAO.Badges
             {
                 using (var sql = new SqlConnection(conStr))
                 {
-                    int queryResultado = sql.Execute(" DELETE FROM Badges WHERE ID = @ID AND EmpresaID = @EmpresaID ", new { ID = id, EmpresaID = HttpContext.Current.Session["EmpresaID"] });
+                    int queryResultado = sql.Execute(" DELETE FROM Badges WHERE ID = @ID AND EmpresaID = @EmpresaID ",
+                        new
+                        {
+                            ID = id,
+                            EmpresaID = HttpContext.Current.Session["EmpresaID"]
+                        });
 
                     resp = ToBoolean(queryResultado);
                 }
@@ -181,7 +201,13 @@ namespace Insignia.DAO.Badges
 
             using (var sql = new SqlConnection(conStr))
             {
-                list = sql.Query<Badge>(" SELECT Badges.ID AS ID, Titulo, Subtitulo, Cor, CorFonte, Nivel, Tags, Quantidade FROM Badges INNER JOIN BadgesAdquiridas ON Badges.ID = BadgesAdquiridas.BadgeID WHERE Badges.EmpresaID = @EmpresaID AND Badges.Nivel = @Nivel AND BadgesAdquiridas.UsuarioID = @UsuarioID ", new { EmpresaID = HttpContext.Current.Session["EmpresaID"], Nivel = nivel, UsuarioID = usuarioID }).ToList();
+                list = sql.Query<Badge>(" SELECT Badges.ID AS ID, Titulo, Subtitulo, Cor, CorFonte, Nivel, Tags, Quantidade FROM Badges INNER JOIN BadgesAdquiridas ON Badges.ID = BadgesAdquiridas.BadgeID WHERE Badges.EmpresaID = @EmpresaID AND Badges.Nivel = @Nivel AND BadgesAdquiridas.UsuarioID = @UsuarioID ",
+                    new
+                    {
+                        EmpresaID = HttpContext.Current.Session["EmpresaID"],
+                        Nivel = nivel,
+                        UsuarioID = usuarioID
+                    }).ToList();
             }
 
             return list;

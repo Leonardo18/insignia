@@ -33,7 +33,12 @@ namespace Insignia.DAO.Competencias
             {
                 using (var sql = new SqlConnection(conStr))
                 {
-                    resp = sql.Query<Competencia>(" SELECT ID, EmpresaID, Nome FROM Competencias WHERE ID = @ID AND EmpresaID = @EmpresaID ", new { ID = id, EmpresaID = HttpContext.Current.Session["EmpresaID"] }).SingleOrDefault();
+                    resp = sql.Query<Competencia>(" SELECT ID, EmpresaID, Nome FROM Competencias WHERE ID = @ID AND EmpresaID = @EmpresaID ", 
+                        new
+                        {
+                            ID = id,
+                            EmpresaID = HttpContext.Current.Session["EmpresaID"]
+                        }).SingleOrDefault();
                 }
             }
 
@@ -128,7 +133,12 @@ namespace Insignia.DAO.Competencias
             {
                 using (var sql = new SqlConnection(conStr))
                 {
-                    int queryResultado = sql.Execute(" DELETE FROM Competencias WHERE ID = @ID AND EmpresaID = @EmpresaID ", new { ID = id, EmpresaID = HttpContext.Current.Session["EmpresaID"] });
+                    int queryResultado = sql.Execute(" DELETE FROM Competencias WHERE ID = @ID AND EmpresaID = @EmpresaID ", 
+                        new
+                        {
+                            ID = id,
+                            EmpresaID = HttpContext.Current.Session["EmpresaID"]
+                        });
 
                     resp = ToBoolean(queryResultado);
                 }

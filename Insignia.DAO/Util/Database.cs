@@ -24,7 +24,11 @@ namespace Insignia.DAO.Util
 
             using (var sql = new SqlConnection(conStr))
             {
-                resp = sql.Query<string>(" SELECT " + Valor + " FROM " + Tabela + " WHERE " + Condicao + " = @Campo ", new { @Campo = CondicaoValor }).SingleOrDefault();
+                resp = sql.Query<string>(" SELECT " + Valor + " FROM " + Tabela + " WHERE " + Condicao + " = @Campo ", 
+                    new
+                    {
+                        Campo = CondicaoValor
+                    }).SingleOrDefault();
             }
 
             return resp;

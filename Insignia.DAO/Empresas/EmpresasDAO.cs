@@ -33,7 +33,11 @@ namespace Insignia.DAO.Empresas
             {
                 using (var sql = new SqlConnection(conStr))
                 {
-                    resp = sql.Query<Empresa>(" SELECT ID, RazaoSocial, CNPJ, Email, Senha AS SenhaCadastro, Cidade, Estado, Pais, Site, Foto, Cargo FROM Empresas WHERE ID = @ID ", new { ID = id }).SingleOrDefault();
+                    resp = sql.Query<Empresa>(" SELECT ID, RazaoSocial, CNPJ, Email, Senha AS SenhaCadastro, Cidade, Estado, Pais, Site, Foto, Cargo FROM Empresas WHERE ID = @ID ", 
+                        new
+                        {
+                            ID = id
+                        }).SingleOrDefault();
                 }
             }
 
@@ -146,7 +150,11 @@ namespace Insignia.DAO.Empresas
             {
                 using (var sql = new SqlConnection(conStr))
                 {
-                    int queryResultado = sql.Execute(" DELETE FROM Empresas WHERE ID = @ID ", new { ID = id });
+                    int queryResultado = sql.Execute(" DELETE FROM Empresas WHERE ID = @ID ", 
+                        new
+                        {
+                            ID = id
+                        });
 
                     resp = ToBoolean(queryResultado);
                 }
@@ -168,7 +176,12 @@ namespace Insignia.DAO.Empresas
 
             using (var sql = new SqlConnection(conStr))
             {
-                empresa = sql.Query<Empresa>(" SELECT ID FROM Empresas WHERE Email = @Email OR CNPJ = @CNPJ ", new { Email = email, CNPJ = cnpj }).FirstOrDefault();
+                empresa = sql.Query<Empresa>(" SELECT ID FROM Empresas WHERE Email = @Email OR CNPJ = @CNPJ ", 
+                    new
+                    {
+                        Email = email,
+                        CNPJ = cnpj
+                    }).FirstOrDefault();
             }
 
             if (empresa != null && !string.IsNullOrEmpty(email) && !string.IsNullOrEmpty(cnpj))
@@ -201,7 +214,12 @@ namespace Insignia.DAO.Empresas
             {
                 using (var sql = new SqlConnection(conStr))
                 {
-                    int queryResultado = sql.Execute(" UPDATE Empresas SET Senha = @Senha WHERE Email = @Email ", new { Email = email, Senha = Util.Autenticacao.Criptografar(senha) });
+                    int queryResultado = sql.Execute(" UPDATE Empresas SET Senha = @Senha WHERE Email = @Email ", 
+                        new
+                        {
+                            Email = email,
+                            Senha = Util.Autenticacao.Criptografar(senha)
+                        });
 
                     resp = ToBoolean(queryResultado);
                 }
