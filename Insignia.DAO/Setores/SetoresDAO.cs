@@ -33,7 +33,7 @@ namespace Insignia.DAO.Setores
             {
                 using (var sql = new SqlConnection(conStr))
                 {
-                    resp = sql.Query<Setor>(" SELECT ID, EmpresaID, Nome FROM Setores WHERE ID = @ID AND EmpresaID = @EmpresaID ", 
+                    resp = sql.Query<Setor>(" SELECT ID, EmpresaID, Nome FROM Setores WHERE ID = @ID AND EmpresaID = @EmpresaID ",
                         new
                         {
                             ID = id,
@@ -114,7 +114,11 @@ namespace Insignia.DAO.Setores
 
             using (var sql = new SqlConnection(conStr))
             {
-                list = sql.Query<Setor>(" SELECT ID, EmpresaID, Nome FROM Setores ORDER BY Nome ").ToList();
+                list = sql.Query<Setor>(" SELECT ID, EmpresaID, Nome FROM Setores WHERE EmpresaID = @EmpresaID ORDER BY Nome ",
+                    new
+                    {
+                        EmpresaID = HttpContext.Current.Session["EmpresaID"]
+                    }).ToList();
             }
 
             return list;
@@ -133,7 +137,7 @@ namespace Insignia.DAO.Setores
             {
                 using (var sql = new SqlConnection(conStr))
                 {
-                    int queryResultado = sql.Execute(" DELETE FROM Setores WHERE ID = @ID AND EmpresaID = @EmpresaID ", 
+                    int queryResultado = sql.Execute(" DELETE FROM Setores WHERE ID = @ID AND EmpresaID = @EmpresaID ",
                         new
                         {
                             ID = id,

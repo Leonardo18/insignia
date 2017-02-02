@@ -152,7 +152,11 @@ namespace Insignia.DAO.Usuarios
 
             using (var sql = new SqlConnection(conStr))
             {
-                list = sql.Query<Usuario>(" SELECT ID, EmpresaID, SetorID, Nome, Email, Tipo FROM Usuarios ORDER BY Nome ").ToList();
+                list = sql.Query<Usuario>(" SELECT ID, EmpresaID, SetorID, Nome, Email, Tipo FROM Usuarios WHERE EmpresaID = @EmpresaID ORDER BY Nome "
+                    new
+                    {
+                        EmpresaID = HttpContext.Current.Session["EmpresaID"]
+                    }).ToList();
             }
 
             return list;
@@ -283,7 +287,7 @@ namespace Insignia.DAO.Usuarios
             {
                 using (var sql = new SqlConnection(conStr))
                 {
-                    int queryResultado = sql.Execute(" UPDATE Usuarios SET Senha = @Senha WHERE Email = @Email ", 
+                    int queryResultado = sql.Execute(" UPDATE Usuarios SET Senha = @Senha WHERE Email = @Email ",
                         new
                         {
                             Email = email,
