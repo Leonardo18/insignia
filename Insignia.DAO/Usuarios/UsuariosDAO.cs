@@ -152,7 +152,7 @@ namespace Insignia.DAO.Usuarios
 
             using (var sql = new SqlConnection(conStr))
             {
-                list = sql.Query<Usuario>(" SELECT ID, EmpresaID, SetorID, Nome, Email, Tipo FROM Usuarios WHERE EmpresaID = @EmpresaID ORDER BY Nome "
+                list = sql.Query<Usuario>(" SELECT ID, EmpresaID, SetorID, Nome, Email, Tipo FROM Usuarios WHERE EmpresaID = @EmpresaID ORDER BY Nome ",
                     new
                     {
                         EmpresaID = HttpContext.Current.Session["EmpresaID"]

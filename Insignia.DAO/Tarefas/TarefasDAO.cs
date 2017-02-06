@@ -312,9 +312,11 @@ namespace Insignia.DAO.Tarefas
             {
                 using (var sql = new SqlConnection(conStr))
                 {
-                    Quantidade = sql.ExecuteScalar<int>(" SELECT Count(ID) FROM Tarefas WHERE BadgeID = @BadgeID AND Status = @Status ",
+                    Quantidade = sql.ExecuteScalar<int>(" SELECT Count(ID) FROM Tarefas WHERE BadgeID = @BadgeID AND Status = @Status AND EmpresaID = @EmpresaID AND UsuarioID = @UsuarioID ",
                         new
                         {
+                            EmpresaID = HttpContext.Current.Session["EmpresaID"],
+                            UsuarioID = HttpContext.Current.Session["UsuarioID"],
                             BadgeID = tipoID,
                             Status = ConfigurationManager.AppSettings["Finalizada"]
                         });
@@ -337,9 +339,11 @@ namespace Insignia.DAO.Tarefas
             {
                 using (var sql = new SqlConnection(conStr))
                 {
-                    Quantidade = sql.ExecuteScalar<int>(" SELECT Count(ID) FROM Tarefas WHERE Status = @Status AND Month(CriadoEm) = @Mes AND Year(CriadoEm) = Year(GetDate()) ",
+                    Quantidade = sql.ExecuteScalar<int>(" SELECT Count(ID) FROM Tarefas WHERE Status = @Status AND Month(CriadoEm) = @Mes AND Year(CriadoEm) = Year(GetDate()) AND EmpresaID = @EmpresaID AND UsuarioID = @UsuarioID ",
                         new
                         {
+                            EmpresaID = HttpContext.Current.Session["EmpresaID"],
+                            UsuarioID = HttpContext.Current.Session["UsuarioID"],
                             Mes = mes,
                             Status = ConfigurationManager.AppSettings["Finalizada"]
                         });
