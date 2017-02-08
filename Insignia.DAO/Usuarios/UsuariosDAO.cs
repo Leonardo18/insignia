@@ -68,7 +68,7 @@ namespace Insignia.DAO.Usuarios
                                         Nome = usuario.Nome,
                                         Email = usuario.Email,
                                         Tipo = usuario.Tipo,
-                                        Token = Hash.ValidHash("ID", "Usuarios", "Token"),
+                                        Token = Hash.ValidaHash("ID", "Usuarios", "Token"),
                                     });
 
                     usuario.ID = (int)queryResultado;

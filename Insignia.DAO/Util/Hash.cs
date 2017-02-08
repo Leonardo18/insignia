@@ -12,7 +12,7 @@ namespace Insignia.DAO.Util
         /// </summary>
         /// <param name="length">Length desejado para o hash</param>
         /// <returns>String com o hash gerado</returns>
-        public static string Create(int length)
+        public static string Criar(int length)
         {
             string chars = "AaBbCcDdEeFfGdHhIiJjKkLlMnNnOoPpQqRrSsTtUuVvWwXxYyZz01234567898765432100123456789876543210";
             char[] stringChars = new char[length];
@@ -32,10 +32,10 @@ namespace Insignia.DAO.Util
         /// Valida o hash gerado se já não existe
         /// </summary>
         /// <param name="campo">Campo a ser validado</param>
-        /// <param name="tabela">Tablea a ser validade</param>
+        /// <param name="tabela">Tabela a ser buscado</param>
         /// <param name="campo2">Valor que será verificado</param>
         /// <returns>Retorna valor gerado</returns>
-        public static string ValidHash(string campo, string tabela, string campo2)
+        public static string ValidaHash(string campo, string tabela, string campo2)
         {
             string hash;
 
@@ -43,7 +43,7 @@ namespace Insignia.DAO.Util
 
             do
             {
-                hash = Create(50);
+                hash = Criar(50);
 
                 using (var sql = new SqlConnection(ConfigurationManager.ConnectionStrings["strConMain"].ConnectionString))
                 {
