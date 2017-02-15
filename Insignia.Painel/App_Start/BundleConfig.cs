@@ -59,7 +59,8 @@ namespace Insignia.Painel
 
             //Arquivos de css usados nas tarefas
             bundles.Add(new ScriptBundle("~/Tarefas/styles").Include(
-                    "~/Content/css/google-code-prettify/prettify.css"));
+                    "~/Content/css/google-code-prettify/prettify.css",
+                    "~/Content/css/select2/select2.css"));
 
             //Arquivos de javascript usados nas tarefas
             bundles.Add(new ScriptBundle("~/Tarefas/scripts").Include(
@@ -69,7 +70,8 @@ namespace Insignia.Painel
                     "~/Scripts/js/wysiwyg/bootstrap-wysiwyg.min.js",
                     "~/Scripts/js/moment/moment.min.js",
                     "~/Scripts/js/daterangepicker/daterangepicker.js",
-                    "~/Scripts/js/inputmask/jquery.inputmask.bundle.min.js"));
+                    "~/Scripts/js/inputmask/jquery.inputmask.bundle.min.js",
+                    "~/Scripts/js/select2/select2.full.js"));
 
             //Arquivos de css usados para tables
             bundles.Add(new StyleBundle("~/DataTables/styles").Include(

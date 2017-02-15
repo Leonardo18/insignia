@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
 using System.Web;
+using Insignia.Painel.Helpers.Util;
 using System.Web.Mvc;
 
 namespace Insignia.Painel.Controllers
@@ -46,17 +47,8 @@ namespace Insignia.Painel.Controllers
         {
             var TarefaModel = new Tarefa();
 
-            List<SelectListItem> TipoID = new List<SelectListItem>();
-
-            //Busca os tipos de tarefa e retorna um dictionary contendo elas
-            var TarefasTipos = TarefasDAO.Tipos();
-
-            foreach (var item in TarefasTipos.Keys)
-            {
-                TipoID.Add(new SelectListItem { Text = TarefasTipos[item].Replace(",", ", "), Value = Convert.ToString(item) });
-            }
-
-            ViewBag.TipoID = TipoID;
+            //Busca os tipos de tarefa e retorna um dictionary contendo os registros para montar o select list
+            ViewBag.TipoID = SelectListMVC.CriaListaSelecao(TarefasDAO.Tipos());
 
             return View(TarefaModel);
         }
@@ -105,17 +97,19 @@ namespace Insignia.Painel.Controllers
                 }
             }
 
-            List<SelectListItem> TipoID = new List<SelectListItem>();
+            //Busca os tipos de tarefa e retorna um dictionary contendo os registros e monta o select list
+            var TarefasTipos = SelectListMVC.CriaListaSelecao(TarefasDAO.Tipos());
 
-            //Busca os tipos de tarefa e retorna um dictionary contendo elas
-            var TarefasTipos = TarefasDAO.Tipos();
-
-            foreach (var item in TarefasTipos.Keys)
+            foreach (var item in TarefasTipos)
             {
-                TipoID.Add(new SelectListItem { Text = TarefasTipos[item], Value = Convert.ToString(item) });
+                if (item.Value == TarefaModel.TipoID)
+                {
+                    item.Selected = true;
+                    break;
+                }
             }
 
-            ViewBag.TipoID = TipoID;
+            ViewBag.TipoID = TarefasTipos;
 
             return View(TarefaModel);
         }
@@ -130,18 +124,11 @@ namespace Insignia.Painel.Controllers
         {
             Tarefa TarefaModel = TarefasDAO.Carregar(ID);
 
-            List<SelectListItem> TipoID = new List<SelectListItem>();
-
             //Busca os tipos de tarefa e retorna um dictionary contendo elas
-            var TarefasTipos = TarefasDAO.Tipos();
-
-            foreach (var item in TarefasTipos.Keys)
-            {
-                TipoID.Add(new SelectListItem { Text = TarefasTipos[item], Value = Convert.ToString(item) });
-            }
+            var TarefasTipos = SelectListMVC.CriaListaSelecao(TarefasDAO.Tipos());
 
             //Retorna na list o valor marcado atualmente para o cadastro
-            foreach (var item in TipoID)
+            foreach (var item in TarefasTipos)
             {
                 if (item.Value == TarefaModel.TipoID)
                 {
@@ -149,7 +136,8 @@ namespace Insignia.Painel.Controllers
                     break;
                 }
             }
-            ViewBag.TipoID = TipoID;
+
+            ViewBag.TipoID = TarefasTipos;
 
             return View("Editar", TarefaModel);
         }
@@ -209,11 +197,15 @@ namespace Insignia.Painel.Controllers
             List<SelectListItem> TipoID = new List<SelectListItem>();
 
             //Busca os tipos de tarefa e retorna um dictionary contendo elas
-            var TarefasTipos = TarefasDAO.Tipos();
+            var TarefasTipos = SelectListMVC.CriaListaSelecao(TarefasDAO.Tipos());
 
-            foreach (var item in TarefasTipos.Keys)
+            foreach (var item in TarefasTipos)
             {
-                TipoID.Add(new SelectListItem { Text = TarefasTipos[item], Value = Convert.ToString(item) });
+                if (item.Value == TarefaModel.TipoID)
+                {
+                    item.Selected = true;
+                    break;
+                }
             }
 
             ViewBag.TipoID = TipoID;
@@ -241,6 +233,7 @@ namespace Insignia.Painel.Controllers
                     }
                 }
             }
+
             return RedirectToAction("Editar", new { ID = ID });
         }
 
@@ -290,6 +283,7 @@ namespace Insignia.Painel.Controllers
                     ViewBag.Error = "Ocorreu um erro ao tentar excluir o resgistro, favor entrar em contato com o administrador do sistema";
                 }
             }
+
             return View(TarefaModel);
         }
     }

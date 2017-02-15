@@ -132,6 +132,7 @@
     <Content Include="Content\css\google-code-prettify\prettify.css" />
     <Content Include="Content\css\logo\logo.css" />
     <Content Include="Content\css\nprogress\nprogress.css" />
+    <Content Include="Content\css\select2\select2.css" />
     <Content Include="Content\css\tags\jquery.tagsinput.css" />
     <Content Include="Content\images\favicon.ico" />
     <Content Include="Content\uploads\ReadMe.txt" />
@@ -169,6 +170,7 @@
     <Content Include="Scripts\js\nprogress\nprogress.js" />
     <Content Include="Scripts\js\bootstrap-progressbar\bootstrap-progressbar.js" />
     <Content Include="Scripts\js\raphael\raphael.js" />
+    <Content Include="Scripts\js\select2\select2.full.js" />
     <Content Include="Scripts\js\tags\jquery.tagsinput.js" />
     <Content Include="Scripts\js\upload\bootstrap-filestyle.js" />
     <Content Include="Scripts\js\wysiwyg\bootstrap-wysiwyg.min.js" />
@@ -240,6 +242,7 @@
     <Compile Include="Helpers\CustomAttributes\IsLogged.cs" />
     <Compile Include="Helpers\Email\SendMail.cs" />
     <Compile Include="Helpers\Util\BadgesCor.cs" />
+    <Compile Include="Helpers\Util\SelectListMVC.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\ViewModelBadge.cs" />
     <Compile Include="ViewModels\ViewModelTarefa.cs" />

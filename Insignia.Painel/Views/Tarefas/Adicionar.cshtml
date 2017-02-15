@@ -30,7 +30,7 @@
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">
                             Título: <span class="required">*</span>
                         </label>
-                        <div class="col-md-6 col-sm-6 col-xs-12">                            
+                        <div class="col-md-6 col-sm-6 col-xs-12">
                             @Html.TextBox("Titulo", Model.Titulo, new { @class = "form-control col-md-7 col-xs-12", placeholder = "Título", required = "", autofocus = "true" })
                             @Html.ValidationMessageFor(modelItem => modelItem.Titulo, null, new { @class = "text-danger" })
                         </div><span class="glyphicon glyphicon-info-sign" data-toggle="tooltip" data-placement="right" title="Este campo indica qual o titulo da tarefa."></span>
@@ -105,7 +105,7 @@
                                     <a class="btn" data-edit="redo" title="Redo (Ctrl/Cmd+Y)"><i class="fa fa-repeat"></i></a>
                                 </div>
                             </div>
-                            <div id="editor" class="editor-wrapper"></div>                            
+                            <div id="editor" class="editor-wrapper"></div>
                             @Html.TextArea("Descricao", Model.Descricao, new { placeholder = "Descrição", name = "descr", id = "descr", style = "display:none;" })
                             @Html.ValidationMessageFor(modelItem => modelItem.Descricao, null, new { @class = "text-danger" })
                             <br />
@@ -121,9 +121,17 @@
                     </div>
                     <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                            Usuários Participantes
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            @Html.DropDownList("TipoID", (List<SelectListItem>)ViewBag.Tipos, null, new { @class = "select2_multiple form-control", multiple = "multiple", required = "" })
+                        </div><span class="glyphicon glyphicon-info-sign" data-toggle="tooltip" data-placement="right" title="Este campo indica quais usuários irão participar da execução da tarefa."></span>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">
                             Data de término: <span class="required">*</span>
                         </label>
-                        <div class="col-md-6 col-sm-6 col-xs-12">                            
+                        <div class="col-md-6 col-sm-6 col-xs-12">
                             @Html.TextBox("Termino", Model.Termino, new { @class = "form-control col-md-7 col-xs-12 has-feedback-left", placeholder = "Data de término", required = "", id = "single_cal4", ariadescribedby = "inputSuccess2Status4" })
                             <span class="fa fa-calendar-o form-control-feedback left" aria-hidden="true"></span>
                             <span id="inputSuccess2Status4" class="sr-only">(success)</span>
@@ -244,6 +252,22 @@
     });
 </script>
 <!-- /bootstrap-wysiwyg -->
+<!-- Select2 -->
+<script>
+    $(document).ready(function () {
+        $(".select2_single").select2({
+            placeholder: "Select a state",
+            allowClear: true
+        });
+        $(".select2_group").select2({});
+        $(".select2_multiple").select2({
+            maximumSelectionLength: 4,
+            placeholder: "Selecione o registro",
+            allowClear: true
+        });
+    });
+</script>
+<!-- /Select2 -->
 <!-- Carrega o campo descritivo -->
 <script>
     $(document).ready(function () {
