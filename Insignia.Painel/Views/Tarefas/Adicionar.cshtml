@@ -124,7 +124,7 @@
                             Usuários Participantes
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                            @Html.DropDownList("TipoID", (List<SelectListItem>)ViewBag.Tipos, null, new { @class = "select2_multiple form-control", multiple = "multiple", required = "" })
+                            @Html.DropDownList("Participantes", (List<SelectListItem>)ViewBag.Participantes, null, new { @class = "select2_multiple form-control", multiple = "multiple" })
                         </div><span class="glyphicon glyphicon-info-sign" data-toggle="tooltip" data-placement="right" title="Este campo indica quais usuários irão participar da execução da tarefa."></span>
                     </div>
                     <div class="form-group">

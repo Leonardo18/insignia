@@ -287,9 +287,10 @@ namespace Insignia.DAO.Usuarios
             {
                 using (var sql = new SqlConnection(conStr))
                 {
-                    int queryResultado = sql.Execute(" UPDATE Usuarios SET Senha = @Senha WHERE Email = @Email ",
+                    int queryResultado = sql.Execute(" UPDATE Usuarios SET Senha = @Senha WHERE EmpresaID = @EmpresaID AND Email = @Email ",
                         new
                         {
+                            EmpresaID = HttpContext.Current.Session["EmpresaID"],
                             Email = email,
                             Senha = Util.Autenticacao.Criptografar(senha)
                         });

@@ -216,6 +216,28 @@ namespace Insignia.DAO.Tarefas
         }
 
         /// <summary>
+        /// Carrega todos os usuários da empresa e setor
+        /// </summary>
+        /// <returns>Dictionary contendo ID e nome de cada usuário</returns>
+        public Dictionary<int, string> Participantes()
+        {
+            Dictionary<int, string> dict = new Dictionary<int, string>();
+
+            using (var sql = new SqlConnection(conStr))
+            {
+                dict = sql.Query(" SELECT ID, Nome FROM Usuarios WHERE EmpresaID = @EmpresaID AND SetorID = @SetorID AND ID <> @UsuarioID ORDER BY Nome ASC ",
+                    new
+                    {
+                        EmpresaID = HttpContext.Current.Session["EmpresaID"],
+                        SetorID = HttpContext.Current.Session["SetorID"],
+                        UsuarioID = HttpContext.Current.Session["UsuarioID"]
+                    }).ToDictionary(row => (int)row.ID, row => (string)row.Nome);
+            }
+
+            return dict;
+        }
+
+        /// <summary>
         /// Recupera as informações de um arquivo no banco de dados
         /// </summary>
         /// <param name="id">ID da tarefa</param>

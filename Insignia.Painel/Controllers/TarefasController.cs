@@ -49,6 +49,7 @@ namespace Insignia.Painel.Controllers
 
             //Busca os tipos de tarefa e retorna um dictionary contendo os registros para montar o select list
             ViewBag.TipoID = SelectListMVC.CriaListaSelecao(TarefasDAO.Tipos());
+            ViewBag.Participantes = SelectListMVC.CriaListaSelecao(TarefasDAO.Participantes());
 
             return View(TarefaModel);
         }
@@ -98,7 +99,7 @@ namespace Insignia.Painel.Controllers
             }
 
             //Busca os tipos de tarefa e retorna um dictionary contendo os registros e monta o select list
-            var TarefasTipos = SelectListMVC.CriaListaSelecao(TarefasDAO.Tipos());
+            var TarefasTipos = SelectListMVC.CriaListaSelecao(TarefasDAO.Tipos());            
 
             foreach (var item in TarefasTipos)
             {
@@ -110,6 +111,7 @@ namespace Insignia.Painel.Controllers
             }
 
             ViewBag.TipoID = TarefasTipos;
+            ViewBag.Participantes = SelectListMVC.CriaListaSelecao(TarefasDAO.Participantes());
 
             return View(TarefaModel);
         }

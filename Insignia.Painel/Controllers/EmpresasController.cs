@@ -5,6 +5,7 @@ using Insignia.DAO.Util;
 using Insignia.Model.Empresa;
 using Insignia.Painel.Helpers.AmazonS3;
 using Insignia.Painel.Helpers.CustomAttributes;
+using Insignia.Painel.Helpers.Util;
 using Insignia.Painel.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -57,19 +58,12 @@ namespace Insignia.Painel.Controllers
         public ActionResult PerfilEditar(int id)
         {
             var EmpresaModel = EmpresaDAO.Carregar(id);
-
-            List<SelectListItem> Estados = new List<SelectListItem>();
-
+           
             //Busca os  e retorna um dictionary contendo os dados
-            var TodosEstados = EmpresaDAO.Estados();
-
-            foreach (var item in TodosEstados.Keys)
-            {
-                Estados.Add(new SelectListItem { Text = TodosEstados[item], Value = Convert.ToString(item) });
-            }
+            var TodosEstados = SelectListMVC.CriaListaSelecao(EmpresaDAO.Estados());
 
             //Retorna na list o valor marcado atualmente para o cadastro
-            foreach (var item in Estados)
+            foreach (var item in TodosEstados)
             {
                 if (item.Text == EmpresaModel.Estado)
                 {
@@ -77,7 +71,8 @@ namespace Insignia.Painel.Controllers
                     break;
                 }
             }
-            ViewBag.Estados = Estados;
+
+            ViewBag.Estados = TodosEstados;
 
             return View(EmpresaModel);
         }
@@ -130,19 +125,21 @@ namespace Insignia.Painel.Controllers
                 Session["UsuarioFoto"] = EmpresaModel.Foto;
 
                 return RedirectToAction("Perfil", new { ID = EmpresaModel.ID });
-            }
-
-            List<SelectListItem> Estados = new List<SelectListItem>();
+            }            
 
             //Busca e retorna um dictionary contendo os dados
-            var TodosEstados = EmpresaDAO.Estados();
+            var TodosEstados = SelectListMVC.CriaListaSelecao(EmpresaDAO.Estados());
 
-            foreach (var item in TodosEstados.Keys)
+            foreach (var item in TodosEstados)
             {
-                Estados.Add(new SelectListItem { Text = TodosEstados[item], Value = Convert.ToString(item) });
-            }
+                if (item.Text == EmpresaModel.Estado)
+                {
+                    item.Selected = true;
+                    break;
+                }
+            }        
 
-            ViewBag.Estados = Estados;
+            ViewBag.Estados = TodosEstados;
 
             return RedirectToAction("PerfilEditar", EmpresaModel);
         }

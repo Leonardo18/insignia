@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Insignia.Model.Tarefa
@@ -52,6 +53,11 @@ namespace Insignia.Model.Tarefa
         /// Anexo de algum arquivo referente a tarefa
         /// </summary>
         public string Anexo { get; set; }
+
+        /// <summary>
+        /// Usuários participantes
+        /// </summary>
+        public List<int> Participantes { get; set; }
 
         /// <summary>
         /// Data para término da tarefa

@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Data.SqlClient;
 using System.Linq;
-using System.Web;
 using static System.Convert;
 
 namespace Insignia.DAO.Empresas

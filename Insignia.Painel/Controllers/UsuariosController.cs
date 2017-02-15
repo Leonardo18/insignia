@@ -5,6 +5,7 @@ using Insignia.DAO.Util;
 using Insignia.Model.Usuario;
 using Insignia.Painel.Helpers.AmazonS3;
 using Insignia.Painel.Helpers.CustomAttributes;
+using Insignia.Painel.Helpers.Util;
 using Insignia.Painel.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -45,17 +46,8 @@ namespace Insignia.Painel.Controllers
         {
             var UsuarioModel = new Usuario();
 
-            List<SelectListItem> Setores = new List<SelectListItem>();
-
-            //Busca os tipos de tarefa e retorna um dictionary contendo os dados
-            var SetoresNome = UsuariosDAO.Setores();
-
-            foreach (var item in SetoresNome.Keys)
-            {
-                Setores.Add(new SelectListItem { Text = SetoresNome[item], Value = Convert.ToString(item) });
-            }
-
-            ViewBag.Setores = Setores;
+            //Busca os tipos de tarefa e retorna um dictionary contendo os dados e retorna o select list
+            ViewBag.Setores = SelectListMVC.CriaListaSelecao(UsuariosDAO.Setores());
 
             return View(UsuarioModel);
         }
@@ -83,17 +75,19 @@ namespace Insignia.Painel.Controllers
                 }
             }
 
-            List<SelectListItem> Setores = new List<SelectListItem>();
-
             //Busca os  e retorna um dictionary contendo os dados
-            var UsuariosTipos = UsuariosDAO.Setores();
+            var UsuariosTipos = SelectListMVC.CriaListaSelecao(UsuariosDAO.Setores());
 
-            foreach (var item in UsuariosTipos.Keys)
+            foreach (var item in UsuariosTipos)
             {
-                Setores.Add(new SelectListItem { Text = UsuariosTipos[item], Value = Convert.ToString(item) });
+                if (item.Value == UsuarioModel.Tipo)
+                {
+                    item.Selected = true;
+                    break;
+                }
             }
 
-            ViewBag.Setores = Setores;
+            ViewBag.Setores = UsuariosTipos;
 
             return View(UsuarioModel);
         }
@@ -108,18 +102,11 @@ namespace Insignia.Painel.Controllers
         {
             Usuario UsuarioModel = UsuariosDAO.Carregar(ID);
 
-            List<SelectListItem> Setores = new List<SelectListItem>();
-
             //Busca os tipos de tarefa e retorna um dictionary contendo elas
-            var UsuariosTipos = UsuariosDAO.Setores();
-
-            foreach (var item in UsuariosTipos.Keys)
-            {
-                Setores.Add(new SelectListItem { Text = UsuariosTipos[item], Value = Convert.ToString(item) });
-            }
+            var UsuariosTipos = SelectListMVC.CriaListaSelecao(UsuariosDAO.Setores());
 
             //Retorna na list o valor marcado atualmente para o cadastro
-            foreach (var item in Setores)
+            foreach (var item in UsuariosTipos)
             {
                 if (item.Value == Convert.ToString(UsuarioModel.SetorID))
                 {
@@ -128,7 +115,7 @@ namespace Insignia.Painel.Controllers
                 }
             }
 
-            ViewBag.Setores = Setores;
+            ViewBag.Setores = UsuariosTipos;
 
             return View("Editar", UsuarioModel);
         }
@@ -152,17 +139,20 @@ namespace Insignia.Painel.Controllers
                 }
             }
 
-            List<SelectListItem> Setores = new List<SelectListItem>();
+            //Busca os tipos de tarefa e retorna um dictionary contendo elas
+            var UsuariosTipos = SelectListMVC.CriaListaSelecao(UsuariosDAO.Setores());
 
-            //Busca os setores e retorna um dictionary contendo elas
-            var UsuariosTipos = UsuariosDAO.Setores();
-
-            foreach (var item in UsuariosTipos.Keys)
+            //Retorna na list o valor marcado atualmente para o cadastro
+            foreach (var item in UsuariosTipos)
             {
-                Setores.Add(new SelectListItem { Text = UsuariosTipos[item], Value = Convert.ToString(item) });
+                if (item.Value == Convert.ToString(UsuarioModel.SetorID))
+                {
+                    item.Selected = true;
+                    break;
+                }
             }
 
-            ViewBag.Setores = Setores;
+            ViewBag.Setores = UsuariosTipos;
 
             return View("Editar", UsuarioModel);
         }
