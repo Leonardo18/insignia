@@ -22,6 +22,11 @@ namespace Insignia.Model.Tarefa
         public int UsuarioID { get; set; }
 
         /// <summary>
+        /// Nome do usuário
+        /// </summary>
+        public string UsuarioNome { get; set; }
+
+        /// <summary>
         /// Tipo da tarefa a ser executada, sendo ele definido pelas tags de alguma badge
         /// </summary>
         [Required(ErrorMessage = "Informe o tipo da tarefa")]
@@ -57,7 +62,7 @@ namespace Insignia.Model.Tarefa
         /// <summary>
         /// Usuários participantes
         /// </summary>
-        public List<int> Participantes { get; set; }
+        public List<dynamic> Participantes { get; set; }
 
         /// <summary>
         /// Data para término da tarefa

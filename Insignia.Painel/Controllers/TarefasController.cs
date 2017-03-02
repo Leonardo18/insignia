@@ -10,6 +10,7 @@ using System.IO;
 using System.Web;
 using Insignia.Painel.Helpers.Util;
 using System.Web.Mvc;
+using Insignia.DAO.Util;
 
 namespace Insignia.Painel.Controllers
 {
@@ -35,6 +36,17 @@ namespace Insignia.Painel.Controllers
             //Busca as tarefa com status finalizada
             ViewModel.ListFinalizadas = TarefasDAO.Listar(ConfigurationManager.AppSettings["Finalizada"]);
 
+            //Busca as tarefa em que o usuário logado é participante
+            var Participantes = TarefasDAO.ListarParticipante();
+
+            //Busca nome do usuário que criou a tarefa
+            foreach (var item in Participantes)
+            {
+                item.UsuarioNome = Database.DBBuscaInfo("Usuarios", "ID", Convert.ToString(item.UsuarioID), "Nome");
+            }
+            
+            ViewModel.ListParticipante = Participantes;
+
             return View(ViewModel);
         }
 
@@ -49,6 +61,8 @@ namespace Insignia.Painel.Controllers
 
             //Busca os tipos de tarefa e retorna um dictionary contendo os registros para montar o select list
             ViewBag.TipoID = SelectListMVC.CriaListaSelecao(TarefasDAO.Tipos());
+
+            //Busca os usuários retorna um dictionary contendo os registros para montar o select list de participantes
             ViewBag.Participantes = SelectListMVC.CriaListaSelecao(TarefasDAO.Participantes());
 
             return View(TarefaModel);
@@ -99,7 +113,7 @@ namespace Insignia.Painel.Controllers
             }
 
             //Busca os tipos de tarefa e retorna um dictionary contendo os registros e monta o select list
-            var TarefasTipos = SelectListMVC.CriaListaSelecao(TarefasDAO.Tipos());            
+            var TarefasTipos = SelectListMVC.CriaListaSelecao(TarefasDAO.Tipos());
 
             foreach (var item in TarefasTipos)
             {
@@ -129,7 +143,7 @@ namespace Insignia.Painel.Controllers
             //Busca os tipos de tarefa e retorna um dictionary contendo elas
             var TarefasTipos = SelectListMVC.CriaListaSelecao(TarefasDAO.Tipos());
 
-            //Retorna na list o valor marcado atualmente para o cadastro
+            //Retorna na list o valor marcado atualmente para a tarefa
             foreach (var item in TarefasTipos)
             {
                 if (item.Value == TarefaModel.TipoID)
@@ -140,7 +154,7 @@ namespace Insignia.Painel.Controllers
             }
 
             ViewBag.TipoID = TarefasTipos;
-
+                        
             return View("Editar", TarefaModel);
         }
 

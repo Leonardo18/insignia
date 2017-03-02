@@ -34,6 +34,9 @@
                         <li role="presentation" class="">
                             <a href="#tab_content3" role="tab" id="finalizadas-tab2" data-toggle="tab" aria-expanded="false">Tarefas Finalizadas</a>
                         </li>
+                        <li role="presentation" class="">
+                            <a href="#tab_content4" role="tab" id="participante-tab2" data-toggle="tab" aria-expanded="false">Tarefas em que sou Participante</a>
+                        </li>
                     </ul>
                     <div id="myTabContent" class="tab-content">
                         <div role="tabpanel" class="tab-pane fade active in" id="tab_content1" aria-labelledby="fazer-tab">
@@ -107,6 +110,33 @@
                                                 </h2>
                                                 <div class="byline">
                                                     <span>Criado as @Convert.ToDateTime(item.CriadoEm).Hour Horas</span> por <a>@Session["UsuarioNome"]</a> <span>no dia @Convert.ToDateTime(item.CriadoEm).Day / @Convert.ToDateTime(item.CriadoEm).Month / @Convert.ToDateTime(item.CriadoEm).Year</span>
+                                                </div>
+                                                <p class="excerpt">
+                                                    @item.Resumo<a href="@Url.Action("../Tarefas/Editar", null, new { ID = item.ID, controller = "Tarefas" }, Request.Url.Scheme)">&nbsp;Ler&nbsp;Mais</a>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            }
+                        </div>
+                        <div role="tabpanel" class="tab-pane fade" id="tab_content4" aria-labelledby="participante-tab">
+                            @foreach (var item in Model.ListParticipante)
+                            {
+                                <ul class="list-unstyled timeline">
+                                    <li>
+                                        <div class="block">
+                                            <div class="tags">
+                                                <a href="@Url.Action("../Tarefas/Editar", null, new { ID = item.ID, controller = "Tarefas" }, Request.Url.Scheme)" class="tag">
+                                                    <span title="Data prevista de término">@item.Termino</span>
+                                                </a>
+                                            </div>
+                                            <div class="block_content">
+                                                <h2 class="title">
+                                                    <a>@item.Titulo</a>
+                                                </h2>
+                                                <div class="byline">
+                                                    <span>Criado as @Convert.ToDateTime(item.CriadoEm).Hour Horas</span> por <a>@item.UsuarioNome</a> <span>no dia @Convert.ToDateTime(item.CriadoEm).Day / @Convert.ToDateTime(item.CriadoEm).Month / @Convert.ToDateTime(item.CriadoEm).Year</span>
                                                 </div>
                                                 <p class="excerpt">
                                                     @item.Resumo<a href="@Url.Action("../Tarefas/Editar", null, new { ID = item.ID, controller = "Tarefas" }, Request.Url.Scheme)">&nbsp;Ler&nbsp;Mais</a>

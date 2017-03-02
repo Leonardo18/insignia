@@ -35,7 +35,7 @@ namespace Insignia.DAO.Tarefas
             {
                 using (var sql = new SqlConnection(conStr))
                 {
-                    resp = sql.Query<Tarefa>("SELECT ID, EmpresaID, UsuarioID, BadgeID AS TipoID, Status, Titulo, Resumo, Descricao, Anexo, Termino, Observacoes, CriadoEm FROM Tarefas WHERE ID = @ID AND EmpresaID = @EmpresaID AND UsuarioID = @UsuarioID ",
+                    resp = sql.Query<Tarefa>("SELECT ID, EmpresaID, UsuarioID, BadgeID AS TipoID, Status, Titulo, Resumo, Descricao, Anexo, Termino, Observacoes, CriadoEm FROM Tarefas WHERE ID = @ID AND EmpresaID = @EmpresaID AND (UsuarioID = @UsuarioID OR ID IN (SELECT TarefaID FROM TarefasParticipantes WHERE UsuarioID = @UsuarioID)) ",
                         new
                         {
                             ID = id,
@@ -43,6 +43,7 @@ namespace Insignia.DAO.Tarefas
                             UsuarioID = HttpContext.Current.Session["UsuarioID"]
                         }).SingleOrDefault();
                 }
+                resp.Participantes = BuscarParticipantes(id);
             }
 
             return resp;
@@ -123,7 +124,7 @@ namespace Insignia.DAO.Tarefas
 
                     resp = ToBoolean(queryResultado);
 
-                    if (tarefa.Participantes.Count > 0)
+                    if (tarefa.Participantes != null && tarefa.Participantes.Count > 0)
                     {
                         if (RemoverParticipantes(tarefa.ID))
                         {
@@ -191,20 +192,19 @@ namespace Insignia.DAO.Tarefas
 
             if (!string.IsNullOrWhiteSpace(Convert.ToString(id)))
             {
-                if (RemoverParticipantes(id))
+                RemoverParticipantes(id);
+                
+                using (var sql = new SqlConnection(conStr))
                 {
-                    using (var sql = new SqlConnection(conStr))
-                    {
-                        int queryResultado = sql.Execute(" DELETE FROM Tarefas WHERE ID = @ID AND EmpresaID = @EmpresaID AND UsuarioID = @UsuarioID ",
-                            new
-                            {
-                                ID = id,
-                                EmpresaID = HttpContext.Current.Session["EmpresaID"],
-                                UsuarioID = HttpContext.Current.Session["UsuarioID"]
-                            });
+                    int queryResultado = sql.Execute(" DELETE FROM Tarefas WHERE ID = @ID AND EmpresaID = @EmpresaID AND UsuarioID = @UsuarioID ",
+                        new
+                        {
+                            ID = id,
+                            EmpresaID = HttpContext.Current.Session["EmpresaID"],
+                            UsuarioID = HttpContext.Current.Session["UsuarioID"]
+                        });
 
-                        resp = ToBoolean(queryResultado);
-                    }
+                    resp = ToBoolean(queryResultado);
                 }
             }
 
@@ -254,12 +254,33 @@ namespace Insignia.DAO.Tarefas
         }
 
         /// <summary>
-        /// Salva em uma taberla de relacionamento os participantes da tarefa
+        /// Carrega uma lista com todas tarefas na qual o usuário participa
+        /// </summary>
+        /// <returns>Retornar uma List de Tarefas</returns>
+        public List<Tarefa> ListarParticipante()
+        {
+            List<Tarefa> list;
+
+            using (var sql = new SqlConnection(conStr))
+            {
+                list = sql.Query<Tarefa>(" SELECT ID, EmpresaID, UsuarioID, BadgeID AS TipoID, Titulo, Resumo, Descricao, Anexo, Termino, Observacoes, CriadoEm FROM Tarefas WHERE ID IN (SELECT TarefaID FROM TarefasParticipantes WHERE EmpresaID = @EmpresaID AND UsuarioID = @UsuarioID) ",
+                    new
+                    {
+                        EmpresaID = HttpContext.Current.Session["EmpresaID"],
+                        UsuarioID = HttpContext.Current.Session["UsuarioID"]
+                    }).ToList();
+            }
+
+            return list;
+        }
+
+        /// <summary>
+        /// Salva em uma tabela de relacionamento os participantes da tarefa
         /// </summary>
         /// <param name="tarefaID">ID da tarefa</param>
         /// <param name="participantes">Lista com ID dos participantes da tarefa</param>
         /// <returns>Retorna true caso tenha gravado todos com sucesso, false caso contrário</returns>               
-        public bool SalvaParticipantes(int tarefaID, List<int> participantes)
+        public bool SalvaParticipantes(int tarefaID, List<dynamic> participantes)
         {
             using (var sql = new SqlConnection(conStr))
             {
@@ -281,6 +302,31 @@ namespace Insignia.DAO.Tarefas
             }
 
             return true;
+        }
+
+        /// <summary>
+        /// Busca participantes de uma tarefa do banco de dados
+        /// </summary>
+        /// <param name="id">ID da tarefa no qual os participantes irão ser buscados</param>
+        /// <returns>True se os participantes foram encontrados, false caso contrário</returns>
+        public List<dynamic> BuscarParticipantes(int tarefaID)
+        {
+            if (!string.IsNullOrWhiteSpace(Convert.ToString(tarefaID)))
+            {
+                using (var sql = new SqlConnection(conStr))
+                {
+                    var participantes = sql.Query(" SELECT UsuarioID FROM TarefasParticipantes WHERE EmpresaID = @EmpresaID AND TarefaID = @TarefaID ",
+                        new
+                        {
+                            EmpresaID = HttpContext.Current.Session["EmpresaID"],
+                            TarefaID = tarefaID
+                        }).ToList();
+
+                    return participantes;
+                }
+            }
+
+            return new List<dynamic>();
         }
 
         /// <summary>
