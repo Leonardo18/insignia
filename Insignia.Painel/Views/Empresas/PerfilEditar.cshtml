@@ -30,7 +30,7 @@
                             País:
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                            @Html.TextBox("Pais", Model.Pais, new { @class = "form-control col-md-7 col-xs-12", placeholder = "País" })
+                            @Html.TextBox("Pais", Model.Pais, new { @class = "form-control col-md-7 col-xs-12", placeholder = "País", autofocus = "true" })
                         </div><span class="glyphicon glyphicon-info-sign" data-toggle="tooltip" data-placement="right" title="Este campo indica qual o país do usuário."></span>
                     </div>
                     <div class="form-group">
@@ -41,14 +41,14 @@
                             @Html.DropDownList("Estado", (List<SelectListItem>)ViewBag.Estados, null, new { @class = "select2_multiple form-control" })
                         </div><span class="glyphicon glyphicon-info-sign" data-toggle="tooltip" data-placement="right" title="Este campo indica qual o estado do usuário."></span>
                     </div>
-                        <div class="form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">
-                                Cidade:
-                            </label>
-                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                @Html.TextBox("Cidade", Model.Cidade, new { @class = "form-control col-md-7 col-xs-12", placeholder = "Cidade", autofocus = "true" })
-                            </div><span class="glyphicon glyphicon-info-sign" data-toggle="tooltip" data-placement="right" title="Este campo indica qual a cidade do usuário."></span>
-                        </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">
+                            Cidade:
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            @Html.TextBox("Cidade", Model.Cidade, new { @class = "form-control col-md-7 col-xs-12", placeholder = "Cidade" })
+                        </div><span class="glyphicon glyphicon-info-sign" data-toggle="tooltip" data-placement="right" title="Este campo indica qual a cidade do usuário."></span>
+                    </div>
                         <div class="item form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="website">
                                 Site:

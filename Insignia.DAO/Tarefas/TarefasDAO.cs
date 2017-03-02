@@ -82,6 +82,11 @@ namespace Insignia.DAO.Tarefas
                     tarefa.ID = (int)queryResultado;
 
                     resp = ToBoolean(queryResultado);
+
+                    if (tarefa.Participantes.Count > 0)
+                    {
+                        SalvaParticipantes(tarefa.ID, tarefa.Participantes);
+                    }
                 }
             }
 
@@ -117,6 +122,14 @@ namespace Insignia.DAO.Tarefas
                                     });
 
                     resp = ToBoolean(queryResultado);
+
+                    if (tarefa.Participantes.Count > 0)
+                    {
+                        if (RemoverParticipantes(tarefa.ID))
+                        {
+                            SalvaParticipantes(tarefa.ID, tarefa.Participantes);
+                        }
+                    }
                 }
             }
 
@@ -178,17 +191,20 @@ namespace Insignia.DAO.Tarefas
 
             if (!string.IsNullOrWhiteSpace(Convert.ToString(id)))
             {
-                using (var sql = new SqlConnection(conStr))
+                if (RemoverParticipantes(id))
                 {
-                    int queryResultado = sql.Execute(" DELETE FROM Tarefas WHERE ID = @ID AND EmpresaID = @EmpresaID AND UsuarioID = @UsuarioID ",
-                        new
-                        {
-                            ID = id,
-                            EmpresaID = HttpContext.Current.Session["EmpresaID"],
-                            UsuarioID = HttpContext.Current.Session["UsuarioID"]
-                        });
+                    using (var sql = new SqlConnection(conStr))
+                    {
+                        int queryResultado = sql.Execute(" DELETE FROM Tarefas WHERE ID = @ID AND EmpresaID = @EmpresaID AND UsuarioID = @UsuarioID ",
+                            new
+                            {
+                                ID = id,
+                                EmpresaID = HttpContext.Current.Session["EmpresaID"],
+                                UsuarioID = HttpContext.Current.Session["UsuarioID"]
+                            });
 
-                    resp = ToBoolean(queryResultado);
+                        resp = ToBoolean(queryResultado);
+                    }
                 }
             }
 
@@ -235,6 +251,63 @@ namespace Insignia.DAO.Tarefas
             }
 
             return dict;
+        }
+
+        /// <summary>
+        /// Salva em uma taberla de relacionamento os participantes da tarefa
+        /// </summary>
+        /// <param name="tarefaID">ID da tarefa</param>
+        /// <param name="participantes">Lista com ID dos participantes da tarefa</param>
+        /// <returns>Retorna true caso tenha gravado todos com sucesso, false caso contrário</returns>               
+        public bool SalvaParticipantes(int tarefaID, List<int> participantes)
+        {
+            using (var sql = new SqlConnection(conStr))
+            {
+                foreach (var item in participantes)
+                {
+                    int queryResultado = sql.ExecuteScalar<int>(" INSERT INTO TarefasParticipantes(EmpresaID, UsuarioID, TarefaID) OUTPUT INSERTED.ID VALUES (@EmpresaID, @UsuarioID, @TarefaID) ",
+                                        new
+                                        {
+                                            EmpresaID = HttpContext.Current.Session["EmpresaID"],
+                                            UsuarioID = item,
+                                            TarefaID = tarefaID
+                                        });
+
+                    if (!ToBoolean(queryResultado))
+                    {
+                        return false;
+                    }
+                }
+            }
+
+            return true;
+        }
+
+        /// <summary>
+        /// Remove participantes de uma tarefa do banco de dados
+        /// </summary>
+        /// <param name="id">ID da tarefa no qual os participantes irão ser removidos</param>
+        /// <returns>True se os participantes foram removidos, false caso contrário</returns>
+        public bool RemoverParticipantes(int tarefaID)
+        {
+            bool resp = false;
+
+            if (!string.IsNullOrWhiteSpace(Convert.ToString(tarefaID)))
+            {
+                using (var sql = new SqlConnection(conStr))
+                {
+                    int queryResultado = sql.Execute(" DELETE FROM TarefasParticipantes WHERE EmpresaID = @EmpresaID AND TarefaID = @TarefaID ",
+                        new
+                        {
+                            EmpresaID = HttpContext.Current.Session["EmpresaID"],
+                            TarefaID = tarefaID
+                        });
+
+                    resp = ToBoolean(queryResultado);
+                }
+            }
+
+            return resp;
         }
 
         /// <summary>
@@ -296,7 +369,7 @@ namespace Insignia.DAO.Tarefas
         /// <param name="UsuarioID">ID do usuário da tarefa</param>
         public void VerificaBadge(string tipoID, int usuarioID)
         {
-            int Quantidade = QuantidadeTarefas(ToInt32(tipoID));
+            int Quantidade = QuantidadeTarefasTipo(ToInt32(tipoID));
 
             if (Quantidade > 0)
             {
@@ -326,7 +399,7 @@ namespace Insignia.DAO.Tarefas
         /// </summary>
         /// <param name="tipID">Tipo da tarefa a ser pesquisado</param>
         /// <returns>Retorna a quantidade de tarefas de um tipo especifico, caso não ache retorna 0</returns>
-        private int QuantidadeTarefas(int tipoID)
+        private int QuantidadeTarefasTipo(int tipoID)
         {
             int Quantidade = 0;
 

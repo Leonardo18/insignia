@@ -4465,7 +4465,7 @@ S2.define('select2/i18n/en',[],function () {
   // English
   return {
     errorLoading: function () {
-      return 'The results could not be loaded.';
+      return 'Os registros não puderam ser carregados.';
     },
     inputTooLong: function (args) {
       var overChars = args.input.length - args.maximum;
@@ -4498,10 +4498,10 @@ S2.define('select2/i18n/en',[],function () {
       return message;
     },
     noResults: function () {
-      return 'No results found';
+      return 'Nenhum registro encontrado';
     },
     searching: function () {
-      return 'Searching…';
+      return 'Carregando…';
     }
   };
 });
