@@ -31,7 +31,7 @@ namespace Insignia.Painel.Controllers
 
             foreach (var item in UsuarioModel)
             {
-                item.Setor = Database.DBBuscaInfo("Setores", "ID", Convert.ToString(item.SetorID), "Nome");
+                item.SetorNome = Database.DBBuscaInfo("Setores", "ID", Convert.ToString(item.SetorID), "Nome");
             }
 
             return View(UsuarioModel);
@@ -269,6 +269,7 @@ namespace Insignia.Painel.Controllers
             {
                 AmazonUpload AmazonS3 = new AmazonUpload();
 
+                //Verifica se possui arquivo antigo para substituição na amazon
                 string ArquivoAntigo = Database.DBBuscaInfo("Usuarios", "ID", Convert.ToString(UsuarioModel.ID), "Foto");
 
                 // Pega o nome do arquivo
@@ -276,7 +277,6 @@ namespace Insignia.Painel.Controllers
 
                 // Grava o arquivo em uma pasta local
                 var Caminho = Path.Combine(Server.MapPath("~/Content/uploads"), UsuarioModel.Foto);
-
                 Foto.SaveAs(Caminho);
 
                 //Verifica se existe a pasta da empresa no Bucket
@@ -292,6 +292,7 @@ namespace Insignia.Painel.Controllers
                 //Faz Upload do arquivo para o S3
                 AmazonS3.EnviaArquivoS3(Caminho, ConfigurationManager.AppSettings["BucketName"], Convert.ToString(Session["EmpresaNome"]), "Fotos", UsuarioModel.Foto);
 
+                //Deleta arquivo salvo local
                 System.IO.File.Delete(Caminho);
             }
             else

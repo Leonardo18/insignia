@@ -4,7 +4,6 @@ using Insignia.Painel.Helpers.AmazonS3;
 using Insignia.Painel.Helpers.CustomAttributes;
 using Insignia.Painel.ViewModels;
 using System;
-using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
 using System.Web;
@@ -44,7 +43,7 @@ namespace Insignia.Painel.Controllers
             {
                 item.UsuarioNome = Database.DBBuscaInfo("Usuarios", "ID", Convert.ToString(item.UsuarioID), "Nome");
             }
-            
+
             ViewModel.ListParticipante = Participantes;
 
             return View(ViewModel);
@@ -88,7 +87,6 @@ namespace Insignia.Painel.Controllers
 
                     // Grava o arquivo em uma pasta local
                     var Caminho = Path.Combine(Server.MapPath("~/Content/uploads"), TarefaModel.Anexo);
-
                     Arquivo.SaveAs(Caminho);
 
                     //Verifica se existe a pasta da empresa no Bucket
@@ -101,6 +99,7 @@ namespace Insignia.Painel.Controllers
                     //Faz Upload do arquivo para o S3
                     AmazonS3.EnviaArquivoS3(Caminho, ConfigurationManager.AppSettings["BucketName"], Convert.ToString(Session["EmpresaNome"]), "Arquivos", TarefaModel.Anexo);
 
+                    //Deleta o arquivo salvo local
                     System.IO.File.Delete(Caminho);
                 }
 
@@ -154,7 +153,7 @@ namespace Insignia.Painel.Controllers
             }
 
             ViewBag.TipoID = TarefasTipos;
-                        
+
             return View("Editar", TarefaModel);
         }
 
@@ -173,6 +172,7 @@ namespace Insignia.Painel.Controllers
                 {
                     AmazonUpload AmazonS3 = new AmazonUpload();
 
+                    //Verifica se possui arquivo antigo para substituição na amazon
                     string ArquivoAntigo = TarefasDAO.BuscaArquivo(TarefaModel.ID);
 
                     // Pega o nome do arquivo
@@ -180,7 +180,6 @@ namespace Insignia.Painel.Controllers
 
                     // Grava o arquivo em uma pasta local
                     var Caminho = Path.Combine(Server.MapPath("~/Content/uploads"), TarefaModel.Anexo);
-
                     Arquivo.SaveAs(Caminho);
 
                     //Verifica se existe a pasta da empresa no Bucket
@@ -196,6 +195,7 @@ namespace Insignia.Painel.Controllers
                     //Faz Upload do arquivo para o S3
                     AmazonS3.EnviaArquivoS3(Caminho, ConfigurationManager.AppSettings["BucketName"], Convert.ToString(Session["EmpresaNome"]), "Arquivos", TarefaModel.Anexo);
 
+                    //Deleta o arquivo salvo Local
                     System.IO.File.Delete(Caminho);
                 }
                 else
@@ -210,8 +210,6 @@ namespace Insignia.Painel.Controllers
                 }
             }
 
-            List<SelectListItem> TipoID = new List<SelectListItem>();
-
             //Busca os tipos de tarefa e retorna um dictionary contendo elas
             var TarefasTipos = SelectListMVC.CriaListaSelecao(TarefasDAO.Tipos());
 
@@ -224,7 +222,7 @@ namespace Insignia.Painel.Controllers
                 }
             }
 
-            ViewBag.TipoID = TipoID;
+            ViewBag.TipoID = TarefasTipos;
 
             return View("Editar", TarefaModel);
         }

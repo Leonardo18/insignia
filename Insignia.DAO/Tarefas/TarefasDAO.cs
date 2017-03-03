@@ -43,6 +43,7 @@ namespace Insignia.DAO.Tarefas
                             UsuarioID = HttpContext.Current.Session["UsuarioID"]
                         }).SingleOrDefault();
                 }
+
                 resp.Participantes = BuscarParticipantes(id);
             }
 
@@ -86,7 +87,7 @@ namespace Insignia.DAO.Tarefas
 
                     if (tarefa.Participantes.Count > 0)
                     {
-                        SalvaParticipantes(tarefa.ID, tarefa.Participantes);
+                        SalvarParticipantes(tarefa.ID, tarefa.Participantes);
                     }
                 }
             }
@@ -128,35 +129,13 @@ namespace Insignia.DAO.Tarefas
                     {
                         if (RemoverParticipantes(tarefa.ID))
                         {
-                            SalvaParticipantes(tarefa.ID, tarefa.Participantes);
+                            SalvarParticipantes(tarefa.ID, tarefa.Participantes);
                         }
                     }
                 }
             }
 
             return resp;
-        }
-
-        /// <summary>
-        /// Carrega uma list de tarefas conforme o número passado no top e o status
-        /// </summary>
-        /// <returns>Retornar uma List de Tarefas</returns>
-        public List<Tarefa> ListarTop(string status, int top)
-        {
-            List<Tarefa> list;
-
-            using (var sql = new SqlConnection(conStr))
-            {
-                list = sql.Query<Tarefa>(" SELECT Top " + top + " ID, EmpresaID, UsuarioID, BadgeID AS TipoID, Titulo, Resumo, Descricao, Anexo, Termino, Observacoes, CriadoEm FROM Tarefas WHERE EmpresaID = @EmpresaID AND UsuarioID = @UsuarioID AND Status = @Status ",
-                    new
-                    {
-                        EmpresaID = HttpContext.Current.Session["EmpresaID"],
-                        UsuarioID = HttpContext.Current.Session["UsuarioID"],
-                        Status = status
-                    }).ToList();
-            }
-
-            return list;
         }
 
         /// <summary>
@@ -193,7 +172,7 @@ namespace Insignia.DAO.Tarefas
             if (!string.IsNullOrWhiteSpace(Convert.ToString(id)))
             {
                 RemoverParticipantes(id);
-                
+
                 using (var sql = new SqlConnection(conStr))
                 {
                     int queryResultado = sql.Execute(" DELETE FROM Tarefas WHERE ID = @ID AND EmpresaID = @EmpresaID AND UsuarioID = @UsuarioID ",
@@ -210,6 +189,28 @@ namespace Insignia.DAO.Tarefas
 
             return resp;
         }
+
+        /// <summary>
+        /// Carrega uma list de tarefas conforme o número passado no top e o status
+        /// </summary>
+        /// <returns>Retornar uma List de Tarefas</returns>
+        public List<Tarefa> ListarTop(string status, int top)
+        {
+            List<Tarefa> list;
+
+            using (var sql = new SqlConnection(conStr))
+            {
+                list = sql.Query<Tarefa>(" SELECT Top " + top + " ID, EmpresaID, UsuarioID, BadgeID AS TipoID, Titulo, Resumo, Descricao, Anexo, Termino, Observacoes, CriadoEm FROM Tarefas WHERE EmpresaID = @EmpresaID AND UsuarioID = @UsuarioID AND Status = @Status ",
+                    new
+                    {
+                        EmpresaID = HttpContext.Current.Session["EmpresaID"],
+                        UsuarioID = HttpContext.Current.Session["UsuarioID"],
+                        Status = status
+                    }).ToList();
+            }
+
+            return list;
+        }              
 
         /// <summary>
         /// Carrega todos os tipos sendo eles as tags das bagdes
@@ -280,7 +281,7 @@ namespace Insignia.DAO.Tarefas
         /// <param name="tarefaID">ID da tarefa</param>
         /// <param name="participantes">Lista com ID dos participantes da tarefa</param>
         /// <returns>Retorna true caso tenha gravado todos com sucesso, false caso contrário</returns>               
-        public bool SalvaParticipantes(int tarefaID, List<dynamic> participantes)
+        public bool SalvarParticipantes(int tarefaID, List<dynamic> participantes)
         {
             using (var sql = new SqlConnection(conStr))
             {

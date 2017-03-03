@@ -27,7 +27,7 @@ namespace Insignia.Painel.Controllers
         [HttpGet, IsLogged]
         public ActionResult Perfil(int id)
         {
-            var ViewModel = new ViewModelPerfil();            
+            var ViewModel = new ViewModelPerfil();
 
             ViewModel.Empresa = EmpresaDAO.Carregar(id);
 
@@ -58,7 +58,7 @@ namespace Insignia.Painel.Controllers
         public ActionResult PerfilEditar(int id)
         {
             var EmpresaModel = EmpresaDAO.Carregar(id);
-           
+
             //Busca os  e retorna um dictionary contendo os dados
             var TodosEstados = SelectListMVC.CriaListaSelecao(EmpresaDAO.Estados());
 
@@ -89,6 +89,7 @@ namespace Insignia.Painel.Controllers
             {
                 AmazonUpload AmazonS3 = new AmazonUpload();
 
+                //Verifica se possui arquivo antigo para substituição na amazon
                 string ArquivoAntigo = Database.DBBuscaInfo("Empresas", "ID", Convert.ToString(EmpresaModel.ID), "Foto");
 
                 // Pega o nome do arquivo
@@ -96,7 +97,6 @@ namespace Insignia.Painel.Controllers
 
                 // Grava o arquivo em uma pasta local
                 var Caminho = Path.Combine(Server.MapPath("~/Content/uploads"), EmpresaModel.Foto);
-
                 Foto.SaveAs(Caminho);
 
                 //Verifica se existe a pasta da empresa no Bucket
@@ -112,11 +112,12 @@ namespace Insignia.Painel.Controllers
                 //Faz Upload do arquivo para o S3
                 AmazonS3.EnviaArquivoS3(Caminho, ConfigurationManager.AppSettings["BucketName"], Convert.ToString(Session["EmpresaNome"]), "Fotos", EmpresaModel.Foto);
 
+                //Seleta o arquivo salvo localmente
                 System.IO.File.Delete(Caminho);
             }
             else
             {
-                //Se não tem arquivo nome, mantém o antigo
+                //Se não tem arquivo novo, mantém o antigo
                 EmpresaModel.Foto = Database.DBBuscaInfo("Empresas", "ID", Convert.ToString(EmpresaModel.ID), "Foto");
             }
 
@@ -125,7 +126,7 @@ namespace Insignia.Painel.Controllers
                 Session["UsuarioFoto"] = EmpresaModel.Foto;
 
                 return RedirectToAction("Perfil", new { ID = EmpresaModel.ID });
-            }            
+            }
 
             //Busca e retorna um dictionary contendo os dados
             var TodosEstados = SelectListMVC.CriaListaSelecao(EmpresaDAO.Estados());
@@ -137,7 +138,7 @@ namespace Insignia.Painel.Controllers
                     item.Selected = true;
                     break;
                 }
-            }        
+            }
 
             ViewBag.Estados = TodosEstados;
 

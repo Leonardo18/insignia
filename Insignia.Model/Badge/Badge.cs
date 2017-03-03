@@ -52,6 +52,6 @@ namespace Insignia.Model.Badge
         /// Quantidade de vezes que uma tarefa tem de ser executada para desbloqueio de badge
         /// </summary>
         [Required(ErrorMessage = "Informe a quantidade")]
-        public int Quantidade { get; set; }
+        public int Quantidade { get; set; } = 1;
     }
 }

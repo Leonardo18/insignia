@@ -23,7 +23,7 @@ namespace Insignia.Painel.Controllers
             var ViewModel = new ViewModelBadge();
 
             ViewModel.Badge = new Badge();
-            ViewModel.Badge.Quantidade = 1;
+            //ViewModel.Badge.Quantidade = 1;
 
             ViewModel.ListBadgeBasicas = BadgesDAO.Listar("Basica");
             ViewModel.ListBadgeIntermediarias = BadgesDAO.Listar("Intermediaria");
