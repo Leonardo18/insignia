@@ -140,7 +140,7 @@ namespace Insignia.Painel.Controllers
         [HttpPost]
         public ActionResult RecuperarSenha(string email)
         {
-            if (EmpresaDAO.VerificaEmpresa(email, null) || UsuarioDAO.VerificaUsuario(email))
+            if (EmpresaDAO.VerificaEmpresa(email, null) || UsuarioDAO.VerificaUsuario(0, email))
             {
                 SendMail Email = new SendMail();
 

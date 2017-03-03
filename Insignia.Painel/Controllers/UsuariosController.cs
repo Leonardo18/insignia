@@ -62,7 +62,7 @@ namespace Insignia.Painel.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (UsuariosDAO.VerificaUsuario(UsuarioModel.Email) && string.IsNullOrEmpty(Database.DBBuscaInfo("Empresas", "Email", UsuarioModel.Email, "ID")))
+                if (UsuariosDAO.VerificaUsuario(0, UsuarioModel.Email) && string.IsNullOrEmpty(Database.DBBuscaInfo("Empresas", "Email", UsuarioModel.Email, "ID")))
                 {
                     if (UsuariosDAO.Salvar(UsuarioModel))
                     {
@@ -130,7 +130,7 @@ namespace Insignia.Painel.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (UsuariosDAO.VerificaUsuario(UsuarioModel.Email) && string.IsNullOrEmpty(Database.DBBuscaInfo("Empresas", "Email", UsuarioModel.Email, "ID")))
+                if (UsuariosDAO.VerificaUsuario(UsuarioModel.ID, UsuarioModel.Email) && string.IsNullOrEmpty(Database.DBBuscaInfo("Empresas", "Email", UsuarioModel.Email, "ID")))
                 {
                     if (UsuariosDAO.Editar(UsuarioModel))
                     {

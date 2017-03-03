@@ -231,14 +231,14 @@ namespace Insignia.DAO.Usuarios
         /// </summary>
         /// <param name="email">Email que está sendo cadastrado</param>        
         /// <returns>True se não existe e false caso já exista</returns>
-        public bool VerificaUsuario(string email)
+        public bool VerificaUsuario(int id, string email)
         {
             bool resp = true;
             Usuario usuario = null;
 
             using (var sql = new SqlConnection(conStr))
             {
-                usuario = sql.Query<Usuario>(" SELECT ID FROM Usuarios WHERE Email = @Email AND EmpresaID = @EmpresaID",
+                usuario = sql.Query<Usuario>(" SELECT ID FROM Usuarios WHERE Email = @Email ",
                     new
                     {
                         Email = email,
@@ -246,7 +246,7 @@ namespace Insignia.DAO.Usuarios
                     }).FirstOrDefault();
             }
 
-            if (usuario != null && !string.IsNullOrEmpty(email))
+            if (usuario != null && !string.IsNullOrEmpty(email) && (id != 0 && usuario.ID != id))
             {
                 if (!string.IsNullOrEmpty(Convert.ToString(usuario.ID)))
                 {
@@ -287,14 +287,12 @@ namespace Insignia.DAO.Usuarios
             {
                 using (var sql = new SqlConnection(conStr))
                 {
-                    int queryResultado = sql.Execute(" UPDATE Usuarios SET Senha = @Senha WHERE EmpresaID = @EmpresaID AND Email = @Email ",
+                    int queryResultado = sql.Execute(" UPDATE Usuarios SET Senha = @Senha WHERE Email = @Email ",
                         new
-                        {
-                            EmpresaID = HttpContext.Current.Session["EmpresaID"],
+                        {                            
                             Email = email,
                             Senha = Util.Autenticacao.Criptografar(senha)
-                        });
-
+                        });                    
                     resp = ToBoolean(queryResultado);
                 }
             }
