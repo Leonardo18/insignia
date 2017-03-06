@@ -185,6 +185,7 @@
     <Content Include="Helpers\Email\NovoCadastro.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Properties\PublishProfiles\local.pubxml" />
     <None Include="Properties\PublishProfiles\web.pubxml" />
     <Content Include="Views\Shared\LayoutPrincipal.cshtml" />
     <Content Include="Views\Dashboard\Dashboard.cshtml" />
