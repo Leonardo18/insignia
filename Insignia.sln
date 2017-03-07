@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Insignia.DAO", "Insignia.DA
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Insignia.Model", "Insignia.Model\Insignia.Model.csproj", "{0ED38AD7-6BB3-4F5C-95CF-7657218CD3FD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Insignia.Site", "Insignia.Site\Insignia.Site.csproj", "{19CECDFE-7F5C-48E6-AF5E-909A0B39E663}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{0ED38AD7-6BB3-4F5C-95CF-7657218CD3FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0ED38AD7-6BB3-4F5C-95CF-7657218CD3FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0ED38AD7-6BB3-4F5C-95CF-7657218CD3FD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{19CECDFE-7F5C-48E6-AF5E-909A0B39E663}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{19CECDFE-7F5C-48E6-AF5E-909A0B39E663}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{19CECDFE-7F5C-48E6-AF5E-909A0B39E663}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{19CECDFE-7F5C-48E6-AF5E-909A0B39E663}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
