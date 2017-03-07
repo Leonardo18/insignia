@@ -1353,7 +1353,7 @@ button,
     input[type="reset"]:hover,
     button:hover,
     .button:hover {
-        background-color: #f98780;
+        background-color: #2d7b7b;
     }
 
     input[type="button"].style1,
@@ -1361,7 +1361,7 @@ button,
     input[type="reset"].style1,
     button.style1,
     .button.style1 {
-        background: #e97770 url("../css/images/overlay.png");
+        background: #2ba2a2 url("../css/images/overlay.png");
         color: #fff;
     }
 
@@ -1370,7 +1370,7 @@ button,
         input[type="reset"].style1:hover,
         button.style1:hover,
         .button.style1:hover {
-            background-color: #f98780;
+            background-color: #2d7b7b;
         }
 
         input[type="button"].style1:active,
@@ -1479,7 +1479,7 @@ ol.default {
 /* Feature List */
 
 .feature-list h3 {
-    color: #e97770 !important;
+    color: #2ba2a2 !important;
 }
 
     .feature-list h3:before {
@@ -1555,13 +1555,13 @@ ol.default {
         }
 
     .wrapper.style1 {
-        background: #e97770 url("../css/images/overlay.png");
+        background: #2ba2a2 url("../css/images/overlay.png");
         color: #eee;
         color: rgba(255, 255, 255, 0.75);
     }
 
         .wrapper.style1 .title {
-            background: #e97770 url("../css/images/overlay.png");
+            background: #2ba2a2 url("../css/images/overlay.png");
             color: #fff;
         }
 
@@ -1592,7 +1592,7 @@ ol.default {
         }
 
 #header-wrapper {
-    background: url("../../Content/images/banner.jpg") center center;
+    background: url("https://s3-sa-east-1.amazonaws.com/insigniagamify/images/Background-Lozange.png") center center;
     background-size: cover;
 }
 
@@ -1729,7 +1729,7 @@ ol.default {
 }
 
     #highlights .highlight h3 {
-        color: #e97770;
+        color: #2ba2a2;
     }
 
 /* Copyright */
