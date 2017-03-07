@@ -224,11 +224,12 @@
         for (var i = 0; i < itens.length; i++) {
             if ($(itens[i]).css("display") == "none") {
                 if (cont <= 4) {
-                    $(itens[i]).slideDown('slow');
+                    setTimeout(function () { $(itens[i]).slideDown('slow') }, 2000);
                     cont++
                 }
             }
         }
+        
         console.log(itens);
     }
 </script>
