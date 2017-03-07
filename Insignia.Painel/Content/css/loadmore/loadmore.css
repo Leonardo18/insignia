@@ -1,0 +1,60 @@
+﻿.load-more {
+    position: absolute;
+    display: block;
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    top: 50%;
+    left: 50%;
+    margin: -20px 0 0 -20px;
+}
+
+    .load-more:before,
+    .load-more:after {
+        position: absolute;
+        display: block;
+        content: '';
+        width: 30px;
+        height: 30px;
+        left: 50%;
+        top: 50%;
+        margin-top: -15px;
+        border-width: 2px;
+        border-style: solid;
+        border-color: transparent;
+        border-bottom-color: #000;
+        border-right-color: #000;
+        border-radius: 0 0 5px 0;
+        transform: translate(-50%, -50%) rotate(45deg);
+        transition: all .4s ease-in-out;
+    }
+
+    .load-more.active:before {
+        border-radius: 50%;
+        animation: .8s rotate .4s linear forwards infinite;
+    }
+
+    .load-more.active:after {
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        animation: .8s rotate2 .4s linear forwards infinite;
+    }
+
+@keyframes rotate {
+    to {
+        transform: translate(-50%, -50%) rotate(405deg);
+    }
+}
+
+@keyframes rotate2 {
+    to {
+        transform: translate(-50%, -50%) rotate(-315deg);
+    }
+}
+
+.load-more.disabled:before,
+.load-more.disabled:after {
+    margin-top: 0;
+    transform: translate(-50%, -50%) rotate(135deg) rotateY(180deg);
+}

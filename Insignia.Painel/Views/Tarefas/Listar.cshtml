@@ -3,6 +3,7 @@
     ViewBag.Title = "Listar";
     Layout = "~/Views/Shared/LayoutPrincipal.cshtml";
 }
+@Styles.Render("~/Tarefas/styles")
 
 <!-- page content -->
 <div class="title_left" style="margin-bottom: 20px;">
@@ -40,30 +41,61 @@
                     </ul>
                     <div id="myTabContent" class="tab-content">
                         <div role="tabpanel" class="tab-pane fade active in" id="tab_content1" aria-labelledby="fazer-tab">
+                            @{int cont = 1;}
+
                             @foreach (var item in Model.ListFazer)
                             {
-                                <ul class="list-unstyled timeline">
-                                    <li>
-                                        <div class="block">
-                                            <div class="tags">
-                                                <a href="@Url.Action("../Tarefas/Editar", null, new { ID = item.ID, controller = "Tarefas" }, Request.Url.Scheme)" class="tag">
-                                                    <span title="Data prevista de término">@item.Termino</span>
-                                                </a>
-                                            </div>
-                                            <div class="block_content">
-                                                <h2 class="title">
-                                                    <a>@item.Titulo</a>
-                                                </h2>
-                                                <div class="byline">
-                                                    <span>Criado as @Convert.ToDateTime(item.CriadoEm).Hour Horas</span> por <a>@Session["UsuarioNome"] </a> <span>no dia @Convert.ToDateTime(item.CriadoEm).Day / @Convert.ToDateTime(item.CriadoEm).Month / @Convert.ToDateTime(item.CriadoEm).Year</span>
+                                if (cont <= 2)
+                                {
+                                    <ul class="list-unstyled timeline Fazer">
+                                        <li>
+                                            <div class="block">
+                                                <div class="tags">
+                                                    <a href="@Url.Action("../Tarefas/Editar", null, new { ID = item.ID, controller = "Tarefas" }, Request.Url.Scheme)" class="tag">
+                                                        <span title="Data prevista de término">@item.Termino</span>
+                                                    </a>
                                                 </div>
-                                                <p class="excerpt">
-                                                    @item.Resumo<a href="@Url.Action("../Tarefas/Editar", null, new { ID = item.ID, controller = "Tarefas" }, Request.Url.Scheme)">&nbsp;Ler&nbsp;Mais</a>
-                                                </p>
+                                                <div class="block_content">
+                                                    <h2 class="title">
+                                                        <a>@item.Titulo</a>
+                                                    </h2>
+                                                    <div class="byline">
+                                                        <span>Criado as @Convert.ToDateTime(item.CriadoEm).Hour Horas</span> por <a>@Session["UsuarioNome"] </a> <span>no dia @Convert.ToDateTime(item.CriadoEm).Day / @Convert.ToDateTime(item.CriadoEm).Month / @Convert.ToDateTime(item.CriadoEm).Year</span>
+                                                    </div>
+                                                    <p class="excerpt">
+                                                        @item.Resumo<a href="@Url.Action("../Tarefas/Editar", null, new { ID = item.ID, controller = "Tarefas" }, Request.Url.Scheme)">&nbsp;Ler&nbsp;Mais</a>
+                                                    </p>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </li>
-                                </ul>
+                                        </li>
+                                    </ul>
+                                }
+                                else
+                                {
+                                    <ul class="list-unstyled timeline Fazer" style="display: none">
+                                        <li>
+                                            <div class="block">
+                                                <div class="tags">
+                                                    <a href="@Url.Action("../Tarefas/Editar", null, new { ID = item.ID, controller = "Tarefas" }, Request.Url.Scheme)" class="tag">
+                                                        <span title="Data prevista de término">@item.Termino</span>
+                                                    </a>
+                                                </div>
+                                                <div class="block_content">
+                                                    <h2 class="title">
+                                                        <a>@item.Titulo</a>
+                                                    </h2>
+                                                    <div class="byline">
+                                                        <span>Criado as @Convert.ToDateTime(item.CriadoEm).Hour Horas</span> por <a>@Session["UsuarioNome"] </a> <span>no dia @Convert.ToDateTime(item.CriadoEm).Day / @Convert.ToDateTime(item.CriadoEm).Month / @Convert.ToDateTime(item.CriadoEm).Year</span>
+                                                    </div>
+                                                    <p class="excerpt">
+                                                        @item.Resumo<a href="@Url.Action("../Tarefas/Editar", null, new { ID = item.ID, controller = "Tarefas" }, Request.Url.Scheme)">&nbsp;Ler&nbsp;Mais</a>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                }
+                                cont++;
                             }
                         </div>
                         <div role="tabpanel" class="tab-pane fade" id="tab_content2" aria-labelledby="andamento-tab">
@@ -154,8 +186,49 @@
                         <i class="fa fa-plus" title="Adicionar Badge" style="font-size: 2em; vertical-align: middle;"></i>
                     </a>
                 </div>
+                <div>
+                    <span onclick="LoadMore(this)" class="load-more" style="top: 0; bottom: 0;"></span>
+                </div>
             </div>
         </div>
     </div>
 </div>
 <!-- /page content -->
+
+<script type="text/javascript" language="javascript">
+    var page = 1, moving = false;
+    var animationIteration = "animationiteration webkitAnimationIteration mozAnimationIteration oAnimationIteration oanimationiteration",
+        transitionEnd = "transitionend webkitTransitionEnd oTransitionEnd otransitionend MSTransitionEnd";
+    $(".load-more").on("click", function () {
+        if (moving == false) {
+            moving = true;
+            $(".load-more").addClass("active");
+            setTimeout(function () {
+                $(".load-more").one(animationIteration, function () {
+                    $(".load-more").removeClass("active");
+                    $(".load-more").one(transitionEnd, function () {
+                        page++;
+                        moving = false;
+                    });
+                });
+            }, 2000);
+        }
+    });
+
+    function LoadMore(elem) {
+        var itens2;
+        var itens = $("ul.Fazer");
+
+        cont = 0;
+
+        for (var i = 0; i < itens.length; i++) {
+            if ($(itens[i]).css("display") == "none") {
+                if (cont <= 4) {
+                    $(itens[i]).slideDown('slow');
+                    cont++
+                }
+            }
+        }
+        console.log(itens);
+    }
+</script>

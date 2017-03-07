@@ -130,6 +130,7 @@
     <Content Include="Content\css\colorpicker\imagem\saturation.png" />
     <Content Include="Content\css\custom.css" />
     <Content Include="Content\css\google-code-prettify\prettify.css" />
+    <Content Include="Content\css\loadmore\loadmore.css" />
     <Content Include="Content\css\logo\logo.css" />
     <Content Include="Content\css\nprogress\nprogress.css" />
     <Content Include="Content\css\select2\select2.css" />

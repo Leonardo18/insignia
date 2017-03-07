@@ -60,7 +60,8 @@ namespace Insignia.Painel
             //Arquivos de css usados nas tarefas
             bundles.Add(new ScriptBundle("~/Tarefas/styles").Include(
                     "~/Content/css/google-code-prettify/prettify.css",
-                    "~/Content/css/select2/select2.css"));
+                    "~/Content/css/select2/select2.css",
+                    "~/Content/css/loadmore/loadmore.css"));
 
             //Arquivos de javascript usados nas tarefas
             bundles.Add(new ScriptBundle("~/Tarefas/scripts").Include(
