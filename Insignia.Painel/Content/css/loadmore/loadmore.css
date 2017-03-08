@@ -22,8 +22,8 @@
         border-width: 2px;
         border-style: solid;
         border-color: transparent;
-        border-bottom-color: #000;
-        border-right-color: #000;
+        border-bottom-color: #23527c;
+        border-right-color: #23527c;
         border-radius: 0 0 5px 0;
         transform: translate(-50%, -50%) rotate(45deg);
         transition: all .4s ease-in-out;
