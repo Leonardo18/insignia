@@ -10,6 +10,7 @@ using System.Web;
 using Insignia.Painel.Helpers.Util;
 using System.Web.Mvc;
 using Insignia.DAO.Util;
+using System.Collections.Generic;
 
 namespace Insignia.Painel.Controllers
 {
@@ -299,6 +300,19 @@ namespace Insignia.Painel.Controllers
             }
 
             return View(TarefaModel);
+        }
+
+        /// <summary>
+        /// Ativado por um ajax carrega uma listagem de tarefas a partir dos index
+        /// </summary>
+        /// <param name="tarefaTipo">Status da Tarefa</param>
+        /// <param name="index">Index no qual até quanto será buscado</param>
+        /// <returns>Retorna uma list contendo as tarefas do resultado da consulta</returns>
+        public ActionResult CarregarMais(string tarefaStatus, int index)
+        {
+            List<Tarefa> list = TarefasDAO.ListarTop(tarefaStatus, index, index + 5);
+
+            return Json(new { list = list }, JsonRequestBehavior.AllowGet);
         }
     }
 }

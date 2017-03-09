@@ -148,7 +148,7 @@ namespace Insignia.DAO.Tarefas
 
             using (var sql = new SqlConnection(conStr))
             {
-                list = sql.Query<Tarefa>(" SELECT ID, EmpresaID, UsuarioID, BadgeID AS TipoID, Titulo, Resumo, Descricao, Anexo, Termino, Observacoes, CriadoEm FROM Tarefas WHERE EmpresaID = @EmpresaID AND UsuarioID = @UsuarioID AND Status = @Status ",
+                list = sql.Query<Tarefa>(" SELECT Top 5 ID, EmpresaID, UsuarioID, BadgeID AS TipoID, Titulo, Resumo, Descricao, Anexo, Termino, Observacoes, CriadoEm FROM Tarefas WHERE EmpresaID = @EmpresaID AND UsuarioID = @UsuarioID AND Status = @Status ",
                     new
                     {
                         EmpresaID = HttpContext.Current.Session["EmpresaID"],
@@ -193,24 +193,29 @@ namespace Insignia.DAO.Tarefas
         /// <summary>
         /// Carrega uma list de tarefas conforme o número passado no top e o status
         /// </summary>
+        /// <param name="status">Status da tarefa</param>
+        /// <param name="index">Index de início da busca</param>
+        /// <param name="maxIndex">Index fim da busca</param>
         /// <returns>Retornar uma List de Tarefas</returns>
-        public List<Tarefa> ListarTop(string status, int top)
+        public List<Tarefa> ListarTop(string status, int index, int maxIndex)
         {
             List<Tarefa> list;
 
             using (var sql = new SqlConnection(conStr))
             {
-                list = sql.Query<Tarefa>(" SELECT Top " + top + " ID, EmpresaID, UsuarioID, BadgeID AS TipoID, Titulo, Resumo, Descricao, Anexo, Termino, Observacoes, CriadoEm FROM Tarefas WHERE EmpresaID = @EmpresaID AND UsuarioID = @UsuarioID AND Status = @Status ",
+                list = sql.Query<Tarefa>(" SELECT * FROM (SELECT Row_Number() OVER (order by ID) AS RowIndex, Tarefas.ID, EmpresaID, UsuarioID, BadgeID AS TipoID, Titulo, Resumo, Descricao, Anexo, Termino, Observacoes, CriadoEm FROM Tarefas WHERE EmpresaID = @EmpresaID AND UsuarioID = @UsuarioID AND Status = @Status) AS Sub WHERE Sub.RowIndex > @Index AND Sub.RowIndex <= @MaxIndex ",
                     new
                     {
                         EmpresaID = HttpContext.Current.Session["EmpresaID"],
                         UsuarioID = HttpContext.Current.Session["UsuarioID"],
-                        Status = status
+                        Status = status,
+                        Index = index,
+                        MaxIndex = maxIndex
                     }).ToList();
             }
 
             return list;
-        }              
+        }
 
         /// <summary>
         /// Carrega todos os tipos sendo eles as tags das bagdes
