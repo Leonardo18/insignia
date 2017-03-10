@@ -23,6 +23,9 @@
                 <div class="clearfix"></div>
             </div>
             <div class="x_content">
+                <input type="hidden" , id="indexFazer" value="5" />
+                <input type="hidden" , id="indexAndamento" value="5" />
+                <input type="hidden" , id="indexFinalizada" value="5" />
                 <div class="" role="tabpanel" data-example-id="togglable-tabs">
                     <ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
                         <li role="presentation" class="active">
@@ -55,7 +58,7 @@
                                                     <a>@item.Titulo</a>
                                                 </h2>
                                                 <div class="byline">
-                                                    <span>Criado as @Convert.ToDateTime(item.CriadoEm).Hour Horas</span> por <a>@Session["UsuarioNome"] </a> <span>no dia @Convert.ToDateTime(item.CriadoEm).Day / @Convert.ToDateTime(item.CriadoEm).Month / @Convert.ToDateTime(item.CriadoEm).Year</span>
+                                                    <span>Criado</span> por <a>@Session["UsuarioNome"]</a><span> na data de @Convert.ToDateTime(item.CriadoEm).Day / @Convert.ToDateTime(item.CriadoEm).Month / @Convert.ToDateTime(item.CriadoEm).Year</span>
                                                 </div>
                                                 <p class="excerpt">
                                                     @item.Resumo<a href="@Url.Action("../Tarefas/Editar", null, new { ID = item.ID, controller = "Tarefas" }, Request.Url.Scheme)">&nbsp;Ler&nbsp;Mais</a>
@@ -65,8 +68,8 @@
                                     </li>
                                 </ul>
                             }
-                            <div style="position: relative; margin-top: 45px;">
-                                <span onclick="LoadMore('Fazer', 5)" class="load-more"></span>
+                            <div style="position: relative; margin-top: 45px;" id="LoadMoreFazer">
+                                <span onclick="LoadMore('Fazer', document.getElementById('indexFazer').value)" class="load-more"></span>
                             </div>
                         </div>
                         <div role="tabpanel" class="tab-pane fade" id="Andamento" aria-labelledby="andamento-tab">
@@ -85,7 +88,7 @@
                                                     <a>@item.Titulo</a>
                                                 </h2>
                                                 <div class="byline">
-                                                    <span>Criado as @Convert.ToDateTime(item.CriadoEm).Hour Horas</span> por <a>@Session["UsuarioNome"]</a> <span>no dia @Convert.ToDateTime(item.CriadoEm).Day / @Convert.ToDateTime(item.CriadoEm).Month / @Convert.ToDateTime(item.CriadoEm).Year</span>
+                                                    <span>Criado</span> por <a>@Session["UsuarioNome"] </a> <span>na data de @Convert.ToDateTime(item.CriadoEm).Day / @Convert.ToDateTime(item.CriadoEm).Month / @Convert.ToDateTime(item.CriadoEm).Year</span>
                                                 </div>
                                                 <p class="excerpt">
                                                     @item.Resumo<a href="@Url.Action("../Tarefas/Editar", null, new { ID = item.ID, controller = "Tarefas" }, Request.Url.Scheme)">&nbsp;Ler&nbsp;Mais</a>
@@ -95,8 +98,8 @@
                                     </li>
                                 </ul>
                             }
-                            <div style="position: relative; margin-top: 45px;">
-                                <span onclick="LoadMore('Andamento', 0)" class="load-more"></span>
+                            <div style="position: relative; margin-top: 45px;" id="LoadMoreAndamento">
+                                <span onclick="LoadMore('Andamento', document.getElementById('indexAndamento').value)" class="load-more"></span>
                             </div>
                         </div>
                         <div role="tabpanel" class="tab-pane fade" id="Finalizada" aria-labelledby="finalizadas-tab">
@@ -115,7 +118,7 @@
                                                     <a>@item.Titulo</a>
                                                 </h2>
                                                 <div class="byline">
-                                                    <span>Criado as @Convert.ToDateTime(item.CriadoEm).Hour Horas</span> por <a>@Session["UsuarioNome"]</a> <span>no dia @Convert.ToDateTime(item.CriadoEm).Day / @Convert.ToDateTime(item.CriadoEm).Month / @Convert.ToDateTime(item.CriadoEm).Year</span>
+                                                    <span>Criado</span> por <a>@Session["UsuarioNome"] </a> <span>na data de @Convert.ToDateTime(item.CriadoEm).Day / @Convert.ToDateTime(item.CriadoEm).Month / @Convert.ToDateTime(item.CriadoEm).Year</span>
                                                 </div>
                                                 <p class="excerpt">
                                                     @item.Resumo<a href="@Url.Action("../Tarefas/Editar", null, new { ID = item.ID, controller = "Tarefas" }, Request.Url.Scheme)">&nbsp;Ler&nbsp;Mais</a>
@@ -125,8 +128,8 @@
                                     </li>
                                 </ul>
                             }
-                            <div style="position: relative; margin-top: 45px;">
-                                <span onclick="LoadMore('Finalizadas', 0)" class="load-more"></span>
+                            <div style="position: relative; margin-top: 45px;" id="LoadMoreFinalizada">
+                                <span onclick="LoadMore('Finalizadas', document.getElementById('indexFinalizada').value)" class="load-more"></span>
                             </div>
                         </div>
                         <div role="tabpanel" class="tab-pane fade" id="Participante" aria-labelledby="participante-tab">
@@ -145,7 +148,7 @@
                                                     <a>@item.Titulo</a>
                                                 </h2>
                                                 <div class="byline">
-                                                    <span>Criado as @Convert.ToDateTime(item.CriadoEm).Hour Horas</span> por <a>@item.UsuarioNome</a> <span>no dia @Convert.ToDateTime(item.CriadoEm).Day / @Convert.ToDateTime(item.CriadoEm).Month / @Convert.ToDateTime(item.CriadoEm).Year</span>
+                                                    <span>Criado</span> por <a>@Session["UsuarioNome"] </a> <span>na data de @Convert.ToDateTime(item.CriadoEm).Day / @Convert.ToDateTime(item.CriadoEm).Month / @Convert.ToDateTime(item.CriadoEm).Year</span>
                                                 </div>
                                                 <p class="excerpt">
                                                     @item.Resumo<a href="@Url.Action("../Tarefas/Editar", null, new { ID = item.ID, controller = "Tarefas" }, Request.Url.Scheme)">&nbsp;Ler&nbsp;Mais</a>
@@ -168,6 +171,8 @@
     </div>
 </div>
 <!-- /page content -->
+
+@Scripts.Render("~/Tarefas/scripts")
 <!-- Loader -->
 <script type="text/javascript" language="javascript">
     var page = 1, moving = false;
@@ -198,9 +203,9 @@
             url: 'CarregarMais',
             dataType: 'json',
             async: true,
-            data: { 'tarefaStatus': tarefaStatus, 'index': 5 },
+            data: { 'tarefaStatus': tarefaStatus, 'index': index },
             success: function (Dado) {
-                HtmlTarefas(Dado.list);
+                setTimeout(function () { HtmlTarefas(tarefaStatus, Dado.list) }, 2000);
             },
             error: function (Dado) {
                 console.log(Dado);
@@ -209,13 +214,48 @@
     }
 
 
-    function HtmlTarefas(listTarefas) {
+    function HtmlTarefas(tarefaStatus, listTarefas) {
         var list = listTarefas;
 
         $.each(list, function (index, value) {
-            alert(value.Anexo);
+            var htmlTarefa = "<ul class=\"list-unstyled timeline " + tarefaStatus +  "\">\
+                                <li>\
+                                    <div class=\"block\">\
+                                        <div class=\"tags\">\
+                                            <a href=\"Editar/" + value.ID + "\" class=\"tag\">\
+                                                <span title=\"Data prevista de término\">" + moment(value.Termino).format("DD/MM/YYYY") + "</span>\
+                                            </a>\
+                                        </div>\
+                                        <div class=\"block_content\">\
+                                            <h2 class=\"title\">\
+                                                <a>" + value.Titulo + "</a>\
+                                            </h2>\
+                                            <div class=\"byline\">\
+                                                <span>Criado </span> por <a>@Session["UsuarioNome"]</a><span> na data de " + moment(value.CriadoEm).format("DD/MM/YYYY") +"</span>\
+                                            </div>\
+                                            <p class=\"excerpt\">\
+                                            " + value.Resumo + "<a href=\"Editar/" + value.ID + "\">&nbsp;Ler&nbsp;Mais</a>\
+                                            </p>\
+                                        </div>\
+                                    </div>\
+                                </li>\
+                            </ul>";
+            $(htmlTarefa).insertBefore("#LoadMore" + tarefaStatus);
         });
-    }
 
+        if (list.length < 5) {
+            $("#" + tarefaStatus).find('div span.load-more').hide();
+        }
+
+        if (tarefaStatus == "Fazer") {
+            document.getElementById('indexFazer').value = Number(document.getElementById('indexFazer').value) + 5;
+        }
+        else if (tarefaStatus == "Andamento") {
+            document.getElementById('indexAndamento').value = Number(document.getElementById('indexAndamento').value) + 5;
+        }
+        else if (tarefaStatus == "Finalizada") {
+            document.getElementById('indexFinalizada').value = Number(document.getElementById('indexFinalizada').value) + 5;
+        }
+    }
 </script>
 <!-- LoadMore -->

@@ -25,7 +25,7 @@ namespace Insignia.Painel.Controllers
         [HttpGet, IsLogged]
         public ActionResult Listar()
         {
-            var ViewModel = new ViewModelTarefa();
+            var ViewModel = new ViewModelTarefa();            
 
             //Busca as tarefa com status a fazer
             ViewModel.ListFazer = TarefasDAO.Listar(ConfigurationManager.AppSettings["Fazer"]);
@@ -303,14 +303,14 @@ namespace Insignia.Painel.Controllers
         }
 
         /// <summary>
-        /// Ativado por um ajax carrega uma listagem de tarefas a partir dos index
+        /// Ativado por um ajax que carrega uma listagem de tarefas a partir dos index
         /// </summary>
         /// <param name="tarefaTipo">Status da Tarefa</param>
         /// <param name="index">Index no qual até quanto será buscado</param>
         /// <returns>Retorna uma list contendo as tarefas do resultado da consulta</returns>
         public ActionResult CarregarMais(string tarefaStatus, int index)
         {
-            List<Tarefa> list = TarefasDAO.ListarTop(tarefaStatus, index, index + 5);
+            List<Tarefa> list = TarefasDAO.ListarTop(tarefaStatus, index, index + 5);            
 
             return Json(new { list = list }, JsonRequestBehavior.AllowGet);
         }

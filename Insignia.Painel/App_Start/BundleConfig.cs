@@ -72,7 +72,8 @@ namespace Insignia.Painel
                     "~/Scripts/js/moment/moment.min.js",
                     "~/Scripts/js/daterangepicker/daterangepicker.js",
                     "~/Scripts/js/inputmask/jquery.inputmask.bundle.min.js",
-                    "~/Scripts/js/select2/select2.full.js"));
+                    "~/Scripts/js/select2/select2.full.js",
+                    "~/Scripts/js/moment/moment.min.js"));
 
             //Arquivos de css usados para tables
             bundles.Add(new StyleBundle("~/DataTables/styles").Include(
