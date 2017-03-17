@@ -69,7 +69,7 @@
                                 </ul>
                             }
                             <div style="position: relative; margin-top: 45px;" id="LoadMoreFazer">
-                                <span onclick="LoadMore('Fazer', document.getElementById('indexFazer').value)" class="load-more"></span>
+                                <span onclick="Loader(this);LoadMore('Fazer', document.getElementById('indexFazer').value)" class="load-more"></span>
                             </div>
                         </div>
                         <div role="tabpanel" class="tab-pane fade" id="Andamento" aria-labelledby="andamento-tab">
@@ -99,7 +99,7 @@
                                 </ul>
                             }
                             <div style="position: relative; margin-top: 45px;" id="LoadMoreAndamento">
-                                <span onclick="LoadMore('Andamento', document.getElementById('indexAndamento').value)" class="load-more"></span>
+                                <span onclick="Loader(this);LoadMore('Andamento', document.getElementById('indexAndamento').value)" class="load-more"></span>
                             </div>
                         </div>
                         <div role="tabpanel" class="tab-pane fade" id="Finalizada" aria-labelledby="finalizadas-tab">
@@ -129,7 +129,7 @@
                                 </ul>
                             }
                             <div style="position: relative; margin-top: 45px;" id="LoadMoreFinalizada">
-                                <span onclick="LoadMore('Finalizadas', document.getElementById('indexFinalizada').value)" class="load-more"></span>
+                                <span onclick="Loader(this);LoadMore('Finalizadas', document.getElementById('indexFinalizada').value)" class="load-more"></span>
                             </div>
                         </div>
                         <div role="tabpanel" class="tab-pane fade" id="Participante" aria-labelledby="participante-tab">
@@ -178,21 +178,38 @@
     var page = 1, moving = false;
     var animationIteration = "animationiteration webkitAnimationIteration mozAnimationIteration oAnimationIteration oanimationiteration",
         transitionEnd = "transitionend webkitTransitionEnd oTransitionEnd otransitionend MSTransitionEnd";
-    $(".load-more").on("click", function () {
+    //$(".load-more").on("click", function () {
+    //    if (moving == false) {
+    //        moving = true;
+    //        $(".load-more").addClass("active");
+    //        setTimeout(function () {
+    //            $(".load-more").one(animationIteration, function () {
+    //                $(".load-more").removeClass("active");
+    //                $(".load-more").one(transitionEnd, function () {
+    //                    page++;
+    //                    moving = false;
+    //                });
+    //            });
+    //        }, 2000);
+    //    }
+    //});
+
+    function Loader(elem) {
         if (moving == false) {
             moving = true;
-            $(".load-more").addClass("active");
+            $(elem).addClass("active");
             setTimeout(function () {
-                $(".load-more").one(animationIteration, function () {
-                    $(".load-more").removeClass("active");
-                    $(".load-more").one(transitionEnd, function () {
+                $(elem).one(animationIteration, function () {
+                    $(elem).removeClass("active");
+                    $(elem).one(transitionEnd, function () {
                         page++;
                         moving = false;
                     });
+                    moving = false;
                 });
             }, 2000);
         }
-    });
+    }
 </script>
 <!-- /Loader -->
 <!-- LoadMore -->

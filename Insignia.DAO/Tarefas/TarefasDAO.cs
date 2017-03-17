@@ -85,7 +85,7 @@ namespace Insignia.DAO.Tarefas
 
                     resp = ToBoolean(queryResultado);
 
-                    if (tarefa.Participantes.Count > 0)
+                    if (tarefa.Participantes != null && tarefa.Participantes.Count > 0)
                     {
                         SalvarParticipantes(tarefa.ID, tarefa.Participantes);
                     }
