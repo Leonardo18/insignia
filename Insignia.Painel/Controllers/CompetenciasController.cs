@@ -1,6 +1,7 @@
 ﻿using Insignia.DAO.Competencias;
 using Insignia.Model.Competencia;
 using Insignia.Painel.Helpers.CustomAttributes;
+using Insignia.Painel.ViewModels;
 using System.Configuration;
 using System.Web.Mvc;
 
@@ -18,7 +19,7 @@ namespace Insignia.Painel.Controllers
         [HttpGet, IsLogged]
         public ActionResult Listar()
         {
-            var CompetenciaModel = CompetenciasDAO.Listar();            
+            var CompetenciaModel = CompetenciasDAO.Listar();
 
             return View(CompetenciaModel);
         }
@@ -124,6 +125,25 @@ namespace Insignia.Painel.Controllers
             }
 
             return View(CompetenciaModel);
+        }
+
+        /// <summary>
+        /// GET: Competência Distribuir Pontos
+        /// </summary>        
+        /// <returns>Retorna a view com dados para distribuir pontos nas competências</returns>
+        [HttpGet, IsLogged]
+        public ActionResult DistribuirPontos()
+        {
+            var ViewModel = new ViewModelCompetencia();
+
+            ViewModel.ListCompetencias = CompetenciasDAO.Listar();
+
+            foreach (var item in ViewModel.ListCompetencias)
+            {
+                item.Pontos = CompetenciasDAO.CompetenciaPontos(item.ID);
+            }
+
+            return View(ViewModel);
         }
     }
 }

@@ -247,6 +247,7 @@
     <Compile Include="Helpers\Util\SelectListMVC.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\ViewModelBadge.cs" />
+    <Compile Include="ViewModels\ViewModelCompetencia.cs" />
     <Compile Include="ViewModels\ViewModelTarefa.cs" />
     <Compile Include="ViewModels\ViewModelPerfil.cs" />
   </ItemGroup>

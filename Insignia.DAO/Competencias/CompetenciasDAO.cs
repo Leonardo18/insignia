@@ -150,5 +150,28 @@ namespace Insignia.DAO.Competencias
 
             return resp;
         }
+
+        /// <summary>
+        /// Busca pontos de um usuário em uma competência especifíca
+        /// </summary>
+        /// <param name="id">ID da competência</param>
+        /// <returns>Retorna 0 caso não tenha pontos ou retorna o número de pontos distribuido na competência</returns>
+        public int CompetenciaPontos(int id)
+        {
+            int Pontos = 0;
+
+            using (var sql = new SqlConnection(conStr))
+            {
+                Pontos = sql.ExecuteScalar<int>(" SELECT Pontos FROM CompetenciasUsuarios WHERE EmpresaID = @EmpresaID AND UsuarioID = @UsuarioID AND CompetenciaID = @CompetenciaID ",
+                        new
+                        {
+                            EmpresaID = HttpContext.Current.Session["EmpresaID"],
+                            UsuarioID = HttpContext.Current.Session["UsuarioID"],
+                            CompetenciaID = id,
+                        });
+            }
+
+            return Pontos;
+        }
     }
 }
