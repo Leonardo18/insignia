@@ -443,6 +443,8 @@ namespace Insignia.DAO.Tarefas
                                             BadgeID = Badges.ID,
                                             ConquistadoEm = DateTime.Now
                                         });
+
+                        AdicionaPontos(Badges.Nivel);
                     }
                 }
             }
@@ -473,6 +475,42 @@ namespace Insignia.DAO.Tarefas
             }
 
             return Quantidade;
+        }
+
+        /// <summary>
+        /// Adiciona pontos ao usuário por ter desbloqueado uma badge
+        /// </summary>
+        /// <param name="nivel">Nível da badge adquirida para definir a quantidade de pontos</param>
+        private void AdicionaPontos(string nivel)
+        {
+            int PontosGanhos = 0;
+
+            if (!string.IsNullOrEmpty(Convert.ToString(nivel)))
+            {
+                switch (nivel)
+                {
+                    case "Basica":
+                        PontosGanhos = 3;
+                        break;
+                    case "Intermediaria":
+                        PontosGanhos = 7;
+                        break;
+                    case "Avancada":
+                        PontosGanhos = 15;
+                        break;
+                }
+
+                using (var sql = new SqlConnection(conStr))
+                {
+                    int queryResultado = sql.ExecuteScalar<int>(" UPDATE UsuariosPontos SET Pontos = Pontos + @PontosGanhos WHERE EmpresaID = @EmpresaID AND UsuarioID = @UsuarioID IF @@ROWCOUNT=0 INSERT INTO UsuariosPontos(UsuarioID, Pontos) VALUES(@EmpresaID, @UsuarioID, @PontosGanhos) ",
+                        new
+                        {
+                            EmpresaID = HttpContext.Current.Session["EmpresaID"],
+                            UsuarioID = HttpContext.Current.Session["UsuarioID"],
+                            PontosGanhos = PontosGanhos
+                        });
+                }
+            }
         }
 
         /// <summary>

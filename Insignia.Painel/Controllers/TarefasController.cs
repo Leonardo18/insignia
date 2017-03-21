@@ -310,16 +310,7 @@ namespace Insignia.Painel.Controllers
         /// <returns>Retorna uma list contendo as tarefas do resultado da consulta</returns>
         public ActionResult CarregarMais(string tarefaStatus, int index)
         {
-            List<Tarefa> list;
-
-            if (tarefaStatus == "Participante")
-            {
-                list = TarefasDAO.ListarParticipante(index, index + 5);
-            }
-            else
-            {
-                list = TarefasDAO.ListarTop(tarefaStatus, index, index + 5);
-            }            
+            List<Tarefa> list = tarefaStatus == "Participante" ? TarefasDAO.ListarParticipante(index, index + 5) : TarefasDAO.ListarTop(tarefaStatus, index, index + 5);
 
             return Json(new { list = list }, JsonRequestBehavior.AllowGet);
         }
