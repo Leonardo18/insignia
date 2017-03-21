@@ -25,7 +25,7 @@ namespace Insignia.Painel.Controllers
         [HttpGet, IsLogged]
         public ActionResult Listar()
         {
-            var ViewModel = new ViewModelTarefa();            
+            var ViewModel = new ViewModelTarefa();
 
             //Busca as tarefa com status a fazer
             ViewModel.ListFazer = TarefasDAO.Listar(ConfigurationManager.AppSettings["Fazer"]);
@@ -37,7 +37,7 @@ namespace Insignia.Painel.Controllers
             ViewModel.ListFinalizadas = TarefasDAO.Listar(ConfigurationManager.AppSettings["Finalizada"]);
 
             //Busca as tarefa em que o usuário logado é participante
-            var Participantes = TarefasDAO.ListarParticipante();
+            var Participantes = TarefasDAO.ListarParticipante(0, 5);
 
             //Busca nome do usuário que criou a tarefa
             foreach (var item in Participantes)
@@ -310,7 +310,16 @@ namespace Insignia.Painel.Controllers
         /// <returns>Retorna uma list contendo as tarefas do resultado da consulta</returns>
         public ActionResult CarregarMais(string tarefaStatus, int index)
         {
-            List<Tarefa> list = TarefasDAO.ListarTop(tarefaStatus, index, index + 5);            
+            List<Tarefa> list;
+
+            if (tarefaStatus == "Participante")
+            {
+                list = TarefasDAO.ListarParticipante(index, index + 5);
+            }
+            else
+            {
+                list = TarefasDAO.ListarTop(tarefaStatus, index, index + 5);
+            }            
 
             return Json(new { list = list }, JsonRequestBehavior.AllowGet);
         }

@@ -26,6 +26,7 @@
                 <input type="hidden" , id="indexFazer" value="5" />
                 <input type="hidden" , id="indexAndamento" value="5" />
                 <input type="hidden" , id="indexFinalizada" value="5" />
+                <input type="hidden" , id="indexParticipante" value="5" />
                 <div class="" role="tabpanel" data-example-id="togglable-tabs">
                     <ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
                         <li role="presentation" class="active">
@@ -158,6 +159,9 @@
                                     </li>
                                 </ul>
                             }
+                            <div style="position: relative; margin-top: 45px;" id="LoadMoreParticipante">
+                                <span onclick="Loader(this);LoadMore('Participante', document.getElementById('indexParticipante').value)" class="load-more"></span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -177,23 +181,7 @@
 <script type="text/javascript" language="javascript">
     var page = 1, moving = false;
     var animationIteration = "animationiteration webkitAnimationIteration mozAnimationIteration oAnimationIteration oanimationiteration",
-        transitionEnd = "transitionend webkitTransitionEnd oTransitionEnd otransitionend MSTransitionEnd";
-    //$(".load-more").on("click", function () {
-    //    if (moving == false) {
-    //        moving = true;
-    //        $(".load-more").addClass("active");
-    //        setTimeout(function () {
-    //            $(".load-more").one(animationIteration, function () {
-    //                $(".load-more").removeClass("active");
-    //                $(".load-more").one(transitionEnd, function () {
-    //                    page++;
-    //                    moving = false;
-    //                });
-    //            });
-    //        }, 2000);
-    //    }
-    //});
-
+        transitionEnd = "transitionend webkitTransitionEnd oTransitionEnd otransitionend MSTransitionEnd";    
     function Loader(elem) {
         if (moving == false) {
             moving = true;

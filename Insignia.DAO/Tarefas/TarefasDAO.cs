@@ -263,17 +263,19 @@ namespace Insignia.DAO.Tarefas
         /// Carrega uma lista com todas tarefas na qual o usuário participa
         /// </summary>
         /// <returns>Retornar uma List de Tarefas</returns>
-        public List<Tarefa> ListarParticipante()
+        public List<Tarefa> ListarParticipante(int index, int maxIndex)
         {
             List<Tarefa> list;
 
             using (var sql = new SqlConnection(conStr))
             {
-                list = sql.Query<Tarefa>(" SELECT ID, EmpresaID, UsuarioID, BadgeID AS TipoID, Titulo, Resumo, Descricao, Anexo, Termino, Observacoes, CriadoEm FROM Tarefas WHERE ID IN (SELECT TarefaID FROM TarefasParticipantes WHERE EmpresaID = @EmpresaID AND UsuarioID = @UsuarioID) ",
+                list = sql.Query<Tarefa>(" SELECT * FROM (SELECT Row_Number() OVER (order by ID) AS RowIndex, Tarefas.ID, EmpresaID, UsuarioID, BadgeID AS TipoID, Titulo, Resumo, Descricao, Anexo, Termino, Observacoes, CriadoEm FROM Tarefas WHERE Tarefas.ID IN (SELECT TarefaID FROM TarefasParticipantes WHERE EmpresaID = @EmpresaID AND UsuarioID = @UsuarioID)) AS Sub  WHERE Sub.RowIndex > @Index AND Sub.RowIndex <= @MaxIndex ",
                     new
                     {
                         EmpresaID = HttpContext.Current.Session["EmpresaID"],
-                        UsuarioID = HttpContext.Current.Session["UsuarioID"]
+                        UsuarioID = HttpContext.Current.Session["UsuarioID"],
+                        Index = index,
+                        MaxIndex = maxIndex
                     }).ToList();
             }
 
