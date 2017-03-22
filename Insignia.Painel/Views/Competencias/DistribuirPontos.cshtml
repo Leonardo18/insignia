@@ -82,9 +82,23 @@
         </div>
     </div>
 </div>
+<!-- /page content -->
 
 @Scripts.Render("~/Competencias/scripts")
+<!-- Height x_Panel -->
+<script>
+    $(document).ready(function () {
+        var x = $('.x_panel')[1];
+        var y = $('.x_panel')[0];
 
+        x = x.offsetHeight;
+
+        $(y).css('height', x + 'px');
+
+    });
+</script>
+<!-- /Height x_Panel -->
+<!-- Gráfico Radar -->
 <script>
     var theme = {
         color: [
@@ -335,7 +349,7 @@
                         @:text: '@item.Nome',
                         @:max: 100
                     @:},
-                 }
+                }
             ]
         }],
         calculable: true,
@@ -354,3 +368,4 @@
         }]
     });
 </script>
+<!-- /Gráfico Radar -->
