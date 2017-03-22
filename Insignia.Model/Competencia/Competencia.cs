@@ -21,6 +21,11 @@ namespace Insignia.Model.Competencia
         public string Nome { get; set; }
 
         /// <summary>
+        /// Descrição da competência
+        /// </summary>        
+        public string Descricao { get; set; }
+
+        /// <summary>
         /// Pontos da competência
         /// </summary>        
         public int Pontos { get; set; }

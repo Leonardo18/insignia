@@ -161,6 +161,7 @@
     <Content Include="Scripts\js\datatables\responsive.bootstrap.min.js" />
     <Content Include="Scripts\js\datatables\vfs_fonts.js" />
     <Content Include="Scripts\js\daterangepicker\daterangepicker.js" />
+    <Content Include="Scripts\js\echarts\echarts.js" />
     <Content Include="Scripts\js\fastclick\fastclick.js" />
     <Content Include="Scripts\js\google-code-prettify\prettify.js" />
     <Content Include="Scripts\js\hotkeys\jquery.hotkeys.js" />
@@ -216,6 +217,7 @@
     <Content Include="Views\Empresas\Perfil.cshtml" />
     <Content Include="Views\Usuarios\PerfilEditar.cshtml" />
     <Content Include="Views\Empresas\PerfilEditar.cshtml" />
+    <Content Include="Views\Competencias\DistribuirPontos.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

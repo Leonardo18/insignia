@@ -110,7 +110,11 @@ namespace Insignia.Painel
 
             //Arquivos de javascript usados no editar do perfil
             bundles.Add(new ScriptBundle("~/PerfilEditar/scripts").Include(
-                    "~/Scripts/js/Upload/bootstrap-filestyle.js"));
+                    "~/Scripts/js/Upload/bootstrap-filestyle.js"));       
+
+            //Arquivos de javascript usados nas tarefas
+            bundles.Add(new ScriptBundle("~/Competencias/scripts").Include(
+                    "~/Scripts/js/echarts/echarts.js"));
         }
     }
 }

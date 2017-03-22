@@ -30,6 +30,7 @@
                             <tr>
                                 <th>ID</th>
                                 <th>Nome</th>
+                                <th>Descrição</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -38,6 +39,7 @@
                                 <tr>
                                     <td><a href="@Url.Action("Editar", null, new { ID = item.ID, controller = "Competencias" }, Request.Url.Scheme)"><b>@item.ID</b></a></td>
                                     <td>@item.Nome</td>
+                                    <td>@item.Descricao</td>
                                 </tr>
                             }
                         </tbody>

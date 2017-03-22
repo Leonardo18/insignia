@@ -33,7 +33,7 @@ namespace Insignia.DAO.Competencias
             {
                 using (var sql = new SqlConnection(conStr))
                 {
-                    resp = sql.Query<Competencia>(" SELECT ID, EmpresaID, Nome FROM Competencias WHERE ID = @ID AND EmpresaID = @EmpresaID ",
+                    resp = sql.Query<Competencia>(" SELECT ID, EmpresaID, Nome, Descricao FROM Competencias WHERE ID = @ID AND EmpresaID = @EmpresaID ",
                         new
                         {
                             ID = id,
@@ -60,11 +60,12 @@ namespace Insignia.DAO.Competencias
             {
                 using (var sql = new SqlConnection(conStr))
                 {
-                    int queryResultado = sql.ExecuteScalar<int>(" INSERT INTO Competencias(EmpresaID, Nome) OUTPUT INSERTED.ID VALUES (@EmpresaID, @Nome) ",
+                    int queryResultado = sql.ExecuteScalar<int>(" INSERT INTO Competencias(EmpresaID, Nome, Descricao) OUTPUT INSERTED.ID VALUES (@EmpresaID, @Nome, @Descricao) ",
                                     new
                                     {
                                         EmpresaID = HttpContext.Current.Session["EmpresaID"],
                                         Nome = competencia.Nome,
+                                        Descricao = competencia.Descricao
                                     });
 
                     competencia.ID = (int)queryResultado;
@@ -90,11 +91,12 @@ namespace Insignia.DAO.Competencias
             {
                 using (var sql = new SqlConnection(conStr))
                 {
-                    var queryResultado = sql.Execute(" UPDATE Competencias SET Nome = @Nome WHERE ID = @ID",
+                    var queryResultado = sql.Execute(" UPDATE Competencias SET Nome = @Nome, Descricao = @Descricao WHERE ID = @ID",
                                     new
                                     {
                                         ID = competencia.ID,
-                                        Nome = competencia.Nome
+                                        Nome = competencia.Nome,
+                                        Descricao = competencia.Descricao
                                     });
 
                     resp = ToBoolean(queryResultado);
@@ -114,7 +116,7 @@ namespace Insignia.DAO.Competencias
 
             using (var sql = new SqlConnection(conStr))
             {
-                list = sql.Query<Competencia>(" SELECT ID, EmpresaID, Nome FROM Competencias WHERE EmpresaID = @EmpresaID ORDER BY Nome ",
+                list = sql.Query<Competencia>(" SELECT ID, EmpresaID, Nome, Descricao FROM Competencias WHERE EmpresaID = @EmpresaID ORDER BY Nome ",
                     new
                     {
                         EmpresaID = HttpContext.Current.Session["EmpresaID"]

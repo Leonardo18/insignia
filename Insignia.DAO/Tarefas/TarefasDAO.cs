@@ -502,7 +502,7 @@ namespace Insignia.DAO.Tarefas
 
                 using (var sql = new SqlConnection(conStr))
                 {
-                    int queryResultado = sql.ExecuteScalar<int>(" UPDATE UsuariosPontos SET Pontos = Pontos + @PontosGanhos WHERE EmpresaID = @EmpresaID AND UsuarioID = @UsuarioID IF @@ROWCOUNT=0 INSERT INTO UsuariosPontos(UsuarioID, Pontos) VALUES(@EmpresaID, @UsuarioID, @PontosGanhos) ",
+                    int queryResultado = sql.ExecuteScalar<int>(" UPDATE UsuariosPontos SET Pontos = Pontos + @PontosGanhos WHERE EmpresaID = @EmpresaID AND UsuarioID = @UsuarioID IF @@ROWCOUNT=0 INSERT INTO UsuariosPontos(EmpresaID, UsuarioID, Pontos) VALUES(@EmpresaID, @UsuarioID, @PontosGanhos) ",
                         new
                         {
                             EmpresaID = HttpContext.Current.Session["EmpresaID"],
