@@ -14,8 +14,7 @@ namespace Insignia.Painel.Controllers
     public class AgendaController : Controller
     {
         static string[] Scopes = { CalendarService.Scope.CalendarReadonly };
-        static string ApplicationName = "Calendar";
-
+        static string ApplicationName = "Calendar API";
         /// <summary>
         /// GET: Agenda Visualizar
         /// </summary>
@@ -35,21 +34,22 @@ namespace Insignia.Painel.Controllers
         {
             UserCredential credential;
 
-            using (var stream = new FileStream("client_secret_215187720738-qvd9a4kbm69cqd5iuutgekhspg67l8ar.apps.googleusercontent.com.json", FileMode.Open, FileAccess.Read))
+            using (var stream =
+                new FileStream(Server.MapPath("~/client_secret_215187720738-qvd9a4kbm69cqd5iuutgekhspg67l8ar.apps.googleusercontent.com.json"), FileMode.Open, FileAccess.Read))
             {
-                string credPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
-                credPath = Path.Combine(credPath, ".credentials");
+                string credPath = Environment.GetFolderPath(
+                    Environment.SpecialFolder.Personal);
+                credPath = Path.Combine(credPath, ".credentials/calendar-dotnet-quickstart.json");
 
                 credential = GoogleWebAuthorizationBroker.AuthorizeAsync(
-                  GoogleClientSecrets.Load(stream).Secrets,
-                  Scopes,
-                  "user",
-                  CancellationToken.None,
-                  new FileDataStore(credPath, true)
-                ).Result;
+                    GoogleClientSecrets.Load(stream).Secrets,
+                    Scopes,
+                    "user",
+                    CancellationToken.None,
+                    new FileDataStore(credPath, true)).Result;
             }
 
-            // Create Calendar Service.
+            // Create Google Calendar API service.
             var service = new CalendarService(new BaseClientService.Initializer()
             {
                 HttpClientInitializer = credential,
@@ -64,9 +64,11 @@ namespace Insignia.Painel.Controllers
             request.MaxResults = 10;
             request.OrderBy = EventsResource.ListRequest.OrderByEnum.StartTime;
 
-            //Upcoming events
+            // List events.
             Events events = request.Execute();
-            if (events.Items.Count > 0)
+
+            //Upcoming events
+            if (events.Items != null && events.Items.Count > 0)
             {
                 foreach (var eventItem in events.Items)
                 {
@@ -79,6 +81,7 @@ namespace Insignia.Painel.Controllers
             }
             else
             {
+
             }
 
             return View();
