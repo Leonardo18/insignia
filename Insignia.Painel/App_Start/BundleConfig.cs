@@ -45,7 +45,7 @@ namespace Insignia.Painel
                     "~/Scripts/js/fastclick/fastclick.js"));
 
             //Arquivos de css usados nas badges
-            bundles.Add(new ScriptBundle("~/Badges/styles").Include(
+            bundles.Add(new StyleBundle("~/Badges/styles").Include(
                     "~/Content/css/badges/badge.css",
                     "~/Content/css/colorpicker/bootstrap-colorpicker.css",
                     "~/Content/css/tags/jquery.tagsinput.css"));
@@ -58,7 +58,7 @@ namespace Insignia.Painel
                     "~/Scripts/js/tags/jquery.tagsinput.js"));
 
             //Arquivos de css usados nas tarefas
-            bundles.Add(new ScriptBundle("~/Tarefas/styles").Include(
+            bundles.Add(new StyleBundle("~/Tarefas/styles").Include(
                     "~/Content/css/google-code-prettify/prettify.css",
                     "~/Content/css/select2/select2.css",
                     "~/Content/css/loadmore/loadmore.css"));
@@ -72,8 +72,7 @@ namespace Insignia.Painel
                     "~/Scripts/js/moment/moment.min.js",
                     "~/Scripts/js/daterangepicker/daterangepicker.js",
                     "~/Scripts/js/inputmask/jquery.inputmask.bundle.min.js",
-                    "~/Scripts/js/select2/select2.full.js",
-                    "~/Scripts/js/moment/moment.min.js"));
+                    "~/Scripts/js/select2/select2.full.js"));
 
             //Arquivos de css usados para tables
             bundles.Add(new StyleBundle("~/DataTables/styles").Include(
@@ -110,11 +109,21 @@ namespace Insignia.Painel
 
             //Arquivos de javascript usados no editar do perfil
             bundles.Add(new ScriptBundle("~/PerfilEditar/scripts").Include(
-                    "~/Scripts/js/Upload/bootstrap-filestyle.js"));       
+                    "~/Scripts/js/Upload/bootstrap-filestyle.js"));
 
-            //Arquivos de javascript usados nas tarefas
+            //Arquivos de javascript usados nas competencias
             bundles.Add(new ScriptBundle("~/Competencias/scripts").Include(
                     "~/Scripts/js/echarts/echarts.js"));
+
+            //Arquivos de css usados na agenda
+            bundles.Add(new StyleBundle("~/Agenda/styles").Include(
+                    "~/Content/css/fullcalendar/fullcalendar.css",
+                    "~/Content/css/fullcalendar/fullcalendar.print.css"));
+
+            //Arquivos de javascript usados na agenda
+            bundles.Add(new ScriptBundle("~/Agenda/scripts").Include(
+                    "~/Scripts/js/moment/moment.min.js",
+                    "~/Scripts/js/fullcalendar/fullcalendar.js"));
         }
     }
 }
