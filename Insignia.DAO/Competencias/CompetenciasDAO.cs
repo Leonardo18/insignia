@@ -175,5 +175,83 @@ namespace Insignia.DAO.Competencias
 
             return Pontos;
         }
+
+        /// <summary>
+        /// Busca total de pontos que um usuário possui para distribuir
+        /// </summary>        
+        /// <returns>Retorna 0 caso não tenha pontos para distribuir ou retorna o número de pontos que possui para distribuir</returns>
+        public int SaldoPontos()
+        {
+            int Saldo = 0;
+
+            using (var sql = new SqlConnection(conStr))
+            {
+                Saldo = sql.ExecuteScalar<int>(" SELECT Pontos FROM UsuariosPontos WHERE EmpresaID = @EmpresaID AND UsuarioID = @UsuarioID ",
+                        new
+                        {
+                            EmpresaID = HttpContext.Current.Session["EmpresaID"],
+                            UsuarioID = HttpContext.Current.Session["UsuarioID"]
+                        });
+            }
+
+            return Saldo;
+        }
+
+        /// <summary>
+        /// Adiciona pontos em uma competência
+        /// </summary>
+        /// <param name="id">ID da competência</param>
+        /// <param name="pontos">Pontos que serão adicionados</param>
+        /// <returns>Caso consiga atualizar dados com sucesso retorna true se não retorna false</returns>
+        public bool AdicionarPontos(int id, int pontos, int saldo)
+        {
+            bool resp = false;
+
+            using (var sql = new SqlConnection(conStr))
+            {
+                int queryResultado = sql.ExecuteScalar<int>(" UPDATE CompetenciasUsuarios SET Pontos = @PontosAdicionados WHERE EmpresaID = @EmpresaID AND UsuarioID = @UsuarioID AND CompetenciaID = @CompetenciaID IF @@ROWCOUNT=0 INSERT INTO CompetenciasUsuarios(EmpresaID, UsuarioID, CompetenciaID, Pontos) VALUES(@EmpresaID, @UsuarioID, @CompetenciaID, @PontosAdicionados) ",
+                    new
+                    {
+                        EmpresaID = HttpContext.Current.Session["EmpresaID"],
+                        UsuarioID = HttpContext.Current.Session["UsuarioID"],
+                        CompetenciaID = id,
+                        PontosAdicionados = pontos
+                    });
+
+                resp = true; //ToBoolean(queryResultado);
+
+                if (resp)
+                {
+                    AtualizaSaldo(saldo);
+                }
+            }
+
+            return resp;
+        }
+
+        /// <summary>
+        /// Atualiza saldo de pontos de um usuário
+        /// </summary>
+        /// <returns></returns>
+        public bool AtualizaSaldo(int saldo)
+        {
+            bool resp = false;
+
+            using (var sql = new SqlConnection(conStr))
+            {
+                int queryResultado = sql.ExecuteScalar<int>(" UPDATE UsuariosPontos SET Pontos = @Saldo WHERE EmpresaID = @EmpresaID AND UsuarioID = @UsuarioID ",
+                    new
+                    {
+                        EmpresaID = HttpContext.Current.Session["EmpresaID"],
+                        UsuarioID = HttpContext.Current.Session["UsuarioID"],                        
+                        Saldo = saldo
+                    });
+
+                resp = true; //ToBoolean(queryResultado);               
+            }
+
+            return resp;
+        }
     }
 }
+

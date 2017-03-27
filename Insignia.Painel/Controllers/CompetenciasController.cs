@@ -2,6 +2,7 @@
 using Insignia.Model.Competencia;
 using Insignia.Painel.Helpers.CustomAttributes;
 using Insignia.Painel.ViewModels;
+using System;
 using System.Configuration;
 using System.Web.Mvc;
 
@@ -143,7 +144,24 @@ namespace Insignia.Painel.Controllers
                 item.Pontos = CompetenciasDAO.CompetenciaPontos(item.ID);
             }
 
+            ViewModel.SaldoPontos = CompetenciasDAO.SaldoPontos();
+
             return View(ViewModel);
+        }
+
+        /// <summary>
+        /// Ativado por um ajax que adiciona pontos na competência de um usuário
+        /// </summary>
+        /// <param name="ID">ID da competência</param>
+        /// <param name="Pontos">pontos que a competência irá possuir</param>
+        /// <returns>Retorna 1 para true caso consiga atualizar dados com sucesso e 0 para false</returns>
+        public string AdicionarPontos(int ID, int Pontos, int Saldo)
+        {
+            bool resp = false;
+
+            resp = CompetenciasDAO.AdicionarPontos(ID, Pontos, Saldo);
+
+            return Convert.ToString(resp);
         }
     }
 }

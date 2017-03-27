@@ -444,7 +444,7 @@ namespace Insignia.DAO.Tarefas
                                             ConquistadoEm = DateTime.Now
                                         });
 
-                        AdicionaPontos(Badges.Nivel);
+                        AtualizaSaldoPontos(Badges.Nivel);
                     }
                 }
             }
@@ -481,7 +481,7 @@ namespace Insignia.DAO.Tarefas
         /// Adiciona pontos ao usuário por ter desbloqueado uma badge
         /// </summary>
         /// <param name="nivel">Nível da badge adquirida para definir a quantidade de pontos</param>
-        private void AdicionaPontos(string nivel)
+        private void AtualizaSaldoPontos(string nivel)
         {
             int PontosGanhos = 0;
 
