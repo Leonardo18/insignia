@@ -3,8 +3,6 @@ using Google.Apis.Calendar.v3.Data;
 using Insignia.Painel.Helpers.CustomAttributes;
 using Insignia.Painel.Helpers.Google;
 using System;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Web.Mvc;
 
 namespace Insignia.Painel.Controllers
@@ -18,6 +16,11 @@ namespace Insignia.Painel.Controllers
         [HttpGet, IsLogged]
         public ActionResult Visualizar()
         {
+            CalendarService service = OAuthService.Handle(Convert.ToString(Session["UsuarioID"]),
+                "", "http://localhost:53966/Agenda/Visualizar",
+                "Calendar API",
+                new[] { CalendarService.Scope.CalendarReadonly });
+
             return View();
         }
 
@@ -27,9 +30,9 @@ namespace Insignia.Painel.Controllers
         /// <returns>Retorna a view de visualizar agenda</returns>
         [HttpPost, IsLogged]
         public ActionResult Visualizar(int i = 0)
-        {            
-            CalendarService service = OAuthService.Handle("calendar-api-162513",
-                "", "https://www.portalinsignia.com.br/authorize/",
+        {
+            CalendarService service = OAuthService.Handle(Convert.ToString(Session["UsuarioID"]),
+                "", "http://localhost:53966/Agenda/Visualizar",
                 "Calendar API",
                 new[] { CalendarService.Scope.CalendarReadonly });
 
@@ -60,6 +63,16 @@ namespace Insignia.Painel.Controllers
                 }
             }
 
+            return View();
+        }
+
+        /// <summary>
+        /// POST: Agenda Visualizar
+        /// </summary>
+        /// <returns>Retorna a view de visualizar agenda</returns>
+        [HttpPost, IsLogged]
+        public ActionResult Authorize()
+        {
             return View();
         }
     }

@@ -4,12 +4,10 @@ using Google.Apis.Auth.OAuth2.Requests;
 using Google.Apis.Auth.OAuth2.Web;
 using Google.Apis.Calendar.v3;
 using Google.Apis.Services;
-using Google.Apis.Util.Store;
 using System;
+using System.Configuration;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Web;
-using System.Web.Mvc;
 
 namespace Insignia.Painel.Helpers.Google
 {
@@ -21,12 +19,12 @@ namespace Insignia.Painel.Helpers.Google
             try
             {
                 string UserId = _userId;//The user ID wil be for examlpe the users gmail address.
-                CalendarService service;
+                CalendarService service = new CalendarService();
                 GoogleAuthorizationCodeFlow flow;
                 //use extended class to create google authorization code flow
                 flow = new ForceOfflineGoogleAuthorizationCodeFlow(new GoogleAuthorizationCodeFlow.Initializer
                 {
-                    //DataStore = new DbDataStore(_connectionString),//DataStore class to save the token in a SQL database.
+                    DataStore = new DataStore(ConfigurationManager.ConnectionStrings["strConMain"].ConnectionString),//DataStore class to save the token in a SQL database.
                     ClientSecrets = new ClientSecrets { ClientId = "215187720738-qvd9a4kbm69cqd5iuutgekhspg67l8ar.apps.googleusercontent.com", ClientSecret = "96JWX7tgheXLn1pe5QJw968E" },
                     Scopes = _scopes,
                 });

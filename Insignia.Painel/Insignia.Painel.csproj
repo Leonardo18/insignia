@@ -51,6 +51,10 @@
       <HintPath>..\packages\AWSSDK.2.3.55.2\lib\net45\AWSSDK.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Dapper, Version=1.50.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Dapper.1.50.2\lib\net451\Dapper.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Google.Apis, Version=1.22.0.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
       <HintPath>..\packages\Google.Apis.1.22.0\lib\net45\Google.Apis.dll</HintPath>
       <Private>True</Private>
@@ -282,6 +286,7 @@
     <Compile Include="Helpers\AmazonS3\AmazonUpload.cs" />
     <Compile Include="Helpers\CustomAttributes\IsLogged.cs" />
     <Compile Include="Helpers\Email\SendMail.cs" />
+    <Compile Include="Helpers\Google\DataStore.cs" />
     <Compile Include="Helpers\Google\OAuthService.cs" />
     <Compile Include="Helpers\Util\BadgesCor.cs" />
     <Compile Include="Helpers\Util\SelectListMVC.cs" />
