@@ -34,7 +34,7 @@ namespace Insignia.Painel.Controllers
             TarefasDAO TarefasDAO = new TarefasDAO(ConfigurationManager.ConnectionStrings["strConMain"].ConnectionString);
 
             //Busca as tarefa com status finalizada e top 5
-            ViewModel.ListFinalizadas = TarefasDAO.ListarTop(ConfigurationManager.AppSettings["Finalizada"], 0,  5);
+            ViewModel.ListFinalizadas = TarefasDAO.ListarTop(ConfigurationManager.AppSettings["Finalizada"], 0, 5);
 
             ViewModel.TarefasMes = new List<int>();
 
@@ -46,6 +46,11 @@ namespace Insignia.Painel.Controllers
             CompetenciasDAO CompetenciasDAO = new CompetenciasDAO(ConfigurationManager.ConnectionStrings["strConMain"].ConnectionString);
 
             ViewModel.ListCompetencias = CompetenciasDAO.Listar();
+
+            foreach (var item in ViewModel.ListCompetencias)
+            {
+                item.Pontos = CompetenciasDAO.CompetenciaPontos(item.ID);
+            }
 
             return View(ViewModel);
         }

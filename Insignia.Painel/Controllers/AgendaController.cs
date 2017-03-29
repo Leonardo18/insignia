@@ -1,20 +1,14 @@
-﻿using Google.Apis.Auth.OAuth2;
-using Google.Apis.Calendar.v3;
+﻿using Google.Apis.Calendar.v3;
 using Google.Apis.Calendar.v3.Data;
-using Google.Apis.Services;
-using Google.Apis.Util.Store;
 using Insignia.Painel.Helpers.CustomAttributes;
+using Insignia.Painel.Helpers.Google;
 using System;
-using System.IO;
-using System.Threading;
 using System.Web.Mvc;
 
 namespace Insignia.Painel.Controllers
 {
     public class AgendaController : Controller
     {
-        static string[] Scopes = { CalendarService.Scope.CalendarReadonly };
-        static string ApplicationName = "Calendar API";
         /// <summary>
         /// GET: Agenda Visualizar
         /// </summary>
@@ -32,29 +26,7 @@ namespace Insignia.Painel.Controllers
         [HttpPost, IsLogged]
         public ActionResult Visualizar(int i = 0)
         {
-            UserCredential credential;
-
-            using (var stream =
-                new FileStream(Server.MapPath("~/client_secret_215187720738-qvd9a4kbm69cqd5iuutgekhspg67l8ar.apps.googleusercontent.com.json"), FileMode.Open, FileAccess.Read))
-            {
-                string credPath = Environment.GetFolderPath(
-                    Environment.SpecialFolder.Personal);
-                credPath = Path.Combine(credPath, ".credentials/calendar-dotnet-quickstart.json");
-
-                credential = GoogleWebAuthorizationBroker.AuthorizeAsync(
-                    GoogleClientSecrets.Load(stream).Secrets,
-                    Scopes,
-                    "user",
-                    CancellationToken.None,
-                    new FileDataStore(credPath, true)).Result;
-            }
-
-            // Create Google Calendar API service.
-            var service = new CalendarService(new BaseClientService.Initializer()
-            {
-                HttpClientInitializer = credential,
-                ApplicationName = ApplicationName,
-            });
+            var service = OAuthService.AuthenticateOauth("", "", "");
 
             // Define parameters of request.
             EventsResource.ListRequest request = service.Events.List("primary");
@@ -78,10 +50,6 @@ namespace Insignia.Painel.Controllers
                         when = eventItem.Start.Date;
                     }
                 }
-            }
-            else
-            {
-
             }
 
             return View();

@@ -282,6 +282,7 @@
     <Compile Include="Helpers\AmazonS3\AmazonUpload.cs" />
     <Compile Include="Helpers\CustomAttributes\IsLogged.cs" />
     <Compile Include="Helpers\Email\SendMail.cs" />
+    <Compile Include="Helpers\Google\OAuthService.cs" />
     <Compile Include="Helpers\Util\BadgesCor.cs" />
     <Compile Include="Helpers\Util\SelectListMVC.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
