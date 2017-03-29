@@ -3,6 +3,8 @@ using Google.Apis.Calendar.v3.Data;
 using Insignia.Painel.Helpers.CustomAttributes;
 using Insignia.Painel.Helpers.Google;
 using System;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 
 namespace Insignia.Painel.Controllers
@@ -25,8 +27,14 @@ namespace Insignia.Painel.Controllers
         /// <returns>Retorna a view de visualizar agenda</returns>
         [HttpPost, IsLogged]
         public ActionResult Visualizar(int i = 0)
-        {
-            var service = OAuthService.AuthenticateOauth("", "", "");
+        {            
+            CalendarService service = OAuthService.Handle("calendar-api-162513",
+                "", "https://www.portalinsignia.com.br/authorize/",
+                "Calendar API",
+                new[] { CalendarService.Scope.CalendarReadonly });
+
+            //DataResource.RealtimeResource.GetRequest request = service.Data.Realtime.Get(String.Format("ga:{0}", profileId), "rt:activeUsers");
+            //RealtimeData feed = request.Execute();
 
             // Define parameters of request.
             EventsResource.ListRequest request = service.Events.List("primary");
