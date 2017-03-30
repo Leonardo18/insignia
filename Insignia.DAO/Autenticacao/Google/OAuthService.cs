@@ -4,51 +4,59 @@ using Google.Apis.Auth.OAuth2.Requests;
 using Google.Apis.Auth.OAuth2.Web;
 using Google.Apis.Calendar.v3;
 using Google.Apis.Services;
+using Insignia.DAO.Google;
 using System;
-using System.Configuration;
 using System.Threading;
 using System.Web;
 
-namespace Insignia.Painel.Helpers.Google
+namespace Insignia.DAO.Autenticacao.Google
 {
     public static class OAuthService
     {
-
-        public static CalendarService Handle(string _userId, string _connectionString, string _googleRedirectUri, string _applicationName, string[] _scopes)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="usuarioID"></param>
+        /// <param name="conexaoBanco"></param>
+        /// <param name="urlRedirecionamento"></param>
+        /// <param name="aplicacaoNome"></param>
+        /// <param name="escopos"></param>
+        /// <returns></returns>
+        public static CalendarService Handle(string usuarioID, string conexaoBanco, string urlRedirecionamento, string aplicacaoNome, string[] escopos)
         {
             try
             {
-                string UserId = _userId;//The user ID wil be for examlpe the users gmail address.
                 CalendarService service = new CalendarService();
+                //Use extended class to create google authorization code flow
                 GoogleAuthorizationCodeFlow flow;
-                //use extended class to create google authorization code flow
                 flow = new ForceOfflineGoogleAuthorizationCodeFlow(new GoogleAuthorizationCodeFlow.Initializer
                 {
-                    DataStore = new DataStore(ConfigurationManager.ConnectionStrings["strConMain"].ConnectionString),//DataStore class to save the token in a SQL database.
+                    //Classe GoogleDAO para salvar o token de acesso no banco de dados.
+                    DataStore = new GoogleDAO(conexaoBanco),
                     ClientSecrets = new ClientSecrets { ClientId = "215187720738-qvd9a4kbm69cqd5iuutgekhspg67l8ar.apps.googleusercontent.com", ClientSecret = "96JWX7tgheXLn1pe5QJw968E" },
-                    Scopes = _scopes,
+                    Scopes = escopos,
                 });
 
 
                 var uri = HttpContext.Current.Request.Url.ToString();
-                string redirecturi = _googleRedirectUri;//This is the redirect URL set in google developer console.
+                string redirecturi = urlRedirecionamento;//This is the redirect URL set in google developer console.
                 var code = HttpContext.Current.Request["code"];
                 if (code != null)
                 {
-                    var token = flow.ExchangeCodeForTokenAsync(UserId, code,
+                    var token = flow.ExchangeCodeForTokenAsync(usuarioID, code,
                         uri.Substring(0, uri.IndexOf("?")), CancellationToken.None).Result;
 
                     var test = HttpContext.Current.Request["state"];
 
                     // Extract the right state.
                     var oauthState = AuthWebUtility.ExtracRedirectFromState(
-                         flow.DataStore, UserId, HttpContext.Current.Request["state"]).Result;
+                         flow.DataStore, usuarioID, HttpContext.Current.Request["state"]).Result;
                     HttpContext.Current.Response.Redirect(oauthState);
                 }
                 else
                 {
 
-                    var result = new AuthorizationCodeWebApp(flow, redirecturi, uri).AuthorizeAsync(UserId,
+                    var result = new AuthorizationCodeWebApp(flow, redirecturi, uri).AuthorizeAsync(usuarioID,
                          CancellationToken.None).Result;
 
                     if (result.RedirectUri != null)
@@ -62,7 +70,7 @@ namespace Insignia.Painel.Helpers.Google
                         service = new CalendarService(new BaseClientService.Initializer()
                         {
                             HttpClientInitializer = result.Credential,
-                            ApplicationName = _applicationName
+                            ApplicationName = aplicacaoNome
                         });
                         return service;
                     }
@@ -76,6 +84,9 @@ namespace Insignia.Painel.Helpers.Google
 
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         internal class ForceOfflineGoogleAuthorizationCodeFlow : GoogleAuthorizationCodeFlow
         {
             public ForceOfflineGoogleAuthorizationCodeFlow(Initializer initializer) : base(initializer) { }

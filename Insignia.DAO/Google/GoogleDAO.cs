@@ -1,20 +1,20 @@
-﻿using Google.Apis.Json;
+﻿using Dapper;
+using Google.Apis.Json;
+using Google.Apis.Util.Store;
 using System;
-using Dapper;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
-using Google.Apis.Util.Store;
 
-namespace Insignia.Painel.Helpers.Google
+namespace Insignia.DAO.Google
 {
-    public class DataStore : IDataStore
+    public class GoogleDAO : IDataStore
     {
         readonly string connectionString;
 
         private string conStr;
 
-        public DataStore(string conStr)
+        public GoogleDAO(string conStr)
         {
             this.conStr = conStr;
 
@@ -65,7 +65,7 @@ namespace Insignia.Painel.Helpers.Google
                                        value = serialized
                                    });
                 }
-            }            
+            }
 
             return Task.Delay(0);
         }

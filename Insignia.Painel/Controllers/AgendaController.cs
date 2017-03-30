@@ -1,8 +1,9 @@
 ﻿using Google.Apis.Calendar.v3;
 using Google.Apis.Calendar.v3.Data;
+using Insignia.DAO.Autenticacao.Google;
 using Insignia.Painel.Helpers.CustomAttributes;
-using Insignia.Painel.Helpers.Google;
 using System;
+using System.Configuration;
 using System.Web.Mvc;
 
 namespace Insignia.Painel.Controllers
@@ -16,11 +17,13 @@ namespace Insignia.Painel.Controllers
         [HttpGet, IsLogged]
         public ActionResult Visualizar()
         {
-            CalendarService service = OAuthService.Handle(Convert.ToString(Session["UsuarioID"]),
-                "", "http://localhost:53966/Agenda/Visualizar",
-                "Calendar API",
-                new[] { CalendarService.Scope.CalendarReadonly });
-
+            CalendarService service = OAuthService.Handle
+                                    (
+                                        Convert.ToString(Session["UsuarioID"]),
+                                        ConfigurationManager.ConnectionStrings["strConMain"].ConnectionString, "https://www.portalinsignia.com.br/Agenda/Visualizar",
+                                        "Calendar API",
+                                        new[] { CalendarService.Scope.CalendarReadonly }
+                                    );
             return View();
         }
 
@@ -31,15 +34,15 @@ namespace Insignia.Painel.Controllers
         [HttpPost, IsLogged]
         public ActionResult Visualizar(int i = 0)
         {
-            CalendarService service = OAuthService.Handle(Convert.ToString(Session["UsuarioID"]),
-                "", "http://localhost:53966/Agenda/Visualizar",
-                "Calendar API",
-                new[] { CalendarService.Scope.CalendarReadonly });
+            CalendarService service = OAuthService.Handle
+                                    (
+                                        Convert.ToString(Session["UsuarioID"]),
+                                        ConfigurationManager.ConnectionStrings["strConMain"].ConnectionString, "https://www.portalinsignia.com.br/Agenda/Visualizar",
+                                        "Calendar API",
+                                        new[] { CalendarService.Scope.CalendarReadonly }
+                                    );
 
-            //DataResource.RealtimeResource.GetRequest request = service.Data.Realtime.Get(String.Format("ga:{0}", profileId), "rt:activeUsers");
-            //RealtimeData feed = request.Execute();
-
-            // Define parameters of request.
+            //Define os parâmetros do request.
             EventsResource.ListRequest request = service.Events.List("primary");
             request.TimeMin = DateTime.Now;
             request.ShowDeleted = false;
@@ -47,10 +50,10 @@ namespace Insignia.Painel.Controllers
             request.MaxResults = 10;
             request.OrderBy = EventsResource.ListRequest.OrderByEnum.StartTime;
 
-            // List events.
+            //Lista de eventos.
             Events events = request.Execute();
 
-            //Upcoming events
+            //Eventos que irão acontecer
             if (events.Items != null && events.Items.Count > 0)
             {
                 foreach (var eventItem in events.Items)
@@ -63,16 +66,6 @@ namespace Insignia.Painel.Controllers
                 }
             }
 
-            return View();
-        }
-
-        /// <summary>
-        /// POST: Agenda Visualizar
-        /// </summary>
-        /// <returns>Retorna a view de visualizar agenda</returns>
-        [HttpPost, IsLogged]
-        public ActionResult Authorize()
-        {
             return View();
         }
     }
