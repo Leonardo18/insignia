@@ -42,6 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Agenda\Agenda.cs" />
     <Compile Include="Badge\Badge.cs" />
     <Compile Include="Competencia\Competencia.cs" />
     <Compile Include="Empresa\Empresa.cs" />

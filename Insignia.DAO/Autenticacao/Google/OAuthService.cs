@@ -58,7 +58,21 @@ namespace Insignia.DAO.Autenticacao.Google
                             flow.DataStore, usuarioID, HttpContext.Current.Request["state"]
                         ).Result;
 
-                    HttpContext.Current.Response.Redirect(oauthState);
+                    var result = new AuthorizationCodeWebApp(flow, uriRedirecionamento, uri).AuthorizeAsync(usuarioID, CancellationToken.None).Result;
+
+                    //Caso já exista no banco de dados o token o usuário já possui permissão e está logado.
+                    service = new CalendarService
+                    (
+                        new BaseClientService.Initializer()
+                        {
+                            HttpClientInitializer = result.Credential,
+                            ApplicationName = aplicacaoNome
+                        }
+                    );
+
+                    return service;
+
+                    //HttpContext.Current.Response.Redirect(oauthState);
                 }
                 else
                 {
@@ -72,23 +86,25 @@ namespace Insignia.DAO.Autenticacao.Google
                     else
                     {
                         //Caso já exista no banco de dados o token o usuário já possui permissão e está logado.
-                        service = new CalendarService(
+                        service = new CalendarService
+                        (
                             new BaseClientService.Initializer()
                             {
                                 HttpClientInitializer = result.Credential,
                                 ApplicationName = aplicacaoNome
                             }
                         );
+
                         return service;
                     }
                 }
+
                 return null;
             }
             catch (Exception ex)
             {
                 throw ex;
             }
-
         }
 
         /// <summary>

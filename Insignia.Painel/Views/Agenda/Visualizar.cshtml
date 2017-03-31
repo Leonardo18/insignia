@@ -23,7 +23,7 @@
                 </ul>
                 <div class="clearfix"></div>
             </div>
-            @using (Html.BeginForm("Visualizar", "Agenda", FormMethod.Post, new { @class = "form-horizontal form-label-left", id = "VisualizarAgenda" }))
+            @using (Html.BeginForm("SincronizarAgenda", "Agenda", FormMethod.Get, new { @class = "form-horizontal form-label-left", id = "VisualizarAgenda" }))
             {
                 <div class="x_content">
                     <span class="fa fa-refresh" style="float: right; margin-left: 15px; cursor:pointer;" title="Sincronizar com Google Agenda" onclick="document.getElementById('VisualizarAgenda').submit();"></span>

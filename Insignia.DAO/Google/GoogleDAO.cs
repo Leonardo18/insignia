@@ -51,7 +51,7 @@ namespace Insignia.DAO.Google
                                     new
                                     {
                                         key = key,
-                                        value = serialized
+                                        value = serialized.Replace("?LoginGoogle=True", "")
                                     });
                 }
                 else
