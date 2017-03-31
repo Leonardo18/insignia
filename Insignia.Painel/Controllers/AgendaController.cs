@@ -22,7 +22,7 @@ namespace Insignia.Painel.Controllers
                                         Convert.ToString(Session["UsuarioID"]),
                                         ConfigurationManager.ConnectionStrings["strConMain"].ConnectionString, "http://localhost:53966/Agenda/Visualizar",
                                         "Calendar API",
-                                        new[] { CalendarService.Scope.CalendarReadonly }
+                                        new[] { CalendarService.Scope.CalendarReadonly, CalendarService.Scope.Calendar }
                                     );
             return View();
         }
@@ -39,7 +39,7 @@ namespace Insignia.Painel.Controllers
                                         Convert.ToString(Session["UsuarioID"]),
                                         ConfigurationManager.ConnectionStrings["strConMain"].ConnectionString, "http://localhost:53966/Agenda/Visualizar",
                                         "Calendar API",
-                                        new[] { CalendarService.Scope.CalendarReadonly }
+                                        new[] { CalendarService.Scope.CalendarReadonly, CalendarService.Scope.Calendar }
                                     );
 
             //Define os parâmetros do request.
@@ -61,11 +61,22 @@ namespace Insignia.Painel.Controllers
                     string EventoData = Convert.ToString(eventItem.Start.DateTime);
                     string EventoDescricao = eventItem.Summary;
                     if (string.IsNullOrEmpty(EventoData))
-                    {                        
+                    {
                         EventoData = eventItem.Start.Date;
                     }
                 }
             }
+
+            //Inserção de evento como exemplo para uso no cadastro de tarefas OBS: No serviço utilizar o scope calendar
+            Event newEvent = new Event();
+
+            newEvent.Summary = "Teste de evento por programação";
+            newEvent.Description = "Executar testes todos os dias";
+            newEvent.Start = new EventDateTime();
+            newEvent.Start.DateTime = DateTime.Now;
+            newEvent.End = new EventDateTime();
+            newEvent.End.DateTime = DateTime.Now;
+            var eventResult = service.Events.Insert(newEvent, "primary").Execute();
 
             return View();
         }
