@@ -62,7 +62,7 @@ namespace Insignia.Painel.Helpers.Email
 
                 resp = true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 resp = false;
             }

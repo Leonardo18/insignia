@@ -17,10 +17,10 @@ namespace Insignia.Painel.Controllers
         [HttpGet, IsLogged]
         public ActionResult Visualizar()
         {
-            CalendarService service = OAuthService.Handle
+            CalendarService service = OAuthService.OAuthLogin
                                     (
                                         Convert.ToString(Session["UsuarioID"]),
-                                        ConfigurationManager.ConnectionStrings["strConMain"].ConnectionString, "https://www.portalinsignia.com.br/Agenda/Visualizar",
+                                        ConfigurationManager.ConnectionStrings["strConMain"].ConnectionString, "http://localhost:53966/Agenda/Visualizar",
                                         "Calendar API",
                                         new[] { CalendarService.Scope.CalendarReadonly }
                                     );
@@ -34,17 +34,17 @@ namespace Insignia.Painel.Controllers
         [HttpPost, IsLogged]
         public ActionResult Visualizar(int i = 0)
         {
-            CalendarService service = OAuthService.Handle
+            CalendarService service = OAuthService.OAuthLogin
                                     (
                                         Convert.ToString(Session["UsuarioID"]),
-                                        ConfigurationManager.ConnectionStrings["strConMain"].ConnectionString, "https://www.portalinsignia.com.br/Agenda/Visualizar",
+                                        ConfigurationManager.ConnectionStrings["strConMain"].ConnectionString, "http://localhost:53966/Agenda/Visualizar",
                                         "Calendar API",
                                         new[] { CalendarService.Scope.CalendarReadonly }
                                     );
 
             //Define os parâmetros do request.
             EventsResource.ListRequest request = service.Events.List("primary");
-            request.TimeMin = DateTime.Now;
+            //request.TimeMin = DateTime.Now;
             request.ShowDeleted = false;
             request.SingleEvents = true;
             request.MaxResults = 10;
@@ -58,10 +58,11 @@ namespace Insignia.Painel.Controllers
             {
                 foreach (var eventItem in events.Items)
                 {
-                    string when = eventItem.Start.DateTime.ToString();
-                    if (string.IsNullOrEmpty(when))
-                    {
-                        when = eventItem.Start.Date;
+                    string EventoData = Convert.ToString(eventItem.Start.DateTime);
+                    string EventoDescricao = eventItem.Summary;
+                    if (string.IsNullOrEmpty(EventoData))
+                    {                        
+                        EventoData = eventItem.Start.Date;
                     }
                 }
             }

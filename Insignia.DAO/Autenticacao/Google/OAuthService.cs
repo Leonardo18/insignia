@@ -14,64 +14,71 @@ namespace Insignia.DAO.Autenticacao.Google
     public static class OAuthService
     {
         /// <summary>
-        /// 
+        /// Efetua login OAuth no google e grava dados em banco de dados para não precisar ficar logando a cada acesso
         /// </summary>
-        /// <param name="usuarioID"></param>
-        /// <param name="conexaoBanco"></param>
-        /// <param name="urlRedirecionamento"></param>
-        /// <param name="aplicacaoNome"></param>
-        /// <param name="escopos"></param>
-        /// <returns></returns>
-        public static CalendarService Handle(string usuarioID, string conexaoBanco, string urlRedirecionamento, string aplicacaoNome, string[] escopos)
+        /// <param name="usuarioID">ID do usuário que está logando</param>
+        /// <param name="conexaoBanco">String de conexão com banco de dados</param>
+        /// <param name="urlRedirecionamento">URL que o google irá redirecionar de volta após o Login</param>
+        /// <param name="aplicacaoNome">Nome da aplicação no google console developer</param>
+        /// <param name="escopos">Escopos que definem o que será usado do serviço</param>
+        /// <returns>Retorna o serviço que será usado</returns>
+        public static CalendarService OAuthLogin(string usuarioID, string conexaoBanco, string urlRedirecionamento, string aplicacaoNome, string[] escopos)
         {
             try
             {
                 CalendarService service = new CalendarService();
-                //Use extended class to create google authorization code flow
+
+                //Use uma classe extendida para autenticação Google Flow
                 GoogleAuthorizationCodeFlow flow;
-                flow = new ForceOfflineGoogleAuthorizationCodeFlow(new GoogleAuthorizationCodeFlow.Initializer
-                {
-                    //Classe GoogleDAO para salvar o token de acesso no banco de dados.
-                    DataStore = new GoogleDAO(conexaoBanco),
-                    ClientSecrets = new ClientSecrets { ClientId = "215187720738-qvd9a4kbm69cqd5iuutgekhspg67l8ar.apps.googleusercontent.com", ClientSecret = "96JWX7tgheXLn1pe5QJw968E" },
-                    Scopes = escopos,
-                });
+                flow = new ForceOfflineGoogleAuthorizationCodeFlow
+                    (new GoogleAuthorizationCodeFlow.Initializer
+                    {
+                        //Classe GoogleDAO para salvar o token de acesso no banco de dados.
+                        DataStore = new GoogleDAO(conexaoBanco),
+                        ClientSecrets = new ClientSecrets { ClientId = "215187720738-qvd9a4kbm69cqd5iuutgekhspg67l8ar.apps.googleusercontent.com", ClientSecret = "96JWX7tgheXLn1pe5QJw968E" },
+                        Scopes = escopos
+                    });
 
 
-                var uri = HttpContext.Current.Request.Url.ToString();
-                string redirecturi = urlRedirecionamento;//This is the redirect URL set in google developer console.
-                var code = HttpContext.Current.Request["code"];
-                if (code != null)
+                var uri = Convert.ToString(HttpContext.Current.Request.Url);
+                //URL de redirecionamento configurada no painel do google develoeprs console.
+                string uriRedirecionamento = urlRedirecionamento;
+                var codigo = HttpContext.Current.Request["code"];
+
+                if (codigo != null)
                 {
-                    var token = flow.ExchangeCodeForTokenAsync(usuarioID, code,
+                    var token = flow.ExchangeCodeForTokenAsync(usuarioID, codigo,
                         uri.Substring(0, uri.IndexOf("?")), CancellationToken.None).Result;
 
                     var test = HttpContext.Current.Request["state"];
 
-                    // Extract the right state.
-                    var oauthState = AuthWebUtility.ExtracRedirectFromState(
-                         flow.DataStore, usuarioID, HttpContext.Current.Request["state"]).Result;
+                    // Extrai dados salvos.
+                    var oauthState = AuthWebUtility.ExtracRedirectFromState
+                        (
+                            flow.DataStore, usuarioID, HttpContext.Current.Request["state"]
+                        ).Result;
+
                     HttpContext.Current.Response.Redirect(oauthState);
                 }
                 else
                 {
-
-                    var result = new AuthorizationCodeWebApp(flow, redirecturi, uri).AuthorizeAsync(usuarioID,
-                         CancellationToken.None).Result;
+                    var result = new AuthorizationCodeWebApp(flow, uriRedirecionamento, uri).AuthorizeAsync(usuarioID, CancellationToken.None).Result;
 
                     if (result.RedirectUri != null)
                     {
-                        // Redirect the user to the authorization server.
+                        //Redireciona o usuário para fazer login e dar as permissões
                         HttpContext.Current.Response.Redirect(result.RedirectUri);
                     }
                     else
                     {
-                        // The data store contains the user credential, so the user has been already authenticated.
-                        service = new CalendarService(new BaseClientService.Initializer()
-                        {
-                            HttpClientInitializer = result.Credential,
-                            ApplicationName = aplicacaoNome
-                        });
+                        //Caso já exista no banco de dados o token o usuário já possui permissão e está logado.
+                        service = new CalendarService(
+                            new BaseClientService.Initializer()
+                            {
+                                HttpClientInitializer = result.Credential,
+                                ApplicationName = aplicacaoNome
+                            }
+                        );
                         return service;
                     }
                 }
@@ -85,7 +92,7 @@ namespace Insignia.DAO.Autenticacao.Google
         }
 
         /// <summary>
-        /// 
+        /// Faz login no google offline
         /// </summary>
         internal class ForceOfflineGoogleAuthorizationCodeFlow : GoogleAuthorizationCodeFlow
         {

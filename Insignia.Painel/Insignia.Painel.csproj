@@ -221,7 +221,6 @@
     <Content Include="Helpers\Email\NovoCadastro.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="client_secret_215187720738-qvd9a4kbm69cqd5iuutgekhspg67l8ar.apps.googleusercontent.com.json" />
     <None Include="Properties\PublishProfiles\local.pubxml" />
     <None Include="Properties\PublishProfiles\web.pubxml" />
     <Content Include="Views\Shared\LayoutPrincipal.cshtml" />

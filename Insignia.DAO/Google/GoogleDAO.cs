@@ -10,8 +10,6 @@ namespace Insignia.DAO.Google
 {
     public class GoogleDAO : IDataStore
     {
-        readonly string connectionString;
-
         private string conStr;
 
         public GoogleDAO(string conStr)
@@ -20,7 +18,7 @@ namespace Insignia.DAO.Google
 
             using (var sql = new SqlConnection(conStr))
             {
-                var hold = sql.Query<string>(" SELECT 1 from GoogleUser where 1 = 0 ").SingleOrDefault();
+                var hold = sql.Query<string>(" SELECT 1 FROM UsuariosGoogle WHERE 1 = 0 ").SingleOrDefault();
             }
         }
 
@@ -35,21 +33,21 @@ namespace Insignia.DAO.Google
         {
             if (string.IsNullOrEmpty(key))
             {
-                throw new ArgumentException("Key MUST have a value");
+                throw new ArgumentException("Chave precisa ter um valor");
             }
             var serialized = NewtonsoftJsonSerializer.Instance.Serialize(value);
 
             using (var sql = new SqlConnection(conStr))
             {
-                string hold = sql.Query<string>(" SELECT Userid FROM GoogleUser WHERE UserName = @username ",
+                string hold = sql.Query<string>(" SELECT Usuario FROM UsuariosGoogle WHERE UsuarioID = @UsuarioID ",
                     new
                     {
-                        Username = key
+                        UsuarioID = key
                     }).SingleOrDefault();
 
                 if (hold == null)
                 {
-                    int queryResultado = sql.Execute(" INSERT INTO GoogleUser(username, RefreshToken, Userid) VALUES (@key, @value, '1') ",
+                    int queryResultado = sql.Execute(" INSERT INTO UsuariosGoogle(UsuarioID, TokenAtualizado, Usuario) VALUES (@key, @value, '1') ",
                                     new
                                     {
                                         key = key,
@@ -58,7 +56,7 @@ namespace Insignia.DAO.Google
                 }
                 else
                 {
-                    var queryResultado = sql.Execute(@" UPDATE GoogleUser SET RefreshToken = @value WHERE username = @key  ",
+                    var queryResultado = sql.Execute(@" UPDATE UsuariosGoogle SET TokenAtualizado = @value WHERE UsuarioID = @key  ",
                                    new
                                    {
                                        key = key,
@@ -79,12 +77,12 @@ namespace Insignia.DAO.Google
 
             if (string.IsNullOrEmpty(key))
             {
-                throw new ArgumentException("Key MUST have a value");
+                throw new ArgumentException("Chave precisa ter um valor");
             }
 
             using (var sql = new SqlConnection(conStr))
             {
-                int queryResultado = sql.Execute(" DELETE FROM GoogleUser WHERE username = @key ",
+                int queryResultado = sql.Execute(" DELETE FROM UsuariosGoogle WHERE UsuarioID = @key ",
                     new
                     {
                         key = key
@@ -112,10 +110,10 @@ namespace Insignia.DAO.Google
 
             using (var sql = new SqlConnection(conStr))
             {
-                string RefreshToken = sql.Query<string>(" SELECT RefreshToken FROM GoogleUser WHERE UserName = @username; ",
+                string RefreshToken = sql.Query<string>(" SELECT TokenAtualizado FROM UsuariosGoogle WHERE UsuarioID = @UsuarioID; ",
                     new
                     {
-                        Username = key
+                        UsuarioID = key
                     }).SingleOrDefault();
 
                 if (RefreshToken == null)
@@ -150,7 +148,7 @@ namespace Insignia.DAO.Google
 
             using (var sql = new SqlConnection(conStr))
             {
-                int queryResultado = sql.Execute(" truncate table GoogleUser ");
+                int queryResultado = sql.Execute(" TRUNCATE TABLE UsuariosGoogle ");
             }
 
             return Task.Delay(0);
