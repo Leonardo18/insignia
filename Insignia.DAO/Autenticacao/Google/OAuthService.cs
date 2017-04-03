@@ -128,12 +128,12 @@ namespace Insignia.DAO.Autenticacao.Google
                     //Classe GoogleDAO para salvar o token de acesso no banco de dados.
                     DataStore = new GoogleDAO(conexaoBanco),
                     ClientSecrets = new ClientSecrets { ClientId = "215187720738-qvd9a4kbm69cqd5iuutgekhspg67l8ar.apps.googleusercontent.com", ClientSecret = "96JWX7tgheXLn1pe5QJw968E" },
-                    Scopes = escopos
+                    Scopes = escopos                   
                 });
 
-
             var uri = Convert.ToString(HttpContext.Current.Request.Url);
-            //URL de redirecionamento configurada no painel do google develoeprs console.
+
+            //URL de redirecionamento configurada no painel do google developers console.
             string uriRedirecionamento = urlRedirecionamento;
             var codigo = HttpContext.Current.Request["code"];
 
@@ -141,13 +141,13 @@ namespace Insignia.DAO.Autenticacao.Google
 
             if (logged.RedirectUri == null)
             {
-                //Caso já exista no banco de dados o token o usuário já possui permissão e está logado.
+                //Caso já exista no banco de dados o token, o usuário já possui permissão e está logado.
                 service = new CalendarService
                 (
                     new BaseClientService.Initializer()
                     {
                         HttpClientInitializer = logged.Credential,
-                        ApplicationName = aplicacaoNome
+                        ApplicationName = aplicacaoNome                        
                     }
                 );
                 return service;

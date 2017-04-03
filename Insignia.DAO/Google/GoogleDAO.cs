@@ -104,7 +104,7 @@ namespace Insignia.DAO.Google
             //Key is the user string sent with AuthorizeAsync
             if (string.IsNullOrEmpty(key))
             {
-                throw new ArgumentException("Key MUST have a value");
+                throw new ArgumentException("Chave precisa ter um valor");
             }
             TaskCompletionSource<T> tcs = new TaskCompletionSource<T>();
 

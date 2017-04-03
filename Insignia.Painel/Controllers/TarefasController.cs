@@ -11,6 +11,9 @@ using Insignia.Painel.Helpers.Util;
 using System.Web.Mvc;
 using Insignia.DAO.Util;
 using System.Collections.Generic;
+using Google.Apis.Calendar.v3;
+using Google.Apis.Calendar.v3.Data;
+using Insignia.DAO.Autenticacao.Google;
 
 namespace Insignia.Painel.Controllers
 {
@@ -108,6 +111,30 @@ namespace Insignia.Painel.Controllers
 
                 if (TarefasDAO.Salvar(TarefaModel))
                 {
+                    CalendarService service = OAuthService.Service
+                                (
+                                    Convert.ToString(Session["UsuarioID"]),
+                                    ConfigurationManager.ConnectionStrings["strConMain"].ConnectionString, "http://localhost:53966/Agenda/SincronizarAgenda",
+                                    "Calendar API",
+                                    new[] { CalendarService.Scope.CalendarReadonly, CalendarService.Scope.Calendar }
+                                );
+
+                    //Se possui integração com google calendar, adiciona a tarefa no google
+                    if (service != null)
+                    {
+                        //Inserção de evento da tarefa recém cadastrada
+                        Event NovoEvento = new Event();
+
+                        NovoEvento.Id = Convert.ToString(TarefaModel.ID) + "000";
+                        NovoEvento.Summary = TarefaModel.Titulo;
+                        NovoEvento.Description = TarefaModel.Descricao;
+                        NovoEvento.Start = new EventDateTime();
+                        NovoEvento.Start.DateTime = TarefaModel.Termino;
+                        NovoEvento.End = new EventDateTime();
+                        NovoEvento.End.DateTime = TarefaModel.Termino;
+                        var eventResult = service.Events.Insert(NovoEvento, "primary").Execute();
+                    }
+
                     return RedirectToAction("Editar", new { ID = TarefaModel.ID });
                 }
             }
@@ -207,6 +234,29 @@ namespace Insignia.Painel.Controllers
 
                 if (TarefasDAO.Editar(TarefaModel))
                 {
+                    CalendarService service = OAuthService.Service
+                                 (
+                                     Convert.ToString(Session["UsuarioID"]),
+                                     ConfigurationManager.ConnectionStrings["strConMain"].ConnectionString, "http://localhost:53966/Agenda/SincronizarAgenda",
+                                     "Calendar API",
+                                     new[] { CalendarService.Scope.CalendarReadonly, CalendarService.Scope.Calendar }
+                                 );
+
+                    //Se possui integração com google calendar, adiciona a tarefa no google
+                    if (service != null)
+                    {                       
+                            //Atualiza o evento da tarefa no google calendar
+                            Event NovoEvento = new Event();
+                            
+                            NovoEvento.Summary = TarefaModel.Titulo;
+                            NovoEvento.Description = TarefaModel.Descricao;
+                            NovoEvento.Start = new EventDateTime();
+                            NovoEvento.Start.DateTime = TarefaModel.Termino;
+                            NovoEvento.End = new EventDateTime();
+                            NovoEvento.End.DateTime = TarefaModel.Termino;
+                            var eventResult = service.Events.Update(NovoEvento, "primary", Convert.ToString(TarefaModel.ID) + "000").Execute();                     
+                    }
+
                     return RedirectToAction("Editar", new { ID = TarefaModel.ID });
                 }
             }
