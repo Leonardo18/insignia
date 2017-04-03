@@ -108,6 +108,55 @@ namespace Insignia.DAO.Autenticacao.Google
         }
 
         /// <summary>
+        /// Busca serviço de calendário caso já exista umm loggin para o usuário atual
+        /// </summary>
+        /// <param name="usuarioID">ID do usuário que está logando</param>
+        /// <param name="conexaoBanco">String de conexão com banco de dados</param>
+        /// <param name="urlRedirecionamento">URL que o google irá redirecionar de volta após o Login</param>
+        /// <param name="aplicacaoNome">Nome da aplicação no google console developer</param>
+        /// <param name="escopos">Escopos que definem o que será usado do serviço</param>
+        /// <returns>Retorna serviço de calendario caso exista login se não retorna null</returns>
+        public static CalendarService Service(string usuarioID, string conexaoBanco, string urlRedirecionamento, string aplicacaoNome, string[] escopos)
+        {
+            CalendarService service = new CalendarService();
+
+            //Use uma classe extendida para autenticação Google Flow
+            GoogleAuthorizationCodeFlow flow;
+            flow = new ForceOfflineGoogleAuthorizationCodeFlow
+                (new GoogleAuthorizationCodeFlow.Initializer
+                {
+                    //Classe GoogleDAO para salvar o token de acesso no banco de dados.
+                    DataStore = new GoogleDAO(conexaoBanco),
+                    ClientSecrets = new ClientSecrets { ClientId = "215187720738-qvd9a4kbm69cqd5iuutgekhspg67l8ar.apps.googleusercontent.com", ClientSecret = "96JWX7tgheXLn1pe5QJw968E" },
+                    Scopes = escopos
+                });
+
+
+            var uri = Convert.ToString(HttpContext.Current.Request.Url);
+            //URL de redirecionamento configurada no painel do google develoeprs console.
+            string uriRedirecionamento = urlRedirecionamento;
+            var codigo = HttpContext.Current.Request["code"];
+
+            var logged = new AuthorizationCodeWebApp(flow, uriRedirecionamento, uri).AuthorizeAsync(usuarioID, CancellationToken.None).Result;
+
+            if (logged.RedirectUri == null)
+            {
+                //Caso já exista no banco de dados o token o usuário já possui permissão e está logado.
+                service = new CalendarService
+                (
+                    new BaseClientService.Initializer()
+                    {
+                        HttpClientInitializer = logged.Credential,
+                        ApplicationName = aplicacaoNome
+                    }
+                );
+                return service;
+            }
+
+            return null;
+        }
+
+        /// <summary>
         /// Faz login no google offline
         /// </summary>
         internal class ForceOfflineGoogleAuthorizationCodeFlow : GoogleAuthorizationCodeFlow
@@ -127,3 +176,4 @@ namespace Insignia.DAO.Autenticacao.Google
         };
     }
 }
+
