@@ -109,16 +109,18 @@ namespace Insignia.Painel.Controllers
 
                 TarefaModel.Status = ConfigurationManager.AppSettings["Fazer"];
 
+                CalendarService service = OAuthService.Service
+                               (
+                                   Convert.ToString(Session["UsuarioID"]),
+                                   ConfigurationManager.ConnectionStrings["strConMain"].ConnectionString, "http://localhost:53966/Agenda/SincronizarAgenda",
+                                   "Calendar API",
+                                   new[] { CalendarService.Scope.CalendarReadonly, CalendarService.Scope.Calendar }
+                               );
+                if (service != null)
+                    TarefaModel.SincronizadoAgenda = true;                                
+
                 if (TarefasDAO.Salvar(TarefaModel))
                 {
-                    CalendarService service = OAuthService.Service
-                                (
-                                    Convert.ToString(Session["UsuarioID"]),
-                                    ConfigurationManager.ConnectionStrings["strConMain"].ConnectionString, "http://localhost:53966/Agenda/SincronizarAgenda",
-                                    "Calendar API",
-                                    new[] { CalendarService.Scope.CalendarReadonly, CalendarService.Scope.Calendar }
-                                );
-
                     //Se possui integração com google calendar, adiciona a tarefa no google
                     if (service != null)
                     {
@@ -133,6 +135,8 @@ namespace Insignia.Painel.Controllers
                         NovoEvento.End = new EventDateTime();
                         NovoEvento.End.DateTime = TarefaModel.Termino;
                         var eventResult = service.Events.Insert(NovoEvento, "primary").Execute();
+
+                        TarefaModel.SincronizadoAgenda = true;
                     }
 
                     return RedirectToAction("Editar", new { ID = TarefaModel.ID });
@@ -243,18 +247,18 @@ namespace Insignia.Painel.Controllers
                                  );
 
                     //Se possui integração com google calendar, adiciona a tarefa no google
-                    if (service != null)
-                    {                       
-                            //Atualiza o evento da tarefa no google calendar
-                            Event NovoEvento = new Event();
-                            
-                            NovoEvento.Summary = TarefaModel.Titulo;
-                            NovoEvento.Description = TarefaModel.Descricao;
-                            NovoEvento.Start = new EventDateTime();
-                            NovoEvento.Start.DateTime = TarefaModel.Termino;
-                            NovoEvento.End = new EventDateTime();
-                            NovoEvento.End.DateTime = TarefaModel.Termino;
-                            var eventResult = service.Events.Update(NovoEvento, "primary", Convert.ToString(TarefaModel.ID) + "000").Execute();                     
+                    if (service != null && TarefaModel.SincronizadoAgenda)
+                    {
+                        //Atualiza o evento da tarefa no google calendar
+                        Event NovoEvento = new Event();
+
+                        NovoEvento.Summary = TarefaModel.Titulo;
+                        NovoEvento.Description = TarefaModel.Descricao;
+                        NovoEvento.Start = new EventDateTime();
+                        NovoEvento.Start.DateTime = TarefaModel.Termino;
+                        NovoEvento.End = new EventDateTime();
+                        NovoEvento.End.DateTime = TarefaModel.Termino;
+                        var eventResult = service.Events.Update(NovoEvento, "primary", Convert.ToString(TarefaModel.ID) + "000").Execute();
                     }
 
                     return RedirectToAction("Editar", new { ID = TarefaModel.ID });
