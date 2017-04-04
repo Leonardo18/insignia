@@ -35,7 +35,7 @@ namespace Insignia.DAO.Tarefas
             {
                 using (var sql = new SqlConnection(conStr))
                 {
-                    resp = sql.Query<Tarefa>("SELECT ID, EmpresaID, UsuarioID, BadgeID AS TipoID, Status, Titulo, Resumo, Descricao, Anexo, Termino, Observacoes, CriadoEm, SincronizadoAgenda FROM Tarefas WHERE ID = @ID AND EmpresaID = @EmpresaID AND (UsuarioID = @UsuarioID OR ID IN (SELECT TarefaID FROM TarefasParticipantes WHERE UsuarioID = @UsuarioID)) ",
+                    resp = sql.Query<Tarefa>("SELECT ID, EmpresaID, UsuarioID, BadgeID AS TipoID, Status, Titulo, Resumo, Descricao, Anexo, Termino, Observacoes, CriadoEm, AgendaID FROM Tarefas WHERE ID = @ID AND EmpresaID = @EmpresaID AND (UsuarioID = @UsuarioID OR ID IN (SELECT TarefaID FROM TarefasParticipantes WHERE UsuarioID = @UsuarioID)) ",
                         new
                         {
                             ID = id,
@@ -65,7 +65,7 @@ namespace Insignia.DAO.Tarefas
             {
                 using (var sql = new SqlConnection(conStr))
                 {
-                    int queryResultado = sql.ExecuteScalar<int>(" INSERT INTO Tarefas(EmpresaID, UsuarioID, BadgeID, Status, Titulo, Resumo, Descricao, Anexo, Termino, Observacoes, CriadoEm, SincronizadoAgenda) OUTPUT INSERTED.ID VALUES (@EmpresaID, @UsuarioID, @BadgeID, @Status, @Titulo, @Resumo, @Descricao, @Anexo, @Termino, @Observacoes, @CriadoEm, @SincronizadoAgenda) ",
+                    int queryResultado = sql.ExecuteScalar<int>(" INSERT INTO Tarefas(EmpresaID, UsuarioID, BadgeID, Status, Titulo, Resumo, Descricao, Anexo, Termino, Observacoes, CriadoEm, AgendaID) OUTPUT INSERTED.ID VALUES (@EmpresaID, @UsuarioID, @BadgeID, @Status, @Titulo, @Resumo, @Descricao, @Anexo, @Termino, @Observacoes, @CriadoEm, @AgendaID) ",
                                     new
                                     {
                                         EmpresaID = HttpContext.Current.Session["EmpresaID"],
@@ -79,7 +79,7 @@ namespace Insignia.DAO.Tarefas
                                         Termino = tarefa.Termino,
                                         Observacoes = tarefa.Observacoes,
                                         CriadoEm = DateTime.Now,                                        
-                                        SincronizadoAgenda = tarefa.SincronizadoAgenda
+                                        AgendaID = tarefa.AgendaID
                                     });
 
                     tarefa.ID = (int)queryResultado;

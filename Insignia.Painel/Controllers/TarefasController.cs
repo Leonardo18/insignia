@@ -109,15 +109,22 @@ namespace Insignia.Painel.Controllers
 
                 TarefaModel.Status = ConfigurationManager.AppSettings["Fazer"];
 
-                CalendarService service = OAuthService.Service
-                               (
-                                   Convert.ToString(Session["UsuarioID"]),
-                                   ConfigurationManager.ConnectionStrings["strConMain"].ConnectionString, "http://localhost:53966/Agenda/SincronizarAgenda",
-                                   "Calendar API",
-                                   new[] { CalendarService.Scope.CalendarReadonly, CalendarService.Scope.Calendar }
-                               );
+                CalendarService service = null;
+
+                //Caso exista login do usuário na tabela de goole, busca serviço
+                if (!string.IsNullOrEmpty(Database.DBBuscaInfo("UsuariosGoogle", "UsuarioID", Convert.ToString(Session["UsuarioID"]), "Usuario")))
+                {
+                    service = OAuthService.OAuthLogin
+                                         (
+                                             Convert.ToString(Session["UsuarioID"]),
+                                             ConfigurationManager.ConnectionStrings["strConMain"].ConnectionString, "http://localhost:53966/Agenda/SincronizarAgenda",
+                                             "Calendar API",
+                                             new[] { CalendarService.Scope.CalendarReadonly, CalendarService.Scope.Calendar }
+                                         );
+                }
+
                 if (service != null)
-                    TarefaModel.SincronizadoAgenda = true;                                
+                    TarefaModel.AgendaID = Hash.ValidaHash("ID", "Tarefas", "AgendaID", 10).ToLower();
 
                 if (TarefasDAO.Salvar(TarefaModel))
                 {
@@ -127,7 +134,7 @@ namespace Insignia.Painel.Controllers
                         //Inserção de evento da tarefa recém cadastrada
                         Event NovoEvento = new Event();
 
-                        NovoEvento.Id = Convert.ToString(TarefaModel.ID) + "000";
+                        NovoEvento.Id = TarefaModel.AgendaID;
                         NovoEvento.Summary = TarefaModel.Titulo;
                         NovoEvento.Description = TarefaModel.Descricao;
                         NovoEvento.Start = new EventDateTime();
@@ -135,8 +142,6 @@ namespace Insignia.Painel.Controllers
                         NovoEvento.End = new EventDateTime();
                         NovoEvento.End.DateTime = TarefaModel.Termino;
                         var eventResult = service.Events.Insert(NovoEvento, "primary").Execute();
-
-                        TarefaModel.SincronizadoAgenda = true;
                     }
 
                     return RedirectToAction("Editar", new { ID = TarefaModel.ID });
@@ -238,16 +243,22 @@ namespace Insignia.Painel.Controllers
 
                 if (TarefasDAO.Editar(TarefaModel))
                 {
-                    CalendarService service = OAuthService.Service
-                                 (
-                                     Convert.ToString(Session["UsuarioID"]),
-                                     ConfigurationManager.ConnectionStrings["strConMain"].ConnectionString, "http://localhost:53966/Agenda/SincronizarAgenda",
-                                     "Calendar API",
-                                     new[] { CalendarService.Scope.CalendarReadonly, CalendarService.Scope.Calendar }
-                                 );
+                    CalendarService service = null;
+
+                    //Caso exista login do usuário na tabela de goole, busca serviço
+                    if (!string.IsNullOrEmpty(Database.DBBuscaInfo("UsuariosGoogle", "UsuarioID", Convert.ToString(Session["UsuarioID"]), "Usuario")))
+                    {
+                        service = OAuthService.OAuthLogin
+                                             (
+                                                 Convert.ToString(Session["UsuarioID"]),
+                                                 ConfigurationManager.ConnectionStrings["strConMain"].ConnectionString, "http://localhost:53966/Agenda/SincronizarAgenda",
+                                                 "Calendar API",
+                                                 new[] { CalendarService.Scope.CalendarReadonly, CalendarService.Scope.Calendar }
+                                             );
+                    }
 
                     //Se possui integração com google calendar, adiciona a tarefa no google
-                    if (service != null && TarefaModel.SincronizadoAgenda)
+                    if (service != null && !string.IsNullOrEmpty(Database.DBBuscaInfo("Tarefas", "ID", Convert.ToString(TarefaModel.ID), "AgendaID")))
                     {
                         //Atualiza o evento da tarefa no google calendar
                         Event NovoEvento = new Event();
@@ -258,8 +269,8 @@ namespace Insignia.Painel.Controllers
                         NovoEvento.Start.DateTime = TarefaModel.Termino;
                         NovoEvento.End = new EventDateTime();
                         NovoEvento.End.DateTime = TarefaModel.Termino;
-                        var eventResult = service.Events.Update(NovoEvento, "primary", Convert.ToString(TarefaModel.ID) + "000").Execute();
-                    }
+                        var eventResult = service.Events.Update(NovoEvento, "primary", Database.DBBuscaInfo("Tarefas", "ID", Convert.ToString(TarefaModel.ID), "AgendaID")).Execute();
+                    }                    
 
                     return RedirectToAction("Editar", new { ID = TarefaModel.ID });
                 }
@@ -340,6 +351,26 @@ namespace Insignia.Painel.Controllers
                 {
                     if (TarefasDAO.Remover(TarefaModel.ID))
                     {
+                        CalendarService service = null;
+
+                        //Caso exista login do usuário na tabela de goole, busca serviço
+                        if (!string.IsNullOrEmpty(Database.DBBuscaInfo("UsuariosGoogle", "UsuarioID", Convert.ToString(Session["UsuarioID"]), "Usuario")))
+                        {
+                            service = OAuthService.OAuthLogin
+                                                 (
+                                                     Convert.ToString(Session["UsuarioID"]),
+                                                     ConfigurationManager.ConnectionStrings["strConMain"].ConnectionString, "http://localhost:53966/Agenda/SincronizarAgenda",
+                                                     "Calendar API",
+                                                     new[] { CalendarService.Scope.CalendarReadonly, CalendarService.Scope.Calendar }
+                                                 );
+                        }
+
+                        //Se possui integração com google calendar, adiciona a tarefa no google
+                        if (service != null && !string.IsNullOrEmpty(TarefaModel.AgendaID))
+                        {                           
+                            var eventResult = service.Events.Delete("primary", TarefaModel.AgendaID).Execute();
+                        }
+
                         return RedirectToAction("Listar");
                     }
                     else

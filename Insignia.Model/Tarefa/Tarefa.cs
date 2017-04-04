@@ -82,8 +82,8 @@ namespace Insignia.Model.Tarefa
         public DateTime? CriadoEm { get; set; }
 
         /// <summary>
-        /// Caso a tarefa tenha sido sincronizada com google agenda
+        /// ID da tarefa no google calendar
         /// </summary>
-        public bool SincronizadoAgenda { get; set; } = false;
+        public string AgendaID { get; set; }
     }
 }

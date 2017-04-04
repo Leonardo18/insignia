@@ -35,7 +35,7 @@ namespace Insignia.DAO.Util
         /// <param name="tabela">Tabela a ser buscado</param>
         /// <param name="campo2">Valor que será verificado</param>
         /// <returns>Retorna valor gerado</returns>
-        public static string ValidaHash(string campo, string tabela, string campo2)
+        public static string ValidaHash(string campo, string tabela, string campo2, int tamanhoToken)
         {
             string hash;
 
@@ -43,7 +43,7 @@ namespace Insignia.DAO.Util
 
             do
             {
-                hash = Criar(50);
+                hash = Criar(tamanhoToken);
 
                 using (var sql = new SqlConnection(ConfigurationManager.ConnectionStrings["strConMain"].ConnectionString))
                 {

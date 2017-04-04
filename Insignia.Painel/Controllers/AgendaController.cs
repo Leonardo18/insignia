@@ -8,6 +8,7 @@ using System.Configuration;
 using System.Web.Mvc;
 using Insignia.Model.Agenda;
 using System.Collections.Generic;
+using Insignia.DAO.Util;
 
 namespace Insignia.Painel.Controllers
 {
@@ -22,49 +23,45 @@ namespace Insignia.Painel.Controllers
         {
             var ViewModel = new ViewModelAgenda();
 
-            CalendarService service = OAuthService.Service
-                                (
-                                    Convert.ToString(Session["UsuarioID"]),
-                                    ConfigurationManager.ConnectionStrings["strConMain"].ConnectionString, "http://localhost:53966/Agenda/SincronizarAgenda",
-                                    "Calendar API",
-                                    new[] { CalendarService.Scope.CalendarReadonly, CalendarService.Scope.Calendar }
-                                );
-
-            if (service != null)
+            if (!string.IsNullOrEmpty(Database.DBBuscaInfo("UsuariosGoogle", "UsuarioID", Convert.ToString(Session["UsuarioID"]), "Usuario")))
             {
-                //Define os parâmetros do request.
-                EventsResource.ListRequest request = service.Events.List("primary");
-                //request.TimeMin = DateTime.Now;
-                request.ShowDeleted = false;
-                request.SingleEvents = true;                
-                //request.MaxResults = 10;
-                request.OrderBy = EventsResource.ListRequest.OrderByEnum.StartTime;
-
-                //Lista de eventos.
-                Events events = request.Execute();
-
-                //Eventos que irão acontecer
-                if (events.Items != null && events.Items.Count > 0)
+                CalendarService service = OAuthService.OAuthLogin
+                                    (
+                                        Convert.ToString(Session["UsuarioID"]),
+                                        ConfigurationManager.ConnectionStrings["strConMain"].ConnectionString, "http://localhost:53966/Agenda/SincronizarAgenda",
+                                        "Calendar API",
+                                        new[] { CalendarService.Scope.CalendarReadonly, CalendarService.Scope.Calendar }
+                                    );
+                
+                if (service != null)
                 {
-                    ViewModel.ListAgenda = new List<Agenda>();
+                    //Define os parâmetros do request.
+                    EventsResource.ListRequest request = service.Events.List("primary");
+                    //request.TimeMin = DateTime.Now;
+                    request.ShowDeleted = false;
+                    request.SingleEvents = true;
+                    //request.MaxResults = 10;
+                    request.OrderBy = EventsResource.ListRequest.OrderByEnum.StartTime;
 
-                    foreach (var eventItem in events.Items)
+                    //Lista de eventos.
+                    Events events = request.Execute();
+
+                    //Eventos que irão acontecer
+                    if (events.Items != null && events.Items.Count > 0)
                     {
-                        ViewModel.ListAgenda.Add(new Agenda()
-                        {
-                            Titulo = eventItem.Summary,
-                            DataInicio = Convert.ToDateTime(eventItem.Start.DateTime),
-                            DataFim = Convert.ToDateTime(eventItem.End.DateTime)
-                        });
+                        ViewModel.ListAgenda = new List<Agenda>();
 
-                        string EventoData = Convert.ToString(eventItem.Start.DateTime);
-                        string EventoDescricao = eventItem.Summary;
-                        if (string.IsNullOrEmpty(EventoData))
+                        foreach (var eventItem in events.Items)
                         {
-                            EventoData = eventItem.Start.Date;
+                            ViewModel.ListAgenda.Add(new Agenda()
+                            {
+                                Titulo = eventItem.Summary,
+                                DataInicio = Convert.ToDateTime(eventItem.Start.DateTime),
+                                DataFim = Convert.ToDateTime(eventItem.End.DateTime)
+                            });                           
                         }
                     }
-                }               
+                }
             }
 
             return View(ViewModel);
@@ -112,16 +109,9 @@ namespace Insignia.Painel.Controllers
                             Titulo = eventItem.Summary,
                             DataInicio = Convert.ToDateTime(eventItem.Start.DateTime),
                             DataFim = Convert.ToDateTime(eventItem.End.DateTime)
-                        });
-
-                        string EventoData = Convert.ToString(eventItem.Start.DateTime);
-                        string EventoDescricao = eventItem.Summary;
-                        if (string.IsNullOrEmpty(EventoData))
-                        {
-                            EventoData = eventItem.Start.Date;
-                        }
+                        });                       
                     }
-                }              
+                }
             }
 
             return View("Visualizar", ViewModel);

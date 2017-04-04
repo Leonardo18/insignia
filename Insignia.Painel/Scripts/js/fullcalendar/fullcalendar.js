@@ -10020,15 +10020,15 @@
         // locale
         isRTL: false,
         buttonText: {
-            prev: "prev",
-            next: "next",
-            prevYear: "prev year",
-            nextYear: "next year",
-            year: 'year', // TODO: locale files need to specify this
-            today: 'today',
-            month: 'month',
-            week: 'week',
-            day: 'day'
+            prev: "anterior",
+            next: "próximo",
+            prevYear: "ano anterior",
+            nextYear: "ano seguinte",
+            year: 'ano', // TODO: locale files need to specify this
+            today: 'hoje',
+            month: 'mês',
+            week: 'semana',
+            day: 'dia'
         },
 
         buttonIcons: {
