@@ -78,7 +78,7 @@ namespace Insignia.DAO.Tarefas
                                         Anexo = tarefa.Anexo,
                                         Termino = tarefa.Termino,
                                         Observacoes = tarefa.Observacoes,
-                                        CriadoEm = DateTime.Now,                                        
+                                        CriadoEm = DateTime.Now,
                                         AgendaID = tarefa.AgendaID
                                     });
 
@@ -445,7 +445,8 @@ namespace Insignia.DAO.Tarefas
                                             ConquistadoEm = DateTime.Now
                                         });
 
-                        AtualizaSaldoPontos(Badges.Nivel);
+                        if (HttpContext.Current.Session["EmpresaID"] != HttpContext.Current.Session["UsuarioID"])
+                            AtualizaSaldoPontos(Badges.Nivel);
                     }
                 }
             }
