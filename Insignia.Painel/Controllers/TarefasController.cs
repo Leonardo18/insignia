@@ -114,7 +114,7 @@ namespace Insignia.Painel.Controllers
                 //Caso exista login do usuário na tabela de goole, busca serviço
                 if (!string.IsNullOrEmpty(Database.DBBuscaInfo("UsuariosGoogle", "UsuarioID", Convert.ToString(Session["UsuarioID"]), "Usuario")))
                 {
-                    service = OAuthService.OAuthLogin
+                    service = OAuthService.OAuthLogged
                                          (
                                              Convert.ToString(Session["UsuarioID"]),
                                              ConfigurationManager.ConnectionStrings["strConMain"].ConnectionString, "https://www.portalinsignia.com.br/Agenda/SincronizarAgenda",
@@ -248,7 +248,7 @@ namespace Insignia.Painel.Controllers
                     //Caso exista login do usuário na tabela de goole, busca serviço
                     if (!string.IsNullOrEmpty(Database.DBBuscaInfo("UsuariosGoogle", "UsuarioID", Convert.ToString(Session["UsuarioID"]), "Usuario")))
                     {
-                        service = OAuthService.OAuthLogin
+                        service = OAuthService.OAuthLogged
                                              (
                                                  Convert.ToString(Session["UsuarioID"]),
                                                  ConfigurationManager.ConnectionStrings["strConMain"].ConnectionString, "https://www.portalinsignia.com.br/Agenda/SincronizarAgenda",
@@ -356,7 +356,7 @@ namespace Insignia.Painel.Controllers
                         //Caso exista login do usuário na tabela de goole, busca serviço
                         if (!string.IsNullOrEmpty(Database.DBBuscaInfo("UsuariosGoogle", "UsuarioID", Convert.ToString(Session["UsuarioID"]), "Usuario")))
                         {
-                            service = OAuthService.OAuthLogin
+                            service = OAuthService.OAuthLogged
                                                  (
                                                      Convert.ToString(Session["UsuarioID"]),
                                                      ConfigurationManager.ConnectionStrings["strConMain"].ConnectionString, "https://www.portalinsignia.com.br/Agenda/SincronizarAgenda",

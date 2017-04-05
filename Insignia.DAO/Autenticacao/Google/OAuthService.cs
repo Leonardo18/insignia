@@ -69,7 +69,7 @@ namespace Insignia.DAO.Autenticacao.Google
                         }
                     );
 
-                    return service;                    
+                    return service;
                 }
                 else
                 {
@@ -102,6 +102,40 @@ namespace Insignia.DAO.Autenticacao.Google
             {
                 throw ex;
             }
+        }
+
+        public static CalendarService OAuthLogged(string usuarioID, string conexaoBanco, string urlRedirecionamento, string aplicacaoNome, string[] escopos)
+        {
+            CalendarService service = new CalendarService();
+
+            //Use uma classe extendida para autenticação Google Flow
+            GoogleAuthorizationCodeFlow flow;
+            flow = new ForceOfflineGoogleAuthorizationCodeFlow
+                (new GoogleAuthorizationCodeFlow.Initializer
+                {
+                    //Classe GoogleDAO para salvar o token de acesso no banco de dados.
+                    DataStore = new GoogleDAO(conexaoBanco),
+                    ClientSecrets = new ClientSecrets { ClientId = "215187720738-qvd9a4kbm69cqd5iuutgekhspg67l8ar.apps.googleusercontent.com", ClientSecret = "96JWX7tgheXLn1pe5QJw968E" },
+                    Scopes = escopos
+                });
+
+            var result = new AuthorizationCodeWebApp(flow, urlRedirecionamento, Convert.ToString(HttpContext.Current.Request.Url)).AuthorizeAsync(usuarioID, CancellationToken.None).Result;
+
+            if (result.RedirectUri == null)
+            {
+                //Caso já exista no banco de dados o token o usuário já possui permissão e está logado.
+                service = new CalendarService
+                (
+                    new BaseClientService.Initializer()
+                    {
+                        HttpClientInitializer = result.Credential,
+                        ApplicationName = aplicacaoNome
+                    }
+                );
+
+                return service;
+            }
+            return null;
         }
 
         /// <summary>
