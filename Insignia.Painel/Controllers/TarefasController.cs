@@ -117,7 +117,7 @@ namespace Insignia.Painel.Controllers
                     service = OAuthService.OAuthLogin
                                          (
                                              Convert.ToString(Session["UsuarioID"]),
-                                             ConfigurationManager.ConnectionStrings["strConMain"].ConnectionString, "http://localhost:53966/Agenda/SincronizarAgenda",
+                                             ConfigurationManager.ConnectionStrings["strConMain"].ConnectionString, "https://www.portalinsignia.com.br/Agenda/SincronizarAgenda",
                                              "Calendar API",
                                              new[] { CalendarService.Scope.CalendarReadonly, CalendarService.Scope.Calendar }
                                          );
@@ -251,7 +251,7 @@ namespace Insignia.Painel.Controllers
                         service = OAuthService.OAuthLogin
                                              (
                                                  Convert.ToString(Session["UsuarioID"]),
-                                                 ConfigurationManager.ConnectionStrings["strConMain"].ConnectionString, "http://localhost:53966/Agenda/SincronizarAgenda",
+                                                 ConfigurationManager.ConnectionStrings["strConMain"].ConnectionString, "https://www.portalinsignia.com.br/Agenda/SincronizarAgenda",
                                                  "Calendar API",
                                                  new[] { CalendarService.Scope.CalendarReadonly, CalendarService.Scope.Calendar }
                                              );
@@ -359,7 +359,7 @@ namespace Insignia.Painel.Controllers
                             service = OAuthService.OAuthLogin
                                                  (
                                                      Convert.ToString(Session["UsuarioID"]),
-                                                     ConfigurationManager.ConnectionStrings["strConMain"].ConnectionString, "http://localhost:53966/Agenda/SincronizarAgenda",
+                                                     ConfigurationManager.ConnectionStrings["strConMain"].ConnectionString, "https://www.portalinsignia.com.br/Agenda/SincronizarAgenda",
                                                      "Calendar API",
                                                      new[] { CalendarService.Scope.CalendarReadonly, CalendarService.Scope.Calendar }
                                                  );
