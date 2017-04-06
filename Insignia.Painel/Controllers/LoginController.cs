@@ -35,6 +35,11 @@ namespace Insignia.Painel.Controllers
                 ViewBag.Success = Convert.ToString(Session["Success"]);
             }
 
+            if (!string.IsNullOrEmpty(Convert.ToString(Session["EmpresaID"])))
+            {
+                return RedirectToAction("../Dashboard/Dashboard");
+            }
+
             return View(new Empresa());
         }
 
@@ -115,7 +120,7 @@ namespace Insignia.Painel.Controllers
 
                         SendMail Email = new SendMail();
 
-                        if (Email.EnviaEmail(EmpresaModel.RazaoSocial, EmpresaModel.Email, "Você efetuou um cadatrado no sistema Insígnia.", "NovoCadastro.html"))
+                        if (Email.EnviaEmail(EmpresaModel.RazaoSocial, EmpresaModel.Email, "Você efetuou um cadatrado no sistema Insígnia.", "Novo cadastro", "NovoCadastro.html", string.Empty))
                         {
                             return RedirectToAction("../Dashboard/Dashboard");
                         }
@@ -136,9 +141,9 @@ namespace Insignia.Painel.Controllers
         }
 
         /// <summary>
-        /// POST: RecuperarSenha 
+        /// POST: RecuperarSenha
         /// </summary>
-        /// <param name="email">Email cadastrado no sistema</param>
+        /// <param name="email">E-mail cadastrado no sistema</param>
         [HttpPost]
         public ActionResult RecuperarSenha(string email)
         {
@@ -146,7 +151,7 @@ namespace Insignia.Painel.Controllers
             {
                 SendMail Email = new SendMail();
 
-                if (Email.EnviaEmail(email, email, "Foi solicitado uma recuperação de senha no sistema Insígnia.", "RecuperarSenha.html"))
+                if (Email.EnviaEmail(email, email, "Foi solicitado uma recuperação de senha no sistema Insígnia.", "Redefinição de Senha", "RecuperarSenha.html", string.Empty))
                 {
                     Session["Success"] = "Foi enviado um e-mail para " + email + ", verifique o e-mail informado para redefinir sua senha.";
                 }
@@ -201,6 +206,51 @@ namespace Insignia.Painel.Controllers
                     else
                     {
                         ViewBag.Error = "Ocorreu um problema ao tentar atualizar a senha, verifique o e-mail informado para recuperação de senha ou entre em contato com o administrador do sistema.";
+                    }
+                }
+                else
+                {
+                    ViewBag.Error = "As senhas digitadas diferem.";
+                }
+            }
+
+            return View();
+        }
+
+        /// <summary>
+        /// GET: NovoUsuario
+        /// </summary>
+        /// <param name="token">Token de acesso do usuário para criar senha</param>
+        [HttpGet]
+        public ActionResult NovoUsuario(string token)
+        {
+            //Salvo o e-mail criptografado em uma session
+            Session["Token"] = token;
+
+            return View();
+        }
+
+        /// <summary>
+        /// POST: NovoUsuario
+        /// </summary>        
+        /// <param name="senhaCadastro">Nova senha do usuário</param>
+        /// <param name="confirmaSenha">Confirmação da nova senha do usuário</param>
+        [HttpPost]
+        public ActionResult NovoUsuario(string senhaCadastro, string confirmaSenha)
+        {
+            string token = Convert.ToString(Session["Token"]).Replace(" ", "+");
+
+            if (!string.IsNullOrEmpty(token) && !string.IsNullOrEmpty(senhaCadastro) && !string.IsNullOrEmpty(confirmaSenha))
+            {
+                if (senhaCadastro == confirmaSenha)
+                {                    
+                    if (UsuarioDAO.CriarSenha(token, senhaCadastro))
+                    {
+                        return RedirectToAction("Sair");
+                    }
+                    else
+                    {
+                        ViewBag.Error = "Ocorreu um problema ao tentar criar a senha, entre em contato com o administrador do sistema.";
                     }
                 }
                 else

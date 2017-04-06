@@ -41,15 +41,17 @@ namespace Insignia.DAO.Autenticacao.Google
 
 
                 var uri = Convert.ToString(HttpContext.Current.Request.Url);
-                //URL de redirecionamento configurada no painel do google develoeprs console.
-                string uriRedirecionamento = urlRedirecionamento;
-                var codigo = HttpContext.Current.Request["code"];
 
-                if (codigo != null)
+                //URL de redirecionamento configurada no painel do google developers console.
+                string uriRedirecionamento = urlRedirecionamento;
+
+                if (HttpContext.Current.Request["code"] != null)
                 {
-                    var token = flow.ExchangeCodeForTokenAsync(usuarioID, codigo,
-                        uri.Substring(0, uri.IndexOf("?")), CancellationToken.None).Result;
-                    var test = HttpContext.Current.Request["state"];
+                    var token = flow.ExchangeCodeForTokenAsync
+                        (
+                            usuarioID, HttpContext.Current.Request["code"],
+                            uri.Substring(0, uri.IndexOf("?")), CancellationToken.None
+                        ).Result;
 
                     // Extrai dados salvos.
                     var oauthState = AuthWebUtility.ExtracRedirectFromState
@@ -57,14 +59,14 @@ namespace Insignia.DAO.Autenticacao.Google
                             flow.DataStore, usuarioID, HttpContext.Current.Request["state"]
                         ).Result;
 
-                    var result = new AuthorizationCodeWebApp(flow, uriRedirecionamento, uri).AuthorizeAsync(usuarioID, CancellationToken.None).Result;
+                    var dados = new AuthorizationCodeWebApp(flow, uriRedirecionamento, uri).AuthorizeAsync(usuarioID, CancellationToken.None).Result;
 
-                    //Caso já exista no banco de dados o token o usuário já possui permissão e está logado.
+                    //Caso já exista no banco de dados o token, o usuário já possui permissão e está logado.
                     service = new CalendarService
                     (
                         new BaseClientService.Initializer()
                         {
-                            HttpClientInitializer = result.Credential,
+                            HttpClientInitializer = dados.Credential,
                             ApplicationName = aplicacaoNome
                         }
                     );
@@ -73,21 +75,21 @@ namespace Insignia.DAO.Autenticacao.Google
                 }
                 else
                 {
-                    var result = new AuthorizationCodeWebApp(flow, uriRedirecionamento, uri).AuthorizeAsync(usuarioID, CancellationToken.None).Result;
+                    var dados = new AuthorizationCodeWebApp(flow, uriRedirecionamento, uri).AuthorizeAsync(usuarioID, CancellationToken.None).Result;
 
-                    if (result.RedirectUri != null)
+                    if (dados.RedirectUri != null)
                     {
                         //Redireciona o usuário para fazer login e dar as permissões
-                        HttpContext.Current.Response.Redirect(result.RedirectUri);
+                        HttpContext.Current.Response.Redirect(dados.RedirectUri);
                     }
                     else
                     {
-                        //Caso já exista no banco de dados o token o usuário já possui permissão e está logado.
+                        //Caso já exista no banco de dados o token, o usuário já possui permissão e está logado.
                         service = new CalendarService
                         (
                             new BaseClientService.Initializer()
                             {
-                                HttpClientInitializer = result.Credential,
+                                HttpClientInitializer = dados.Credential,
                                 ApplicationName = aplicacaoNome
                             }
                         );
@@ -104,6 +106,15 @@ namespace Insignia.DAO.Autenticacao.Google
             }
         }
 
+        /// <summary>
+        /// Verifica se o usuário está logado no Google Calendar
+        /// </summary>
+        /// <param name="usuarioID">ID do usuário no sistema</param>
+        /// <param name="conexaoBanco">Conexão com banco de dados</param>
+        /// <param name="urlRedirecionamento">Url de redirecionamento definida no Google Console Developers</param>
+        /// <param name="aplicacaoNome">Nome da aplicação no google</param>
+        /// <param name="escopos">Acessos que o sistema irá solicitar ao usuário</param>
+        /// <returns>Caso esteja logado retorna o serviço para ser usado, s enão retorna null</returns>
         public static CalendarService OAuthLogged(string usuarioID, string conexaoBanco, string urlRedirecionamento, string aplicacaoNome, string[] escopos)
         {
             CalendarService service = new CalendarService();
@@ -119,22 +130,23 @@ namespace Insignia.DAO.Autenticacao.Google
                     Scopes = escopos
                 });
 
-            var result = new AuthorizationCodeWebApp(flow, urlRedirecionamento, Convert.ToString(HttpContext.Current.Request.Url)).AuthorizeAsync(usuarioID, CancellationToken.None).Result;
+            var dados = new AuthorizationCodeWebApp(flow, urlRedirecionamento, Convert.ToString(HttpContext.Current.Request.Url)).AuthorizeAsync(usuarioID, CancellationToken.None).Result;
 
-            if (result.RedirectUri == null)
+            if (dados.RedirectUri == null)
             {
                 //Caso já exista no banco de dados o token o usuário já possui permissão e está logado.
                 service = new CalendarService
                 (
                     new BaseClientService.Initializer()
                     {
-                        HttpClientInitializer = result.Credential,
+                        HttpClientInitializer = dados.Credential,
                         ApplicationName = aplicacaoNome
                     }
                 );
 
                 return service;
             }
+
             return null;
         }
 
@@ -148,11 +160,13 @@ namespace Insignia.DAO.Autenticacao.Google
             public override AuthorizationCodeRequestUrl CreateAuthorizationCodeRequest(string redirectUri)
             {
                 var ss = new GoogleAuthorizationCodeRequestUrl(new Uri(AuthorizationServerUrl));
+
                 ss.AccessType = "offline";
                 ss.ApprovalPrompt = "force";
                 ss.ClientId = ClientSecrets.ClientId;
                 ss.Scope = string.Join(" ", Scopes);
                 ss.RedirectUri = redirectUri;
+
                 return ss;
             }
         };

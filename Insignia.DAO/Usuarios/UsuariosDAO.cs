@@ -58,6 +58,8 @@ namespace Insignia.DAO.Usuarios
 
             if (Validacao.ValidaModel(usuario, out resultadoValidacao))
             {
+                usuario.Token = Hash.ValidaHash("ID", "Usuarios", "Token", 50);
+
                 using (var sql = new SqlConnection(conStr))
                 {
                     int queryResultado = sql.ExecuteScalar<int>(" INSERT INTO Usuarios(EmpresaID, SetorID, Nome, Email, Tipo, Token) OUTPUT INSERTED.ID VALUES (@EmpresaID, @SetorID, @Nome, @Email, @Tipo, @Token) ",
@@ -68,7 +70,7 @@ namespace Insignia.DAO.Usuarios
                                         Nome = usuario.Nome,
                                         Email = usuario.Email,
                                         Tipo = usuario.Tipo,
-                                        Token = Hash.ValidaHash("ID", "Usuarios", "Token", 50),
+                                        Token = usuario.Token,
                                     });
 
                     usuario.ID = (int)queryResultado;
@@ -175,6 +177,34 @@ namespace Insignia.DAO.Usuarios
             {
                 using (var sql = new SqlConnection(conStr))
                 {
+                    sql.Execute(" DELETE FROM TarefasParticipantes WHERE UsuarioID = @ID AND EmpresaID = @EmpresaID ",
+                        new
+                        {
+                            ID = id,
+                            EmpresaID = HttpContext.Current.Session["EmpresaID"]
+                        });
+
+                    sql.Execute(" DELETE FROM UsuariosPontos WHERE UsuarioID = @ID AND EmpresaID = @EmpresaID ",
+                        new
+                        {
+                            ID = id,
+                            EmpresaID = HttpContext.Current.Session["EmpresaID"]
+                        });
+
+                    sql.Execute(" DELETE FROM CompetenciasUsuarios WHERE UsuarioID = @ID AND EmpresaID = @EmpresaID ",
+                        new
+                        {
+                            ID = id,
+                            EmpresaID = HttpContext.Current.Session["EmpresaID"]
+                        });
+
+                    sql.Execute(" DELETE FROM UsuariosGoogle WHERE UsuarioID = @ID ",
+                        new
+                        {
+                            ID = id,
+                            EmpresaID = HttpContext.Current.Session["EmpresaID"]
+                        });
+
                     int queryResultado = sql.Execute(" DELETE FROM Usuarios WHERE ID = @ID AND EmpresaID = @EmpresaID ",
                         new
                         {
@@ -227,6 +257,34 @@ namespace Insignia.DAO.Usuarios
         }
 
         /// <summary>
+        /// Cria senha para um novo usuário no sistema
+        /// </summary>
+        /// <param name="token">Token de identificação do usuário</param>
+        /// <param name="senha">senha criada</param>
+        /// <returns>Retorna true caso tenha criado a senha com sucesso, false caso contrário</returns>
+        public bool CriarSenha(string token, string senha)
+        {
+            bool resp = false;
+
+            if (!string.IsNullOrWhiteSpace(token) && !string.IsNullOrWhiteSpace(senha))
+            {
+                using (var sql = new SqlConnection(conStr))
+                {
+                    int queryResultado = sql.Execute(" UPDATE Usuarios SET Senha = @Senha, AtivadoEm = @AtivadoEm WHERE Token = @Token ",
+                        new
+                        {
+                            Token = token,
+                            Senha = Util.Autenticacao.Criptografar(senha),
+                            AtivadoEm = DateTime.Now
+                        });
+                    resp = ToBoolean(queryResultado);
+                }
+            }
+
+            return resp;
+        }
+
+        /// <summary>
         /// Verifica se o usuário já existe no sistema
         /// </summary>
         /// <param name="email">Email que está sendo cadastrado</param>        
@@ -254,23 +312,12 @@ namespace Insignia.DAO.Usuarios
                 }
             }
 
-            return resp;
-        }
-
-        /// <summary>
-        /// Carrega todos os estados do banco
-        /// </summary>
-        /// <returns>Dictionary contendo a Sigla e nome de cada estado</returns>
-        public Dictionary<string, string> Estados()
-        {
-            Dictionary<string, string> dict = new Dictionary<string, string>();
-
-            using (var sql = new SqlConnection(conStr))
+            if (usuario == null)
             {
-                dict = sql.Query(" SELECT Sigla, Nome FROM Estados ORDER BY Nome ASC ").ToDictionary(row => (string)row.Sigla, row => (string)row.Nome);
+                resp = false;
             }
 
-            return dict;
+            return resp;
         }
 
         /// <summary>
@@ -289,15 +336,31 @@ namespace Insignia.DAO.Usuarios
                 {
                     int queryResultado = sql.Execute(" UPDATE Usuarios SET Senha = @Senha WHERE Email = @Email ",
                         new
-                        {                            
+                        {
                             Email = email,
                             Senha = Util.Autenticacao.Criptografar(senha)
-                        });                    
+                        });
                     resp = ToBoolean(queryResultado);
                 }
             }
 
             return resp;
+        }
+
+        /// <summary>
+        /// Carrega todos os estados do banco
+        /// </summary>
+        /// <returns>Dictionary contendo a Sigla e nome de cada estado</returns>
+        public Dictionary<string, string> Estados()
+        {
+            Dictionary<string, string> dict = new Dictionary<string, string>();
+
+            using (var sql = new SqlConnection(conStr))
+            {
+                dict = sql.Query(" SELECT Sigla, Nome FROM Estados ORDER BY Nome ASC ").ToDictionary(row => (string)row.Sigla, row => (string)row.Nome);
+            }
+
+            return dict;
         }
     }
 }

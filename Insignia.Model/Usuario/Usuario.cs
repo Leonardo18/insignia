@@ -21,6 +21,11 @@ namespace Insignia.Model.Usuario
         public int SetorID { get; set; }
 
         /// <summary>
+        /// Token do usuário
+        /// </summary>       
+        public string Token { get; set; }
+
+        /// <summary>
         /// Nome do Setor
         /// </summary>
         public string SetorNome { get; set; }
@@ -45,7 +50,7 @@ namespace Insignia.Model.Usuario
         /// <summary>
         /// Confirmação da senha digitada
         /// </summary>        
-        public string ConfirmaSenha { get; set; }       
+        public string ConfirmaSenha { get; set; }
 
         /// <summary>
         /// Tipo do usuário sendo eles: Funcionário e Gestor

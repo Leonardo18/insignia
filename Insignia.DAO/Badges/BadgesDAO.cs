@@ -115,7 +115,7 @@ namespace Insignia.DAO.Badges
         }
 
         /// <summary>
-        /// Carrega uma lista com todas as badges encontradas no banco de dados
+        /// Carrega uma lista com todas as badges encontradas no banco de dados por nível
         /// </summary>
         /// <returns>Retornar uma List de Badges</returns>
         public List<Badge> Listar(string nivel)

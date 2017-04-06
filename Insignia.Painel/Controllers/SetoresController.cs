@@ -15,7 +15,7 @@ namespace Insignia.Painel.Controllers
         /// GET: Setores Listar
         /// </summary>
         /// <returns>Retorna a view de listar setores com os dados</returns>
-        [HttpGet, IsLogged]
+        [HttpGet, IsLogged, HavePermission(AreaNome = "Setores")]
         public ActionResult Listar()
         {
             var SetorModel = SetoresDAO.Listar();
@@ -27,7 +27,7 @@ namespace Insignia.Painel.Controllers
         /// GET: Setores Adicionar
         /// </summary>
         /// <returns>Retorna a view de adicionar setores</returns>
-        [HttpGet, IsLogged]
+        [HttpGet, IsLogged, HavePermission(AreaNome = "Setores")]
         public ActionResult Adicionar()
         {
             var SetorModel = new Setor();
@@ -40,7 +40,7 @@ namespace Insignia.Painel.Controllers
         /// </summary>
         /// <param name="SetorModel">Objeto Model do Setor contendo os dados inseridos para cadastro</param>
         /// <returns>Caso consiga validar e salvar o setor faz redirecionamento, se não retorna a view com mensagem</returns>
-        [HttpPost, IsLogged]
+        [HttpPost, IsLogged, HavePermission(AreaNome = "Setores")]
         public ActionResult Adicionar(Setor SetorModel)
         {
             if (ModelState.IsValid)
@@ -59,7 +59,7 @@ namespace Insignia.Painel.Controllers
         /// </summary>
         /// <param name="ID">ID do Setor a ser editado</param>
         /// <returns>Retorna a view com os dados do setror a serem editados</returns>
-        [HttpGet, IsLogged]
+        [HttpGet, IsLogged, HavePermission(AreaNome = "Setores")]
         public ActionResult Editar(int ID)
         {
             Setor SetorModel = SetoresDAO.Carregar(ID);
@@ -72,7 +72,7 @@ namespace Insignia.Painel.Controllers
         /// </summary>
         /// <param name="SetorModel">Model contendo os dados do Setor</param>
         /// <returns>Caso consiga validar os dados e atualizar o setor faz redirecionamento, caso contrário retorna a view novamente para ajuste de dados inválidos</returns>
-        [HttpPost, IsLogged]
+        [HttpPost, IsLogged, HavePermission(AreaNome = "Setores")]
         public ActionResult Editar(Setor SetorModel)
         {
             if (ModelState.IsValid)
@@ -91,7 +91,7 @@ namespace Insignia.Painel.Controllers
         /// </summary>
         /// <param name="ID">ID do setor a ser removido</param>
         /// <returns>Retorna a view com dados do setor que será removido</returns>
-        [HttpGet, IsLogged]
+        [HttpGet, IsLogged, HavePermission(AreaNome = "Setores")]
         public ActionResult Remover(int ID)
         {
             //Faz Load com o ID passado
@@ -105,7 +105,7 @@ namespace Insignia.Painel.Controllers
         /// </summary>
         /// <param name="SetorModel">Model contendo os dados do setor</param>
         /// <returns>Caso consiga remover o setor do sistema faz redirecionamento, caso contrário retorna a view com mensagem</returns>
-        [HttpPost, IsLogged]
+        [HttpPost, IsLogged, HavePermission(AreaNome = "Setores")]
         public ActionResult Remover(Setor SetorModel)
         {
             //Faz Load com o ID passado

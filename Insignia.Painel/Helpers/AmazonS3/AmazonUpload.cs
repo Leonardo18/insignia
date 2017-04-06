@@ -23,7 +23,7 @@ namespace Insignia.Painel.Helpers.AmazonS3
             bool resp = false;
 
             //Objeto cliente que cria acesso com as chaves e define a região como São Paulo para maior otimização de upload
-            IAmazonS3 cliente = new AmazonS3Client(ConfigurationManager.AppSettings["AWSAccessKey"], ConfigurationManager.AppSettings["AWSSecretKey"], RegionEndpoint.SAEast1);
+            IAmazonS3 cliente = new AmazonS3Client(ConfigurationManager.AppSettings["AWSAccessKeyS3"], ConfigurationManager.AppSettings["AWSSecretKeyS3"], RegionEndpoint.SAEast1);
 
             //Cria o objeto de transferência com o objeto cliente
             TransferUtility util = new TransferUtility(cliente);
@@ -70,7 +70,7 @@ namespace Insignia.Painel.Helpers.AmazonS3
             string Url = string.Empty;
 
             //Objeto cliente que cria acesso com as chaves e define a região como São Paulo para maior otimização de upload
-            IAmazonS3 cliente = new AmazonS3Client(ConfigurationManager.AppSettings["AWSAccessKey"], ConfigurationManager.AppSettings["AWSSecretKey"], RegionEndpoint.SAEast1);
+            IAmazonS3 cliente = new AmazonS3Client(ConfigurationManager.AppSettings["AWSAccessKeyS3"], ConfigurationManager.AppSettings["AWSSecretKeyS3"], RegionEndpoint.SAEast1);
 
             //Objeto de requestUrl
             GetPreSignedUrlRequest requestUrl = new GetPreSignedUrlRequest();
@@ -100,7 +100,7 @@ namespace Insignia.Painel.Helpers.AmazonS3
             bool resp = false;
 
             //Objeto cliente que cria acesso com as chaves e define a região como São Paulo para maior otimização de upload
-            IAmazonS3 cliente = new AmazonS3Client(ConfigurationManager.AppSettings["AWSAccessKey"], ConfigurationManager.AppSettings["AWSSecretKey"], RegionEndpoint.SAEast1);
+            IAmazonS3 cliente = new AmazonS3Client(ConfigurationManager.AppSettings["AWSAccessKeyS3"], ConfigurationManager.AppSettings["AWSSecretKeyS3"], RegionEndpoint.SAEast1);
 
             ListObjectsRequest findFolderRequest = new ListObjectsRequest();
 
@@ -126,7 +126,7 @@ namespace Insignia.Painel.Helpers.AmazonS3
             bool resp = false;
 
             //Objeto cliente que cria acesso com as chaves e define a região como São Paulo para maior otimização de upload
-            IAmazonS3 cliente = new AmazonS3Client(ConfigurationManager.AppSettings["AWSAccessKey"], ConfigurationManager.AppSettings["AWSSecretKey"], RegionEndpoint.SAEast1);
+            IAmazonS3 cliente = new AmazonS3Client(ConfigurationManager.AppSettings["AWSAccessKeyS3"], ConfigurationManager.AppSettings["AWSSecretKeyS3"], RegionEndpoint.SAEast1);
 
             PutObjectRequest request = new PutObjectRequest();
 
@@ -155,7 +155,7 @@ namespace Insignia.Painel.Helpers.AmazonS3
         {
             bool resp = true;
 
-            IAmazonS3 client = new AmazonS3Client(ConfigurationManager.AppSettings["AWSAccessKey"], ConfigurationManager.AppSettings["AWSSecretKey"], RegionEndpoint.SAEast1);
+            IAmazonS3 client = new AmazonS3Client(ConfigurationManager.AppSettings["AWSAccessKeyS3"], ConfigurationManager.AppSettings["AWSSecretKeyS3"], RegionEndpoint.SAEast1);
 
             DeleteObjectRequest request = new DeleteObjectRequest();
             request.BucketName = BucketNome;

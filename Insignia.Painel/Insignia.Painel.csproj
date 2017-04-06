@@ -170,6 +170,7 @@
     <Content Include="Fonts\css\font-awesome.css" />
     <Content Include="Fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
+    <Content Include="Helpers\Email\NovoUsuario.html" />
     <Content Include="Helpers\Email\RecuperarSenha.html" />
     <Content Include="packages.config" />
     <Content Include="Fonts\glyphicons-halflings-regular.woff2" />
@@ -253,6 +254,8 @@
     <Content Include="Views\Empresas\PerfilEditar.cshtml" />
     <Content Include="Views\Competencias\DistribuirPontos.cshtml" />
     <Content Include="Views\Agenda\Visualizar.cshtml" />
+    <Content Include="Views\Login\NovoUsuario.cshtml" />
+    <Content Include="Views\Areas\Permissao.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -267,6 +270,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AgendaController.cs" />
+    <Compile Include="Controllers\AreasController.cs" />
     <Compile Include="Controllers\BadgesController.cs" />
     <Compile Include="Controllers\CompetenciasController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
@@ -279,6 +283,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\AmazonS3\AmazonUpload.cs" />
+    <Compile Include="Helpers\CustomAttributes\HavePermission.cs" />
     <Compile Include="Helpers\CustomAttributes\IsLogged.cs" />
     <Compile Include="Helpers\Email\SendMail.cs" />
     <Compile Include="Helpers\Util\BadgesCor.cs" />

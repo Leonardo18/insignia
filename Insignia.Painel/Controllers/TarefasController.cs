@@ -124,7 +124,12 @@ namespace Insignia.Painel.Controllers
                 }
 
                 if (service != null)
-                    TarefaModel.AgendaID = Hash.ValidaHash("ID", "Tarefas", "AgendaID", 5).ToLower();
+                {
+                    do
+                    {
+                        TarefaModel.EventoID = Convert.ToInt64(Database.GeraCodigo(10));
+                    } while (TarefasDAO.VerificaEventoID(TarefaModel.EventoID));
+                }
 
                 if (TarefasDAO.Salvar(TarefaModel))
                 {
@@ -134,7 +139,7 @@ namespace Insignia.Painel.Controllers
                         //Inserção de evento da tarefa recém cadastrada
                         Event NovoEvento = new Event();
 
-                        NovoEvento.Id = TarefaModel.AgendaID;
+                        NovoEvento.Id = Convert.ToString(TarefaModel.EventoID);
                         NovoEvento.Summary = TarefaModel.Titulo;
                         NovoEvento.Description = TarefaModel.Descricao;
                         NovoEvento.Start = new EventDateTime();
@@ -258,7 +263,7 @@ namespace Insignia.Painel.Controllers
                     }
 
                     //Se possui integração com google calendar, adiciona a tarefa no google
-                    if (service != null && !string.IsNullOrEmpty(Database.DBBuscaInfo("Tarefas", "ID", Convert.ToString(TarefaModel.ID), "AgendaID")))
+                    if (service != null && !string.IsNullOrEmpty(Database.DBBuscaInfo("Tarefas", "ID", Convert.ToString(TarefaModel.ID), "EventoID")))
                     {
                         //Atualiza o evento da tarefa no google calendar
                         Event NovoEvento = new Event();
@@ -269,8 +274,8 @@ namespace Insignia.Painel.Controllers
                         NovoEvento.Start.DateTime = TarefaModel.Termino;
                         NovoEvento.End = new EventDateTime();
                         NovoEvento.End.DateTime = TarefaModel.Termino;
-                        var eventResult = service.Events.Update(NovoEvento, "primary", Database.DBBuscaInfo("Tarefas", "ID", Convert.ToString(TarefaModel.ID), "AgendaID")).Execute();
-                    }                    
+                        var eventResult = service.Events.Update(NovoEvento, "primary", Database.DBBuscaInfo("Tarefas", "ID", Convert.ToString(TarefaModel.ID), "EventoID")).Execute();
+                    }
 
                     return RedirectToAction("Editar", new { ID = TarefaModel.ID });
                 }
@@ -366,9 +371,9 @@ namespace Insignia.Painel.Controllers
                         }
 
                         //Se possui integração com google calendar, adiciona a tarefa no google
-                        if (service != null && !string.IsNullOrEmpty(TarefaModel.AgendaID))
-                        {                           
-                            var eventResult = service.Events.Delete("primary", TarefaModel.AgendaID).Execute();
+                        if (service != null && TarefaModel.EventoID != 0)
+                        {
+                            var eventResult = service.Events.Delete("primary", Convert.ToString(TarefaModel.EventoID)).Execute();
                         }
 
                         return RedirectToAction("Listar");

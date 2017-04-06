@@ -17,7 +17,7 @@ namespace Insignia.Painel.Controllers
         /// GET: Competência Listar
         /// </summary>
         /// <returns>Retorna a view de listar competências com os dados</returns>
-        [HttpGet, IsLogged]
+        [HttpGet, IsLogged, HavePermission(AreaNome = "Competencias")]
         public ActionResult Listar()
         {
             var CompetenciaModel = CompetenciasDAO.Listar();
@@ -29,7 +29,7 @@ namespace Insignia.Painel.Controllers
         /// GET: Competencias Adicionar
         /// </summary>
         /// <returns>Retorna a view de adicionar competência</returns>
-        [HttpGet, IsLogged]
+        [HttpGet, IsLogged, HavePermission(AreaNome = "Competencias")]
         public ActionResult Adicionar()
         {
             var CompetenciaModel = new Competencia();
@@ -42,7 +42,7 @@ namespace Insignia.Painel.Controllers
         /// </summary>
         /// <param name="CompetenciaModel">Objeto Model da competência contendo os dados inseridos para cadastro</param>
         /// <returns>Caso consiga validar e salvar a competência faz redirecionamento, se não retorna a view com mensagem</returns>
-        [HttpPost, IsLogged]
+        [HttpPost, IsLogged, HavePermission(AreaNome = "Competencias")]
         public ActionResult Adicionar(Competencia CompetenciaModel)
         {
             if (ModelState.IsValid)
@@ -61,7 +61,7 @@ namespace Insignia.Painel.Controllers
         /// </summary>
         /// <param name="ID">ID da competência a ser editada</param>
         /// <returns>Retorna a view com os dados da competência a serem editados</returns>
-        [HttpGet, IsLogged]
+        [HttpGet, IsLogged, HavePermission(AreaNome = "Competencias")]
         public ActionResult Editar(int ID)
         {
             Competencia CompetenciaModel = CompetenciasDAO.Carregar(ID);
@@ -74,7 +74,7 @@ namespace Insignia.Painel.Controllers
         /// </summary>
         /// <param name="CompetenciaModel">Model contendo os dados da Competencia</param>
         /// <returns>Caso consiga validar os dados e atualizar a competência faz redirecionamento, caso contrário retorna a view novamente para ajuste de dados inválidos</returns>
-        [HttpPost, IsLogged]
+        [HttpPost, IsLogged, HavePermission(AreaNome = "Competencias")]
         public ActionResult Editar(Competencia CompetenciaModel)
         {
             if (ModelState.IsValid)
@@ -93,7 +93,7 @@ namespace Insignia.Painel.Controllers
         /// </summary>
         /// <param name="ID">ID da competência a ser removida</param>
         /// <returns>Retorna a view com dados da competência que será removida</returns>
-        [HttpGet, IsLogged]
+        [HttpGet, IsLogged, HavePermission(AreaNome = "Competencias")]
         public ActionResult Remover(int ID)
         {
             //Faz Load com o ID passado
@@ -107,7 +107,7 @@ namespace Insignia.Painel.Controllers
         /// </summary>
         /// <param name="CompetenciaModel">Model contendo os dados da competência</param>
         /// <returns>Caso consiga remover a competência do sistema faz redirecionamento, caso contrário retorna a view com mensagem</returns>
-        [HttpPost, IsLogged]
+        [HttpPost, IsLogged, HavePermission(AreaNome = "Competencias")]
         public ActionResult Remover(Competencia CompetenciaModel)
         {
             //Faz Load com o ID passado

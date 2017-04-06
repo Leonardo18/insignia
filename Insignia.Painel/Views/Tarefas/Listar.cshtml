@@ -149,7 +149,7 @@
                                                     <a>@item.Titulo</a>
                                                 </h2>
                                                 <div class="byline">
-                                                    <span>Criado</span> por <a>@Session["UsuarioNome"] </a> <span>na data de @Convert.ToDateTime(item.CriadoEm).Day / @Convert.ToDateTime(item.CriadoEm).Month / @Convert.ToDateTime(item.CriadoEm).Year</span>
+                                                    <span>Criado</span> por <a>@item.UsuarioNome </a> <span>na data de @Convert.ToDateTime(item.CriadoEm).Day / @Convert.ToDateTime(item.CriadoEm).Month / @Convert.ToDateTime(item.CriadoEm).Year</span>
                                                 </div>
                                                 <p class="excerpt">
                                                     @item.Resumo<a href="@Url.Action("../Tarefas/Editar", null, new { ID = item.ID, controller = "Tarefas" }, Request.Url.Scheme)">&nbsp;Ler&nbsp;Mais</a>
@@ -181,7 +181,7 @@
 <script type="text/javascript" language="javascript">
     var page = 1, moving = false;
     var animationIteration = "animationiteration webkitAnimationIteration mozAnimationIteration oAnimationIteration oanimationiteration",
-        transitionEnd = "transitionend webkitTransitionEnd oTransitionEnd otransitionend MSTransitionEnd";    
+        transitionEnd = "transitionend webkitTransitionEnd oTransitionEnd otransitionend MSTransitionEnd";
     function Loader(elem) {
         if (moving == false) {
             moving = true;
@@ -223,7 +223,7 @@
         var list = listTarefas;
 
         $.each(list, function (index, value) {
-            var htmlTarefa = "<ul class=\"list-unstyled timeline " + tarefaStatus +  "\">\
+            var htmlTarefa = "<ul class=\"list-unstyled timeline " + tarefaStatus + "\">\
                                 <li>\
                                     <div class=\"block\">\
                                         <div class=\"tags\">\
@@ -236,7 +236,7 @@
                                                 <a>" + value.Titulo + "</a>\
                                             </h2>\
                                             <div class=\"byline\">\
-                                                <span>Criado </span> por <a>@Session["UsuarioNome"]</a><span> na data de " + moment(value.CriadoEm).format("DD/MM/YYYY") +"</span>\
+                                                <span>Criado </span> por <a>@Session["UsuarioNome"]</a><span> na data de " + moment(value.CriadoEm).format("DD/MM/YYYY") + "</span>\
                                             </div>\
                                             <p class=\"excerpt\">\
                                             " + value.Resumo + "<a href=\"Editar/" + value.ID + "\">&nbsp;Ler&nbsp;Mais</a>\

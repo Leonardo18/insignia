@@ -17,7 +17,7 @@ namespace Insignia.Painel.Controllers
         /// GET: Badge Adicionar
         /// </summary>
         /// <returns>Retorna a view de adicionar badge</returns>
-        [HttpGet, IsLogged]
+        [HttpGet, IsLogged, HavePermission(AreaNome = "Badges")]
         public ActionResult Adicionar()
         {
             var ViewModel = new ViewModelBadge();
@@ -37,7 +37,7 @@ namespace Insignia.Painel.Controllers
         /// </summary>
         /// <param name="BadgeModel">Objeto Model da badge contendo os dados inseridos para cadastro</param>
         /// <returns>Caso consiga validar os dados e salvar a badge faz redirecionamento, caso contrário retorna a view novamente para ajuste de dados inválidos</returns>
-        [HttpPost, IsLogged]
+        [HttpPost, IsLogged, HavePermission(AreaNome = "Badges")]
         public ActionResult Adicionar(Badge BadgeModel)
         {
             //Objeto com funções de cores
@@ -69,7 +69,7 @@ namespace Insignia.Painel.Controllers
         /// </summary>
         /// <param name="ID">ID da badge que será editada</param>
         /// <returns>Retorna a view com os dados da badge a serem editados</returns>
-        [HttpGet, IsLogged]
+        [HttpGet, IsLogged, HavePermission(AreaNome = "Badges")]
         public ActionResult Editar(int ID)
         {
             Badge BadgeModel = BadgesDAO.Carregar(ID);
@@ -82,7 +82,7 @@ namespace Insignia.Painel.Controllers
         /// </summary>
         /// <param name="BadgeModel">Objeto Model da badge contendo os dados atualiados</param>
         /// <returns>Caso consiga validar os dados e atualizar a badge faz redirecionamento, caso contrário retorna a view novamente para ajuste de dados inválidos</returns>
-        [HttpPost, IsLogged]
+        [HttpPost, IsLogged, HavePermission(AreaNome = "Badges")]
         public ActionResult Editar(Badge BadgeModel)
         {
             //Objeto com funções de cores
@@ -106,7 +106,7 @@ namespace Insignia.Painel.Controllers
         /// </summary>
         /// <param name="ID">ID da bagde a ser removida</param>
         /// <returns>Retorna a view com dados da badge que será removida</returns>
-        [HttpGet, IsLogged]
+        [HttpGet, IsLogged, HavePermission(AreaNome = "Badges")]
         public ActionResult Remover(int ID)
         {
             //Faz Load com o ID passado
@@ -120,7 +120,7 @@ namespace Insignia.Painel.Controllers
         /// </summary>
         /// <param name="BadgeModel">Model da badge contendo dados dela</param>
         /// <returns>Caso consiga remover a badge do sistema faz redirecionamento, caso contrário retorna a view com mensagem</returns>
-        [HttpPost, IsLogged]
+        [HttpPost, IsLogged, HavePermission(AreaNome = "Badges")]
         public ActionResult Remover(Badge BadgeModel)
         {
             //Faz Load com o ID passado

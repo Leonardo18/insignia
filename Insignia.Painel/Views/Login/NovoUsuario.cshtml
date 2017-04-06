@@ -1,0 +1,97 @@
+﻿@{
+    Layout = null;
+}
+
+<!-- page content -->
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="~/Content/images/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="~/Content/images/favicon.ico" type="image/x-icon">
+    <title>Insígnia</title>
+    <script src="~/Scripts/js/jquery.js"></script>
+    @Styles.Render("~/Login/styles")
+</head>
+
+<body>
+    <div class="login" style="width: 100%; height: 100%; position: fixed; top: 0; background-position: center; background-size: cover;">
+        <div style="background-color: #000; opacity: 0.6; width: 100%; height: 100%; position: fixed; top: 0; "></div>
+        <div>
+            <div class="login_wrapper">
+                <div class="animate form login_form">
+                    <section class="login_content">
+                        @using (Html.BeginForm("NovoUsuario", "Login"))
+                        {
+                            <div class="Inicio">
+                                <div class="logo">
+                                    <p style="margin-top: 18px;">
+                                    </p>
+                                    <p style="color: #00e7fb">
+                                        INSÍGNIA
+                                    </p>
+                                </div>
+                                <div class="square square1"></div>
+                                <div class="square square2"></div>
+                                <div class="square square3"></div>
+                                <div class="square square4"></div>
+                                <div class="square square5"></div>
+                                <div class="square square6"></div>
+                            </div>
+                        <!--<h1><img src = "~/Content/Images/.png" width="200" /></h1>-->
+                            if (!string.IsNullOrWhiteSpace(ViewBag.Error))
+                            {
+                                <div class="alert alert-warning alert-dismissible fade in" role="alert">
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">×</span>
+                                    </button>
+                                    @ViewBag.Error
+                                </div>
+                            }
+                            <div>
+                                @Html.Password("SenhaCadastro", "", new { @class = "form-control", placeholder = "Senha", required = "", id = "SenhaCadastro" })
+                            </div>
+                            <div>
+                                @Html.Password("ConfirmaSenha", "", new { @class = "form-control", placeholder = "Redigite a Senha", required = "", id = "ConfirmaSenha" })
+                            </div>
+                            <div>
+                                <button class="btn btn-default submit" type="submit">Gravar</button>
+                            </div>
+
+                            <div class="clearfix"></div>
+                            <div class="separator">
+                                <div class="clearfix"></div>
+                                <div>
+                                    <p>©2016 Todos direitos reservados.Insígnia é um projeto de TCC.</p>
+                                </div>
+                            </div>
+                        }
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /page content -->
+
+    @Scripts.Render("~/Login/scripts")
+    <!-- ConfirmPassword-->
+    <script>
+        var password = document.getElementById("SenhaCadastro"), confirm_password = document.getElementById("ConfirmaSenha");
+
+        function validatePassword() {
+            if (password.value != confirm_password.value) {
+                confirm_password.setCustomValidity("As senhas diferem");
+            } else {
+                confirm_password.setCustomValidity('');
+            }
+        }
+        password.onchange = validatePassword;
+        confirm_password.onkeyup = validatePassword;
+    </script>
+    <!-- /ConfirmPassword -->
+</body>
+</html>

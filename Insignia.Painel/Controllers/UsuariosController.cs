@@ -5,6 +5,7 @@ using Insignia.DAO.Util;
 using Insignia.Model.Usuario;
 using Insignia.Painel.Helpers.AmazonS3;
 using Insignia.Painel.Helpers.CustomAttributes;
+using Insignia.Painel.Helpers.Email;
 using Insignia.Painel.Helpers.Util;
 using Insignia.Painel.ViewModels;
 using System;
@@ -24,7 +25,7 @@ namespace Insignia.Painel.Controllers
         /// GET: Usuário Listar
         /// </summary>
         /// <returns>Retorna a view de listar usuários com os dados</returns>
-        [HttpGet, IsLogged]
+        [HttpGet, IsLogged, HavePermission(AreaNome = "Usuarios")]
         public ActionResult Listar()
         {
             var UsuarioModel = UsuariosDAO.Listar();
@@ -41,7 +42,7 @@ namespace Insignia.Painel.Controllers
         /// GET: Usuário Adicionar
         /// </summary>
         /// <returns>Retorna a view de adicionar usuários</returns>
-        [HttpGet, IsLogged]
+        [HttpGet, IsLogged, HavePermission(AreaNome = "Usuarios")]
         public ActionResult Adicionar()
         {
             var UsuarioModel = new Usuario();
@@ -57,16 +58,26 @@ namespace Insignia.Painel.Controllers
         /// </summary>
         /// <param name="UsuarioModel">Objeto Model do usuário contendo os dados inseridos para cadastro</param>
         /// <returns>Caso consiga validar e salvar faz redirecionamento, se não retorna a view com mensagem</returns>
-        [HttpPost, IsLogged]
+        [HttpPost, IsLogged, HavePermission(AreaNome = "Usuarios")]
         public ActionResult Adicionar(Usuario UsuarioModel)
         {
             if (ModelState.IsValid)
             {
-                if (UsuariosDAO.VerificaUsuario(0, UsuarioModel.Email) && string.IsNullOrEmpty(Database.DBBuscaInfo("Empresas", "Email", UsuarioModel.Email, "ID")))
+                if (!UsuariosDAO.VerificaUsuario(0, UsuarioModel.Email) && string.IsNullOrEmpty(Database.DBBuscaInfo("Empresas", "Email", UsuarioModel.Email, "ID")))
                 {
                     if (UsuariosDAO.Salvar(UsuarioModel))
                     {
-                        return RedirectToAction("Editar", new { ID = UsuarioModel.ID });
+                        SendMail Email = new SendMail();
+
+                        if (Email.EnviaEmail(Convert.ToString(UsuarioModel.EmpresaID), UsuarioModel.Email, "Foi efetuado um cadastro para o usuário " + UsuarioModel.Nome + " no sistema Insígnia.", "Criação de Senha", "NovoUsuario.html", UsuarioModel.Token))
+                        {
+                            return RedirectToAction("Editar", new { ID = UsuarioModel.ID });
+                        }
+                        else
+                        {
+                            ViewBag.Error = "Não foi possível enviar um e-mail de validação para: " + UsuarioModel.Email + ", verifique o e-mail informado no cadastro.";
+                            UsuariosDAO.Remover(UsuarioModel.ID);
+                        }
                     }
                 }
                 else
@@ -97,7 +108,7 @@ namespace Insignia.Painel.Controllers
         /// </summary>
         /// <param name="ID">ID do usuário a ser editado</param>
         /// <returns>Retorna a view com os dados do usuário a serem editados</returns>
-        [HttpGet, IsLogged]
+        [HttpGet, IsLogged, HavePermission(AreaNome = "Usuarios")]
         public ActionResult Editar(int ID)
         {
             Usuario UsuarioModel = UsuariosDAO.Carregar(ID);
@@ -125,7 +136,7 @@ namespace Insignia.Painel.Controllers
         /// </summary>
         /// <param name="UsuarioModel">Model contendo os dados do Usuario</param>
         /// <returns>Caso consiga validar os dados e atualizar o usuário faz redirecionamento, caso contrário retorna a view novamente para ajuste de dados inválidos</returns>
-        [HttpPost, IsLogged]
+        [HttpPost, IsLogged, HavePermission(AreaNome = "Usuarios")]
         public ActionResult Editar(Usuario UsuarioModel)
         {
             if (ModelState.IsValid)
@@ -162,7 +173,7 @@ namespace Insignia.Painel.Controllers
         /// </summary>
         /// <param name="ID">ID do Usuário a ser removido</param>
         /// <returns>Retorna a view com dados do usuário que será removido</returns>
-        [HttpGet, IsLogged]
+        [HttpGet, IsLogged, HavePermission(AreaNome = "Usuarios")]
         public ActionResult Remover(int ID)
         {
             //Faz Load com o ID passado
@@ -176,7 +187,7 @@ namespace Insignia.Painel.Controllers
         /// </summary>
         /// <param name="UsuarioModel">Model contendo os dados do Usuário</param>
         /// <returns>Caso consiga remover o Usuário do sistema faz redirecionamento, caso contrário retorna a view com mensagem</returns>
-        [HttpPost, IsLogged]
+        [HttpPost, IsLogged, HavePermission(AreaNome = "Usuarios")]
         public ActionResult Remover(Usuario UsuarioModel)
         {
             //Faz Load com o ID passado

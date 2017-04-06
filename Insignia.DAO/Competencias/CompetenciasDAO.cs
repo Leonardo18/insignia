@@ -177,7 +177,7 @@ namespace Insignia.DAO.Competencias
         }
 
         /// <summary>
-        /// Busca total de pontos que um usuário possui para distribuir
+        /// Busca o total de pontos que um usuário possui para distribuir
         /// </summary>        
         /// <returns>Retorna 0 caso não tenha pontos para distribuir ou retorna o número de pontos que possui para distribuir</returns>
         public int SaldoPontos()
@@ -232,7 +232,7 @@ namespace Insignia.DAO.Competencias
         /// <summary>
         /// Atualiza saldo de pontos de um usuário
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Caso tenha atualizado com sucesso retorna true, se não retorna false</returns>
         public bool AtualizaSaldo(int saldo)
         {
             bool resp = false;

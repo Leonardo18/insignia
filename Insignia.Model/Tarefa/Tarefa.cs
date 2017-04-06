@@ -82,8 +82,8 @@ namespace Insignia.Model.Tarefa
         public DateTime? CriadoEm { get; set; }
 
         /// <summary>
-        /// ID da tarefa no google calendar
+        /// ID do evento no google calendar
         /// </summary>
-        public string AgendaID { get; set; }
+        public long EventoID { get; set; }
     }
 }

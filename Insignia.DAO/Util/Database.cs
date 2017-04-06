@@ -39,7 +39,7 @@ namespace Insignia.DAO.Util
         /// </summary>
         /// <param name="chars">Número de caracteres</param>
         /// <returns>Retornar string com o código gerado</returns>
-        private static string GeraCodigo(int chars)
+        public static string GeraCodigo(int chars)
         {
             string resp = string.Empty;
             Random rnd = new Random();

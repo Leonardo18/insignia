@@ -53,64 +53,16 @@
                 right: 'month,agendaWeek,agendaDay'
             },
             selectable: true,
-            selectHelper: true,
-            //select: function(start, end, allDay) {
-            //  $('#fc_create').click();
-
-            //  started = start;
-            //  ended = end;
-
-            //  $(".antosubmit").on("click", function() {
-            //    var title = $("#title").val();
-            //    if (end) {
-            //      ended = end;
-            //    }
-
-            //    categoryClass = $("#event_type").val();
-
-            //    if (title) {
-            //      calendar.fullCalendar('renderEvent', {
-            //          title: title,
-            //          start: started,
-            //          end: end,
-            //          allDay: allDay
-            //        },
-            //        true // make the event "stick"
-            //      );
-            //    }
-
-            //    $('#title').val('');
-
-            //    calendar.fullCalendar('unselect');
-
-            //    $('.antoclose').click();
-
-            //    return false;
-            //  });
-            //},
-            //eventClick: function(calEvent, jsEvent, view) {
-            //  $('#fc_edit').click();
-            //  $('#title2').val(calEvent.title);
-
-            //  categoryClass = $("#event_type").val();
-
-            //  $(".antosubmit2").on("click", function() {
-            //    calEvent.title = $("#title2").val();
-
-            //    calendar.fullCalendar('updateEvent', calEvent);
-            //    $('.antoclose2').click();
-            //  });
-
-            //  calendar.fullCalendar('unselect');
-            //},
+            selectHelper: true,            
             editable: false,
             events: [
                 @if (Model.ListAgenda != null)
                 {
                     foreach (var item in Model.ListAgenda){
                         @:{
-                            @:title: '@Html.Raw(item.Titulo.Replace("'"," "))',
-                            @:start: new Date(@item.DataInicio.Year + '-' + @item.DataInicio.Month + '-' + @item.DataInicio.Day)
+                            @:title: '@Html.Raw(item.Titulo)',
+                            @:start: new Date(@item.DataInicio.Year + '-' + @item.DataInicio.Month + '-' + @item.DataInicio.Day),
+                            @:backgroundColor : "#2C4257"
                         @:},
                     }
                 }

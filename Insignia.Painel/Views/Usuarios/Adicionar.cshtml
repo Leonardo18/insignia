@@ -71,7 +71,7 @@
                         <div class="col-md-6 col-sm-6 col-xs-12">
                             @Html.TextBox("Email", Model.Email, new { @class = "form-control", placeholder = "E-mail", required = "", type = "email" })
                             @Html.ValidationMessageFor(modelItem => modelItem.Email, null, new { @class = "text-danger" })
-                        </div><span class="glyphicon glyphicon-info-sign" data-toggle="tooltip" data-placement="right" title="Este campo indica qual o e-mail do usuário."></span>
+                        </div><span class="glyphicon glyphicon-info-sign" data-toggle="tooltip" data-placement="right" title="Este campo indica qual o e-mail do usuário, asism que criado o usuário, será enviado um e-mail para ele definir sua senha de acesso ao sistema."></span>
                     </div>
                     <div class="clearfix"></div>
                     <div class="modal-footer">

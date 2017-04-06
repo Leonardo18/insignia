@@ -20,7 +20,7 @@ namespace Insignia.Painel.Helpers.Email
         /// <param name="DestinatarioEmail">Email do destinatário</param>
         /// <param name="DestinatarioMensagem">Mensagem ao destinatário</param>
         /// <returns>True se conseguiu enviar o e-mail com sucesso, false caso de algum erro ou o e-mail seja inválido</returns>
-        public bool EnviaEmail(string DestinatarioNome, string DestinatarioEmail, string DestinatarioMensagem, string Template)
+        public bool EnviaEmail(string DestinatarioNome, string DestinatarioEmail, string DestinatarioMensagem, string Assunto, string Template, string Token)
         {
             bool resp = false;
             string body = string.Empty;
@@ -44,9 +44,9 @@ namespace Insignia.Painel.Helpers.Email
             mail.Sender = new MailAddress(ConfigurationManager.AppSettings["EmailUser"], "Insígnia");
             mail.From = new MailAddress(ConfigurationManager.AppSettings["EmailUser"], "Insígnia");
             mail.To.Add(new MailAddress(DestinatarioEmail, DestinatarioNome));
-            mail.Subject = "Contato";
+            mail.Subject = Assunto;
             mail.IsBodyHtml = true;
-            mail.Body = body.Replace("[Email]", Util.Criptografar(DestinatarioEmail));
+            mail.Body = body.Replace("[Email]", Util.Criptografar(DestinatarioEmail)).Replace("[Token]", Token);
             mail.IsBodyHtml = true;
             mail.Priority = MailPriority.Normal;
             mail.BodyEncoding = Encoding.GetEncoding("ISO-8859-1");
