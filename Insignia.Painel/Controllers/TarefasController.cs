@@ -124,7 +124,7 @@ namespace Insignia.Painel.Controllers
                 }
 
                 if (service != null)
-                    TarefaModel.AgendaID = Hash.ValidaHash("ID", "Tarefas", "AgendaID", 10).ToLower();
+                    TarefaModel.AgendaID = Hash.ValidaHash("ID", "Tarefas", "AgendaID", 5).ToLower();
 
                 if (TarefasDAO.Salvar(TarefaModel))
                 {
