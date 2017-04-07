@@ -141,10 +141,26 @@ namespace Insignia.Painel.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (UsuariosDAO.VerificaUsuario(UsuarioModel.ID, UsuarioModel.Email) && string.IsNullOrEmpty(Database.DBBuscaInfo("Empresas", "Email", UsuarioModel.Email, "ID")))
+                if (!UsuariosDAO.VerificaUsuario(UsuarioModel.ID, UsuarioModel.Email) && string.IsNullOrEmpty(Database.DBBuscaInfo("Empresas", "Email", UsuarioModel.Email, "ID")))
                 {
-                    if (UsuariosDAO.Editar(UsuarioModel))
+                    //Verifica se possui arquivo antigo para substituição na amazon
+                    string EmailAntigo = Database.DBBuscaInfo("Usuarios", "ID", Convert.ToString(UsuarioModel.ID), "Email");
+
+                    if (EmailAntigo != UsuarioModel.Email)
                     {
+                        UsuariosDAO.AtualizaToken(UsuarioModel);
+
+                        SendMail Email = new SendMail();
+
+                        if (!Email.EnviaEmail(Convert.ToString(UsuarioModel.EmpresaID), UsuarioModel.Email, "Foi efetuado um cadastro para o usuário " + UsuarioModel.Nome + " no sistema Insígnia.", "Criação de Senha", "NovoUsuario.html", UsuarioModel.Token))
+                        {
+                            ViewBag.Error = "Não foi possível enviar um e-mail de validação para: " + UsuarioModel.Email + ", verifique o e-mail informado no cadastro.";
+                            UsuariosDAO.Remover(UsuarioModel.ID);
+                        }                        
+                    }
+
+                    if (UsuariosDAO.Editar(UsuarioModel))
+                    {                        
                         return RedirectToAction("Editar", new { ID = UsuarioModel.ID });
                     }
                 }

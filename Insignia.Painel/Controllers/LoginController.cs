@@ -116,7 +116,7 @@ namespace Insignia.Painel.Controllers
                         Session["UsuarioID"] = EmpresaModel.ID;
                         Session["UsuarioNome"] = EmpresaModel.RazaoSocial;
                         Session["UsuarioEmail"] = EmpresaModel.Email;
-                        Session["UsuarioFoto"] = EmpresaModel.Foto;                        
+                        Session["UsuarioFoto"] = EmpresaModel.Foto;
 
                         SendMail Email = new SendMail();
 
@@ -227,6 +227,13 @@ namespace Insignia.Painel.Controllers
             //Salvo o e-mail criptografado em uma session
             Session["Token"] = token;
 
+            //Caso token já foi ativado
+            if (UsuarioDAO.VerificaToken(token))
+            {
+                Session["Error"] = "Este usuário já está ativo no sistema insígnia, caso tenha esquecido sua senha, utilize o 'Esqueceu sua Senha?' para redefini-la.";
+                return RedirectToAction("Login");
+            }
+
             return View();
         }
 
@@ -243,7 +250,7 @@ namespace Insignia.Painel.Controllers
             if (!string.IsNullOrEmpty(token) && !string.IsNullOrEmpty(senhaCadastro) && !string.IsNullOrEmpty(confirmaSenha))
             {
                 if (senhaCadastro == confirmaSenha)
-                {                    
+                {
                     if (UsuarioDAO.CriarSenha(token, senhaCadastro))
                     {
                         return RedirectToAction("Sair");

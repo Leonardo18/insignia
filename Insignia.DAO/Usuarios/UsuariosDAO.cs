@@ -321,6 +321,31 @@ namespace Insignia.DAO.Usuarios
         }
 
         /// <summary>
+        /// Verifica se o token do usuário já foi ativado
+        /// </summary>
+        /// <param name="token">Token do usuário</param>
+        /// <returns>Retorna true caso não tenha sido ativado, false caso contrário</returns>
+        public bool VerificaToken(string token)
+        {
+            bool resp = false;
+
+            if (!string.IsNullOrWhiteSpace(token))
+            {
+                using (var sql = new SqlConnection(conStr))
+                {
+                    int queryResultado = sql.ExecuteScalar<int>(" SELECT ID FROM Usuarios WHERE Token = @Token AND NOT AtivadoEm IS NULL ",
+                        new
+                        {
+                            Token = token
+                        });
+                    resp = ToBoolean(queryResultado);
+                }
+            }
+
+            return resp;
+        }
+
+        /// <summary>
         /// Atualiza a senha em um cadastro
         /// </summary>
         /// <param name="email">email na qual será atualizado a senha</param>
@@ -340,6 +365,37 @@ namespace Insignia.DAO.Usuarios
                             Email = email,
                             Senha = Util.Autenticacao.Criptografar(senha)
                         });
+                    resp = ToBoolean(queryResultado);
+                }
+            }
+
+            return resp;
+        }
+
+
+        /// <summary>
+        /// Gera novo token pois o e-mail de um usuário foi alterado para outro
+        /// </summary>
+        /// <param name="usuario">Model contendo dados do usuário</param>
+        /// <returns>True se o token editado, false caso contrário</returns>
+        public bool AtualizaToken(Usuario usuario)
+        {
+            bool resp = false;
+
+            if (!string.IsNullOrEmpty(Convert.ToString(usuario.ID)))
+            {
+                usuario.Token = Hash.ValidaHash("ID", "Usuarios", "Token", 50);
+
+                using (var sql = new SqlConnection(conStr))
+                {
+                    var queryResultado = sql.Execute(" UPDATE Usuarios SET Token = @Token, AtivadoEm = NULL WHERE ID = @ID AND EmpresaID = @EmpresaID",
+                                    new
+                                    {
+                                        ID = usuario.ID,
+                                        EmpresaID = HttpContext.Current.Session["EmpresaID"],
+                                        Token = usuario.Token
+                                    });
+
                     resp = ToBoolean(queryResultado);
                 }
             }
