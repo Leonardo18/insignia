@@ -225,7 +225,7 @@
     <None Include="Properties\PublishProfiles\local.pubxml" />
     <None Include="Properties\PublishProfiles\web.pubxml" />
     <Content Include="Views\Shared\LayoutPrincipal.cshtml" />
-    <Content Include="Views\Dashboard\Dashboard.cshtml" />
+    <Content Include="Views\Dashboard\Gestor.cshtml" />
     <Content Include="Views\Badges\Adicionar.cshtml" />
     <Content Include="Views\Badges\Editar.cshtml" />
     <Content Include="Views\Badges\Remover.cshtml" />
@@ -256,6 +256,8 @@
     <Content Include="Views\Agenda\Visualizar.cshtml" />
     <Content Include="Views\Login\NovoUsuario.cshtml" />
     <Content Include="Views\Areas\Permissao.cshtml" />
+    <Content Include="Views\Dashboard\Funcionario.cshtml" />
+    <Content Include="Views\Dashboard\Empresa.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

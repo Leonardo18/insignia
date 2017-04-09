@@ -71,7 +71,7 @@ namespace Insignia.Painel.Controllers
                 Session["UsuarioEmail"] = EmpresaModel.Email;
                 Session["UsuarioFoto"] = EmpresaModel.Foto;
 
-                return RedirectToAction("../Dashboard/Dashboard");
+                return RedirectToAction("../Dashboard/Empresa");
             }
             else if (UsuarioModel != null)
             {
@@ -85,7 +85,14 @@ namespace Insignia.Painel.Controllers
                 Session["UsuarioFoto"] = UsuarioModel.Foto;
                 Session["UsuarioTipo"] = UsuarioModel.Tipo;
 
-                return RedirectToAction("../Dashboard/Dashboard");
+                if (UsuarioModel.Tipo == "Gestor")
+                {
+                    return RedirectToAction("../Dashboard/Gestor");
+                }
+                else
+                {
+                    return RedirectToAction("../Dashboard/Funcionario");
+                }
             }
             else
             {

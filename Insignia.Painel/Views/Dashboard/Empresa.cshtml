@@ -1,14 +1,14 @@
 ﻿
 @{
-    ViewBag.Title = "Dashboard";
+    ViewBag.Title = "Empresa";
     Layout = "~/Views/Shared/LayoutPrincipal.cshtml";
 }
 
 <!-- page content -->
 <div class="page-title">
     <div class="title_left">
-        <h3>Gráficos</h3>
-    </div>    
+        <h3>Dashboard - @Session["EmpresaNome"]</h3>
+    </div>
 </div>
 
 <div class="clearfix"></div>
@@ -43,3 +43,4 @@
     </div>
 </div>
 <!-- /page content -->
+
