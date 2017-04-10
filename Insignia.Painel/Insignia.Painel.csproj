@@ -294,6 +294,7 @@
     <Compile Include="ViewModels\ViewModelAgenda.cs" />
     <Compile Include="ViewModels\ViewModelBadge.cs" />
     <Compile Include="ViewModels\ViewModelCompetencia.cs" />
+    <Compile Include="ViewModels\ViewModelDashboardFuncionario.cs" />
     <Compile Include="ViewModels\ViewModelTarefa.cs" />
     <Compile Include="ViewModels\ViewModelPerfil.cs" />
   </ItemGroup>
