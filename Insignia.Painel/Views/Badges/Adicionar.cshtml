@@ -30,11 +30,22 @@
                 {
                     <a href="@Url.Action("../Badges/Editar", null, new { ID = item.ID, controller = "Badges" }, Request.Url.Scheme)">
                         <div class="badge-sistema">
-                            <svg xmlns="http://www.w3.org/2000/svg" version="1.1" x="0px" y="0px" width="169px" height="181px" viewBox="0 0 216 232">
-                                <path fill="#2B2B2B" d="M207,0C171.827,0.001,43.875,0.004,9.003,0c-5.619-0.001-9,3.514-9,9c0,28.23-0.006,151.375,0,169    c0.005,13.875,94.499,54,107.999,54S216,191.57,216,178V9C216,3.298,212.732,0,207,0z" />
-                            </svg>
-                            <p class="title" style="color: @item.CorFonte; background: @item.Cor">@item.Titulo</p>
-                            <p class="subtitle">@item.Subtitulo</p>
+                            <div class="wrap">
+                                <div class="side-a">
+                                    <svg xmlns="http://www.w3.org/2000/svg" version="1.1" x="0px" y="0px" width="169px" height="181px" viewBox="0 0 216 232">
+                                        <path fill="#2B2B2B" d="M207,0C171.827,0.001,43.875,0.004,9.003,0c-5.619-0.001-9,3.514-9,9c0,28.23-0.006,151.375,0,169    c0.005,13.875,94.499,54,107.999,54S216,191.57,216,178V9C216,3.298,212.732,0,207,0z" />
+                                    </svg>
+                                    <p class="title" style="color: @item.CorFonte; background: @item.Cor">@item.Titulo</p>
+                                    <p class="subtitle"></p>
+                                </div>
+                                <div class="side-b">
+                                    <svg xmlns="http://www.w3.org/2000/svg" version="1.1" x="0px" y="0px" width="169px" height="181px" viewBox="0 0 216 232">
+                                        <path fill="#2B2B2B" d="M207,0C171.827,0.001,43.875,0.004,9.003,0c-5.619-0.001-9,3.514-9,9c0,28.23-0.006,151.375,0,169    c0.005,13.875,94.499,54,107.999,54S216,191.57,216,178V9C216,3.298,212.732,0,207,0z" />
+                                    </svg>
+                                    <p class="title" style="background: rgb(43, 43, 43);"></p>
+                                    <p class="descricao">@item.Descricao</p>
+                                </div>
+                            </div>
                         </div>
                     </a>
                 }
@@ -59,11 +70,22 @@
                 {
                     <a href="@Url.Action("../Badges/Editar", null, new { ID = item.ID, controller = "Badges" }, Request.Url.Scheme)">
                         <div class="badge-sistema">
-                            <svg xmlns="http://www.w3.org/2000/svg" version="1.1" x="0px" y="0px" width="169px" height="181px" viewBox="0 0 216 232">
-                                <path fill="#2B2B2B" d="M207,0C171.827,0.001,43.875,0.004,9.003,0c-5.619-0.001-9,3.514-9,9c0,28.23-0.006,151.375,0,169    c0.005,13.875,94.499,54,107.999,54S216,191.57,216,178V9C216,3.298,212.732,0,207,0z" />
-                            </svg>
-                            <p class="title" style="color: @item.CorFonte; background: @item.Cor; ">@item.Titulo</p>
-                            <p class="subtitle">@item.Subtitulo</p>
+                            <div class="wrap">
+                                <div class="side-a">
+                                    <svg xmlns="http://www.w3.org/2000/svg" version="1.1" x="0px" y="0px" width="169px" height="181px" viewBox="0 0 216 232">
+                                        <path fill="#2B2B2B" d="M207,0C171.827,0.001,43.875,0.004,9.003,0c-5.619-0.001-9,3.514-9,9c0,28.23-0.006,151.375,0,169    c0.005,13.875,94.499,54,107.999,54S216,191.57,216,178V9C216,3.298,212.732,0,207,0z" />
+                                    </svg>
+                                    <p class="title" style="color: @item.CorFonte; background: @item.Cor">@item.Titulo</p>
+                                    <p class="subtitle"></p>
+                                </div>
+                                <div class="side-b">
+                                    <svg xmlns="http://www.w3.org/2000/svg" version="1.1" x="0px" y="0px" width="169px" height="181px" viewBox="0 0 216 232">
+                                        <path fill="#2B2B2B" d="M207,0C171.827,0.001,43.875,0.004,9.003,0c-5.619-0.001-9,3.514-9,9c0,28.23-0.006,151.375,0,169    c0.005,13.875,94.499,54,107.999,54S216,191.57,216,178V9C216,3.298,212.732,0,207,0z" />
+                                    </svg>
+                                    <p class="title" style="background: rgb(43, 43, 43);"></p>
+                                    <p class="descricao">@item.Descricao</p>
+                                </div>
+                            </div>
                         </div>
                     </a>
                 }
@@ -87,11 +109,22 @@
                 {
                     <a href="@Url.Action("../Badges/Editar", null, new { ID = item.ID, controller = "Badges" }, Request.Url.Scheme)">
                         <div class="badge-sistema">
-                            <svg xmlns="http://www.w3.org/2000/svg" version="1.1" x="0px" y="0px" width="169px" height="181px" viewBox="0 0 216 232">
-                                <path fill="#2B2B2B" d="M207,0C171.827,0.001,43.875,0.004,9.003,0c-5.619-0.001-9,3.514-9,9c0,28.23-0.006,151.375,0,169    c0.005,13.875,94.499,54,107.999,54S216,191.57,216,178V9C216,3.298,212.732,0,207,0z" />
-                            </svg>
-                            <p class="title" style="color: @item.CorFonte; background: @item.Cor;">@item.Titulo</p>
-                            <p class="subtitle">@item.Subtitulo</p>
+                            <div class="wrap">
+                                <div class="side-a">
+                                    <svg xmlns="http://www.w3.org/2000/svg" version="1.1" x="0px" y="0px" width="169px" height="181px" viewBox="0 0 216 232">
+                                        <path fill="#2B2B2B" d="M207,0C171.827,0.001,43.875,0.004,9.003,0c-5.619-0.001-9,3.514-9,9c0,28.23-0.006,151.375,0,169    c0.005,13.875,94.499,54,107.999,54S216,191.57,216,178V9C216,3.298,212.732,0,207,0z" />
+                                    </svg>
+                                    <p class="title" style="color: @item.CorFonte; background: @item.Cor">@item.Titulo</p>
+                                    <p class="subtitle"></p>
+                                </div>
+                                <div class="side-b">
+                                    <svg xmlns="http://www.w3.org/2000/svg" version="1.1" x="0px" y="0px" width="169px" height="181px" viewBox="0 0 216 232">
+                                        <path fill="#2B2B2B" d="M207,0C171.827,0.001,43.875,0.004,9.003,0c-5.619-0.001-9,3.514-9,9c0,28.23-0.006,151.375,0,169    c0.005,13.875,94.499,54,107.999,54S216,191.57,216,178V9C216,3.298,212.732,0,207,0z" />
+                                    </svg>
+                                    <p class="title" style="background: rgb(43, 43, 43);"></p>
+                                    <p class="descricao">@item.Descricao</p>
+                                </div>
+                            </div>
                         </div>
                     </a>
                 }
@@ -134,9 +167,12 @@
                                 Subtítulo: <span class="required">*</span>
                             </label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                @Html.TextBox("Subtitulo", Model.Badge.Subtitulo, new { @class = "form-control col-md-7 col-xs-12", placeholder = "Subtítulo", required = "" })
-                                @Html.ValidationMessageFor(modelItem => modelItem.Badge.Subtitulo, null, new { @class = "text-danger" })
+                                @Html.TextArea("Descricao", Model.Badge.Descricao, new { @class = "form-control col-md-7 col-xs-12", placeholder = "Descrição", required = "", onkeyup = "textContador(this,'contador',200);", id = "descricao" })
+                                @Html.ValidationMessageFor(modelItem => modelItem.Badge.Descricao, null, new { @class = "text-danger" })
                             </div><span class="glyphicon glyphicon-info-sign" data-toggle="tooltip" data-placement="right" title="Este campo indica uma breve descrição da badge."></span>
+                            <div style="display: block; width: 78%; float: left; text-align: center;">
+                                <span>Você ainda pode digitar </span><span id="contador">200</span><span> caracteres.</span>
+                            </div>
                         </div>
                         <div class="form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">
@@ -237,3 +273,16 @@
     });
 </script>
 <!-- /jQuery Tags Input -->
+<!-- textContador -->
+<script>
+    function textContador(field, field2, maxlimit) {
+        var countfield = document.getElementById(field2);
+        if (field.value.length > maxlimit) {
+            field.value = field.value.substring(0, maxlimit);
+            return false;
+        } else {
+            $("#contador").text(maxlimit - field.value.length);
+        }
+    }
+</script>
+<!-- /textContador -->

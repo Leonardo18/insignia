@@ -21,10 +21,10 @@ namespace Insignia.Model.Badge
         public string Titulo { get; set; }
 
         /// <summary>
-        /// Subtitulo da badge
+        /// Descrição da badge
         /// </summary>
-        [Required(ErrorMessage = "Informe o subtítulo da badge")]
-        public string Subtitulo { get; set; }
+        [Required(ErrorMessage = "Informe a descrição da badge")]
+        public string Descricao { get; set; }
 
         /// <summary>
         /// Cor em hexadecimal que a badge terá

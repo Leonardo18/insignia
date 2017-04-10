@@ -33,7 +33,7 @@ namespace Insignia.DAO.Badges
             {
                 using (var sql = new SqlConnection(conStr))
                 {
-                    resp = sql.Query<Badge>(" SELECT ID, EmpresaID, Titulo, Subtitulo, Cor, CorFonte, Nivel, Tags, Quantidade FROM Badges WHERE ID = @ID AND EmpresaID = @EmpresaID ",
+                    resp = sql.Query<Badge>(" SELECT ID, EmpresaID, Titulo, Descricao, Cor, CorFonte, Nivel, Tags, Quantidade FROM Badges WHERE ID = @ID AND EmpresaID = @EmpresaID ",
                         new
                         {
                             ID = id,
@@ -60,12 +60,12 @@ namespace Insignia.DAO.Badges
             {
                 using (var sql = new SqlConnection(conStr))
                 {
-                    int queryResultado = sql.Execute(" INSERT INTO Badges(EmpresaID, Titulo, Subtitulo, Cor, CorFonte, Nivel, Tags, Quantidade) VALUES (@EmpresaID, @Titulo, @Subtitulo, @Cor, @CorFonte, @Nivel, @Tags, @Quantidade) ",
+                    int queryResultado = sql.Execute(" INSERT INTO Badges(EmpresaID, Titulo, Descricao, Cor, CorFonte, Nivel, Tags, Quantidade) VALUES (@EmpresaID, @Titulo, @Descricao, @Cor, @CorFonte, @Nivel, @Tags, @Quantidade) ",
                                     new
                                     {
                                         EmpresaID = HttpContext.Current.Session["EmpresaID"],
                                         Titulo = bagde.Titulo,
-                                        Subtitulo = bagde.Subtitulo,
+                                        Descricao = bagde.Descricao,
                                         Cor = bagde.Cor,
                                         CorFonte = bagde.CorFonte,
                                         Nivel = bagde.Nivel,
@@ -95,12 +95,12 @@ namespace Insignia.DAO.Badges
             {
                 using (var sql = new SqlConnection(conStr))
                 {
-                    var queryResultado = sql.Execute(@" UPDATE Badges SET Titulo = @Titulo, Subtitulo = @Subtitulo, Cor = @Cor, CorFonte = @CorFonte, Nivel = @Nivel, Tags = @Tags, Quantidade = @Quantidade WHERE ID = @ID ",
+                    var queryResultado = sql.Execute(@" UPDATE Badges SET Titulo = @Titulo, Descricao = @Descricao, Cor = @Cor, CorFonte = @CorFonte, Nivel = @Nivel, Tags = @Tags, Quantidade = @Quantidade WHERE ID = @ID ",
                                     new
                                     {
                                         ID = badge.ID,
                                         Titulo = badge.Titulo,
-                                        Subtitulo = badge.Subtitulo,
+                                        Descricao = badge.Descricao,
                                         Cor = badge.Cor,
                                         CorFonte = badge.CorFonte,
                                         Nivel = badge.Nivel,
@@ -124,7 +124,7 @@ namespace Insignia.DAO.Badges
 
             using (var sql = new SqlConnection(conStr))
             {
-                list = sql.Query<Badge>(" SELECT ID, Titulo, Subtitulo, Cor, CorFonte, Nivel, Tags, Quantidade FROM Badges WHERE EmpresaID = @EmpresaID AND Nivel = @Nivel ",
+                list = sql.Query<Badge>(" SELECT ID, Titulo, Descricao, Cor, CorFonte, Nivel, Tags, Quantidade FROM Badges WHERE EmpresaID = @EmpresaID AND Nivel = @Nivel ",
                     new
                     {
                         EmpresaID = HttpContext.Current.Session["EmpresaID"],
@@ -201,7 +201,7 @@ namespace Insignia.DAO.Badges
 
             using (var sql = new SqlConnection(conStr))
             {
-                list = sql.Query<Badge>(" SELECT Badges.ID AS ID, Titulo, Subtitulo, Cor, CorFonte, Nivel, Tags, Quantidade FROM Badges INNER JOIN BadgesAdquiridas ON Badges.ID = BadgesAdquiridas.BadgeID WHERE Badges.EmpresaID = @EmpresaID AND Badges.Nivel = @Nivel AND BadgesAdquiridas.UsuarioID = @UsuarioID ",
+                list = sql.Query<Badge>(" SELECT Badges.ID AS ID, Titulo, Descricao, Cor, CorFonte, Nivel, Tags, Quantidade FROM Badges INNER JOIN BadgesAdquiridas ON Badges.ID = BadgesAdquiridas.BadgeID WHERE Badges.EmpresaID = @EmpresaID AND Badges.Nivel = @Nivel AND BadgesAdquiridas.UsuarioID = @UsuarioID ",
                     new
                     {
                         EmpresaID = HttpContext.Current.Session["EmpresaID"],
