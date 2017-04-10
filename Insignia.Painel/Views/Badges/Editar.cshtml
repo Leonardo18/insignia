@@ -42,12 +42,15 @@
                     </div>
                     <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">
-                            Subtítulo: <span class="required">*</span>
+                            Descrição: <span class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                            @Html.TextBox("Subtitulo", Model.Subtitulo, new { @class = "form-control col-md-7 col-xs-12", placeholder = "Subtítulo", required = "", @readonly = "readonly" })
-                            @Html.ValidationMessageFor(modelItem => Model.Subtitulo, null, new { @class = "text-danger" })
+                            @Html.TextArea("Descricao", Model.Descricao, new { @class = "form-control col-md-7 col-xs-12", placeholder = "Descrição", required = "", onkeyup = "textContador(this,'contador',200);", id = "descricao", @readonly = "readonly" })
+                            @Html.ValidationMessageFor(modelItem => modelItem.Descricao, null, new { @class = "text-danger" })
                         </div><span class="glyphicon glyphicon-info-sign" data-toggle="tooltip" data-placement="right" title="Este campo indica uma breve descrição da badge."></span>
+                        <div style="display: block; width: 70%; float: left; text-align: center;">
+                            <span>Você ainda pode digitar </span><span id="contador">200</span><span> caracteres.</span>
+                        </div>
                     </div>
                     <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">
@@ -181,3 +184,30 @@
     }
 </script>
 <!-- /Editar -->
+<!-- textContador -->
+<script>
+    $(document).ready(function () {
+        field = document.getElementById('descricao');
+        field2 = document.getElementById('contador');
+        maxlimit = 200;
+
+        var countfield = document.getElementById(field2);
+        if (field.value.length > maxlimit) {
+            field.value = field.value.substring(0, maxlimit);
+            return false;
+        } else {
+            $("#contador").text(maxlimit - field.value.length);
+        }
+    });
+
+    function textContador(field, field2, maxlimit) {
+        var countfield = document.getElementById(field2);
+        if (field.value.length > maxlimit) {
+            field.value = field.value.substring(0, maxlimit);
+            return false;
+        } else {
+            $("#contador").text(maxlimit - field.value.length);
+        }
+    }
+</script>
+<!-- /textContador -->
