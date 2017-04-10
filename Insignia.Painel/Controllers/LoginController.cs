@@ -37,7 +37,18 @@ namespace Insignia.Painel.Controllers
 
             if (!string.IsNullOrEmpty(Convert.ToString(Session["EmpresaID"])))
             {
-                return RedirectToAction("../Dashboard/Dashboard");
+                if (Convert.ToString(Session["UsuarioTipo"]) == "Gestor")
+                {                    
+                    return RedirectToAction("../Dashboard/Gestor");
+                }
+                else if (Convert.ToString(Session["UsuarioTipo"]) == "Funcionario")
+                {
+                    return RedirectToAction("../Dashboard/Funcionario");
+                }
+                else
+                {                    
+                    return RedirectToAction("../Dashboard/Empresa");
+                }
             }
 
             return View(new Empresa());
@@ -70,6 +81,7 @@ namespace Insignia.Painel.Controllers
                 Session["UsuarioNome"] = EmpresaModel.RazaoSocial;
                 Session["UsuarioEmail"] = EmpresaModel.Email;
                 Session["UsuarioFoto"] = EmpresaModel.Foto;
+                Session["UsuarioTipo"] = "Empresa";
 
                 return RedirectToAction("../Dashboard/Empresa");
             }
