@@ -5027,7 +5027,7 @@ ul.notifications {
     height: 50px;    
     border-radius: 50%;
     text-align: center;        
-    position: fixed;
+    position: fixed !important;
     right: 25px;
     bottom: 5%;
     border: 2px solid #FFF;
