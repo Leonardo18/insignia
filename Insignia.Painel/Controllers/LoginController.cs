@@ -141,7 +141,7 @@ namespace Insignia.Painel.Controllers
 
                         if (Email.EnviaEmail(EmpresaModel.RazaoSocial, EmpresaModel.Email, "Você efetuou um cadatrado no sistema Insígnia.", "Novo cadastro", "NovoCadastro.html", string.Empty))
                         {
-                            return RedirectToAction("../Dashboard/Dashboard");
+                            return RedirectToAction("../Dashboard/Empresa");
                         }
                         else
                         {
