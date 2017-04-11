@@ -115,7 +115,7 @@
 </div>
 <!-- /page content -->
 
-@Scripts.Render("~/Competencias/scripts")
+@Scripts.RenderFormat("<script type=\"text/javascript\" src=\"{0}\" charset=\"iso-8859-1\"></script>", "~/Competencias/scripts")
 @Scripts.RenderFormat("<script type=\"text/javascript\" src=\"{0}\" charset=\"iso-8859-1\"></script>", "~/Agenda/scripts")
 <!-- Height x_Panel -->
 <script>
@@ -131,7 +131,7 @@
 </script>
 <!-- /Height x_Panel -->
 <!-- Gráfico Radar -->
-<script>
+<script type="text/javascript" charset="iso-8859-1">
     var theme = {
         color: [
             '#23527c', '#34495E', '#BDC3C7', '#3498DB',
@@ -377,9 +377,9 @@
             indicator: [
                 @foreach (var item in Model.ListCompetencias){
                     @:{
-                                            @:text: '@item.Nome',
-                                            @:max: 100
-                                        @:},
+                        @:text: '@Html.Raw(item.Nome)',
+                        @:max: 100
+                    @:},
                 }
             ]
         }],
@@ -424,10 +424,10 @@
                 {
                     foreach (var item in Model.ListAgenda){
                         @:{
-                                                @:title: '@Html.Raw(item.Titulo)',
-                                                @:start: new Date(@item.DataInicio.Year + '-' + @item.DataInicio.Month + '-' + @item.DataInicio.Day),
-                                                @:backgroundColor : "#2C4257"
-                                            @:},
+                            @:title: '@Html.Raw(HttpUtility.HtmlDecode(item.Titulo))',
+                            @:start: new Date(@item.DataInicio.Year + '-' + @item.DataInicio.Month + '-' + @item.DataInicio.Day),
+                            @:backgroundColor : "#2C4257"
+                        @:},
                     }
                 }
             ]
