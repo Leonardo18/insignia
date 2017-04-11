@@ -46,7 +46,7 @@ namespace Insignia.Painel.Helpers.Email
             mail.To.Add(new MailAddress(DestinatarioEmail, DestinatarioNome));
             mail.Subject = Assunto;
             mail.IsBodyHtml = true;
-            mail.Body = body.Replace("[Email]", Util.Criptografar(DestinatarioEmail)).Replace("[Token]", Token);
+            mail.Body = body.Replace("[Email]", Util.Criptografar(DestinatarioEmail)).Replace("[Token]", Token).Replace("[Empresa]", Convert.ToString(HttpContext.Current.Session["EmpresaNome"]));
             mail.IsBodyHtml = true;
             mail.Priority = MailPriority.Normal;
             mail.BodyEncoding = Encoding.GetEncoding("ISO-8859-1");
