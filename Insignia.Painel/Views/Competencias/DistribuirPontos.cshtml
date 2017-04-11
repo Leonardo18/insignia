@@ -71,7 +71,7 @@
 </div>
 <!-- /page content -->
 
-@Scripts.Render("~/Competencias/scripts")
+@Scripts.RenderFormat("<script type=\"text/javascript\" src=\"{0}\" charset=\"iso-8859-1\"></script>", "~/Competencias/scripts")
 <!-- Height x_Panel -->
 <script>
     $(document).ready(function () {
@@ -332,7 +332,7 @@
             indicator: [
                 @foreach (var item in Model.ListCompetencias){
                     @:{
-                        @:text: '@item.Nome',
+                        @:text: '@Html.Raw(@item.Nome)',
                         @:max: 100
                     @:},
                 }

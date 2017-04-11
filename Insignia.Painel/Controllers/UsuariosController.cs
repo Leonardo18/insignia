@@ -47,8 +47,21 @@ namespace Insignia.Painel.Controllers
         {
             var UsuarioModel = new Usuario();
 
-            //Busca os tipos de tarefa e retorna um dictionary contendo os dados e retorna o select list
-            ViewBag.Setores = SelectListMVC.CriaListaSelecao(UsuariosDAO.Setores());
+            if (Convert.ToString(Session["UsuarioTipo"]) == "Gestor")
+            {
+                Dictionary<int, string> SetorGestor = new Dictionary<int, string>();
+
+                //Faz um dicionário apenas com o setor do Gestor
+                SetorGestor.Add(Convert.ToInt32(Session["SetorID"]), Database.DBBuscaInfo("Setores", "ID", Convert.ToString(Session["SetorID"]), "Nome"));
+
+                //Cria o Select List com o setor do gestor
+                ViewBag.Setores = SelectListMVC.CriaListaSelecao(SetorGestor);
+            }
+            else
+            {
+                //Busca os tipos de tarefa e retorna um dictionary contendo os dados e retorna o select list
+                ViewBag.Setores = SelectListMVC.CriaListaSelecao(UsuariosDAO.Setores());
+            }
 
             return View(UsuarioModel);
         }
@@ -86,19 +99,32 @@ namespace Insignia.Painel.Controllers
                 }
             }
 
-            //Busca os  e retorna um dictionary contendo os dados
-            var UsuariosTipos = SelectListMVC.CriaListaSelecao(UsuariosDAO.Setores());
-
-            foreach (var item in UsuariosTipos)
+            if (Convert.ToString(Session["UsuarioTipo"]) == "Gestor")
             {
-                if (item.Value == UsuarioModel.Tipo)
-                {
-                    item.Selected = true;
-                    break;
-                }
-            }
+                Dictionary<int, string> SetorGestor = new Dictionary<int, string>();
 
-            ViewBag.Setores = UsuariosTipos;
+                //Faz um dicionário apenas com o setor do Gestor
+                SetorGestor.Add(Convert.ToInt32(Session["SetorID"]), Database.DBBuscaInfo("Usuarios", "ID", Convert.ToString(Session["SetorID"]), "Nome"));
+
+                //Cria o Select List com o setor do gestor
+                ViewBag.Setores = SelectListMVC.CriaListaSelecao(SetorGestor);
+            }
+            else
+            {
+                //Busca os tipo de usuároias e retorna um dictionary contendo os dados
+                var UsuariosTipos = SelectListMVC.CriaListaSelecao(UsuariosDAO.Setores());
+
+                foreach (var item in UsuariosTipos)
+                {
+                    if (item.Value == UsuarioModel.Tipo)
+                    {
+                        item.Selected = true;
+                        break;
+                    }
+                }
+
+                ViewBag.Setores = UsuariosTipos;
+            }
 
             return View(UsuarioModel);
         }
@@ -156,11 +182,11 @@ namespace Insignia.Painel.Controllers
                         {
                             ViewBag.Error = "Não foi possível enviar um e-mail de validação para: " + UsuarioModel.Email + ", verifique o e-mail informado no cadastro.";
                             UsuariosDAO.Remover(UsuarioModel.ID);
-                        }                        
+                        }
                     }
 
                     if (UsuariosDAO.Editar(UsuarioModel))
-                    {                        
+                    {
                         return RedirectToAction("Editar", new { ID = UsuarioModel.ID });
                     }
                 }

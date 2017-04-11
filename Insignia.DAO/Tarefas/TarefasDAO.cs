@@ -445,7 +445,7 @@ namespace Insignia.DAO.Tarefas
                                             ConquistadoEm = DateTime.Now
                                         });
 
-                        if (HttpContext.Current.Session["EmpresaID"] != HttpContext.Current.Session["UsuarioID"]) { AtualizaSaldoPontos(Badges.Nivel); }
+                        if (Convert.ToString(HttpContext.Current.Session["EmpresaID"]) != Convert.ToString(HttpContext.Current.Session["UsuarioID"])) { AtualizaSaldoPontos(Badges.Nivel); }
                     }
                 }
             }
