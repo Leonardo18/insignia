@@ -15,27 +15,7 @@
     </div>
 </div>
 <div class="clearfix"></div>
-<div class="row">
-    <div class="col-md-12 col-sm-4 col-xs-12">
-        <div class="x_panel">
-            <div class="x_title">
-                <h2 id="TituloPagina">Agenda</h2>
-                <ul class="nav navbar-right panel_toolbox" style="min-width: 0px;">
-                    <li>
-                        <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                    </li>
-                </ul>
-                <div class="clearfix"></div>
-            </div>
-            @using (Html.BeginForm("SincronizarAgenda", "Dashboard", FormMethod.Get, new { @class = "form-horizontal form-label-left", id = "VisualizarAgenda" }))
-            {
-                <div class="x_content">
-                    <span class="fa fa-refresh" style="float: right; margin-left: 15px; margin-top: 7px; cursor:pointer;" title="Sincronizar com Google Agenda" onclick="document.getElementById('VisualizarAgenda').submit();"></span>
-                    <div id='calendar'></div>
-                </div>
-            }
-        </div>
-    </div>
+<div class="row">  
     <div class="col-md-6 col-sm-4 col-xs-12">
         <div class="x_panel">
             <div class="x_title">
@@ -108,46 +88,31 @@
             </div>
         </div>
     </div>
+    <div class="col-md-12 col-sm-4 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2 id="TituloPagina">Agenda</h2>
+                <ul class="nav navbar-right panel_toolbox" style="min-width: 0px;">
+                    <li>
+                        <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            @using (Html.BeginForm("SincronizarAgenda", "Dashboard", FormMethod.Get, new { @class = "form-horizontal form-label-left", id = "VisualizarAgenda" }))
+            {
+                <div class="x_content">
+                    <span class="fa fa-refresh" style="float: right; margin-left: 15px; margin-top: 7px; cursor:pointer;" title="Sincronizar com Google Agenda" onclick="document.getElementById('VisualizarAgenda').submit();"></span>
+                    <div id='calendar'></div>
+                </div>
+            }
+        </div>
+    </div>
 </div>
 <!-- /page content -->
 
-@Scripts.RenderFormat("<script type=\"text/javascript\" src=\"{0}\" charset=\"iso-8859-1\"></script>", "~/Agenda/scripts")
 @Scripts.Render("~/Competencias/scripts")
-<!-- FullCalendar -->
-<script>
-    $(window).load(function () {
-        var date = new Date(),
-            d = date.getDate(),
-            m = date.getMonth(),
-            y = date.getFullYear(),
-            started,
-            categoryClass;
-
-        var calendar = $('#calendar').fullCalendar({
-            header: {
-                left: 'prev,next today',
-                center: 'title',
-                right: 'month,agendaWeek,agendaDay'
-            },
-            selectable: true,
-            selectHelper: true,
-            editable: false,
-            events: [
-                @if (Model.ListAgenda != null)
-                {
-                    foreach (var item in Model.ListAgenda){
-                        @:{
-                            @:title: '@Html.Raw(item.Titulo)',
-                            @:start: new Date(@item.DataInicio.Year + '-' + @item.DataInicio.Month + '-' + @item.DataInicio.Day),
-                            @:backgroundColor : "#2C4257"
-                        @:},
-                    }
-                }
-            ]
-        });
-    });
-</script>
-<!-- /FullCalendar -->
+@Scripts.RenderFormat("<script type=\"text/javascript\" src=\"{0}\" charset=\"iso-8859-1\"></script>", "~/Agenda/scripts")
 <!-- Height x_Panel -->
 <script>
     $(document).ready(function () {
@@ -431,3 +396,38 @@
     });
 </script>
 <!-- /Gráfico Radar -->
+<!-- FullCalendar -->
+<script>
+    $(window).load(function () {
+        var date = new Date(),
+            d = date.getDate(),
+            m = date.getMonth(),
+            y = date.getFullYear(),
+            started,
+            categoryClass;
+
+        var calendar = $('#calendar').fullCalendar({
+            header: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'month,agendaWeek,agendaDay'
+            },
+            selectable: true,
+            selectHelper: true,
+            editable: false,
+            events: [
+                @if (Model.ListAgenda != null)
+                {
+                    foreach (var item in Model.ListAgenda){
+                        @:{
+                            @:title: '@Html.Raw(item.Titulo)',
+                            @:start: new Date(@item.DataInicio.Year + '-' + @item.DataInicio.Month + '-' + @item.DataInicio.Day),
+                            @:backgroundColor : "#2C4257"
+                        @:},
+                    }
+                }
+            ]
+        });
+    });
+</script>
+<!-- /FullCalendar -->

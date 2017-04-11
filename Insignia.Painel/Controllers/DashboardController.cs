@@ -45,13 +45,30 @@ namespace Insignia.Painel.Controllers
         {
             var ViewModel = new ViewModelDashboardFuncionario();
 
+            UsuariosDAO UsuariosDAO = new UsuariosDAO(ConfigurationManager.ConnectionStrings["strConMain"].ConnectionString);
+
+            ViewModel.Usuario = UsuariosDAO.Carregar(Convert.ToInt32(Session["UsuarioID"]));
+
+            TarefasDAO TarefasDAO = new TarefasDAO(ConfigurationManager.ConnectionStrings["strConMain"].ConnectionString);
+            //Busca as tarefa com status finalizada
+            ViewModel.ListFinalizadas = TarefasDAO.ListarTop(ConfigurationManager.AppSettings["Finalizada"], 0, 5);
+
+            CompetenciasDAO CompetenciasDAO = new CompetenciasDAO(ConfigurationManager.ConnectionStrings["strConMain"].ConnectionString);
+
+            ViewModel.ListCompetencias = CompetenciasDAO.Listar();
+
+            foreach (var item in ViewModel.ListCompetencias)
+            {
+                item.Pontos = CompetenciasDAO.CompetenciaPontos(item.ID);
+            }
+
             CalendarService service = OAuthService.OAuthLogged
-                                (
-                                    Convert.ToString(Session["UsuarioID"]),
-                                    ConfigurationManager.ConnectionStrings["strConMain"].ConnectionString, "https://www.portalinsignia.com.br/Agenda/SincronizarAgenda",
-                                    "Calendar API",
-                                    new[] { CalendarService.Scope.CalendarReadonly, CalendarService.Scope.Calendar }
-                                );
+                               (
+                                   Convert.ToString(Session["UsuarioID"]),
+                                   ConfigurationManager.ConnectionStrings["strConMain"].ConnectionString, "https://www.portalinsignia.com.br/Dashboard/SincronizarAgenda",
+                                   "Calendar API",
+                                   new[] { CalendarService.Scope.CalendarReadonly, CalendarService.Scope.Calendar }
+                               );
 
             if (service != null)
             {
@@ -94,23 +111,6 @@ namespace Insignia.Painel.Controllers
                 }
             }
 
-            UsuariosDAO UsuariosDAO = new UsuariosDAO(ConfigurationManager.ConnectionStrings["strConMain"].ConnectionString);
-
-            ViewModel.Usuario = UsuariosDAO.Carregar(Convert.ToInt32(Session["UsuarioID"]));
-
-            TarefasDAO TarefasDAO = new TarefasDAO(ConfigurationManager.ConnectionStrings["strConMain"].ConnectionString);
-            //Busca as tarefa com status finalizada
-            ViewModel.ListFinalizadas = TarefasDAO.ListarTop(ConfigurationManager.AppSettings["Finalizada"], 0, 5);
-
-            CompetenciasDAO CompetenciasDAO = new CompetenciasDAO(ConfigurationManager.ConnectionStrings["strConMain"].ConnectionString);
-
-            ViewModel.ListCompetencias = CompetenciasDAO.Listar();
-
-            foreach (var item in ViewModel.ListCompetencias)
-            {
-                item.Pontos = CompetenciasDAO.CompetenciaPontos(item.ID);
-            }
-
             return View(ViewModel);
         }
 
@@ -126,7 +126,7 @@ namespace Insignia.Painel.Controllers
             CalendarService service = OAuthService.OAuthLogin
                                 (
                                     Convert.ToString(Session["UsuarioID"]),
-                                    ConfigurationManager.ConnectionStrings["strConMain"].ConnectionString, "https://www.portalinsignia.com.br/Agenda/SincronizarAgenda",
+                                    ConfigurationManager.ConnectionStrings["strConMain"].ConnectionString, "https://www.portalinsignia.com.br/Dashboard/SincronizarAgenda",
                                     "Calendar API",
                                     new[] { CalendarService.Scope.CalendarReadonly, CalendarService.Scope.Calendar }
                                 );
