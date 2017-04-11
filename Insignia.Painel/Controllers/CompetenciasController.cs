@@ -115,6 +115,17 @@ namespace Insignia.Painel.Controllers
 
             if (CompetenciaModel != null)
             {
+                var CompetenciasUsuarios = CompetenciasDAO.VerificaCompetenciaUsuarios(CompetenciaModel.ID);
+
+                //Se existe pontos distribuídos na competência por usuários, redefine saldo
+                if (CompetenciasUsuarios.Count > 0)
+                {
+                    foreach (var item in CompetenciasUsuarios)
+                    {
+                        CompetenciasDAO.RedefinePontosCompetencia(item.Key, item.Value);
+                    }
+                }
+
                 if (CompetenciasDAO.Remover(CompetenciaModel.ID))
                 {
                     return RedirectToAction("Listar");
@@ -157,11 +168,9 @@ namespace Insignia.Painel.Controllers
         /// <returns>Retorna 1 para true caso consiga atualizar dados com sucesso e 0 para false</returns>
         public string AdicionarPontos(int ID, int Pontos, int Saldo)
         {
-            bool resp = false;
+            CompetenciasDAO.AdicionarPontos(ID, Pontos, Saldo);
 
-            resp = CompetenciasDAO.AdicionarPontos(ID, Pontos, Saldo);
-
-            return Convert.ToString(resp);
+            return Convert.ToString("true");
         }
     }
 }

@@ -91,48 +91,7 @@ namespace Insignia.Painel.Controllers
                                     new[] { CalendarService.Scope.CalendarReadonly, CalendarService.Scope.Calendar }
                                 );
 
-            if (service != null)
-            {
-                //Cria model com as propriedades da agenda
-                ViewModel.ListAgenda = new List<Agenda>();
-
-                //Cria serviço para buscar agendas do usuário
-                var ListaAgendas = service.CalendarList.List();
-
-                //Pega todas as agendas do usuário
-                var Agendas = ListaAgendas.Execute();
-
-                //Para cada agenda busca todos os eventos
-                foreach (var item in Agendas.Items)
-                {
-                    //Define os parâmetros do request.
-                    EventsResource.ListRequest request = service.Events.List(item.Id);
-                    //request.TimeMin = DateTime.Now;
-                    request.ShowDeleted = false;
-                    request.SingleEvents = true;
-                    request.MaxResults = 10000;
-                    request.OrderBy = EventsResource.ListRequest.OrderByEnum.StartTime;
-
-                    //Lista de eventos.
-                    Events events = request.Execute();
-
-                    //Se encontrou eventos no calendário, pega os dados
-                    if (events.Items != null && events.Items.Count > 0)
-                    {
-                        foreach (var eventItem in events.Items)
-                        {
-                            ViewModel.ListAgenda.Add(new Agenda()
-                            {
-                                Titulo = !string.IsNullOrEmpty(eventItem.Summary) ? eventItem.Summary.Replace("'", "") : "",
-                                DataInicio = Convert.ToDateTime(eventItem.Start.DateTime),
-                                DataFim = Convert.ToDateTime(eventItem.End.DateTime)
-                            });
-                        }
-                    }
-                }
-            }
-
-            return View("Visualizar", ViewModel);
+            return RedirectToAction("Visualizar");
         }
     }
 }

@@ -192,7 +192,7 @@ namespace Insignia.DAO.Tarefas
         }
 
         /// <summary>
-        /// Carrega uma list de tarefas conforme o número passado no top e o status
+        /// Carrega uma list de tarefas conforme o número passado no top entre o index e o maxIndex
         /// </summary>
         /// <param name="status">Status da tarefa</param>
         /// <param name="index">Index de início da busca</param>
@@ -291,6 +291,8 @@ namespace Insignia.DAO.Tarefas
         /// <returns>Retorna true caso tenha gravado todos com sucesso, false caso contrário</returns>               
         public bool SalvarParticipantes(int tarefaID, List<dynamic> participantes)
         {
+            bool resp = false;
+
             using (var sql = new SqlConnection(conStr))
             {
                 foreach (var item in participantes)
@@ -303,14 +305,11 @@ namespace Insignia.DAO.Tarefas
                                             TarefaID = tarefaID
                                         });
 
-                    if (!ToBoolean(queryResultado))
-                    {
-                        return false;
-                    }
+                    resp = ToBoolean(queryResultado);
                 }
             }
 
-            return true;
+            return resp;
         }
 
         /// <summary>

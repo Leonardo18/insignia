@@ -4,7 +4,6 @@ using Authe = Insignia.DAO.Util.Autenticacao;
 using System.Data.SqlClient;
 using System.Linq;
 using Insignia.Model.Usuario;
-using static System.Convert;
 
 namespace Insignia.DAO.Autenticacao
 {
