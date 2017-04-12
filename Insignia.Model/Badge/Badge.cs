@@ -53,5 +53,10 @@ namespace Insignia.Model.Badge
         /// </summary>
         [Required(ErrorMessage = "Informe a quantidade")]
         public int Quantidade { get; set; } = 1;
+
+        /// <summary>
+        /// Se a badge já foi adquirida ou não
+        /// </summary>
+        public bool Adquirida { get; set; }
     }
 }

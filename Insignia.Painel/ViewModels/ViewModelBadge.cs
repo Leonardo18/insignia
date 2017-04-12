@@ -11,6 +11,6 @@ namespace Insignia.Painel.ViewModels
 
         public List<Badge> ListBadgeIntermediarias { get; set; }
 
-        public List<Badge> ListBadgeAvancadas { get; set; }
+        public List<Badge> ListBadgeAvancadas { get; set; }        
     }
 }

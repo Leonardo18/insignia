@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <!-- Meta, title, CSS, favicons, etc. -->   
+    <!-- Meta, title, CSS, favicons, etc. -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width" />
     <link rel="shortcut icon" href="~/Content/images/favicon.ico" type="image/x-icon">
@@ -53,11 +53,23 @@
                                 <li>
                                     <a><i class="fa fa-edit"></i> Cadastros <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
-                                        <li><a href="~/Badges/Adicionar">Badges</a></li>
-                                        <li><a href="~/Competencias/Listar">Competências</a></li>
-                                        <li><a href="~/Setores/Listar">Setores</a></li>
+                                        @if (Convert.ToString(Session["UsuarioTipo"]) != "Funcionario")
+                                        {
+                                            <li><a href="~/Badges/Adicionar">Badges</a></li>
+                                        }
+                                        @if (Convert.ToString(Session["UsuarioTipo"]) != "Funcionario")
+                                        {
+                                            <li><a href="~/Competencias/Listar">Competências</a></li>
+                                        }
+                                        @if (Convert.ToString(Session["UsuarioTipo"]) == "Empresa")
+                                        {
+                                            <li><a href="~/Setores/Listar">Setores</a></li>
+                                        }
                                         <li><a href="~/Tarefas/Listar">Tarefas</a></li>
-                                        <li><a href="~/Usuarios/Listar">Usuários</a></li>
+                                        @if (Convert.ToString(Session["UsuarioTipo"]) != "Funcionario")
+                                        {
+                                            <li><a href="~/Usuarios/Listar">Usuários</a></li>
+                                        }
                                     </ul>
                                 </li>
                             </ul>
@@ -66,7 +78,10 @@
                                     <a><i class="fa fa-trophy"></i> Conquistas <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
                                         <li><a href="~/Badges/Adquiridas">Badges Adquiridas</a></li>
-                                        <li><a href="~/Competencias/DistribuirPontos">Competências</a></li>
+                                        @if (Convert.ToString(Session["UsuarioTipo"]) != "Empresa")
+                                        {
+                                            <li><a href="~/Competencias/DistribuirPontos">Competências</a></li>
+                                        }
                                     </ul>
                                 </li>
                             </ul>

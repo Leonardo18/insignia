@@ -149,7 +149,7 @@ namespace Insignia.Painel.Controllers
                         var eventResult = service.Events.Insert(NovoEvento, "primary").Execute();
                     }
 
-                    return RedirectToAction("Editar", new { ID = TarefaModel.ID });
+                    return RedirectToAction("Listar");
                 }
             }
 

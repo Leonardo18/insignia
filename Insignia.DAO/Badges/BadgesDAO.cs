@@ -212,5 +212,31 @@ namespace Insignia.DAO.Badges
 
             return list;
         }
+
+        /// <summary>
+        /// Verifica se o usuário possui a badge em questão
+        /// </summary>
+        /// <param name="id">ID da badge</param>
+        /// <param name="usuarioID">ID do usuário</param>
+        /// <returns>Caso tenha adquirido a badge, retorna true se não retorna false</returns>
+        public bool VerificaBadgeAdquirida(int id, int usuarioID)
+        {
+            bool resp = false;
+
+            using (var sql = new SqlConnection(conStr))
+            {
+                int queryResultado = sql.ExecuteScalar<int>(" SELECT ID FROM BadgesAdquiridas WHERE EmpresaID = @EmpresaID AND BadgeID = @BadgeID AND UsuarioID = @UsuarioID ",
+                    new
+                    {
+                        EmpresaID = HttpContext.Current.Session["EmpresaID"],
+                        BadgeID = id,
+                        UsuarioID = usuarioID
+                    });
+
+                resp = ToBoolean(queryResultado);
+            }
+
+            return resp;
+        }
     }
 }

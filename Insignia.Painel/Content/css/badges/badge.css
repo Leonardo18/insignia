@@ -67,6 +67,29 @@ body {
         word-spacing: 30px;
     }
 
+    .badge-sistema .lock {
+        position: absolute;
+        font-family: "Fjalla One", sans-serif;
+        font-size: 3.9em;
+        width: 100%;
+        text-align: center;
+        color: white;
+        position: absolute;
+        top: 79px;
+    }
+
+        .badge-sistema .lock:after {            
+            display: block;
+            font-size: .4em;
+            position: relative;
+            margin: 15px 0 0;
+            transition: all .3s;
+        }
+
+    .badge-sistema:hover .lock:after {
+        word-spacing: 30px;
+    }
+
 p {
     color: black;
 }

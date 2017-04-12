@@ -152,9 +152,24 @@ namespace Insignia.Painel.Controllers
         {
             var ViewModel = new ViewModelBadge();
 
-            ViewModel.ListBadgeBasicas = BadgesDAO.ListarAdquiridas(ToInt32(Session["UsuarioID"]), "Basica");
-            ViewModel.ListBadgeIntermediarias = BadgesDAO.ListarAdquiridas(ToInt32(Session["UsuarioID"]), "Intermediaria");
-            ViewModel.ListBadgeAvancadas = BadgesDAO.ListarAdquiridas(ToInt32(Session["UsuarioID"]), "avancada");
+            ViewModel.ListBadgeBasicas = BadgesDAO.Listar("Basica");
+            ViewModel.ListBadgeIntermediarias = BadgesDAO.Listar("Intermediaria");
+            ViewModel.ListBadgeAvancadas = BadgesDAO.Listar("Avancada");
+
+            foreach (var item in ViewModel.ListBadgeBasicas)
+            {
+                item.Adquirida = BadgesDAO.VerificaBadgeAdquirida(item.ID, ToInt32(Session["UsuarioID"]));
+            }
+
+            foreach (var item in ViewModel.ListBadgeIntermediarias)
+            {
+                item.Adquirida = BadgesDAO.VerificaBadgeAdquirida(item.ID, ToInt32(Session["UsuarioID"]));
+            }
+
+            foreach (var item in ViewModel.ListBadgeAvancadas)
+            {
+                item.Adquirida = BadgesDAO.VerificaBadgeAdquirida(item.ID, ToInt32(Session["UsuarioID"]));
+            }
 
             return View(ViewModel);
         }

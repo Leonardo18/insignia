@@ -136,6 +136,7 @@ namespace Insignia.Painel.Controllers
                         Session["UsuarioNome"] = EmpresaModel.RazaoSocial;
                         Session["UsuarioEmail"] = EmpresaModel.Email;
                         Session["UsuarioFoto"] = EmpresaModel.Foto;
+                        Session["UsuarioTipo"] = "Empresa";
 
                         SendMail Email = new SendMail();
 

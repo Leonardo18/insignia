@@ -296,8 +296,7 @@ input:-ms-input-placeholder {
 .fa-remove:before,
 .fa-close:before,
 .fa-times:before {
-    content: "\f00d";
-    color: #f70b0b;
+    content: "\f00d";    
 }
 
 .fa-search-plus:before {
@@ -491,6 +490,7 @@ input:-ms-input-placeholder {
 
 .fa-pencil:before {
     content: "\f040";
+    color: #fdce08;
 }
 
 .fa-map-marker:before {
@@ -911,8 +911,7 @@ input:-ms-input-placeholder {
 }
 
 .fa-wrench:before {
-    content: "\f0ad";
-    color: #fdce08;   
+    content: "\f0ad";       
 }
 
 .fa-tasks:before {
@@ -1469,7 +1468,7 @@ input:-ms-input-placeholder {
 }
 
 .fa-pencil-square:before {
-    content: "\f14b";
+    content: "\f14b";    
 }
 
 .fa-external-link-square:before {
@@ -2156,6 +2155,7 @@ input:-ms-input-placeholder {
 
 .fa-trash:before {
     content: "\f1f8";
+    color: #f70b0b;
 }
 
 .fa-copyright:before {
