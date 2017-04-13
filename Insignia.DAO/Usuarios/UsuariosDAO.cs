@@ -201,8 +201,7 @@ namespace Insignia.DAO.Usuarios
                     sql.Execute(" DELETE FROM UsuariosGoogle WHERE UsuarioID = @ID ",
                         new
                         {
-                            ID = id,
-                            EmpresaID = HttpContext.Current.Session["EmpresaID"]
+                            ID = Convert.ToString(id)
                         });
 
                     int queryResultado = sql.Execute(" DELETE FROM Usuarios WHERE ID = @ID AND EmpresaID = @EmpresaID ",
