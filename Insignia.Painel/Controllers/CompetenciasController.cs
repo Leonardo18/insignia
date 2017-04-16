@@ -170,7 +170,7 @@ namespace Insignia.Painel.Controllers
         {
             CompetenciasDAO.AdicionarPontos(ID, Pontos, Saldo);
 
-            return Convert.ToString("true");
+            return Convert.ToString("True");
         }
     }
 }
