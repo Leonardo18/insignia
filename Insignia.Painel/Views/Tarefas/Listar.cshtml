@@ -221,9 +221,13 @@
 
     function HtmlTarefas(tarefaStatus, listTarefas) {
         var list = listTarefas;
+        var primeiroID = "";
 
         $.each(list, function (index, value) {
-            var htmlTarefa = "<ul class=\"list-unstyled timeline " + tarefaStatus + "\">\
+            if (primeiroID === "")
+                primeiroID = value.ID;
+
+            var htmlTarefa = "<ul class=\"list-unstyled timeline " + tarefaStatus + "\" id=" + value.ID +">\
                                 <li>\
                                     <div class=\"block\">\
                                         <div class=\"tags\">\
@@ -261,6 +265,10 @@
         else if (tarefaStatus == "Finalizada") {
             document.getElementById('indexFinalizada').value = Number(document.getElementById('indexFinalizada').value) + 5;
         }
+
+        $('html, body').animate({
+            scrollTop: $("#" + primeiroID).offset().top - 100
+        }, 1000);
     }
 </script>
 <!-- LoadMore -->
