@@ -14,6 +14,8 @@ namespace Insignia.Painel.ViewModels
 
         public Usuario Usuario { get; set; }
 
-        public List<Competencia> ListCompetencias { get; set; }        
+        public List<Competencia> ListCompetencias { get; set; }
+
+        public string IconeRefreshCor { get; set; }
     }
 }

@@ -67,8 +67,13 @@ namespace Insignia.Painel.Controllers
                                 DataFim = Convert.ToDateTime(eventItem.End.DateTime)
                             });
                         }
+                        ViewModel.IconeRefreshCor = "green";
                     }
                 }
+            }
+            else
+            {
+                ViewModel.IconeRefreshCor = "red";
             }
 
             return View(ViewModel);

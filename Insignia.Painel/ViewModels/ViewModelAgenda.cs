@@ -6,5 +6,7 @@ namespace Insignia.Painel.ViewModels
     public class ViewModelAgenda
     {
         public List<Agenda> ListAgenda { get; set; }
+
+        public string IconeRefreshCor { get; set; }
     }
 }

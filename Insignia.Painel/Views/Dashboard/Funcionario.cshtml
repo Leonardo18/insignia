@@ -20,10 +20,10 @@
         <div class="x_panel">
             <div class="x_title">
                 <h2>Tarefas Recentes</h2>
-                <ul class="nav navbar-right panel_toolbox" style="min-width: 0px;">
+                <ul class="nav navbar-right panel_toolbox" style="min-width: 0px;">                   
                     <li>
                         <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                    </li>
+                    </li>                   
                 </ul>
                 <div class="clearfix"></div>
             </div>
@@ -98,7 +98,13 @@
                 <h2 id="TituloPagina">Agenda</h2>
                 <ul class="nav navbar-right panel_toolbox" style="min-width: 0px;">
                     <li>
+                        <span style="vertical-align: -webkit-baseline-middle;">Caso o ícone de sincronização &nbsp;<i class="fa fa-refresh"></i> esteja vermelho, clique nele para sincronizar com Google Calendar, caso esteja verde já está sincronizado.</span>&nbsp;&nbsp;&nbsp;
+                    </li>
+                    <li>
                         <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                    <li>
+                        <a><i class="fa fa-refresh" style="color: @Model.IconeRefreshCor;" title="Sincronizar com Google Agenda" onclick="document.getElementById('VisualizarAgenda').submit();"></i></a>
                     </li>
                 </ul>
                 <div class="clearfix"></div>
@@ -106,7 +112,7 @@
             @using (Html.BeginForm("SincronizarAgenda", "Dashboard", FormMethod.Get, new { @class = "form-horizontal form-label-left", id = "VisualizarAgenda" }))
             {
                 <div class="x_content">
-                    <span class="fa fa-refresh" style="float: right; margin-left: 15px; margin-top: 7px; cursor:pointer;" title="Sincronizar com Google Agenda" onclick="document.getElementById('VisualizarAgenda').submit();"></span>
+                    @*<span class="fa fa-refresh" style="float: right; margin-left: 15px; margin-top: 7px; cursor:pointer;" title="Sincronizar com Google Agenda" onclick="document.getElementById('VisualizarAgenda').submit();"></span>*@
                     <div id='calendar'></div>
                 </div>
             }
