@@ -209,18 +209,41 @@ namespace Insignia.DAO.Competencias
         /// </summary>
         /// <param name="id">ID da competência</param>
         /// <param name="pontos">Pontos que serão adicionados</param>
-        /// <returns>Caso consiga atualizar dados com sucesso retorna true se não retorna false</returns>
+        /// <returns>Não possui retorno</returns>
         public void AdicionarPontos(int id, int pontos, int saldo)
         {
             using (var sql = new SqlConnection(conStr))
             {
-                int queryResultado = sql.ExecuteScalar<int>(" UPDATE CompetenciasUsuarios SET Pontos = @PontosAdicionados WHERE EmpresaID = @EmpresaID AND UsuarioID = @UsuarioID AND CompetenciaID = @CompetenciaID IF @@ROWCOUNT=0 INSERT INTO CompetenciasUsuarios(EmpresaID, UsuarioID, CompetenciaID, Pontos) VALUES(@EmpresaID, @UsuarioID, @CompetenciaID, @PontosAdicionados) ",
+                int queryResultado = sql.ExecuteScalar<int>(" UPDATE CompetenciasUsuarios SET Pontos = @PontosAdicionados WHERE EmpresaID = @EmpresaID AND UsuarioID = @UsuarioID AND CompetenciaID = @CompetenciaID IF @@ROWCOUNT=0 INSERT INTO CompetenciasUsuarios(EmpresaID, UsuarioID, CompetenciaID, Pontos) VALUES (@EmpresaID, @UsuarioID, @CompetenciaID, @PontosAdicionados) ",
                                 new
                                 {
                                     EmpresaID = HttpContext.Current.Session["EmpresaID"],
                                     UsuarioID = HttpContext.Current.Session["UsuarioID"],
                                     CompetenciaID = id,
                                     PontosAdicionados = pontos
+                                });
+
+                AtualizaSaldo(saldo);
+            }
+        }
+
+        /// <summary>
+        /// Remove pontos em uma competência
+        /// </summary>
+        /// <param name="id">ID da competência</param>
+        /// <param name="pontos">Pontos que serão removidos</param>   
+        /// <returns>Não possui retorno</returns>
+        public void RemoverPontos(int id, int pontos, int saldo)
+        {
+            using (var sql = new SqlConnection(conStr))
+            {
+                int queryResultado = sql.ExecuteScalar<int>(" UPDATE CompetenciasUsuarios SET Pontos = @PontosRemovidos WHERE EmpresaID = @EmpresaID AND UsuarioID = @UsuarioID AND CompetenciaID = @CompetenciaID IF @@ROWCOUNT=0 INSERT INTO CompetenciasUsuarios(EmpresaID, UsuarioID, CompetenciaID, Pontos) VALUES (@EmpresaID, @UsuarioID, @CompetenciaID, @PontosRemovidos) ",
+                                new
+                                {
+                                    EmpresaID = HttpContext.Current.Session["EmpresaID"],
+                                    UsuarioID = HttpContext.Current.Session["UsuarioID"],
+                                    CompetenciaID = id,
+                                    PontosRemovidos = pontos
                                 });
 
                 AtualizaSaldo(saldo);
@@ -254,13 +277,15 @@ namespace Insignia.DAO.Competencias
         {
             int saldo = 0;
 
+            usuarioID = usuarioID == 0 ? ToInt32(HttpContext.Current.Session["UsuarioID"]) : usuarioID;
+
             using (var sql = new SqlConnection(conStr))
             {
                 saldo = sql.Query<int>(" SELECT Pontos FROM UsuariosPontos WHERE EmpresaID = @EmpresaID AND UsuarioID = @UsuarioID ",
                     new
                     {
                         EmpresaID = HttpContext.Current.Session["EmpresaID"],
-                        UsuarioID = HttpContext.Current.Session["UsuarioID"],
+                        UsuarioID = usuarioID,
                     }).SingleOrDefault();
 
                 return saldo;

@@ -1,4 +1,5 @@
 ﻿using Insignia.DAO.Competencias;
+using Insignia.DAO.Util;
 using Insignia.Model.Competencia;
 using Insignia.Painel.Helpers.CustomAttributes;
 using Insignia.Painel.ViewModels;
@@ -164,13 +165,56 @@ namespace Insignia.Painel.Controllers
         /// Ativado por um ajax que adiciona pontos na competência de um usuário
         /// </summary>
         /// <param name="ID">ID da competência</param>
-        /// <param name="Pontos">pontos que a competência irá possuir</param>
+        /// <param name="Pontos">Pontos que a competência irá possuir</param>
+        /// <param name="Saldo">Saldo que irá ficar</param>
         /// <returns>Retorna 1 para true caso consiga atualizar dados com sucesso e 0 para false</returns>
         public string AdicionarPontos(int ID, int Pontos, int Saldo)
         {
-            CompetenciasDAO.AdicionarPontos(ID, Pontos, Saldo);
+            string resp = string.Empty;
 
-            return Convert.ToString("True");
+            //Busca saldo atual do usuário
+            int SaldoAtual = CompetenciasDAO.SaldoAtual(0);
+
+            //Verifica se o saldo vindo da view e o do banco são os mesmos
+            if (SaldoAtual - Saldo == 1)
+            {
+                resp = "True";
+                CompetenciasDAO.AdicionarPontos(ID, Pontos, Saldo);
+            }
+            else
+            {
+                resp = "Saldo incorreto, atualize a página e tente novamente.";
+            }
+
+            return resp;
+        }
+
+        /// <summary>
+        /// Ativado por um ajax que remove pontos na competência de um usuário
+        /// </summary>
+        /// <param name="ID">ID da competência</param>
+        /// <param name="Pontos">Pontos que a competência irá possuir</param>
+        /// <param name="Saldo">Saldo que irá ficar</param>
+        /// <returns>Retorna 1 para true caso consiga atualizar dados com sucesso e 0 para false</returns>
+        public string RemoverPontos(int ID, int Pontos, int Saldo)
+        {
+            string resp = string.Empty;
+
+            //Busca saldo atual do usuário
+            int SaldoAtual = CompetenciasDAO.SaldoAtual(0);
+
+            //Verifica se o saldo vindo da view e o do banco são os mesmos
+            if (Saldo - SaldoAtual == 1)
+            {
+                resp = "True";
+                CompetenciasDAO.RemoverPontos(ID, Pontos, Saldo);
+            }
+            else
+            {
+                resp = "Saldo incorreto, atualize a página e tente novamente.";
+            }
+
+            return resp;
         }
     }
 }

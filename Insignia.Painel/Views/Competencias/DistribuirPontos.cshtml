@@ -42,6 +42,7 @@
                                             @*<span class="fa fa-arrow-circle-left" style="float: left;"></span>*@
                                             <P style="display: inline-block; margin: 0;" id="@item.ID">@item.Pontos</P>
                                             <span class="fa fa-arrow-circle-right" style="float: right;" onclick="AdicionarPonto('@item.ID')"></span>
+                                            <span class="fa fa-arrow-circle-left" style="float: left;" onclick="RemoverPonto('@item.ID')"></span>
                                         </div>
                                     </td>
                                 </tr>
@@ -63,7 +64,7 @@
                 </ul>
                 <div class="clearfix"></div>
             </div>
-            <div class="x_content">                
+            <div class="x_content">
                 <div id="echart_sonar" style="height:370px;"></div>
             </div>
         </div>
@@ -81,7 +82,6 @@
         x = x.offsetHeight;
 
         $(y).css('height', x + 'px');
-
     });
 </script>
 <!-- /Height x_Panel -->
@@ -332,9 +332,10 @@
             indicator: [
                 @foreach (var item in Model.ListCompetencias){
                     @:{
-                        @:text: '@Html.Raw(@item.Nome)',
-                        @:max: 100
-                    @:},
+                                                                @:text: '@Html.Raw(@item.Nome)',
+                                                                @:max: 100
+                                                            @:
+                                    },
                 }
             ]
         }],
@@ -360,13 +361,55 @@
     function AdicionarPonto(competenciaID) {
         if (competenciaID != '') {
             if ($("strong").text() > 0) {
+                if (Number($("#" + competenciaID).text()) < 100) {
+                    pontos = Number($("#" + competenciaID).text()) + 1;
+                    saldo = Number($("strong").text()) - 1;
 
-                pontos = Number($("#" + competenciaID).text()) + 1;
-                saldo = Number($("strong").text()) - 1;
+                    $.ajax({
+                        type: 'POST',
+                        url: 'AdicionarPontos',
+                        dataType: 'text',
+                        async: true,
+                        data: {
+                            'ID': competenciaID, 'Pontos': pontos, 'Saldo': saldo
+                        },
+                        success: function (Dado) {
+                            if (Dado == "True") {
+                                $("strong").text(saldo);
+                                $("#" + competenciaID).text(pontos);
+                            }
+                            else {
+                                alert(Dado);
+                            }
+                        },
+                        error: function (Dado) {
+                            console.log(Dado);
+                        }
+                    });
+                }
+                else {
+                    alert('Você já atingiu a quantidade máxima de 100 pontos nesta competência');
+                }
+            }
+            else {
+                alert('saldo insuficiente');
+            }
+        }
+    }
+</script>
+<!-- /AdicionarPonto -->
+<!-- RemoverPonto -->
+<script>
+    function RemoverPonto(competenciaID) {
+        if (competenciaID != '') {
+            if (Number($("#" + competenciaID).text()) > 0) {
+
+                pontos = Number($("#" + competenciaID).text()) - 1;
+                saldo = Number($("strong").text()) + 1;
 
                 $.ajax({
                     type: 'POST',
-                    url: 'AdicionarPontos',
+                    url: 'RemoverPontos',
                     dataType: 'text',
                     async: true,
                     data: {
@@ -378,7 +421,7 @@
                             $("#" + competenciaID).text(pontos);
                         }
                         else {
-                            alert('Ocorreu um erro ao tentar ditribuir pontos na competência desejada, contate o administrador do sistema.');
+                            alert(Dado);
                         }
                     },
                     error: function (Dado) {
@@ -387,9 +430,9 @@
                 });
             }
             else {
-                alert('saldo insuficiente');
+                alert('A competência não possui pontos adicionados para remoção.');
             }
-        }        
+        }
     }
 </script>
-<!-- /AdicionarPonto -->
+<!-- /RemoverPonto -->
