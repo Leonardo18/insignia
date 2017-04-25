@@ -38,9 +38,8 @@
                                     <td>@item.Nome</td>
                                     <td>@item.Descricao</td>
                                     <td class="a-right a-right ">
-                                        <div style="width: 95%; margin: 0 auto; text-align: center;">
-                                            @*<span class="fa fa-arrow-circle-left" style="float: left;"></span>*@
-                                            <P style="display: inline-block; margin: 0;" id="@item.ID">@item.Pontos</P>
+                                        <div style="width: 95%; margin: 0 auto; text-align: center;">                                            
+                                            <P style="display: inline-block; margin: 0;" class="CompetenciasPontos" id="@item.ID">@item.Pontos</P>
                                             <span class="fa fa-arrow-circle-right" style="float: right;" onclick="AdicionarPonto('@item.ID')"></span>
                                             <span class="fa fa-arrow-circle-left" style="float: left;" onclick="RemoverPonto('@item.ID')"></span>
                                         </div>
@@ -319,7 +318,7 @@
             show: true,
             feature: {
                 restore: {
-                    show: true,
+                    show: false,
                     title: "Atualizar"
                 },
                 saveAsImage: {
@@ -376,6 +375,8 @@
                             if (Dado == "True") {
                                 $("strong").text(saldo);
                                 $("#" + competenciaID).text(pontos);
+                                
+                                AtualizaGraficoRadar();
                             }
                             else {
                                 alert(Dado);
@@ -418,6 +419,8 @@
                         if (Dado == "True") {
                             $("strong").text(saldo);
                             $("#" + competenciaID).text(pontos);
+
+                            AtualizaGraficoRadar();
                         }
                         else {
                             alert(Dado);
@@ -435,3 +438,26 @@
     }
 </script>
 <!-- /RemoverPonto -->
+<!-- AtualizaGraficoRadar -->
+<script>
+    function AtualizaGraficoRadar() {
+        var elementCompetencias = $(".CompetenciasPontos");
+        var arrayValoresCompetencias = [];
+
+        for (var i = 0; i < elementCompetencias.length; i++) {
+            arrayValoresCompetencias.push($(elementCompetencias[i]).text());
+        }
+
+        echartRadar.setOption({
+            calculable: true,
+            series: [{
+                name: 'Competências',
+                type: 'radar',
+                data: [{
+                    value: arrayValoresCompetencias
+                }]
+            }, ]
+        });
+    }
+</script>
+<!-- /AtualizaGraficoRadar -->
