@@ -27,18 +27,41 @@
                         <div class="profile_pic">
                             @if (!string.IsNullOrEmpty(Convert.ToString(Session["UsuarioFoto"])))
                             {
-                                <!-- Foto do usuário -->
-                                <img src="https://s3-sa-east-1.amazonaws.com/insigniagamify/@Session["EmpresaNome"]/Fotos/@Session["UsuarioFoto"]" alt="..." class="img-circle profile_img">
+                                if (Convert.ToString(Session["EmpresaID"]) == Convert.ToString(Session["UsuarioID"]))
+                                {
+                                    <!-- Foto do usuário -->
+                                    <a href="~/Empresas/Perfil/@Session["EmpresaID"]"><img src="https://s3-sa-east-1.amazonaws.com/insigniagamify/@Session["EmpresaNome"]/Fotos/@Session["UsuarioFoto"]" alt="..." class="img-circle profile_img"></a>
+                                }
+                                else
+                                {
+                                    <!-- Foto do usuário -->
+                                    <a href="~/Usuarios/Perfil/@Session["UsuarioID"]"><img src="https://s3-sa-east-1.amazonaws.com/insigniagamify/@Session["EmpresaNome"]/Fotos/@Session["UsuarioFoto"]" alt="..." class="img-circle profile_img"></a>
+                                }
                             }
                             else
                             {
-                                <!-- Foto padrão -->
-                                <img src="https://s3-sa-east-1.amazonaws.com/insigniagamify/images/Default.png" alt="..." class="img-circle profile_img">
+                                if (Convert.ToString(Session["EmpresaID"]) == Convert.ToString(Session["UsuarioID"]))
+                                {
+                                    <!-- Foto padrão -->
+                                    <a href="~/Empresas/Perfil/@Session["EmpresaID"]"><img src="https://s3-sa-east-1.amazonaws.com/insigniagamify/images/Default.png" alt="..." class="img-circle profile_img"></a>
+                                }
+                                else
+                                {
+                                    <!-- Foto padrão -->
+                                    <a href="~/Usuarios/Perfil/@Session["UsuarioID"]"><img src="https://s3-sa-east-1.amazonaws.com/insigniagamify/images/Default.png" alt="..." class="img-circle profile_img"></a>
+                                }
                             }
                         </div>
                         <div class="profile_info">
                             <span>Bem-Vindo,</span>
-                            <h2>@this.Session["UsuarioNome"]</h2>
+                            @if (Convert.ToString(Session["EmpresaID"]) == Convert.ToString(Session["UsuarioID"]))
+                            {
+                                <a href="~/Empresas/Perfil/@Session["EmpresaID"]"><h2>@this.Session["UsuarioNome"]</h2></a>
+                            }
+                            else
+                            {
+                                <a href="~/Usuarios/Perfil/@Session["UsuarioID"]"><h2>@this.Session["UsuarioNome"]</h2></a>
+                            }
                         </div>
                     </div>
                     <!-- /menu profile quick info -->
