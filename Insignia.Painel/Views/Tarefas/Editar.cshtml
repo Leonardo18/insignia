@@ -3,6 +3,7 @@
     ViewBag.Title = "Editar";
     Layout = "~/Views/Shared/LayoutPrincipal.cshtml";
 }
+@Styles.Render("~/Tarefas/styles")
 
 <!-- /page content -->
 <div class="page-title">
@@ -143,7 +144,15 @@
                                 @Html.Label("Nenhum arquivo anexado à tarefa", new { @class = "control-label label-value", style = "font-weight: Normal;" })
                             }
                         </div><span class="glyphicon glyphicon-info-sign" data-toggle="tooltip" data-placement="right" title="Este campo serve para anexar um arquivo à tarefa."></span>
-                    </div>                    
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                            Usuários Participantes:
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            @Html.DropDownList("Participantes", (List<SelectListItem>)ViewBag.Participantes, null, new { @class = "select2_multiple form-control", multiple = "multiple", @readonly = "readonly", disabled = "disabled", id = "Participantes" })
+                        </div><span class="glyphicon glyphicon-info-sign" data-toggle="tooltip" data-placement="right" title="Este campo indica quais usuários irão participar da execução da tarefa."></span>
+                    </div>
                     <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">
                             Data de término: <span class="required">*</span>
@@ -186,6 +195,22 @@
 <!-- /page content -->
 
 @Scripts.Render("~/Tarefas/scripts")
+<!-- Select2 -->
+<script>
+    $(document).ready(function () {
+        $(".select2_single").select2({
+            placeholder: "Select a state",
+            allowClear: true
+        });
+        $(".select2_group").select2({});
+        $(".select2_multiple").select2({
+            maximumSelectionLength: 4,
+            placeholder: "Selecione o registro",
+            allowClear: true
+        });       
+    });
+</script>
+<!-- /Select2 -->
 <!-- bootstrap-daterangepicker -->
 <script>
     $(document).ready(function () {
@@ -212,6 +237,7 @@
 
         //Seta o cursor do dropdown de Tipo para default
         $("#TipoID").css("cursor", "default");
+        $("#Participantes").css("cursor", "default");
 
         //Desabilita o campo descrição
         $("#editor").css("pointer-events", "none");
@@ -241,6 +267,14 @@
             $("#Finalizar").css("display", "none")
         }
 
+        //Seta os values de usuários participantes no select multiple
+        $("#Participantes").val(
+            [
+                @foreach (var item2 in Model.Participantes)
+                {
+                    @:'@item2.UsuarioID',
+                }
+            ]).trigger("change");
     });
 </script>
 <!-- /Desabitilia Editar -->

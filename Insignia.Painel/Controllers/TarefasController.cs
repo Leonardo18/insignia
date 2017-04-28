@@ -195,6 +195,7 @@ namespace Insignia.Painel.Controllers
             }
 
             ViewBag.TipoID = TarefasTipos;
+            ViewBag.Participantes = SelectListMVC.CriaListaSelecao(TarefasDAO.Participantes());
 
             return View("Editar", TarefaModel);
         }

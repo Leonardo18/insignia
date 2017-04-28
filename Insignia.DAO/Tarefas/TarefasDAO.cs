@@ -126,12 +126,11 @@ namespace Insignia.DAO.Tarefas
 
                     resp = ToBoolean(queryResultado);
 
+                    RemoverParticipantes(tarefa.ID);
+
                     if (tarefa.Participantes != null && tarefa.Participantes.Count > 0)
                     {
-                        if (RemoverParticipantes(tarefa.ID))
-                        {
-                            SalvarParticipantes(tarefa.ID, tarefa.Participantes);
-                        }
+                        SalvarParticipantes(tarefa.ID, tarefa.Participantes);
                     }
                 }
             }
