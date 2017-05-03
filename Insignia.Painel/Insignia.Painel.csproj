@@ -258,6 +258,7 @@
     <Content Include="Views\Areas\Permissao.cshtml" />
     <Content Include="Views\Dashboard\Funcionario.cshtml" />
     <Content Include="Views\Dashboard\Empresa.cshtml" />
+    <Content Include="Views\Graficos\Badges.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -301,7 +302,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Start\App_Data\" />
-    <Folder Include="Views\Graficos\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Insignia.DAO\Insignia.DAO.csproj">

@@ -124,6 +124,12 @@ namespace Insignia.Painel
             bundles.Add(new ScriptBundle("~/Agenda/scripts").Include(
                     "~/Scripts/js/moment/moment.min.js",
                     "~/Scripts/js/fullcalendar/fullcalendar.js"));
+
+            //Arquivos de javascript usados nos gráficos
+            bundles.Add(new ScriptBundle("~/Graficos/scripts").Include(
+                    "~/Scripts/js/raphael/raphael.js",
+                    "~/Scripts/js/morris/morris.js",
+                    "~/Scripts/js/echarts/echarts.js"));
         }
     }
 }
