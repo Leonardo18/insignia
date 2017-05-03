@@ -20,7 +20,7 @@ namespace Insignia.Painel.Controllers
         /// GET: Empresa
         /// </summary>
         /// <returns>Retorna a view do dashboard da empresa</returns>
-        [HttpGet, IsLogged]
+        [HttpGet, IsLogged, HavePermission(AreaNome = "DashboardEmpresa")]
         public ActionResult Empresa()
         {
             return View();
@@ -30,7 +30,7 @@ namespace Insignia.Painel.Controllers
         /// GET: Gestor
         /// </summary>
         /// <returns>Retorna a view do dashboard do gestor</returns>
-        [HttpGet, IsLogged]
+        [HttpGet, IsLogged, HavePermission(AreaNome = "DashboardGestor")]
         public ActionResult Gestor()
         {
             return View();
@@ -40,7 +40,7 @@ namespace Insignia.Painel.Controllers
         /// GET: Funcionario
         /// </summary>
         /// <returns>Retorna a view do dashboard do funcionário</returns>
-        [HttpGet, IsLogged]
+        [HttpGet, IsLogged, HavePermission(AreaNome = "DashboardFuncionario")]
         public ActionResult Funcionario()
         {
             var ViewModel = new ViewModelDashboardFuncionario();

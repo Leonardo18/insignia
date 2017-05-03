@@ -15,6 +15,11 @@ namespace Insignia.Model.Badge
         public int EmpresaID { get; set; }
 
         /// <summary>
+        /// ID do setor do cadastro da badge
+        /// </summary>
+        public int SetorID { get; set; }
+
+        /// <summary>
         /// Titulo da badge
         /// </summary>
         [Required(ErrorMessage = "Informe o título da badge")]

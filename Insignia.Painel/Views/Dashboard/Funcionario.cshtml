@@ -3,7 +3,6 @@
     ViewBag.Title = "Funcionario";
     Layout = "~/Views/Shared/LayoutPrincipal.cshtml";
 }
-
 <!-- Foi adicionado manualmente pois no bundle estava dando problema-->
 <link href="~/Content/css/fullcalendar/fullcalendar.css" rel="stylesheet">
 <link href="~/Content/css/fullcalendar/fullcalendar.print.css" rel="stylesheet" media="print">
@@ -16,14 +15,15 @@
 </div>
 <div class="clearfix"></div>
 <div class="row">
+    <!-- Atividades Recentes -->
     <div class="col-md-6 col-sm-4 col-xs-12">
         <div class="x_panel">
             <div class="x_title">
                 <h2>Tarefas Recentes</h2>
-                <ul class="nav navbar-right panel_toolbox" style="min-width: 0px;">                   
+                <ul class="nav navbar-right panel_toolbox" style="min-width: 0px;">
                     <li>
                         <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                    </li>                   
+                    </li>
                 </ul>
                 <div class="clearfix"></div>
             </div>
@@ -43,12 +43,12 @@
                                         <li>
                                             @if (!string.IsNullOrEmpty(Model.Usuario.Foto))
                                             {
-                                            <!-- Foto do usuário -->
+                                                <!-- Foto do usuário -->
                                                 <img class="avatar" src="https://s3-sa-east-1.amazonaws.com/insigniagamify/@Session["EmpresaNome"]/Fotos/@Model.Usuario.Foto" alt="Foto">
                                             }
                                             else
                                             {
-                                            <!-- Foto padrão -->
+                                                <!-- Foto padrão -->
                                                 <img class="avatar" src="https://s3-sa-east-1.amazonaws.com/insigniagamify/images/Default.png" alt="Foto">
                                             }
                                             <div class="message_wrapper">
@@ -76,6 +76,8 @@
             </div>
         </div>
     </div>
+    <!-- /Atividades Recentes -->
+    <!-- Gráfico Radar -->
     <div class="col-md-6 col-sm-4 col-xs-12">
         <div class="x_panel">
             <div class="x_title">
@@ -92,6 +94,8 @@
             </div>
         </div>
     </div>
+    <!-- /Gráfico Radar -->
+    <!-- Agenda -->
     <div class="col-md-12 col-sm-4 col-xs-12">
         <div class="x_panel">
             <div class="x_title">
@@ -111,13 +115,13 @@
             </div>
             @using (Html.BeginForm("SincronizarAgenda", "Dashboard", FormMethod.Get, new { @class = "form-horizontal form-label-left", id = "VisualizarAgenda" }))
             {
-                <div class="x_content">
-                    @*<span class="fa fa-refresh" style="float: right; margin-left: 15px; margin-top: 7px; cursor:pointer;" title="Sincronizar com Google Agenda" onclick="document.getElementById('VisualizarAgenda').submit();"></span>*@
+                <div class="x_content">                    
                     <div id='calendar'></div>
                 </div>
             }
         </div>
     </div>
+    <!-- Agenda -->
 </div>
 <!-- /page content -->
 
@@ -132,7 +136,6 @@
         x = x.offsetHeight;
 
         $(y).css('height', x + 'px');
-
     });
 </script>
 <!-- /Height x_Panel -->
@@ -370,7 +373,7 @@
             show: true,
             feature: {
                 restore: {
-                    show: true,
+                    show: false,
                     title: "Atualizar"
                 },
                 saveAsImage: {

@@ -113,13 +113,20 @@ namespace Insignia.Painel.Controllers
 
             if (SetorModel != null)
             {
-                if (SetoresDAO.Remover(SetorModel.ID))
+                if (!SetoresDAO.PodeRemover(SetorModel.ID))
                 {
-                    return RedirectToAction("Listar");
+                    if (SetoresDAO.Remover(SetorModel.ID))
+                    {
+                        return RedirectToAction("Listar");
+                    }
+                    else
+                    {
+                        ViewBag.Error = "Ocorreu um erro ao tentar excluir o resgistro, favor entrar em contato com o administrador do sistema";
+                    }
                 }
                 else
                 {
-                    ViewBag.Error = "Ocorreu um erro ao tentar excluir o resgistro, favor entrar em contato com o administrador do sistema";
+                    ViewBag.Error = "Não é possível remover o setor " + SetorModel.Nome + ", pois existem badges cadastras para o mesmo.";
                 }
             }
 

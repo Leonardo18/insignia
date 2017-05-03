@@ -25,8 +25,19 @@ namespace Insignia.Painel.Helpers.CustomAttributes
                 {
                     switch (tipo)
                     {
+                        case "Empresa":
+                            if (AreaNome == "DashboardGestor")
+                                context.Response.Redirect("~/Areas/Permissao");
+                            if (AreaNome == "DashboardFuncionario")
+                                context.Response.Redirect("~/Areas/Permissao");
+                            break;
+
                         case "Gestor":
                             if (AreaNome == "Setores")
+                                context.Response.Redirect("~/Areas/Permissao");
+                            if (AreaNome == "DashboardEmpresa")
+                                context.Response.Redirect("~/Areas/Permissao");
+                            if (AreaNome == "DashboardFuncionario")
                                 context.Response.Redirect("~/Areas/Permissao");
                             break;
 
@@ -39,8 +50,10 @@ namespace Insignia.Painel.Helpers.CustomAttributes
                                 context.Response.Redirect("~/Areas/Permissao");
                             if (AreaNome == "Usuarios")
                                 context.Response.Redirect("~/Areas/Permissao");
-                            break;
-                        default:
+                            if (AreaNome == "DashboardEmpresa")
+                                context.Response.Redirect("~/Areas/Permissao");
+                            if (AreaNome == "DashboardGestor")
+                                context.Response.Redirect("~/Areas/Permissao");
                             break;
                     }
                 }

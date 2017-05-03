@@ -125,6 +125,33 @@ namespace Insignia.DAO.Setores
         }
 
         /// <summary>
+        /// Verifica se existe badge para o setor cadastrado
+        /// </summary>
+        /// <param name="id">Id do setor</param>
+        /// <returns>Caso exista setor para a badge retorna true, se não false</returns>
+        public bool PodeRemover(int id)
+        {
+            bool resp = false;
+
+            if (!string.IsNullOrWhiteSpace(Convert.ToString(id)))
+            {
+                using (var sql = new SqlConnection(conStr))
+                {
+                    int queryResultado = sql.Query<int>(" SELECT Top 1 ID FROM Badges WHERE EmpresaID = @EmpresaID AND SetorID = @SetorID",
+                        new
+                        {
+                            EmpresaID = HttpContext.Current.Session["EmpresaID"],
+                            SetorID = id                            
+                        }).SingleOrDefault();
+
+                    resp = ToBoolean(queryResultado);
+                }
+            }
+
+            return resp;
+        }
+
+        /// <summary>
         /// Remove um setor do banco de dados
         /// </summary>
         /// <param name="id">ID do setor a ser removido</param>

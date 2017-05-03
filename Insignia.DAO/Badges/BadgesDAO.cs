@@ -33,7 +33,7 @@ namespace Insignia.DAO.Badges
             {
                 using (var sql = new SqlConnection(conStr))
                 {
-                    resp = sql.Query<Badge>(" SELECT ID, EmpresaID, Titulo, Descricao, Cor, CorFonte, Nivel, Tags, Quantidade FROM Badges WHERE ID = @ID AND EmpresaID = @EmpresaID ",
+                    resp = sql.Query<Badge>(" SELECT ID, EmpresaID, SetorID, Titulo, Descricao, Cor, CorFonte, Nivel, Tags, Quantidade FROM Badges WHERE ID = @ID AND EmpresaID = @EmpresaID ",
                         new
                         {
                             ID = id,
@@ -50,27 +50,28 @@ namespace Insignia.DAO.Badges
         /// </summary>
         /// <param name="bagde">Badge contendo os dados a serem salvos</param>
         /// <returns>True se o registro foi criado com sucesso, false caso contrário</returns>
-        public bool Salvar(Badge bagde)
+        public bool Salvar(Badge badge)
         {
             bool resp = false;
 
             List<ValidationResult> resultadoValidacao;
 
-            if (Validacao.ValidaModel(bagde, out resultadoValidacao))
+            if (Validacao.ValidaModel(badge, out resultadoValidacao))
             {
                 using (var sql = new SqlConnection(conStr))
                 {
-                    int queryResultado = sql.Execute(" INSERT INTO Badges(EmpresaID, Titulo, Descricao, Cor, CorFonte, Nivel, Tags, Quantidade) VALUES (@EmpresaID, @Titulo, @Descricao, @Cor, @CorFonte, @Nivel, @Tags, @Quantidade) ",
+                    int queryResultado = sql.Execute(" INSERT INTO Badges(EmpresaID, SetorID, Titulo, Descricao, Cor, CorFonte, Nivel, Tags, Quantidade) VALUES (@EmpresaID, @SetorID, @Titulo, @Descricao, @Cor, @CorFonte, @Nivel, @Tags, @Quantidade) ",
                                     new
                                     {
                                         EmpresaID = HttpContext.Current.Session["EmpresaID"],
-                                        Titulo = bagde.Titulo,
-                                        Descricao = bagde.Descricao,
-                                        Cor = bagde.Cor,
-                                        CorFonte = bagde.CorFonte,
-                                        Nivel = bagde.Nivel,
-                                        Tags = bagde.Tags,
-                                        Quantidade = bagde.Quantidade,
+                                        SetorID = badge.SetorID,
+                                        Titulo = badge.Titulo,
+                                        Descricao = badge.Descricao,
+                                        Cor = badge.Cor,
+                                        CorFonte = badge.CorFonte,
+                                        Nivel = badge.Nivel,
+                                        Tags = badge.Tags,
+                                        Quantidade = badge.Quantidade,
                                     });
 
                     resp = ToBoolean(queryResultado);
@@ -95,10 +96,11 @@ namespace Insignia.DAO.Badges
             {
                 using (var sql = new SqlConnection(conStr))
                 {
-                    var queryResultado = sql.Execute(@" UPDATE Badges SET Titulo = @Titulo, Descricao = @Descricao, Cor = @Cor, CorFonte = @CorFonte, Nivel = @Nivel, Tags = @Tags, Quantidade = @Quantidade WHERE ID = @ID ",
+                    var queryResultado = sql.Execute(@" UPDATE Badges SET SetorID = @SetorID, Titulo = @Titulo, Descricao = @Descricao, Cor = @Cor, CorFonte = @CorFonte, Nivel = @Nivel, Tags = @Tags, Quantidade = @Quantidade WHERE ID = @ID ",
                                     new
                                     {
                                         ID = badge.ID,
+                                        SetorID = badge.SetorID,
                                         Titulo = badge.Titulo,
                                         Descricao = badge.Descricao,
                                         Cor = badge.Cor,
@@ -117,19 +119,21 @@ namespace Insignia.DAO.Badges
         /// <summary>
         /// Carrega uma lista com todas as badges encontradas no banco de dados por nível
         /// </summary>
-        /// <returns>Retornar uma List de Badges</returns>
+        /// <param name="nivel">Nível qeu está sendo filtrado</param>        
+        /// <returns>Retorna uma list com bagdes</returns>
         public List<Badge> Listar(string nivel)
         {
-            List<Badge> list;
+            List<Badge> list = null;
 
             using (var sql = new SqlConnection(conStr))
             {
-                list = sql.Query<Badge>(" SELECT ID, Titulo, Descricao, Cor, CorFonte, Nivel, Tags, Quantidade FROM Badges WHERE EmpresaID = @EmpresaID AND Nivel = @Nivel ",
-                    new
-                    {
-                        EmpresaID = HttpContext.Current.Session["EmpresaID"],
-                        Nivel = nivel
-                    }).ToList();
+                list = sql.Query<Badge>(" SELECT ID, Titulo, Descricao, Cor, CorFonte, Nivel, Tags, Quantidade FROM Badges WHERE EmpresaID = @EmpresaID AND Nivel = @Nivel AND SetorID = ISNULL(@SetorID, SetorID) ",
+                   new
+                   {
+                       EmpresaID = HttpContext.Current.Session["EmpresaID"],
+                       Nivel = nivel,
+                       SetorID = !string.IsNullOrEmpty(Convert.ToString(HttpContext.Current.Session["SetorID"])) ? HttpContext.Current.Session["SetorID"] : null
+                   }).ToList();
             }
 
             return list;

@@ -27,12 +27,12 @@ namespace Insignia.Painel.Controllers
         /// <returns>Retorna a view de listar usuários com os dados</returns>
         [HttpGet, IsLogged, HavePermission(AreaNome = "Usuarios")]
         public ActionResult Listar()
-        {
+        {                        
             var UsuarioModel = UsuariosDAO.Listar();
 
             foreach (var item in UsuarioModel)
-            {
-                item.SetorNome = Database.DBBuscaInfo("Setores", "ID", Convert.ToString(item.SetorID), "Nome");
+            {               
+                item.SetorNome = Database.DBBuscaInfo("Setores", "ID", Convert.ToString(item.SetorID), "Nome");               
             }
 
             return View(UsuarioModel);
@@ -47,6 +47,7 @@ namespace Insignia.Painel.Controllers
         {
             var UsuarioModel = new Usuario();
 
+            //Se o usuário logado for gestor pega apenas o setor do usuário atual, se não pega todos setor por ser usuário do tipo empresa
             if (Convert.ToString(Session["UsuarioTipo"]) == "Gestor")
             {
                 Dictionary<int, string> SetorGestor = new Dictionary<int, string>();
@@ -95,35 +96,36 @@ namespace Insignia.Painel.Controllers
                 }
                 else
                 {
-                    ViewBag.Error = "O Usuário " + UsuarioModel.Nome + " já possui um cadastro.";
+                    ViewBag.Error = "Já existe um usuário com o e-mail fornecido.";
                 }
             }
 
+            //Se o usuário logado for gestor pega apenas o setor do usuário atual, se não pega todos setor por ser usuário do tipo empresa
             if (Convert.ToString(Session["UsuarioTipo"]) == "Gestor")
             {
                 Dictionary<int, string> SetorGestor = new Dictionary<int, string>();
 
                 //Faz um dicionário apenas com o setor do Gestor
-                SetorGestor.Add(Convert.ToInt32(Session["SetorID"]), Database.DBBuscaInfo("Usuarios", "ID", Convert.ToString(Session["SetorID"]), "Nome"));
+                SetorGestor.Add(Convert.ToInt32(Session["SetorID"]), Database.DBBuscaInfo("Setores", "ID", Convert.ToString(Session["SetorID"]), "Nome"));
 
                 //Cria o Select List com o setor do gestor
                 ViewBag.Setores = SelectListMVC.CriaListaSelecao(SetorGestor);
             }
             else
             {
-                //Busca os tipo de usuároias e retorna um dictionary contendo os dados
-                var UsuariosTipos = SelectListMVC.CriaListaSelecao(UsuariosDAO.Setores());
+                //Busca todos os setores e retorna um dictionary contendo os dados
+                var Setores = SelectListMVC.CriaListaSelecao(UsuariosDAO.Setores());
 
-                foreach (var item in UsuariosTipos)
+                foreach (var item in Setores)
                 {
-                    if (item.Value == UsuarioModel.Tipo)
+                    if (Convert.ToInt32(item.Value) == UsuarioModel.SetorID)
                     {
                         item.Selected = true;
                         break;
                     }
                 }
 
-                ViewBag.Setores = UsuariosTipos;
+                ViewBag.Setores = Setores;
             }
 
             return View(UsuarioModel);
@@ -139,20 +141,35 @@ namespace Insignia.Painel.Controllers
         {
             Usuario UsuarioModel = UsuariosDAO.Carregar(ID);
 
-            //Busca os tipos de tarefa e retorna um dictionary contendo elas
-            var UsuariosTipos = SelectListMVC.CriaListaSelecao(UsuariosDAO.Setores());
-
-            //Retorna na list o valor marcado atualmente para o cadastro
-            foreach (var item in UsuariosTipos)
+            //Se o usuário logado for gestor pega apenas o setor do usuário atual, se não pega todos setor por ser usuário do tipo empresa
+            if (Convert.ToString(Session["UsuarioTipo"]) == "Gestor")
             {
-                if (item.Value == Convert.ToString(UsuarioModel.SetorID))
-                {
-                    item.Selected = true;
-                    break;
-                }
-            }
+                Dictionary<int, string> SetorGestor = new Dictionary<int, string>();
 
-            ViewBag.Setores = UsuariosTipos;
+                //Faz um dicionário apenas com o setor do Gestor
+                SetorGestor.Add(Convert.ToInt32(Session["SetorID"]), Database.DBBuscaInfo("Setores", "ID", Convert.ToString(Session["SetorID"]), "Nome"));
+
+                //Cria o Select List com o setor do gestor
+                ViewBag.Setores = SelectListMVC.CriaListaSelecao(SetorGestor);
+            }
+            else
+            {
+                UsuariosDAO UsuariosDAO = new UsuariosDAO(ConfigurationManager.ConnectionStrings["strConMain"].ConnectionString);
+
+                //Busca os setores e retorna um dictionary contendo os dados
+                var Setores = SelectListMVC.CriaListaSelecao(UsuariosDAO.Setores());
+
+                foreach (var item in Setores)
+                {
+                    if (Convert.ToInt32(item.Value) == UsuarioModel.SetorID)
+                    {
+                        item.Selected = true;
+                        break;
+                    }
+                }
+
+                ViewBag.Setores = Setores;
+            }
 
             return View("Editar", UsuarioModel);
         }
@@ -189,6 +206,10 @@ namespace Insignia.Painel.Controllers
                     {
                         return RedirectToAction("Editar", new { ID = UsuarioModel.ID });
                     }
+                }
+                else
+                {
+                    ViewBag.Error = "Já existe um usuário com o e-mail fornecido.";                    
                 }
             }
 

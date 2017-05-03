@@ -141,7 +141,8 @@ namespace Insignia.DAO.Tarefas
         /// <summary>
         /// Carrega uma lista com todas as tarefas encontradas no banco de dados por status
         /// </summary>
-        /// <returns>Retornar uma List de Tarefas</returns>
+        /// <param name="status">Filtro por status da tarefa</param>
+        /// <returns>Retorna uma list de tarefas</returns>
         public List<Tarefa> Listar(string status)
         {
             List<Tarefa> list;
@@ -227,10 +228,11 @@ namespace Insignia.DAO.Tarefas
 
             using (var sql = new SqlConnection(conStr))
             {
-                dict = sql.Query(" SELECT ID, Tags FROM Badges WHERE EmpresaID = @EmpresaID ORDER BY Tags ASC ",
+                dict = sql.Query(" SELECT ID, Tags FROM Badges WHERE EmpresaID = @EmpresaID AND SetorID = ISNULL(@SetorID, SetorID) ORDER BY Tags ASC ",
                     new
                     {
-                        EmpresaID = HttpContext.Current.Session["EmpresaID"]
+                        EmpresaID = HttpContext.Current.Session["EmpresaID"],
+                        SetorID = !string.IsNullOrEmpty(Convert.ToString(HttpContext.Current.Session["SetorID"])) ? HttpContext.Current.Session["SetorID"] : null
                     }).ToDictionary(row => (int)row.ID, row => (string)row.Tags);
             }
 
@@ -247,11 +249,11 @@ namespace Insignia.DAO.Tarefas
 
             using (var sql = new SqlConnection(conStr))
             {
-                dict = sql.Query(" SELECT ID, Nome FROM Usuarios WHERE EmpresaID = @EmpresaID AND SetorID = @SetorID AND ID <> @UsuarioID ORDER BY Nome ASC ",
+                dict = sql.Query(" SELECT ID, Nome FROM Usuarios WHERE EmpresaID = @EmpresaID AND SetorID = ISNULL(@SetorID, SetorID) AND ID <> @UsuarioID ORDER BY Nome ASC ",
                     new
                     {
                         EmpresaID = HttpContext.Current.Session["EmpresaID"],
-                        SetorID = HttpContext.Current.Session["SetorID"],
+                        SetorID = !string.IsNullOrEmpty(Convert.ToString(HttpContext.Current.Session["SetorID"])) ? HttpContext.Current.Session["SetorID"] : null,
                         UsuarioID = HttpContext.Current.Session["UsuarioID"]
                     }).ToDictionary(row => (int)row.ID, row => (string)row.Nome);
             }

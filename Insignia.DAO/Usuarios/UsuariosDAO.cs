@@ -150,14 +150,15 @@ namespace Insignia.DAO.Usuarios
         /// <returns>Retornar uma List de usuários</returns>
         public List<Usuario> Listar()
         {
-            List<Usuario> list;
+            List<Usuario> list = null;
 
             using (var sql = new SqlConnection(conStr))
             {
-                list = sql.Query<Usuario>(" SELECT ID, EmpresaID, SetorID, Nome, Email, Tipo FROM Usuarios WHERE EmpresaID = @EmpresaID ORDER BY Nome ",
+                list = sql.Query<Usuario>(" SELECT ID, EmpresaID, SetorID, Nome, Email, Tipo FROM Usuarios WHERE EmpresaID = @EmpresaID AND SetorID = ISNULL(@SetorID, SetorID) ORDER BY Nome ",
                     new
                     {
-                        EmpresaID = HttpContext.Current.Session["EmpresaID"]
+                        EmpresaID = HttpContext.Current.Session["EmpresaID"],
+                        SetorID = !string.IsNullOrEmpty(Convert.ToString(HttpContext.Current.Session["SetorID"])) ? HttpContext.Current.Session["SetorID"] : null
                     }).ToList();
             }
 
@@ -303,9 +304,13 @@ namespace Insignia.DAO.Usuarios
                     }).FirstOrDefault();
             }
 
-            if (usuario != null && !string.IsNullOrEmpty(email) && (id != 0 && usuario.ID != id))
+            if (usuario != null && !string.IsNullOrEmpty(email) && (id != 0))
             {
-                if (!string.IsNullOrEmpty(Convert.ToString(usuario.ID)))
+                if (usuario.ID != id)
+                {
+                    resp = true;
+                }
+                else
                 {
                     resp = false;
                 }

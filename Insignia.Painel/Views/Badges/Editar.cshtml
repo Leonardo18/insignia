@@ -32,6 +32,15 @@
                 @using (Html.BeginForm("Editar", "Badges", FormMethod.Post, new { @class = "form-horizontal form-label-left", id = "FormEditar" }))
                 {
                     <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                            Setor: <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            @Html.DropDownList("SetorID", (List<SelectListItem>)ViewBag.Setores, null, new { @class = "select2_multiple form-control", required = "", @readonly = "readonly", disabled = "disabled", id = "SetorID" })
+                            @Html.ValidationMessageFor(modelItem => modelItem.SetorID, null, new { @class = "text-danger" })
+                        </div><span class="glyphicon glyphicon-info-sign" data-toggle="tooltip" data-placement="right" title="Este campo indica qual o setor no qual o badge irá pertence."></span>
+                    </div>
+                    <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">
                             Título: <span class="required">*</span>
                         </label>
@@ -156,13 +165,20 @@
         $('#tags_1_tag').prop("disabled", true);
         $("#tags_1_tagsinput *").attr("disabled", "disabled").off('click');
         $("#tags_1_tagsinput").css("background-color", "#eee");
-
-        //Seta o cursor do dropdown d enivel para default
-        $("#Nivel").css("cursor", "default");
-
     });
 </script>
 <!-- /jQuery Tags Input -->
+<!-- Desabilita cursor dos dropdown -->
+<script>
+    $(document).ready(function () {
+        //Seta o cursor do dropdown d enivel para default
+        $("#Nivel").css("cursor", "default");
+
+        //Seta o cursor do dropdown de setores para default
+        $("#SetorID").css("cursor", "default");
+    });
+</script>
+<!-- /Desabilita cursor dos dropdown -->
 <!-- Editar -->
 <script>
     function Editar() {

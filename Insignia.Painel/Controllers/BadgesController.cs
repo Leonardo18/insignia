@@ -1,8 +1,12 @@
 ﻿using Insignia.DAO.Badges;
+using Insignia.DAO.Usuarios;
+using Insignia.DAO.Util;
 using Insignia.Model.Badge;
 using Insignia.Painel.Helpers.CustomAttributes;
 using Insignia.Painel.Helpers.Util;
 using Insignia.Painel.ViewModels;
+using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Web.Mvc;
 using static System.Convert;
@@ -27,6 +31,25 @@ namespace Insignia.Painel.Controllers
             ViewModel.ListBadgeBasicas = BadgesDAO.Listar("Basica");
             ViewModel.ListBadgeIntermediarias = BadgesDAO.Listar("Intermediaria");
             ViewModel.ListBadgeAvancadas = BadgesDAO.Listar("avancada");
+
+            //Se o usuário logado for gestor pega apenas o setor do usuário atual, se não pega todos setor por ser usuário do tipo empresa
+            if (Convert.ToString(Session["UsuarioTipo"]) == "Gestor")
+            {
+                Dictionary<int, string> SetorGestor = new Dictionary<int, string>();
+
+                //Faz um dicionário apenas com o setor do Gestor
+                SetorGestor.Add(ToInt32(Session["SetorID"]), Database.DBBuscaInfo("Setores", "ID", Convert.ToString(Session["SetorID"]), "Nome"));
+
+                //Cria o Select List com o setor do gestor
+                ViewBag.Setores = SelectListMVC.CriaListaSelecao(SetorGestor);
+            }
+            else
+            {
+                UsuariosDAO UsuariosDAO = new UsuariosDAO(ConfigurationManager.ConnectionStrings["strConMain"].ConnectionString);
+
+                //Busca todos os setores e retorna um dictionary contendo os dados e retorna o select list
+                ViewBag.Setores = SelectListMVC.CriaListaSelecao(UsuariosDAO.Setores());
+            }
 
             return View(ViewModel);
         }
@@ -60,6 +83,36 @@ namespace Insignia.Painel.Controllers
             ViewModel.ListBadgeIntermediarias = BadgesDAO.Listar("Intermediaria");
             ViewModel.ListBadgeAvancadas = BadgesDAO.Listar("avancada");
 
+            //Se o usuário logado for gestor pega apenas o setor do usuário atual, se não pega todos setor por ser usuário do tipo empresa
+            if (Convert.ToString(Session["UsuarioTipo"]) == "Gestor")
+            {
+                Dictionary<int, string> SetorGestor = new Dictionary<int, string>();
+
+                //Faz um dicionário apenas com o setor do Gestor
+                SetorGestor.Add(ToInt32(Session["SetorID"]), Database.DBBuscaInfo("Setores", "ID", Convert.ToString(Session["SetorID"]), "Nome"));
+
+                //Cria o Select List com o setor do gestor
+                ViewBag.Setores = SelectListMVC.CriaListaSelecao(SetorGestor);
+            }
+            else
+            {
+                UsuariosDAO UsuariosDAO = new UsuariosDAO(ConfigurationManager.ConnectionStrings["strConMain"].ConnectionString);
+
+                //Busca todos os setores e retorna um dictionary contendo os dados
+                var Setores = SelectListMVC.CriaListaSelecao(UsuariosDAO.Setores());
+
+                foreach (var item in Setores)
+                {
+                    if (ToInt32(item.Value) == BadgeModel.SetorID)
+                    {
+                        item.Selected = true;
+                        break;
+                    }
+                }
+
+                ViewBag.Setores = Setores;
+            }
+
             return View(ViewModel);
         }
 
@@ -72,6 +125,36 @@ namespace Insignia.Painel.Controllers
         public ActionResult Editar(int ID)
         {
             Badge BadgeModel = BadgesDAO.Carregar(ID);
+
+            //Se o usuário logado for gestor pega apenas o setor do usuário atual, se não pega todos setor por ser usuário do tipo empresa
+            if (Convert.ToString(Session["UsuarioTipo"]) == "Gestor")
+            {
+                Dictionary<int, string> SetorGestor = new Dictionary<int, string>();
+
+                //Faz um dicionário apenas com o setor do Gestor
+                SetorGestor.Add(ToInt32(Session["SetorID"]), Database.DBBuscaInfo("Setores", "ID", Convert.ToString(Session["SetorID"]), "Nome"));
+
+                //Cria o Select List com o setor do gestor
+                ViewBag.Setores = SelectListMVC.CriaListaSelecao(SetorGestor);
+            }
+            else
+            {
+                UsuariosDAO UsuariosDAO = new UsuariosDAO(ConfigurationManager.ConnectionStrings["strConMain"].ConnectionString);
+
+                //Busca os setores e retorna um dictionary contendo os dados
+                var Setores = SelectListMVC.CriaListaSelecao(UsuariosDAO.Setores());
+
+                foreach (var item in Setores)
+                {
+                    if (ToInt32(item.Value) == BadgeModel.SetorID)
+                    {
+                        item.Selected = true;
+                        break;
+                    }
+                }
+
+                ViewBag.Setores = Setores;
+            }
 
             return View("Editar", BadgeModel);
         }
