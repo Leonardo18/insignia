@@ -1,4 +1,4 @@
-﻿
+﻿@model Insignia.Painel.ViewModels.ViewModelGraficos
 @{
     ViewBag.Title = "Badges";
     Layout = "~/Views/Shared/LayoutPrincipal.cshtml";
@@ -24,7 +24,27 @@
                 <div class="clearfix"></div>
             </div>
             <div class="x_content">
-                Filtros
+                @using (Html.BeginForm("Badges", "Graficos", FormMethod.Post, new { @class = "form-horizontal form-label-left" }))
+                {
+                    <div class="form-group">
+                        <label class="control-label col-md-1 col-sm-3 col-xs-12">
+                            Setor:
+                        </label>
+                        <div class="col-md-3 col-sm-6 col-xs-12">
+                            @Html.DropDownList("FiltroSetor", (List<SelectListItem>)ViewBag.Setores, "Todos Setores", new { @class = "select2_multiple form-control", onchange = "$(this).closest('form').submit();" })
+                        </div>
+                        <label class="control-label col-md-1 col-sm-3 col-xs-12">
+                            Usuário:
+                        </label>
+                        <div class="col-md-3 col-sm-6 col-xs-12">
+                            @Html.DropDownList("FiltroUsuario", (List<SelectListItem>)ViewBag.Usuarios, "Todos Usuários", new { @class = "select2_multiple form-control" })
+                        </div>
+                        <div>
+                            <button class="btn btn-primary" type="submit">Filtrar</button>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>                    
+                }
             </div>
         </div>
     </div>
@@ -54,7 +74,7 @@
         Morris.Donut({
             element: 'graph_donut',
             data: [
-              { label: 'Jam', value: 100 },
+              { label: 'Jam', value: 60 },
               { label: 'Frosted', value: 100 },
               { label: 'Custard', value: 100 },
               { label: 'Sugar', value: 100 }

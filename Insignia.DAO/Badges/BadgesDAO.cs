@@ -128,12 +128,12 @@ namespace Insignia.DAO.Badges
             using (var sql = new SqlConnection(conStr))
             {
                 list = sql.Query<Badge>(" SELECT ID, Titulo, Descricao, Cor, CorFonte, Nivel, Tags, Quantidade FROM Badges WHERE EmpresaID = @EmpresaID AND Nivel = @Nivel AND SetorID = ISNULL(@SetorID, SetorID) ",
-                   new
-                   {
-                       EmpresaID = HttpContext.Current.Session["EmpresaID"],
-                       Nivel = nivel,
-                       SetorID = !string.IsNullOrEmpty(Convert.ToString(HttpContext.Current.Session["SetorID"])) ? HttpContext.Current.Session["SetorID"] : null
-                   }).ToList();
+                    new
+                    {
+                        EmpresaID = HttpContext.Current.Session["EmpresaID"],
+                        Nivel = nivel,
+                        SetorID = !string.IsNullOrEmpty(Convert.ToString(HttpContext.Current.Session["SetorID"])) ? HttpContext.Current.Session["SetorID"] : null
+                    }).ToList();
             }
 
             return list;
