@@ -61,7 +61,12 @@ namespace Insignia.DAO.Graficos
             return dict;
         }
 
-
+        /// <summary>
+        /// Consulta que busca todas badges conforme filtros passados, caso não passe filtros busca todas referente a empresa
+        /// </summary>
+        /// <param name="filtroSetor">Filtro de setor</param>
+        /// <param name="filtroUsuario">Filtro de usuário</param>
+        /// <returns>Retorna uma list de badges</returns>
         public List<Badge> Badge(int filtroSetor, int filtroUsuario)
         {
             List<Badge> resp = null;

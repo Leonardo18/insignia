@@ -567,5 +567,33 @@ namespace Insignia.DAO.Tarefas
 
             return resp;
         }
+
+        /// <summary>
+        /// Atualiza eventoID de uma tarefa no banco de dados
+        /// </summary>
+        /// <param name="id">ID da tarefa</param>
+        /// <param name="eventoID">ID do evento no Google Calendar</param>
+        /// <returns>Caso consiga atualizar retornar true, caso de erro retorna false</returns>
+        public bool AtualizaEventoID(int id, long eventoID)
+        {
+            bool resp = false;
+
+            if (!string.IsNullOrWhiteSpace(Convert.ToString(id)) && eventoID != 0)
+            {
+                using (var sql = new SqlConnection(conStr))
+                {
+                    int queryResultado = sql.Execute(" UPDATE Tarefas SET EventoID = @EventoID WHERE ID = @ID ",
+                        new
+                        {
+                            ID = id,
+                            EventoID = eventoID
+                        });
+
+                    resp = ToBoolean(queryResultado);
+                }
+            }
+
+            return resp;
+        }
     }
 }

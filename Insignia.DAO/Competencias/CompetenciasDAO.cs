@@ -139,11 +139,11 @@ namespace Insignia.DAO.Competencias
             {
                 using (var sql = new SqlConnection(conStr))
                 {
-                    sql.Execute(" DELETE FROM CompetenciasUsuarios WHERE CompetenciaID = @CompetenciaID AND EmpresaID = @EmpresaID ",
+                    sql.Execute(" DELETE FROM CompetenciasUsuarios WHERE EmpresaID = @EmpresaID AND CompetenciaID = @CompetenciaID ",
                         new
                         {
-                            CompetenciaID = id,
-                            EmpresaID = HttpContext.Current.Session["EmpresaID"]
+                            EmpresaID = HttpContext.Current.Session["EmpresaID"],
+                            CompetenciaID = id
                         });
 
                     int queryResultado = sql.Execute(" DELETE FROM Competencias WHERE ID = @ID AND EmpresaID = @EmpresaID ",

@@ -264,7 +264,7 @@ namespace Insignia.Painel.Controllers
                     }
 
                     //Se possui integração com google calendar, adiciona a tarefa no google
-                    if (service != null && !string.IsNullOrEmpty(Database.DBBuscaInfo("Tarefas", "ID", Convert.ToString(TarefaModel.ID), "EventoID")))
+                    if (service != null && Database.DBBuscaInfo("Tarefas", "ID", Convert.ToString(TarefaModel.ID), "EventoID") != "0")
                     {
                         //Atualiza o evento da tarefa no google calendar
                         Event NovoEvento = new Event();
@@ -276,6 +276,27 @@ namespace Insignia.Painel.Controllers
                         NovoEvento.End = new EventDateTime();
                         NovoEvento.End.DateTime = TarefaModel.Termino;
                         var eventResult = service.Events.Update(NovoEvento, "primary", Database.DBBuscaInfo("Tarefas", "ID", Convert.ToString(TarefaModel.ID), "EventoID")).Execute();
+                    }
+                    else if (service != null && Database.DBBuscaInfo("Tarefas", "ID", Convert.ToString(TarefaModel.ID), "EventoID") == "0")
+                    {
+                        do
+                        {
+                            TarefaModel.EventoID = Convert.ToInt64(Database.GeraCodigo(10));
+                        } while (TarefasDAO.VerificaEventoID(TarefaModel.EventoID));
+
+                        TarefasDAO.AtualizaEventoID(TarefaModel.ID, TarefaModel.EventoID);
+
+                        //Inserção de evento da tarefa editada e que não está no google calendar
+                        Event NovoEvento = new Event();
+
+                        NovoEvento.Id = Convert.ToString(TarefaModel.EventoID);
+                        NovoEvento.Summary = TarefaModel.Titulo;
+                        NovoEvento.Description = TarefaModel.Descricao;
+                        NovoEvento.Start = new EventDateTime();
+                        NovoEvento.Start.DateTime = TarefaModel.Termino;
+                        NovoEvento.End = new EventDateTime();
+                        NovoEvento.End.DateTime = TarefaModel.Termino;
+                        var eventResult = service.Events.Insert(NovoEvento, "primary").Execute();
                     }
 
                     return RedirectToAction("Editar", new { ID = TarefaModel.ID });
