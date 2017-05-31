@@ -2,10 +2,6 @@
 @import url(https://fonts.googleapis.com/css?family=Montserrat:400,700);
 @import url(https://fonts.googleapis.com/css?family=Fjalla+One);
 
-body {
-	-webkit-perspective: 2500px;
-}
-
 .badge-sistema {
     position: relative;
     width: 169px;
@@ -59,8 +55,8 @@ body {
         text-align: center;
         color: white;
         position: absolute;
-        top: 0px;   
-        padding: 0 5%;     
+        top: 0px;
+        padding: 0 5%;
     }
 
     .badge-sistema:hover .descricao:after {
@@ -78,7 +74,7 @@ body {
         top: 79px;
     }
 
-        .badge-sistema .lock:after {            
+        .badge-sistema .lock:after {
             display: block;
             font-size: .4em;
             position: relative;
@@ -101,6 +97,7 @@ p {
 
     .wrap div {
         -webkit-backface-visibility: hidden;
+        -webkit-perspective: 2500px;
     }
 
     .wrap:hover {

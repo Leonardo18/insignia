@@ -1,14 +1,11 @@
-﻿@model Insignia.Painel.ViewModels.ViewModelGraficoBadges
+﻿@model Insignia.Painel.ViewModels.ViewModelGraficoTarefas
 @{
-    ViewBag.Title = "Badges";
+    ViewBag.Title = "Tarefas";
     Layout = "~/Views/Shared/LayoutPrincipal.cshtml";
 }
 
 <!-- page content -->
 <div class="page-title">
-    <div class="title_left">
-        <h3>Gráfico de badges</h3>
-    </div>
 </div>
 <div class="clearfix"></div>
 <div class="row">
@@ -24,7 +21,7 @@
                 <div class="clearfix"></div>
             </div>
             <div class="x_content">
-                @using (Html.BeginForm("Badges", "Graficos", FormMethod.Post, new { @class = "form-horizontal form-label-left" }))
+                @using (Html.BeginForm("Tarefas", "Graficos", FormMethod.Post, new { @class = "form-horizontal form-label-left" }))
                 {
                     <div class="form-group">
                         @if (Convert.ToString(Session["UsuarioTipo"]) == "Empresa")
@@ -39,7 +36,7 @@
                         <label class="control-label col-md-1 col-sm-3 col-xs-12">
                             Usuário:
                         </label>
-                        <div class="col-md-3 col-sm-6 col-xs-12">                            
+                        <div class="col-md-3 col-sm-6 col-xs-12">
                             @Html.DropDownList("FiltroUsuario", (List<SelectListItem>)ViewBag.Usuarios, "Todos Usuários", new { @class = "select2_multiple form-control" })
                         </div>
                         <div>
@@ -51,10 +48,10 @@
             </div>
         </div>
     </div>
-    <div class="col-md-12 col-sm-4 col-xs-12">
+    <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">
             <div class="x_title">
-                <h2><i class="fa fa-bars"></i> Gráfico Donut</h2>
+                <h2>Perfil</h2>
                 <ul class="nav navbar-right panel_toolbox" style="min-width: 0px;">
                     <li>
                         <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
@@ -63,39 +60,49 @@
                 <div class="clearfix"></div>
             </div>
             <div class="x_content">
-                <div id="graph_donut" style="width:100%; height:300px;"></div>
+
+                <div class="col-md-12 col-sm12 col-xs-12">
+                    <div class="profile_title">
+                        <div class="col-md-6">
+                            <h2>Relatório de Tarefas</h2>
+                        </div>
+                    </div>
+                    <!-- start of user-activity-graph -->
+                    <div id="graph_bar" style="width:100%; height:280px;"></div>
+                    <!-- end of user-activity-graph -->
+                </div>
             </div>
         </div>
     </div>
 </div>
 <!-- /page content -->
 
-@Scripts.RenderFormat("<script type=\"text/javascript\" src=\"{0}\" charset=\"iso-8859-1\"></script>", "~/Graficos/scripts")
-<!-- morris.js -->
+@Scripts.Render("~/Graficos/scripts")
+<!-- Charts -->
 <script>
-    $(document).ready(function () {
-        Morris.Donut({
-            element: 'graph_donut',
+    $(function () {
+        Morris.Bar({
+            element: 'graph_bar',
             data: [
-
-                @for (var i = 0; i < Model.Badges.Count; i++)
-                {
-                    @:{
-                        @:label: '@Model.Badges[i].Titulo',
-                        @:value: @Model.PorcentagemBadges[Model.Badges[i].ID]
-                    @:},
-                }
+              { "periodo": "Jan", "Tarefas Trabalhadas": @Model.TarefasMes[0] },
+              { "periodo": "Fev", "Tarefas Trabalhadas": @Model.TarefasMes[1] },
+              { "periodo": "Mar", "Tarefas Trabalhadas": @Model.TarefasMes[2] },
+              { "periodo": "Abr", "Tarefas Trabalhadas": @Model.TarefasMes[3] },
+              { "periodo": "Mai", "Tarefas Trabalhadas": @Model.TarefasMes[4] },
+              { "periodo": "Jun", "Tarefas Trabalhadas": @Model.TarefasMes[5] },
+              { "periodo": "Jul", "Tarefas Trabalhadas": @Model.TarefasMes[6] },
+              { "periodo": "Ago", "Tarefas Trabalhadas": @Model.TarefasMes[7] },
+              { "periodo": "Set", "Tarefas Trabalhadas": @Model.TarefasMes[8] },
+              { "periodo": "Out", "Tarefas Trabalhadas": @Model.TarefasMes[9] },
+              { "periodo": "Nov", "Tarefas Trabalhadas": @Model.TarefasMes[10] },
+              { "periodo": "Dez", "Tarefas Trabalhadas": @Model.TarefasMes[11] }
             ],
-            colors:
-                [
-                    @foreach (var item in Model.Badges)
-                    {
-                        @:'@item.Cor',
-                    }
-                ],
-            formatter: function (y) {
-                return y + "%";
-            },
+            xkey: 'periodo',
+            hideHover: 'auto',
+            barColors: ['#5A738E', '#5A738E', '#5A738E', '#5A738E'],
+            ykeys: ['Tarefas Trabalhadas', ''],
+            labels: ['Tarefas Trabalhadas', ''],
+            xLabelAngle: 60,
             resize: true
         });
 
@@ -104,4 +111,4 @@
         });
     });
 </script>
-<!-- /morris.js -->
+<!-- /Charts -->

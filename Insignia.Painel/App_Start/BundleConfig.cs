@@ -129,7 +129,8 @@ namespace Insignia.Painel
             bundles.Add(new ScriptBundle("~/Graficos/scripts").Include(
                     "~/Scripts/js/raphael/raphael.js",
                     "~/Scripts/js/morris/morris.js",
-                    "~/Scripts/js/echarts/echarts.js"));
+                    "~/Scripts/js/echarts/echarts.js",
+                    "~/Scripts/js/bootstrap-progressbar/bootstrap-progressbar.js"));
         }
     }
 }

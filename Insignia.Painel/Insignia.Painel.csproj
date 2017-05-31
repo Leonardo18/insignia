@@ -259,6 +259,8 @@
     <Content Include="Views\Dashboard\Funcionario.cshtml" />
     <Content Include="Views\Dashboard\Empresa.cshtml" />
     <Content Include="Views\Graficos\Badges.cshtml" />
+    <Content Include="Views\Graficos\Tarefas.cshtml" />
+    <Content Include="Views\Graficos\Competencias.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -297,7 +299,9 @@
     <Compile Include="ViewModels\Badge.cs" />
     <Compile Include="ViewModels\Competencia.cs" />
     <Compile Include="ViewModels\DashboardFuncionario.cs" />
-    <Compile Include="ViewModels\Graficos.cs" />
+    <Compile Include="ViewModels\GraficoBadges.cs" />
+    <Compile Include="ViewModels\GraficoCompetencias.cs" />
+    <Compile Include="ViewModels\GraficoTarefas.cs" />
     <Compile Include="ViewModels\Tarefa.cs" />
     <Compile Include="ViewModels\Perfil.cs" />
   </ItemGroup>
@@ -313,6 +317,9 @@
       <Project>{0ed38ad7-6bb3-4f5c-95cf-7657218cd3fd}</Project>
       <Name>Insignia.Model</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

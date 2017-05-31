@@ -57,7 +57,7 @@
                             @Html.TextArea("Descricao", Model.Descricao, new { @class = "form-control col-md-7 col-xs-12", placeholder = "Descrição", required = "", onkeyup = "textContador(this,'contador',200);", id = "descricao", @readonly = "readonly" })
                             @Html.ValidationMessageFor(modelItem => modelItem.Descricao, null, new { @class = "text-danger" })
                         </div><span class="glyphicon glyphicon-info-sign" data-toggle="tooltip" data-placement="right" title="Este campo indica uma breve descrição da badge."></span>
-                        <div style="display: block; width: 70%; float: left; text-align: center;">
+                        <div style="display: block; width: 74%; float: left; text-align: center;">
                             <span>Você ainda pode digitar </span><span id="contador">200</span><span> caracteres.</span>
                         </div>
                     </div>

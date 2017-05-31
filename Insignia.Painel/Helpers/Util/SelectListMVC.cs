@@ -13,7 +13,7 @@ namespace Insignia.Painel.Helpers.Util
         /// <returns>Lista de options</returns>
         public static List<SelectListItem> CriaListaSelecao(Dictionary<int, string> dicionario)
         {
-            List<SelectListItem> itens = new List<SelectListItem>();
+            List<SelectListItem> itens = new List<SelectListItem>();            
 
             foreach (var item in dicionario.Keys)
             {
