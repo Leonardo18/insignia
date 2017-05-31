@@ -28,6 +28,8 @@ namespace Insignia.Painel.Controllers
                 ViewBag.Setores = SelectListMVC.CriaListaSelecao(GraficosDAO.Setores());
             }
 
+            int usuarioID = 0;
+
             //Busca todos os usuários e retorna um dictionary contendo os dados e retorna o select list            
             var Usuarios = SelectListMVC.CriaListaSelecao(GraficosDAO.Usuarios(!string.IsNullOrEmpty(Convert.ToString(Session["SetorID"])) ? Convert.ToInt32(Session["SetorID"]) : 0));
 
@@ -36,6 +38,7 @@ namespace Insignia.Painel.Controllers
                 if (Convert.ToInt32(item.Value) == Convert.ToInt32(Session["UsuarioID"]))
                 {
                     item.Selected = true;
+                    usuarioID = Convert.ToInt32(item.Value);
                     break;
                 }
             }
@@ -53,7 +56,7 @@ namespace Insignia.Painel.Controllers
 
             foreach (var item in ViewModel.Badges)
             {
-                ViewModel.TotalBadgesAdquiridas = GraficosDAO.BadgeAdquiridas(!string.IsNullOrEmpty(Convert.ToString(Session["SetorID"])) ? Convert.ToInt32(Session["SetorID"]) : 0, 0, item.ID);
+                ViewModel.TotalBadgesAdquiridas = GraficosDAO.BadgeAdquiridas(!string.IsNullOrEmpty(Convert.ToString(Session["SetorID"])) ? Convert.ToInt32(Session["SetorID"]) : 0, usuarioID, item.ID);
 
                 var bProgress = Math.Round(((double)ViewModel.TotalBadgesAdquiridas / ViewModel.TotalUsuarios) * 100, 0);
 
@@ -136,6 +139,8 @@ namespace Insignia.Painel.Controllers
                 ViewBag.Setores = SelectListMVC.CriaListaSelecao(GraficosDAO.Setores());
             }
 
+            int UsuarioID = 0;
+
             //Busca todos os usuários e retorna um dictionary contendo os dados e retorna o select list            
             var Usuarios = SelectListMVC.CriaListaSelecao(GraficosDAO.Usuarios(!string.IsNullOrEmpty(Convert.ToString(Session["SetorID"])) ? Convert.ToInt32(Session["SetorID"]) : 0));
 
@@ -144,6 +149,7 @@ namespace Insignia.Painel.Controllers
                 if (Convert.ToInt32(item.Value) == Convert.ToInt32(Session["UsuarioID"]))
                 {
                     item.Selected = true;
+                    UsuarioID = Convert.ToInt32(item.Value);
                     break;
                 }
             }
@@ -154,7 +160,7 @@ namespace Insignia.Painel.Controllers
 
             for (int i = 1; i <= 12; i++)
             {
-                ViewModel.TarefasMes.Add(GraficosDAO.QuantidadeTarefasMes(i, !string.IsNullOrEmpty(Convert.ToString(Session["SetorID"])) ? Convert.ToInt32(Session["SetorID"]) : 0, 0));
+                ViewModel.TarefasMes.Add(GraficosDAO.QuantidadeTarefasMes(i, !string.IsNullOrEmpty(Convert.ToString(Session["SetorID"])) ? Convert.ToInt32(Session["SetorID"]) : 0, UsuarioID));
             }
 
             return View(ViewModel);
@@ -209,27 +215,55 @@ namespace Insignia.Painel.Controllers
             return View(ViewModel);
         }
 
+        /// <summary>
+        /// GET: Gráfico Competências
+        /// </summary>
+        /// <returns>Retorna a view de gráfico das competências</returns>
+        [HttpGet, IsLogged]
         public ActionResult Competencias()
         {
             var ViewModel = new ViewModelGraficoCompetencias();
 
+            int usuarioID = 0;
+
             //Busca todos os usuários e retorna um dictionary contendo os dados e retorna o select list            
-            ViewBag.Usuarios = SelectListMVC.CriaListaSelecao(GraficosDAO.Usuarios(!string.IsNullOrEmpty(Convert.ToString(Session["SetorID"])) ? Convert.ToInt32(Session["SetorID"]) : 0));
+            var Usuarios = SelectListMVC.CriaListaSelecao(GraficosDAO.Usuarios(!string.IsNullOrEmpty(Convert.ToString(Session["SetorID"])) ? Convert.ToInt32(Session["SetorID"]) : 0));
+
+            foreach (var item in Usuarios)
+            {
+                if (Convert.ToInt32(item.Value) == Convert.ToInt32(Session["UsuarioID"]))
+                {
+                    item.Selected = true;
+                    usuarioID = Convert.ToInt32(item.Value);
+                    break;
+                }
+            }
+
+            ViewBag.Usuarios = Usuarios;
 
             ViewModel.ListCompetencias = GraficosDAO.Listar();
 
-            foreach (var item in ViewModel.ListCompetencias)
+            if (usuarioID != 0)
             {
-                item.Pontos = 0;
+                foreach (var item in ViewModel.ListCompetencias)
+                {
+                    item.Pontos = GraficosDAO.CompetenciaPontos(item.ID, usuarioID);
+                }
+            }
+            else
+            {
+                foreach (var item in ViewModel.ListCompetencias)
+                {
+                    item.Pontos = 0;
+                }
             }
 
             return View(ViewModel);
         }
 
         /// <summary>
-        /// POST: Gráfico Tarefas
-        /// </summary>
-        /// <param name="FiltroSetor">ID do setor que será filtrado</param>
+        /// POST: Gráfico Competências
+        /// </summary>        
         /// <param name="FiltroUsuario">ID do usuário que será filtrado</param>
         /// <returns>Retorna a view com novos dados no model conforme filtros passados</returns>
         [HttpPost, IsLogged]
