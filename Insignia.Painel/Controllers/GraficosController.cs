@@ -273,9 +273,19 @@ namespace Insignia.Painel.Controllers
 
             ViewModel.ListCompetencias = GraficosDAO.Listar();
 
-            foreach (var item in ViewModel.ListCompetencias)
+            if (FiltroUsuario != 0)
             {
-                item.Pontos = GraficosDAO.CompetenciaPontos(item.ID, FiltroUsuario);
+                foreach (var item in ViewModel.ListCompetencias)
+                {
+                    item.Pontos = GraficosDAO.CompetenciaPontos(item.ID, FiltroUsuario);
+                }
+            }
+            else
+            {
+                foreach (var item in ViewModel.ListCompetencias)
+                {
+                    item.Pontos = 0;
+                }
             }
 
             //Recarrega o dropdownlist de usuários setando o valor que havia sido usado como filtro
