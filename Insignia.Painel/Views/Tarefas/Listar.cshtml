@@ -56,7 +56,7 @@
                                             </div>
                                             <div class="block_content">
                                                 <h2 class="title">
-                                                    <a>@item.Titulo</a>
+                                                    <a href="@Url.Action("../Tarefas/Editar", null, new { ID = item.ID, controller = "Tarefas" }, Request.Url.Scheme)">@item.Titulo</a>
                                                 </h2>
                                                 <div class="byline">
                                                     <span>Criado</span> por <a>@Session["UsuarioNome"]</a><span> na data de @Convert.ToDateTime(item.CriadoEm).Day / @Convert.ToDateTime(item.CriadoEm).Month / @Convert.ToDateTime(item.CriadoEm).Year</span>
@@ -69,9 +69,12 @@
                                     </li>
                                 </ul>
                             }
-                            <div style="position: relative; margin-top: 45px;" id="LoadMoreFazer">
-                                <span onclick="Loader(this);LoadMore('Fazer', document.getElementById('indexFazer').value)" class="load-more"></span>
-                            </div>
+                            @if (Model.ListFazer.Count > 5)
+                            {
+                                <div style="position: relative; margin-top: 45px;" id="LoadMoreFazer">
+                                    <span onclick="Loader(this);LoadMore('Fazer', document.getElementById('indexFazer').value)" class="load-more"></span>
+                                </div>
+                            }
                         </div>
                         <div role="tabpanel" class="tab-pane fade" id="Andamento" aria-labelledby="andamento-tab">
                             @foreach (var item in Model.ListAndamento)
@@ -86,7 +89,7 @@
                                             </div>
                                             <div class="block_content">
                                                 <h2 class="title">
-                                                    <a>@item.Titulo</a>
+                                                    <a href="@Url.Action("../Tarefas/Editar", null, new { ID = item.ID, controller = "Tarefas" }, Request.Url.Scheme)">@item.Titulo</a>
                                                 </h2>
                                                 <div class="byline">
                                                     <span>Criado</span> por <a>@Session["UsuarioNome"] </a> <span>na data de @Convert.ToDateTime(item.CriadoEm).Day / @Convert.ToDateTime(item.CriadoEm).Month / @Convert.ToDateTime(item.CriadoEm).Year</span>
@@ -99,9 +102,12 @@
                                     </li>
                                 </ul>
                             }
-                            <div style="position: relative; margin-top: 45px;" id="LoadMoreAndamento">
-                                <span onclick="Loader(this);LoadMore('Andamento', document.getElementById('indexAndamento').value)" class="load-more"></span>
-                            </div>
+                            @if (Model.ListAndamento.Count > 5)
+                            {
+                                <div style="position: relative; margin-top: 45px;" id="LoadMoreAndamento">
+                                    <span onclick="Loader(this);LoadMore('Andamento', document.getElementById('indexAndamento').value)" class="load-more"></span>
+                                </div>
+                            }
                         </div>
                         <div role="tabpanel" class="tab-pane fade" id="Finalizada" aria-labelledby="finalizadas-tab">
                             @foreach (var item in Model.ListFinalizadas)
@@ -116,7 +122,7 @@
                                             </div>
                                             <div class="block_content">
                                                 <h2 class="title">
-                                                    <a>@item.Titulo</a>
+                                                    <a href="@Url.Action("../Tarefas/Editar", null, new { ID = item.ID, controller = "Tarefas" }, Request.Url.Scheme)">@item.Titulo</a>
                                                 </h2>
                                                 <div class="byline">
                                                     <span>Criado</span> por <a>@Session["UsuarioNome"] </a> <span>na data de @Convert.ToDateTime(item.CriadoEm).Day / @Convert.ToDateTime(item.CriadoEm).Month / @Convert.ToDateTime(item.CriadoEm).Year</span>
@@ -129,9 +135,12 @@
                                     </li>
                                 </ul>
                             }
-                            <div style="position: relative; margin-top: 45px;" id="LoadMoreFinalizada">
-                                <span onclick="Loader(this);LoadMore('Finalizada', document.getElementById('indexFinalizada').value)" class="load-more"></span>
-                            </div>
+                            @if (Model.ListFinalizadas.Count > 5)
+                            {
+                                <div style="position: relative; margin-top: 45px;" id="LoadMoreFinalizada">
+                                    <span onclick="Loader(this);LoadMore('Finalizada', document.getElementById('indexFinalizada').value)" class="load-more"></span>
+                                </div>
+                            }
                         </div>
                         <div role="tabpanel" class="tab-pane fade" id="Participante" aria-labelledby="participante-tab">
                             @foreach (var item in Model.ListParticipante)
@@ -146,7 +155,7 @@
                                             </div>
                                             <div class="block_content">
                                                 <h2 class="title">
-                                                    <a>@item.Titulo</a>
+                                                    <a href="@Url.Action("../Tarefas/Editar", null, new { ID = item.ID, controller = "Tarefas" }, Request.Url.Scheme)">@item.Titulo</a>
                                                 </h2>
                                                 <div class="byline">
                                                     <span>Criado</span> por <a>@item.UsuarioNome </a> <span>na data de @Convert.ToDateTime(item.CriadoEm).Day / @Convert.ToDateTime(item.CriadoEm).Month / @Convert.ToDateTime(item.CriadoEm).Year</span>
@@ -159,9 +168,12 @@
                                     </li>
                                 </ul>
                             }
-                            <div style="position: relative; margin-top: 45px;" id="LoadMoreParticipante">
-                                <span onclick="Loader(this);LoadMore('Participante', document.getElementById('indexParticipante').value)" class="load-more"></span>
-                            </div>
+                            @if (Model.ListParticipante.Count > 5)
+                            {
+                                <div style="position: relative; margin-top: 45px;" id="LoadMoreParticipante">
+                                    <span onclick="Loader(this);LoadMore('Participante', document.getElementById('indexParticipante').value)" class="load-more"></span>
+                                </div>
+                            }
                         </div>
                     </div>
                 </div>
@@ -227,7 +239,7 @@
             if (primeiroID === "")
                 primeiroID = value.ID;
 
-            var htmlTarefa = "<ul class=\"list-unstyled timeline " + tarefaStatus + "\" id=" + value.ID +">\
+            var htmlTarefa = "<ul class=\"list-unstyled timeline " + tarefaStatus + "\" id=" + value.ID + ">\
                                 <li>\
                                     <div class=\"block\">\
                                         <div class=\"tags\">\

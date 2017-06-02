@@ -80,7 +80,9 @@
 
         x = x.offsetHeight;
 
-        $(y).css('height', x + 'px');
+        if (y.offsetHeight < x) {
+            $(y).css('height', x + 'px');
+        }        
     });
 </script>
 <!-- /Height x_Panel -->

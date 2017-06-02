@@ -204,7 +204,7 @@ namespace Insignia.DAO.Tarefas
 
             using (var sql = new SqlConnection(conStr))
             {
-                list = sql.Query<Tarefa>(" SELECT * FROM (SELECT Row_Number() OVER (order by ID) AS RowIndex, Tarefas.ID, EmpresaID, UsuarioID, BadgeID AS TipoID, Titulo, Resumo, Descricao, Anexo, Termino, Observacoes, CriadoEm FROM Tarefas WHERE EmpresaID = @EmpresaID AND UsuarioID = @UsuarioID AND Status = @Status) AS Sub WHERE Sub.RowIndex > @Index AND Sub.RowIndex <= @MaxIndex ",
+                list = sql.Query<Tarefa>(" SELECT * FROM (SELECT Row_Number() OVER (order by CriadoEm DESC) AS RowIndex, Tarefas.ID, EmpresaID, UsuarioID, BadgeID AS TipoID, Titulo, Resumo, Descricao, Anexo, Termino, Observacoes, CriadoEm FROM Tarefas WHERE EmpresaID = @EmpresaID AND UsuarioID = @UsuarioID AND Status = @Status) AS Sub WHERE Sub.RowIndex > @Index AND Sub.RowIndex <= @MaxIndex ",
                     new
                     {
                         EmpresaID = HttpContext.Current.Session["EmpresaID"],

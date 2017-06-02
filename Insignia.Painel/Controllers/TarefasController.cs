@@ -341,7 +341,7 @@ namespace Insignia.Painel.Controllers
                 }
             }
 
-            return RedirectToAction("Editar", new { ID = ID });
+            return RedirectToAction("Listar");
         }
 
         /// <summary>

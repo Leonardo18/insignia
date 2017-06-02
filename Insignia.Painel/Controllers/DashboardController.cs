@@ -50,8 +50,9 @@ namespace Insignia.Painel.Controllers
             ViewModel.Usuario = UsuariosDAO.Carregar(Convert.ToInt32(Session["UsuarioID"]));
 
             TarefasDAO TarefasDAO = new TarefasDAO(ConfigurationManager.ConnectionStrings["strConMain"].ConnectionString);
-            //Busca as tarefa com status finalizada
-            ViewModel.ListFinalizadas = TarefasDAO.ListarTop(ConfigurationManager.AppSettings["Fazer"], 0, 3);
+
+            //Busca as tarefa com status Fazer
+            ViewModel.ListFazer = TarefasDAO.ListarTop(ConfigurationManager.AppSettings["Fazer"], 0, 3);
 
             CompetenciasDAO CompetenciasDAO = new CompetenciasDAO(ConfigurationManager.ConnectionStrings["strConMain"].ConnectionString);
 
@@ -108,7 +109,7 @@ namespace Insignia.Painel.Controllers
                             });
                         }
                         ViewModel.IconeRefreshCor = "green";
-                    }                    
+                    }
                 }
             }
             else

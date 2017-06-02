@@ -10,7 +10,7 @@ namespace Insignia.Painel.ViewModels
     {
         public List<Agenda> ListAgenda { get; set; }
 
-        public List<Tarefa> ListFinalizadas { get; set; }
+        public List<Tarefa> ListFazer { get; set; }
 
         public Usuario Usuario { get; set; }
 

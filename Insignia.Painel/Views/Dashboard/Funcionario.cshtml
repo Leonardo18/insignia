@@ -38,7 +38,7 @@
                         <div id="myTabContent" class="tab-content">
                             <div role="tabpanel" class="tab-pane fade active in" id="tab_content1" aria-labelledby="home-tab">
                                 <ul class="messages">
-                                    @foreach (var item in Model.ListFinalizadas)
+                                    @foreach (var item in Model.ListFazer)
                                     {
                                         <li>
                                             @if (!string.IsNullOrEmpty(Model.Usuario.Foto))
@@ -53,7 +53,9 @@
                                             }
                                             <div class="message_wrapper">
                                                 <h4 class="heading">@Model.Usuario.Nome</h4>
-                                                <blockquote class="message">@item.Resumo</blockquote>
+                                                <blockquote class="message">
+                                                    <a href="@Url.Action("../Tarefas/Editar", null, new { ID = item.ID, controller = "Tarefas" }, Request.Url.Scheme)">@item.Resumo</a>
+                                                </blockquote>
                                                 <br />
                                                 @if (!string.IsNullOrEmpty(item.Anexo))
                                                 {

@@ -39,14 +39,23 @@
                     <h3>@Model.Usuario.Nome</h3>
                     <ul class="list-unstyled user_data">
                         <li>
-                            <i class="fa fa-map-marker user-profile-icon"></i> @Model.Usuario.Cidade, @Model.Usuario.Estado, @Model.Usuario.Pais
+                            @if (!string.IsNullOrEmpty(Model.Usuario.Cidade) || !string.IsNullOrEmpty(Model.Usuario.Estado) || !string.IsNullOrEmpty(Model.Usuario.Pais))
+                            {
+                                @:<i class="fa fa-map-marker user-profile-icon"></i> @Model.Usuario.Cidade, @Model.Usuario.Estado, @Model.Usuario.Pais
+                            }
                         </li>
                         <li>
-                            <i class="fa fa-briefcase user-profile-icon"></i> @Model.Usuario.Cargo
+                            @if (!string.IsNullOrEmpty(Model.Usuario.Cargo))
+                            {
+                                <i class="fa fa-briefcase user-profile-icon"></i> @Model.Usuario.Cargo
+                            }
                         </li>
                         <li class="m-top-xs">
-                            <i class="fa fa-external-link user-profile-icon"></i>
-                            <a href="@Model.Usuario.Site" target="_blank"> @Model.Usuario.Site</a>
+                            @if (!string.IsNullOrEmpty(Model.Usuario.Site))
+                            {
+                                <i class="fa fa-external-link user-profile-icon"></i>
+                                <a href="@Model.Usuario.Site" target="_blank"> @Model.Usuario.Site</a>
+                            }
                         </li>
                     </ul>
                     <button type="button" style="float: left; margin-bottom: auto;" class="btn btn-primary" onclick="location.href='@Url.Action("PerfilEditar", null, new { ID = Model.Usuario.ID, controller = "Usuarios" }, Request.Url.Scheme)'">
