@@ -45,23 +45,68 @@ namespace Insignia.Painel.Controllers
 
             ViewBag.Usuarios = Usuarios;
 
-            //Busca todas as badges conforme a empresa, caso usuário logado seja gestor ou funcionário busca apenas do seu setor
-            ViewModel.Badges = GraficosDAO.Badges(!string.IsNullOrEmpty(Convert.ToString(Session["SetorID"])) ? Convert.ToInt32(Session["SetorID"]) : 0);
+            ViewModel.ListBadgeBasicas = GraficosDAO.Badges("Basica", !string.IsNullOrEmpty(Convert.ToString(Session["SetorID"])) ? Convert.ToInt32(Session["SetorID"]) : 0);
+            ViewModel.ListBadgeIntermediarias = GraficosDAO.Badges("Intermediaria", !string.IsNullOrEmpty(Convert.ToString(Session["SetorID"])) ? Convert.ToInt32(Session["SetorID"]) : 0);
+            ViewModel.ListBadgeAvancadas = GraficosDAO.Badges("Avancada", !string.IsNullOrEmpty(Convert.ToString(Session["SetorID"])) ? Convert.ToInt32(Session["SetorID"]) : 0);
 
             //Busca o total de usuário da empresa, caso o usuário logado seja gestor ou funcionário busca o total de usuários do setor correspondente
             ViewModel.TotalUsuarios = GraficosDAO.TotalUsuarios(!string.IsNullOrEmpty(Convert.ToString(Session["SetorID"])) ? Convert.ToInt32(Session["SetorID"]) : 0);
 
-            //Dicionário com ID da badge e porcentagem de usuários que adquiriam a badge em questão em relação ao total de usuários da empresa ou setor
-            ViewModel.PorcentagemBadges = new Dictionary<int, double>();
-
-            foreach (var item in ViewModel.Badges)
+            foreach (var item in ViewModel.ListBadgeBasicas)
             {
                 ViewModel.TotalBadgesAdquiridas = GraficosDAO.BadgeAdquiridas(!string.IsNullOrEmpty(Convert.ToString(Session["SetorID"])) ? Convert.ToInt32(Session["SetorID"]) : 0, usuarioID, item.ID);
 
-                var bProgress = Math.Round(((double)ViewModel.TotalBadgesAdquiridas / ViewModel.TotalUsuarios) * 100, 0);
-
-                ViewModel.PorcentagemBadges.Add(item.ID, bProgress);
+                if (ViewModel.TotalBadgesAdquiridas != 0)
+                {
+                    item.Adquirida = true;
+                    item.Progresso = Math.Round(((double)ViewModel.TotalBadgesAdquiridas / ViewModel.TotalUsuarios) * 100, 0);
+                }
+                else
+                {
+                    if (usuarioID == 0)
+                    {
+                        item.Adquirida = true;
+                    }
+                }
             }
+
+            foreach (var item in ViewModel.ListBadgeIntermediarias)
+            {
+                ViewModel.TotalBadgesAdquiridas = GraficosDAO.BadgeAdquiridas(!string.IsNullOrEmpty(Convert.ToString(Session["SetorID"])) ? Convert.ToInt32(Session["SetorID"]) : 0, usuarioID, item.ID);
+
+                if (ViewModel.TotalBadgesAdquiridas != 0)
+                {
+                    item.Adquirida = true;
+                    item.Progresso = Math.Round(((double)ViewModel.TotalBadgesAdquiridas / ViewModel.TotalUsuarios) * 100, 0);
+                }
+                else
+                {
+                    if (usuarioID == 0)
+                    {
+                        item.Adquirida = true;
+                    }
+                }
+            }
+
+            foreach (var item in ViewModel.ListBadgeAvancadas)
+            {
+                ViewModel.TotalBadgesAdquiridas = GraficosDAO.BadgeAdquiridas(!string.IsNullOrEmpty(Convert.ToString(Session["SetorID"])) ? Convert.ToInt32(Session["SetorID"]) : 0, usuarioID, item.ID);
+
+                if (ViewModel.TotalBadgesAdquiridas != 0)
+                {
+                    item.Adquirida = true;
+                    item.Progresso = Math.Round(((double)ViewModel.TotalBadgesAdquiridas / ViewModel.TotalUsuarios) * 100, 0);
+                }
+                else
+                {
+                    if (usuarioID == 0)
+                    {
+                        item.Adquirida = true;
+                    }
+                }
+            }
+
+            ViewBag.UsuarioID = usuarioID;
 
             return View(ViewModel);
         }
@@ -77,21 +122,68 @@ namespace Insignia.Painel.Controllers
         {
             var ViewModel = new ViewModelGraficoBadges();
 
-            //Busca todas as badges conforme a empresa sem filtro
-            ViewModel.Badges = GraficosDAO.Badges(!string.IsNullOrEmpty(Convert.ToString(Session["SetorID"])) ? Convert.ToInt32(Session["SetorID"]) : FiltroSetor);
+            ViewModel.ListBadgeBasicas = GraficosDAO.Badges("Basica", !string.IsNullOrEmpty(Convert.ToString(Session["SetorID"])) ? Convert.ToInt32(Session["SetorID"]) : 0);
+            ViewModel.ListBadgeIntermediarias = GraficosDAO.Badges("Intermediaria", !string.IsNullOrEmpty(Convert.ToString(Session["SetorID"])) ? Convert.ToInt32(Session["SetorID"]) : 0);
+            ViewModel.ListBadgeAvancadas = GraficosDAO.Badges("Avancada", !string.IsNullOrEmpty(Convert.ToString(Session["SetorID"])) ? Convert.ToInt32(Session["SetorID"]) : 0);
 
-            ViewModel.TotalUsuarios = GraficosDAO.TotalUsuarios(!string.IsNullOrEmpty(Convert.ToString(Session["SetorID"])) ? Convert.ToInt32(Session["SetorID"]) : FiltroSetor);
+            //Busca o total de usuário da empresa, caso o usuário logado seja gestor ou funcionário busca o total de usuários do setor correspondente
+            ViewModel.TotalUsuarios = GraficosDAO.TotalUsuarios(!string.IsNullOrEmpty(Convert.ToString(Session["SetorID"])) ? Convert.ToInt32(Session["SetorID"]) : 0);
 
-            ViewModel.PorcentagemBadges = new Dictionary<int, double>();
-
-            foreach (var item in ViewModel.Badges)
+            foreach (var item in ViewModel.ListBadgeBasicas)
             {
-                ViewModel.TotalBadgesAdquiridas = GraficosDAO.BadgeAdquiridas(!string.IsNullOrEmpty(Convert.ToString(Session["SetorID"])) ? Convert.ToInt32(Session["SetorID"]) : FiltroSetor, FiltroUsuario, item.ID);
+                ViewModel.TotalBadgesAdquiridas = GraficosDAO.BadgeAdquiridas(!string.IsNullOrEmpty(Convert.ToString(Session["SetorID"])) ? Convert.ToInt32(Session["SetorID"]) : 0, FiltroUsuario, item.ID);
 
-                var bProgress = Math.Round(((double)ViewModel.TotalBadgesAdquiridas / ViewModel.TotalUsuarios) * 100, 0);
-
-                ViewModel.PorcentagemBadges.Add(item.ID, bProgress);
+                if (ViewModel.TotalBadgesAdquiridas != 0)
+                {
+                    item.Adquirida = true;
+                    item.Progresso = Math.Round(((double)ViewModel.TotalBadgesAdquiridas / ViewModel.TotalUsuarios) * 100, 0);
+                }
+                else
+                {
+                    if (FiltroUsuario == 0)
+                    {
+                        item.Adquirida = true;
+                    }
+                }
             }
+
+            foreach (var item in ViewModel.ListBadgeIntermediarias)
+            {
+                ViewModel.TotalBadgesAdquiridas = GraficosDAO.BadgeAdquiridas(!string.IsNullOrEmpty(Convert.ToString(Session["SetorID"])) ? Convert.ToInt32(Session["SetorID"]) : 0, FiltroUsuario, item.ID);
+
+                if (ViewModel.TotalBadgesAdquiridas != 0)
+                {
+                    item.Adquirida = true;                    
+                    item.Progresso = Math.Round(((double)ViewModel.TotalBadgesAdquiridas / ViewModel.TotalUsuarios) * 100, 0);
+                }
+                else
+                {
+                    if (FiltroUsuario == 0)
+                    {
+                        item.Adquirida = true;
+                    }
+                }
+            }
+
+            foreach (var item in ViewModel.ListBadgeAvancadas)
+            {
+                ViewModel.TotalBadgesAdquiridas = GraficosDAO.BadgeAdquiridas(!string.IsNullOrEmpty(Convert.ToString(Session["SetorID"])) ? Convert.ToInt32(Session["SetorID"]) : 0, FiltroUsuario, item.ID);
+
+                if (ViewModel.TotalBadgesAdquiridas != 0)
+                {
+                    item.Adquirida = true;
+                    item.Progresso = Math.Round(((double)ViewModel.TotalBadgesAdquiridas / ViewModel.TotalUsuarios) * 100, 0);
+                }
+                else
+                {
+                    if (FiltroUsuario == 0)
+                    {
+                        item.Adquirida = true;
+                    }
+                }
+            }
+
+            ViewBag.UsuarioID = FiltroUsuario;
 
             //Recarrega o dropdownlist de setores setando o valor que havia sido usado como filtro
             var Setores = SelectListMVC.CriaListaSelecao(GraficosDAO.Setores());

@@ -63,5 +63,10 @@ namespace Insignia.Model.Badge
         /// Se a badge já foi adquirida ou não
         /// </summary>
         public bool Adquirida { get; set; }
+
+        /// <summary>
+        /// Progresso que um setor tem uma badge
+        /// </summary>
+        public double Progresso { get; set; }
     }
 }

@@ -26,51 +26,49 @@
         <div class="x_content">
             @foreach (var item in Model.ListBadgeBasicas)
             {
-                if (item.Nivel == "Basica")
+                if (item.Adquirida)
                 {
-                    if (item.Adquirida)
-                    {
-                        <div class="badge-sistema" style="cursor: pointer;">
-                            <div class="wrap">
-                                <div class="side-a" style="opacity: 0.9;">
-                                    <svg xmlns="http://www.w3.org/2000/svg" version="1.1" x="0px" y="0px" width="169px" height="181px" viewBox="0 0 216 232">
-                                        <path fill="#2B2B2B" d="M207,0C171.827,0.001,43.875,0.004,9.003,0c-5.619-0.001-9,3.514-9,9c0,28.23-0.006,151.375,0,169    c0.005,13.875,94.499,54,107.999,54S216,191.57,216,178V9C216,3.298,212.732,0,207,0z" />
-                                    </svg>
-                                    <p class="title" style="color: @item.CorFonte; background: @item.Cor">@item.Titulo</p>
-                                    <p class="subtitle"></p>
-                                </div>
-                                <div class="side-b">
-                                    <svg xmlns="http://www.w3.org/2000/svg" version="1.1" x="0px" y="0px" width="169px" height="181px" viewBox="0 0 216 232">
-                                        <path fill="#2B2B2B" d="M207,0C171.827,0.001,43.875,0.004,9.003,0c-5.619-0.001-9,3.514-9,9c0,28.23-0.006,151.375,0,169    c0.005,13.875,94.499,54,107.999,54S216,191.57,216,178V9C216,3.298,212.732,0,207,0z" />
-                                    </svg>
-                                    <p class="title" style="background: rgb(43, 43, 43);"></p>
-                                    <p class="descricao">@item.Descricao</p>
-                                </div>
+                    <div class="badge-sistema" style="cursor: pointer;">
+                        <div class="wrap">
+                            <div class="side-a" style="opacity: 0.9;">
+                                <svg xmlns="http://www.w3.org/2000/svg" version="1.1" x="0px" y="0px" width="169px" height="181px" viewBox="0 0 216 232">
+                                    <path fill="#2B2B2B" d="M207,0C171.827,0.001,43.875,0.004,9.003,0c-5.619-0.001-9,3.514-9,9c0,28.23-0.006,151.375,0,169    c0.005,13.875,94.499,54,107.999,54S216,191.57,216,178V9C216,3.298,212.732,0,207,0z" />
+                                </svg>
+                                <p class="title" style="color: @item.CorFonte; background: @item.Cor">@item.Titulo</p>
+                                <p class="subtitle"></p>
+                            </div>
+                            <div class="side-b">
+                                <svg xmlns="http://www.w3.org/2000/svg" version="1.1" x="0px" y="0px" width="169px" height="181px" viewBox="0 0 216 232">
+                                    <path fill="#2B2B2B" d="M207,0C171.827,0.001,43.875,0.004,9.003,0c-5.619-0.001-9,3.514-9,9c0,28.23-0.006,151.375,0,169    c0.005,13.875,94.499,54,107.999,54S216,191.57,216,178V9C216,3.298,212.732,0,207,0z" />
+                                </svg>
+                                <p class="title" style="background: rgb(43, 43, 43);"></p>
+                                <p class="descricao">@item.Descricao</p>
                             </div>
                         </div>
-                    }
-                    else
-                    {
-                        <div class="badge-sistema" style="cursor: pointer;">
-                            <div class="wrap">
-                                <div class="side-a" style="opacity: 0.5;">
-                                    <svg xmlns="http://www.w3.org/2000/svg" version="1.1" x="0px" y="0px" width="169px" height="181px" viewBox="0 0 216 232">
-                                        <path fill="#2B2B2B" d="M207,0C171.827,0.001,43.875,0.004,9.003,0c-5.619-0.001-9,3.514-9,9c0,28.23-0.006,151.375,0,169    c0.005,13.875,94.499,54,107.999,54S216,191.57,216,178V9C216,3.298,212.732,0,207,0z" />
-                                    </svg>
-                                    <p class="title" style="color: @item.CorFonte; background: @item.Cor">@item.Titulo</p>
-                                    <p class="lock"><i class="fa fa-lock"></i></p>
-                                </div>
-                                <div class="side-b">
-                                    <svg xmlns="http://www.w3.org/2000/svg" version="1.1" x="0px" y="0px" width="169px" height="181px" viewBox="0 0 216 232">
-                                        <path fill="#2B2B2B" d="M207,0C171.827,0.001,43.875,0.004,9.003,0c-5.619-0.001-9,3.514-9,9c0,28.23-0.006,151.375,0,169    c0.005,13.875,94.499,54,107.999,54S216,191.57,216,178V9C216,3.298,212.732,0,207,0z" />
-                                    </svg>
-                                    <p class="title" style="background: rgb(43, 43, 43);"></p>
-                                    <p class="descricao">@item.Descricao</p>
-                                </div>
-                            </div>
-                        </div>
-                    }
+                    </div>
                 }
+                else
+                {
+                    <div class="badge-sistema" style="cursor: pointer;">
+                        <div class="wrap">
+                            <div class="side-a" style="opacity: 0.5;">
+                                <svg xmlns="http://www.w3.org/2000/svg" version="1.1" x="0px" y="0px" width="169px" height="181px" viewBox="0 0 216 232">
+                                    <path fill="#2B2B2B" d="M207,0C171.827,0.001,43.875,0.004,9.003,0c-5.619-0.001-9,3.514-9,9c0,28.23-0.006,151.375,0,169    c0.005,13.875,94.499,54,107.999,54S216,191.57,216,178V9C216,3.298,212.732,0,207,0z" />
+                                </svg>
+                                <p class="title" style="color: @item.CorFonte; background: @item.Cor">@item.Titulo</p>
+                                <p class="lock"><i class="fa fa-lock"></i></p>
+                            </div>
+                            <div class="side-b">
+                                <svg xmlns="http://www.w3.org/2000/svg" version="1.1" x="0px" y="0px" width="169px" height="181px" viewBox="0 0 216 232">
+                                    <path fill="#2B2B2B" d="M207,0C171.827,0.001,43.875,0.004,9.003,0c-5.619-0.001-9,3.514-9,9c0,28.23-0.006,151.375,0,169    c0.005,13.875,94.499,54,107.999,54S216,191.57,216,178V9C216,3.298,212.732,0,207,0z" />
+                                </svg>
+                                <p class="title" style="background: rgb(43, 43, 43);"></p>
+                                <p class="descricao">@item.Descricao</p>
+                            </div>
+                        </div>
+                    </div>
+                }
+
             }
         </div>
     </div>
@@ -88,51 +86,48 @@
         <div class="x_content">
             @foreach (var item in Model.ListBadgeIntermediarias)
             {
-                if (item.Nivel == "Intermediaria")
+                if (item.Adquirida)
                 {
-                    if (item.Adquirida)
-                    {
-                        <div class="badge-sistema" style="cursor: pointer;">
-                            <div class="wrap">
-                                <div class="side-a" style="opacity: 0.9;">
-                                    <svg xmlns="http://www.w3.org/2000/svg" version="1.1" x="0px" y="0px" width="169px" height="181px" viewBox="0 0 216 232">
-                                        <path fill="#2B2B2B" d="M207,0C171.827,0.001,43.875,0.004,9.003,0c-5.619-0.001-9,3.514-9,9c0,28.23-0.006,151.375,0,169    c0.005,13.875,94.499,54,107.999,54S216,191.57,216,178V9C216,3.298,212.732,0,207,0z" />
-                                    </svg>
-                                    <p class="title" style="color: @item.CorFonte; background: @item.Cor">@item.Titulo</p>
-                                    <p class="subtitle"></p>
-                                </div>
-                                <div class="side-b">
-                                    <svg xmlns="http://www.w3.org/2000/svg" version="1.1" x="0px" y="0px" width="169px" height="181px" viewBox="0 0 216 232">
-                                        <path fill="#2B2B2B" d="M207,0C171.827,0.001,43.875,0.004,9.003,0c-5.619-0.001-9,3.514-9,9c0,28.23-0.006,151.375,0,169    c0.005,13.875,94.499,54,107.999,54S216,191.57,216,178V9C216,3.298,212.732,0,207,0z" />
-                                    </svg>
-                                    <p class="title" style="background: rgb(43, 43, 43);"></p>
-                                    <p class="descricao">@item.Descricao</p>
-                                </div>
+                    <div class="badge-sistema" style="cursor: pointer;">
+                        <div class="wrap">
+                            <div class="side-a" style="opacity: 0.9;">
+                                <svg xmlns="http://www.w3.org/2000/svg" version="1.1" x="0px" y="0px" width="169px" height="181px" viewBox="0 0 216 232">
+                                    <path fill="#2B2B2B" d="M207,0C171.827,0.001,43.875,0.004,9.003,0c-5.619-0.001-9,3.514-9,9c0,28.23-0.006,151.375,0,169    c0.005,13.875,94.499,54,107.999,54S216,191.57,216,178V9C216,3.298,212.732,0,207,0z" />
+                                </svg>
+                                <p class="title" style="color: @item.CorFonte; background: @item.Cor">@item.Titulo</p>
+                                <p class="subtitle"></p>
+                            </div>
+                            <div class="side-b">
+                                <svg xmlns="http://www.w3.org/2000/svg" version="1.1" x="0px" y="0px" width="169px" height="181px" viewBox="0 0 216 232">
+                                    <path fill="#2B2B2B" d="M207,0C171.827,0.001,43.875,0.004,9.003,0c-5.619-0.001-9,3.514-9,9c0,28.23-0.006,151.375,0,169    c0.005,13.875,94.499,54,107.999,54S216,191.57,216,178V9C216,3.298,212.732,0,207,0z" />
+                                </svg>
+                                <p class="title" style="background: rgb(43, 43, 43);"></p>
+                                <p class="descricao">@item.Descricao</p>
                             </div>
                         </div>
+                    </div>
 
-                    }
-                    else
-                    {
-                        <div class="badge-sistema" style="cursor: pointer;">
-                            <div class="wrap">
-                                <div class="side-a" style="opacity: 0.5;">
-                                    <svg xmlns="http://www.w3.org/2000/svg" version="1.1" x="0px" y="0px" width="169px" height="181px" viewBox="0 0 216 232">
-                                        <path fill="#2B2B2B" d="M207,0C171.827,0.001,43.875,0.004,9.003,0c-5.619-0.001-9,3.514-9,9c0,28.23-0.006,151.375,0,169    c0.005,13.875,94.499,54,107.999,54S216,191.57,216,178V9C216,3.298,212.732,0,207,0z" />
-                                    </svg>
-                                    <p class="title" style="color: @item.CorFonte; background: @item.Cor">@item.Titulo</p>
-                                    <p class="lock"><i class="fa fa-lock"></i></p>
-                                </div>
-                                <div class="side-b">
-                                    <svg xmlns="http://www.w3.org/2000/svg" version="1.1" x="0px" y="0px" width="169px" height="181px" viewBox="0 0 216 232">
-                                        <path fill="#2B2B2B" d="M207,0C171.827,0.001,43.875,0.004,9.003,0c-5.619-0.001-9,3.514-9,9c0,28.23-0.006,151.375,0,169    c0.005,13.875,94.499,54,107.999,54S216,191.57,216,178V9C216,3.298,212.732,0,207,0z" />
-                                    </svg>
-                                    <p class="title" style="background: rgb(43, 43, 43);"></p>
-                                    <p class="descricao">@item.Descricao</p>
-                                </div>
+                }
+                else
+                {
+                    <div class="badge-sistema" style="cursor: pointer;">
+                        <div class="wrap">
+                            <div class="side-a" style="opacity: 0.5;">
+                                <svg xmlns="http://www.w3.org/2000/svg" version="1.1" x="0px" y="0px" width="169px" height="181px" viewBox="0 0 216 232">
+                                    <path fill="#2B2B2B" d="M207,0C171.827,0.001,43.875,0.004,9.003,0c-5.619-0.001-9,3.514-9,9c0,28.23-0.006,151.375,0,169    c0.005,13.875,94.499,54,107.999,54S216,191.57,216,178V9C216,3.298,212.732,0,207,0z" />
+                                </svg>
+                                <p class="title" style="color: @item.CorFonte; background: @item.Cor">@item.Titulo</p>
+                                <p class="lock"><i class="fa fa-lock"></i></p>
+                            </div>
+                            <div class="side-b">
+                                <svg xmlns="http://www.w3.org/2000/svg" version="1.1" x="0px" y="0px" width="169px" height="181px" viewBox="0 0 216 232">
+                                    <path fill="#2B2B2B" d="M207,0C171.827,0.001,43.875,0.004,9.003,0c-5.619-0.001-9,3.514-9,9c0,28.23-0.006,151.375,0,169    c0.005,13.875,94.499,54,107.999,54S216,191.57,216,178V9C216,3.298,212.732,0,207,0z" />
+                                </svg>
+                                <p class="title" style="background: rgb(43, 43, 43);"></p>
+                                <p class="descricao">@item.Descricao</p>
                             </div>
                         </div>
-                    }
+                    </div>
                 }
             }
         </div>
@@ -150,50 +145,47 @@
         <div class="x_content">
             @foreach (var item in Model.ListBadgeAvancadas)
             {
-                if (item.Nivel == "Avancada")
+                if (item.Adquirida)
                 {
-                    if (item.Adquirida)
-                    {
-                        <div class="badge-sistema" style="cursor: pointer;">
-                            <div class="wrap">
-                                <div class="side-a" style="opacity: 0.9;">
-                                    <svg xmlns="http://www.w3.org/2000/svg" version="1.1" x="0px" y="0px" width="169px" height="181px" viewBox="0 0 216 232">
-                                        <path fill="#2B2B2B" d="M207,0C171.827,0.001,43.875,0.004,9.003,0c-5.619-0.001-9,3.514-9,9c0,28.23-0.006,151.375,0,169    c0.005,13.875,94.499,54,107.999,54S216,191.57,216,178V9C216,3.298,212.732,0,207,0z" />
-                                    </svg>
-                                    <p class="title" style="color: @item.CorFonte; background: @item.Cor">@item.Titulo</p>
-                                    <p class="subtitle"></p>
-                                </div>
-                                <div class="side-b">
-                                    <svg xmlns="http://www.w3.org/2000/svg" version="1.1" x="0px" y="0px" width="169px" height="181px" viewBox="0 0 216 232">
-                                        <path fill="#2B2B2B" d="M207,0C171.827,0.001,43.875,0.004,9.003,0c-5.619-0.001-9,3.514-9,9c0,28.23-0.006,151.375,0,169    c0.005,13.875,94.499,54,107.999,54S216,191.57,216,178V9C216,3.298,212.732,0,207,0z" />
-                                    </svg>
-                                    <p class="title" style="background: rgb(43, 43, 43);"></p>
-                                    <p class="descricao">@item.Descricao</p>
-                                </div>
+                    <div class="badge-sistema" style="cursor: pointer;">
+                        <div class="wrap">
+                            <div class="side-a" style="opacity: 0.9;">
+                                <svg xmlns="http://www.w3.org/2000/svg" version="1.1" x="0px" y="0px" width="169px" height="181px" viewBox="0 0 216 232">
+                                    <path fill="#2B2B2B" d="M207,0C171.827,0.001,43.875,0.004,9.003,0c-5.619-0.001-9,3.514-9,9c0,28.23-0.006,151.375,0,169    c0.005,13.875,94.499,54,107.999,54S216,191.57,216,178V9C216,3.298,212.732,0,207,0z" />
+                                </svg>
+                                <p class="title" style="color: @item.CorFonte; background: @item.Cor">@item.Titulo</p>
+                                <p class="subtitle"></p>
+                            </div>
+                            <div class="side-b">
+                                <svg xmlns="http://www.w3.org/2000/svg" version="1.1" x="0px" y="0px" width="169px" height="181px" viewBox="0 0 216 232">
+                                    <path fill="#2B2B2B" d="M207,0C171.827,0.001,43.875,0.004,9.003,0c-5.619-0.001-9,3.514-9,9c0,28.23-0.006,151.375,0,169    c0.005,13.875,94.499,54,107.999,54S216,191.57,216,178V9C216,3.298,212.732,0,207,0z" />
+                                </svg>
+                                <p class="title" style="background: rgb(43, 43, 43);"></p>
+                                <p class="descricao">@item.Descricao</p>
                             </div>
                         </div>
-                    }
-                    else
-                    {
-                        <div class="badge-sistema" style="cursor: pointer;">
-                            <div class="wrap">
-                                <div class="side-a" style="opacity: 0.5;">
-                                    <svg xmlns="http://www.w3.org/2000/svg" version="1.1" x="0px" y="0px" width="169px" height="181px" viewBox="0 0 216 232">
-                                        <path fill="#2B2B2B" d="M207,0C171.827,0.001,43.875,0.004,9.003,0c-5.619-0.001-9,3.514-9,9c0,28.23-0.006,151.375,0,169    c0.005,13.875,94.499,54,107.999,54S216,191.57,216,178V9C216,3.298,212.732,0,207,0z" />
-                                    </svg>
-                                    <p class="title" style="color: @item.CorFonte; background: @item.Cor">@item.Titulo</p>
-                                    <p class="lock"><i class="fa fa-lock"></i></p>
-                                </div>
-                                <div class="side-b">
-                                    <svg xmlns="http://www.w3.org/2000/svg" version="1.1" x="0px" y="0px" width="169px" height="181px" viewBox="0 0 216 232">
-                                        <path fill="#2B2B2B" d="M207,0C171.827,0.001,43.875,0.004,9.003,0c-5.619-0.001-9,3.514-9,9c0,28.23-0.006,151.375,0,169    c0.005,13.875,94.499,54,107.999,54S216,191.57,216,178V9C216,3.298,212.732,0,207,0z" />
-                                    </svg>
-                                    <p class="title" style="background: rgb(43, 43, 43);"></p>
-                                    <p class="descricao">@item.Descricao</p>
-                                </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="badge-sistema" style="cursor: pointer;">
+                        <div class="wrap">
+                            <div class="side-a" style="opacity: 0.5;">
+                                <svg xmlns="http://www.w3.org/2000/svg" version="1.1" x="0px" y="0px" width="169px" height="181px" viewBox="0 0 216 232">
+                                    <path fill="#2B2B2B" d="M207,0C171.827,0.001,43.875,0.004,9.003,0c-5.619-0.001-9,3.514-9,9c0,28.23-0.006,151.375,0,169    c0.005,13.875,94.499,54,107.999,54S216,191.57,216,178V9C216,3.298,212.732,0,207,0z" />
+                                </svg>
+                                <p class="title" style="color: @item.CorFonte; background: @item.Cor">@item.Titulo</p>
+                                <p class="lock"><i class="fa fa-lock"></i></p>
+                            </div>
+                            <div class="side-b">
+                                <svg xmlns="http://www.w3.org/2000/svg" version="1.1" x="0px" y="0px" width="169px" height="181px" viewBox="0 0 216 232">
+                                    <path fill="#2B2B2B" d="M207,0C171.827,0.001,43.875,0.004,9.003,0c-5.619-0.001-9,3.514-9,9c0,28.23-0.006,151.375,0,169    c0.005,13.875,94.499,54,107.999,54S216,191.57,216,178V9C216,3.298,212.732,0,207,0z" />
+                                </svg>
+                                <p class="title" style="background: rgb(43, 43, 43);"></p>
+                                <p class="descricao">@item.Descricao</p>
                             </div>
                         </div>
-                    }
+                    </div>
                 }
             }
         </div>

@@ -20,26 +20,27 @@ namespace Insignia.DAO.Graficos
         }
 
         /// <summary>
-        /// Consulta que busca todas badges filtros passados, caso não passe filtros busca todas referente a empresa
+        /// Carrega uma lista com todas as badges encontradas no banco de dados por nível
         /// </summary>
-        /// <param name="filtroSetor">Filtro de setor</param>
-        /// <param name="filtroUsuario">Filtro de usuário</param>
-        /// <returns>Retorna list de badges</returns>
-        public List<Badge> Badges(int filtroSetor)
+        /// <param name="nivel">Nível qeu está sendo filtrado</param>        
+        /// <param name="filtroSetor">Filtro de setor</param>        
+        /// <returns>Retorna uma list com bagdes</returns>
+        public List<Badge> Badges(string nivel, int filtroSetor)
         {
-            List<Badge> resp = null;
+            List<Badge> list = null;
 
             using (var sql = new SqlConnection(conStr))
             {
-                resp = sql.Query<Badge>(" SELECT ID, Titulo, Cor FROM Badges WHERE EmpresaID = @EmpresaID AND SetorID = ISNULL(@SetorID, SetorID)",
+                list = sql.Query<Badge>(" SELECT ID, Titulo, Descricao, Cor, CorFonte, Nivel, Tags, Quantidade FROM Badges WHERE EmpresaID = @EmpresaID AND Nivel = @Nivel AND SetorID = ISNULL(@SetorID, SetorID) ",
                     new
                     {
                         EmpresaID = HttpContext.Current.Session["EmpresaID"],
-                        SetorID = Convert.ToString(filtroSetor) != "0" ? Convert.ToString(filtroSetor) : null
+                        Nivel = nivel,
+                        SetorID = Convert.ToString(filtroSetor) != "0" ? Convert.ToString(filtroSetor) : null,                        
                     }).ToList();
             }
 
-            return resp;
+            return list;
         }
 
         /// <summary>
@@ -193,8 +194,8 @@ namespace Insignia.DAO.Graficos
                 Pontos = sql.ExecuteScalar<int>(" SELECT Pontos FROM CompetenciasUsuarios WHERE EmpresaID = @EmpresaID AND UsuarioID = ISNULL(@UsuarioID, UsuarioID) AND CompetenciaID = @CompetenciaID ",
                     new
                     {
-                        EmpresaID = HttpContext.Current.Session["EmpresaID"],                        
-                        UsuarioID = Convert.ToString(filtroUsuario) != "0" ? Convert.ToString(filtroUsuario) : null,                        
+                        EmpresaID = HttpContext.Current.Session["EmpresaID"],
+                        UsuarioID = Convert.ToString(filtroUsuario) != "0" ? Convert.ToString(filtroUsuario) : null,
                         CompetenciaID = id,
                     });
             }

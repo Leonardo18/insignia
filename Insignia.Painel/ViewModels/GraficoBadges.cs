@@ -5,20 +5,29 @@ namespace Insignia.Painel.ViewModels
 {
     public class ViewModelGraficoBadges
     {
-        public int FiltroSetor { get; set; }
+        /// <summary>
+        /// Lista com as badges nível básica
+        /// </summary>
+        public List<Badge> ListBadgeBasicas { get; set; }
 
-        public int FiltroUsuario { get; set; }
+        /// <summary>
+        /// Lista com as badges nível intermediária
+        /// </summary>
+        public List<Badge> ListBadgeIntermediarias { get; set; }
 
-        public List<Badge> Badges { get; set; }
+        /// <summary>
+        /// Lista com as badges nível avançadas
+        /// </summary>
+        public List<Badge> ListBadgeAvancadas { get; set; }
 
-        public Dictionary<int, double> PorcentagemBadges { get; set; }
-
+        /// <summary>
+        /// Total de usuários da empresa
+        /// </summary>
         public int TotalUsuarios { get; set; }
 
-        public int TotalSetores { get; set; }
-
+        /// <summary>
+        /// Total de badge adquiridas
+        /// </summary>
         public int TotalBadgesAdquiridas { get; set; }
-
-        public int TotalBadgesNaoAdquiridas { get; set; }
     }
 }
