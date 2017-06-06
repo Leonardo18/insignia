@@ -122,16 +122,16 @@ namespace Insignia.Painel.Controllers
         {
             var ViewModel = new ViewModelGraficoBadges();
 
-            ViewModel.ListBadgeBasicas = GraficosDAO.Badges("Basica", !string.IsNullOrEmpty(Convert.ToString(Session["SetorID"])) ? Convert.ToInt32(Session["SetorID"]) : 0);
-            ViewModel.ListBadgeIntermediarias = GraficosDAO.Badges("Intermediaria", !string.IsNullOrEmpty(Convert.ToString(Session["SetorID"])) ? Convert.ToInt32(Session["SetorID"]) : 0);
-            ViewModel.ListBadgeAvancadas = GraficosDAO.Badges("Avancada", !string.IsNullOrEmpty(Convert.ToString(Session["SetorID"])) ? Convert.ToInt32(Session["SetorID"]) : 0);
+            ViewModel.ListBadgeBasicas = GraficosDAO.Badges("Basica", !string.IsNullOrEmpty(Convert.ToString(Session["SetorID"])) ? Convert.ToInt32(Session["SetorID"]) : FiltroSetor);
+            ViewModel.ListBadgeIntermediarias = GraficosDAO.Badges("Intermediaria", !string.IsNullOrEmpty(Convert.ToString(Session["SetorID"])) ? Convert.ToInt32(Session["SetorID"]) : FiltroSetor);
+            ViewModel.ListBadgeAvancadas = GraficosDAO.Badges("Avancada", !string.IsNullOrEmpty(Convert.ToString(Session["SetorID"])) ? Convert.ToInt32(Session["SetorID"]) : FiltroSetor);
 
             //Busca o total de usuário da empresa, caso o usuário logado seja gestor ou funcionário busca o total de usuários do setor correspondente
-            ViewModel.TotalUsuarios = GraficosDAO.TotalUsuarios(!string.IsNullOrEmpty(Convert.ToString(Session["SetorID"])) ? Convert.ToInt32(Session["SetorID"]) : 0);
+            ViewModel.TotalUsuarios = GraficosDAO.TotalUsuarios(!string.IsNullOrEmpty(Convert.ToString(Session["SetorID"])) ? Convert.ToInt32(Session["SetorID"]) : FiltroSetor);
 
             foreach (var item in ViewModel.ListBadgeBasicas)
             {
-                ViewModel.TotalBadgesAdquiridas = GraficosDAO.BadgeAdquiridas(!string.IsNullOrEmpty(Convert.ToString(Session["SetorID"])) ? Convert.ToInt32(Session["SetorID"]) : 0, FiltroUsuario, item.ID);
+                ViewModel.TotalBadgesAdquiridas = GraficosDAO.BadgeAdquiridas(!string.IsNullOrEmpty(Convert.ToString(Session["SetorID"])) ? Convert.ToInt32(Session["SetorID"]) : FiltroSetor, FiltroUsuario, item.ID);
 
                 if (ViewModel.TotalBadgesAdquiridas != 0)
                 {
@@ -149,7 +149,7 @@ namespace Insignia.Painel.Controllers
 
             foreach (var item in ViewModel.ListBadgeIntermediarias)
             {
-                ViewModel.TotalBadgesAdquiridas = GraficosDAO.BadgeAdquiridas(!string.IsNullOrEmpty(Convert.ToString(Session["SetorID"])) ? Convert.ToInt32(Session["SetorID"]) : 0, FiltroUsuario, item.ID);
+                ViewModel.TotalBadgesAdquiridas = GraficosDAO.BadgeAdquiridas(!string.IsNullOrEmpty(Convert.ToString(Session["SetorID"])) ? Convert.ToInt32(Session["SetorID"]) : FiltroSetor, FiltroUsuario, item.ID);
 
                 if (ViewModel.TotalBadgesAdquiridas != 0)
                 {
@@ -167,7 +167,7 @@ namespace Insignia.Painel.Controllers
 
             foreach (var item in ViewModel.ListBadgeAvancadas)
             {
-                ViewModel.TotalBadgesAdquiridas = GraficosDAO.BadgeAdquiridas(!string.IsNullOrEmpty(Convert.ToString(Session["SetorID"])) ? Convert.ToInt32(Session["SetorID"]) : 0, FiltroUsuario, item.ID);
+                ViewModel.TotalBadgesAdquiridas = GraficosDAO.BadgeAdquiridas(!string.IsNullOrEmpty(Convert.ToString(Session["SetorID"])) ? Convert.ToInt32(Session["SetorID"]) : FiltroSetor, FiltroUsuario, item.ID);
 
                 if (ViewModel.TotalBadgesAdquiridas != 0)
                 {
