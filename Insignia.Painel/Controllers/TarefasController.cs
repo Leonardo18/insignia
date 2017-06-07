@@ -325,7 +325,7 @@ namespace Insignia.Painel.Controllers
         /// </summary>
         /// <param name="ID">ID da Tarefa no qual o status será atualizado</param>
         /// <param name="ID">Status que a tarefa irá ficar</param>
-        /// <returns>Busca a tarefa e atualiza seu status</returns>        
+        /// <returns>Busca a tarefa e atualiza seu status</returns>                
         public string AtualizaStatus(int ID, string Status)
         {
             string resp = string.Empty;
