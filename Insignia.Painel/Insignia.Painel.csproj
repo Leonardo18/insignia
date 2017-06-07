@@ -163,6 +163,8 @@
     <Content Include="Content\css\loadmore\loadmore.css" />
     <Content Include="Content\css\logo\logo.css" />
     <Content Include="Content\css\nprogress\nprogress.css" />
+    <Content Include="Content\css\pnotify\pnotify.buttons.css" />
+    <Content Include="Content\css\pnotify\pnotify.css" />
     <Content Include="Content\css\select2\select2.css" />
     <Content Include="Content\css\tags\jquery.tagsinput.css" />
     <Content Include="Content\images\favicon.ico" />
@@ -206,6 +208,8 @@
     <Content Include="Scripts\js\morris\morris.js" />
     <Content Include="Scripts\js\nprogress\nprogress.js" />
     <Content Include="Scripts\js\bootstrap-progressbar\bootstrap-progressbar.js" />
+    <Content Include="Scripts\js\pnotify\pnotify.buttons.js" />
+    <Content Include="Scripts\js\pnotify\pnotify.js" />
     <Content Include="Scripts\js\raphael\raphael.js" />
     <Content Include="Scripts\js\select2\select2.full.js" />
     <Content Include="Scripts\js\tags\jquery.tagsinput.js" />

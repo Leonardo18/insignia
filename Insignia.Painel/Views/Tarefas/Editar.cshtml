@@ -182,10 +182,15 @@
                         </div><span class="glyphicon glyphicon-info-sign" data-toggle="tooltip" data-placement="right" title="Este campo indica as observações da tarefa."></span>
                     </div>
                     <div class="modal-footer">
-                        <button class="btn btn-dark" type="button" id="Finalizar" onclick="location.href='@Url.Action("AtualizaStatus", null, new { ID = Model.ID, Status = "Finalizada", controller = "Tarefas" }, Request.Url.Scheme)'">Finalizar</button>
-                        <button class="btn btn-primary" type="button" id="EmAndamento" onclick="location.href='@Url.Action("AtualizaStatus", null, new { ID = Model.ID, Status = "Andamento", controller = "Tarefas" }, Request.Url.Scheme)'">Em Andamento</button>
+                        <button class="btn btn-dark" type="button" id="Finalizada" onclick="AtualizaStatusTarefa('@Model.ID', 'Finalizada');">Finalizar</button>
+                        <button class="btn btn-primary" type="button" id="Andamento" onclick="AtualizaStatusTarefa('@Model.ID', 'Andamento');">Em Andamento</button>
                         <button class="btn btn-primary" type="submit" id="Salvar" onclick="GetDescricao();">Salvar</button>
                         <button class="btn btn-default submit" type="button" onclick="location.href='@Url.Action("Listar", "Tarefas")'" Badg data-dismiss="modal">Voltar</button>
+                    </div>
+                    <div id="custom_notifications" class="custom-notifications dsp_none">
+                        <ul class="list-unstyled notifications clearfix" data-tabbed_notifications="notif-group"></ul>
+                        <div class="clearfix"></div>
+                        <div id="notif-group" class="tabbed_notifications"></div>
                     </div>
                 }
             </div>
@@ -207,7 +212,7 @@
             maximumSelectionLength: 4,
             placeholder: "Selecione o registro",
             allowClear: false
-        });       
+        });
     });
 </script>
 <!-- /Select2 -->
@@ -255,16 +260,16 @@
         if ("@Model.Status" == "Andamento") {
 
             //Some o botão de "Em Andamento" pois a tarefa já está em andamento ou está finalizada
-            $("#EmAndamento").css("display", "none")
+            $("#Andamento").css("display", "none")
         }
 
         if ("@Model.Status" == "Finalizada") {
 
             //Some o botão de "Em Andamento" pois a tarefa já está finalizada
-            $("#EmAndamento").css("display", "none")
+            $("#Andamento").css("display", "none")
 
             //Some o botão de "Finalizar" pois a tarefa já está finalizada
-            $("#Finalizar").css("display", "none")
+            $("#Finalizada").css("display", "none")
         }
 
         //Seta os values de usuários participantes no select multiple
@@ -309,8 +314,8 @@
         $("#Salvar").css("display", "block");
 
         //Some os botões que alteram o status da tarefa
-        $("#EmAndamento").css("display", "none")
-        $("#Finalizar").css("display", "none")
+        $("#Andamento").css("display", "none")
+        $("#Finalizada").css("display", "none")
 
     }
 </script>
@@ -395,3 +400,99 @@
     }
 </script>
 <!-- /Campo descrição -->
+<!-- AtualizaStatus -->
+<script>
+    function AtualizaStatusTarefa(tarefaID, status) {
+        if (tarefaID != '' && status != '') {
+
+            $.ajax({
+                type: 'POST',
+                url: '/Tarefas/AtualizaStatus',
+                dataType: 'text',
+                async: true,
+                data: {
+                    'ID': tarefaID, 'Status': status
+                },
+                success: function (Dado) {
+                    if (Dado == "True") {
+                        $("#" + status).remove();
+
+                        if (status == "Finalizada") {
+                            $("#Andamento").remove();
+                        }
+
+                        new TabbedNotification({
+                            title: 'Nova conquista de badge',
+                            text: 'Parabéns, você acaba de conquistar uma badge e com ela adquiriu pontos para distribuir em áreas de interesse, clique <a href="@Url.Action("../Badges/Adquiridas", null, new { controller = "Badges" }, Request.Url.Scheme)">aqui</a> para visualizar suas badges.',
+                            type: 'success',
+                            sound: false
+                        });
+
+                    }
+                    else {
+                        $("#" + status).remove();
+
+                        if (status == "Finalizada") {
+                            $("#Andamento").remove();
+                        }
+                    }
+                },
+                error: function (Dado) {
+                    console.log(Dado);
+                }
+            });
+        }
+    }
+</script>
+<!-- /AtualizaStatus -->
+<!-- Custom Notification -->
+<script>
+    $(document).ready(function () {
+        var cnt = 10;
+
+        TabbedNotification = function (options) {
+            var message = "<div id='ntf" + cnt + "' class='text alert-" + options.type + "' style='display:none'><h2><i class='fa fa-trophy'></i> " + options.title +
+              "</h2><div class='close'><a href='javascript:;' class='notification_close'><i class='fa fa-close'></i></a></div><p>" + options.text + "</p></div>";
+
+            if (!document.getElementById('custom_notifications')) {
+                alert('doesnt exists');
+            } else {
+                $('#custom_notifications ul.notifications').append("<li><a id='ntlink" + cnt + "' class='alert-" + options.type + "' href='#ntf" + cnt + "'><i class='fa fa-trophy animated shake'></i></a></li>");
+                $('#custom_notifications #notif-group').append(message);
+                cnt++;
+                CustomTabs(options);
+            }
+        };
+
+        CustomTabs = function (options) {
+            $('.tabbed_notifications > div').hide();
+            $('.tabbed_notifications > div:first-of-type').show();
+            $('#custom_notifications').removeClass('dsp_none');
+            $('.notifications a').click(function (e) {
+                e.preventDefault();
+                var $this = $(this),
+                  tabbed_notifications = '#' + $this.parents('.notifications').data('tabbed_notifications'),
+                  others = $this.closest('li').siblings().children('a'),
+                  target = $this.attr('href');
+                others.removeClass('active');
+                $this.addClass('active');
+                $(tabbed_notifications).children('div').hide();
+                $(target).show();
+            });
+        };
+
+        CustomTabs();
+
+        var tabid = idname = '';
+
+        $(document).on('click', '.notification_close', function (e) {
+            idname = $(this).parent().parent().attr("id");
+            tabid = idname.substr(-2);
+            $('#ntf' + tabid).remove();
+            $('#ntlink' + tabid).parent().remove();
+            $('.notifications a').first().addClass('active');
+            $('#notif-group div').first().css('display', 'block');
+        });
+    });
+</script>
+<!-- /Custom Notification -->

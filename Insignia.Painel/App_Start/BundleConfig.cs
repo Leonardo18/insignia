@@ -61,7 +61,9 @@ namespace Insignia.Painel
             bundles.Add(new StyleBundle("~/Tarefas/styles").Include(
                     "~/Content/css/google-code-prettify/prettify.css",
                     "~/Content/css/select2/select2.css",
-                    "~/Content/css/loadmore/loadmore.css"));
+                    "~/Content/css/loadmore/loadmore.css",
+                    "~/Content/css/pnotify/dist/pnotify.css",
+                    "~/Content/css/pnotify/pnotify.buttons.css"));
 
             //Arquivos de javascript usados nas tarefas
             bundles.Add(new ScriptBundle("~/Tarefas/scripts").Include(
@@ -72,7 +74,9 @@ namespace Insignia.Painel
                     "~/Scripts/js/moment/moment.min.js",
                     "~/Scripts/js/daterangepicker/daterangepicker.js",
                     "~/Scripts/js/inputmask/jquery.inputmask.bundle.min.js",
-                    "~/Scripts/js/select2/select2.full.js"));
+                    "~/Scripts/js/select2/select2.full.js",
+                    "~/Scripts/js/pnotify/dist/pnotify.js",
+                    "~/Scripts/js/pnotify/dist/pnotify.buttons.js"));
 
             //Arquivos de css usados para tables
             bundles.Add(new StyleBundle("~/DataTables/styles").Include(

@@ -321,13 +321,15 @@ namespace Insignia.Painel.Controllers
         }
 
         /// <summary>
-        /// GET: Tarefa AtualizarStatus
+        /// Chamado por ajax, atualiza o status de uma tarefa e verifica se conquista badge
         /// </summary>
-        /// <param name="TarefaModel">ID da Tarefa no qual o status será atualizado</param>
-        /// <returns>Busca a tarefa e atualiza seu status</returns>
-        [HttpGet, IsLogged]
-        public ActionResult AtualizaStatus(int ID, string Status)
+        /// <param name="ID">ID da Tarefa no qual o status será atualizado</param>
+        /// <param name="ID">Status que a tarefa irá ficar</param>
+        /// <returns>Busca a tarefa e atualiza seu status</returns>        
+        public string AtualizaStatus(int ID, string Status)
         {
+            string resp = string.Empty;
+
             if (TarefasDAO.AtualizaStatus(ID, Status))
             {
                 if (Status == ConfigurationManager.AppSettings["Finalizada"])
@@ -336,12 +338,12 @@ namespace Insignia.Painel.Controllers
 
                     if (!string.IsNullOrEmpty(TarefaModel.TipoID))
                     {
-                        TarefasDAO.VerificaBadge(TarefaModel.TipoID, TarefaModel.UsuarioID);
+                        resp = Convert.ToString(TarefasDAO.VerificaBadge(TarefaModel.TipoID, TarefaModel.UsuarioID));
                     }
                 }
             }
 
-            return RedirectToAction("Listar");
+            return resp;
         }
 
         /// <summary>

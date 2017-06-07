@@ -422,8 +422,10 @@ namespace Insignia.DAO.Tarefas
         /// </summary>
         /// <param name="TipoID">ID da badge em questão</param>
         /// <param name="UsuarioID">ID do usuário da tarefa</param>
-        public void VerificaBadge(string tipoID, int usuarioID)
+        public bool VerificaBadge(string tipoID, int usuarioID)
         {
+            bool resp = false;
+
             int Quantidade = QuantidadeTarefasTipo(ToInt32(tipoID));
 
             if (Quantidade > 0)
@@ -446,9 +448,13 @@ namespace Insignia.DAO.Tarefas
                                         });
 
                         if (Convert.ToString(HttpContext.Current.Session["EmpresaID"]) != Convert.ToString(HttpContext.Current.Session["UsuarioID"])) { AtualizaSaldoPontos(Badges.Nivel); }
+
+                        resp = true;
                     }
                 }
             }
+
+            return resp;
         }
 
         /// <summary>
