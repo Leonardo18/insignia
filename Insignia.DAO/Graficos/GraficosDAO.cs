@@ -117,6 +117,49 @@ namespace Insignia.DAO.Graficos
 
             return Quantidade;
         }
+               
+        /// <summary>
+        /// Carrega uma lista com todas as competências encontrados no banco de dados.
+        /// </summary>
+        /// <returns>Retornar uma List de competências</returns>
+        public List<Competencia> Listar()
+        {
+            List<Competencia> list;
+
+            using (var sql = new SqlConnection(conStr))
+            {
+                list = sql.Query<Competencia>(" SELECT ID, EmpresaID, Nome, Descricao FROM Competencias WHERE EmpresaID = @EmpresaID ORDER BY Nome ",
+                    new
+                    {
+                        EmpresaID = HttpContext.Current.Session["EmpresaID"]
+                    }).ToList();
+            }
+
+            return list;
+        }
+
+        /// <summary>
+        /// Busca pontos de um usuário em uma competência específica
+        /// </summary>
+        /// <param name="id">ID da competência</param>
+        /// <returns>Retorna 0 caso não tenha pontos ou retorna o número de pontos distribuídos na competência</returns>
+        public int CompetenciaPontos(int id, int filtroUsuario)
+        {
+            int Pontos = 0;
+
+            using (var sql = new SqlConnection(conStr))
+            {
+                Pontos = sql.ExecuteScalar<int>(" SELECT Pontos FROM CompetenciasUsuarios WHERE EmpresaID = @EmpresaID AND UsuarioID = ISNULL(@UsuarioID, UsuarioID) AND CompetenciaID = @CompetenciaID ",
+                    new
+                    {
+                        EmpresaID = HttpContext.Current.Session["EmpresaID"],
+                        UsuarioID = Convert.ToString(filtroUsuario) != "0" ? Convert.ToString(filtroUsuario) : null,
+                        CompetenciaID = id,
+                    });
+            }
+
+            return Pontos;
+        }
 
         /// <summary>
         /// Carrega todos os setores
@@ -160,47 +203,5 @@ namespace Insignia.DAO.Graficos
             return dict;
         }
 
-        /// <summary>
-        /// Carrega uma lista com todas as competências encontrados no banco de dados.
-        /// </summary>
-        /// <returns>Retornar uma List de competências</returns>
-        public List<Competencia> Listar()
-        {
-            List<Competencia> list;
-
-            using (var sql = new SqlConnection(conStr))
-            {
-                list = sql.Query<Competencia>(" SELECT ID, EmpresaID, Nome, Descricao FROM Competencias WHERE EmpresaID = @EmpresaID ORDER BY Nome ",
-                    new
-                    {
-                        EmpresaID = HttpContext.Current.Session["EmpresaID"]
-                    }).ToList();
-            }
-
-            return list;
-        }
-
-        /// <summary>
-        /// Busca pontos de um usuário em uma competência específica
-        /// </summary>
-        /// <param name="id">ID da competência</param>
-        /// <returns>Retorna 0 caso não tenha pontos ou retorna o número de pontos distribuídos na competência</returns>
-        public int CompetenciaPontos(int id, int filtroUsuario)
-        {
-            int Pontos = 0;
-
-            using (var sql = new SqlConnection(conStr))
-            {
-                Pontos = sql.ExecuteScalar<int>(" SELECT Pontos FROM CompetenciasUsuarios WHERE EmpresaID = @EmpresaID AND UsuarioID = ISNULL(@UsuarioID, UsuarioID) AND CompetenciaID = @CompetenciaID ",
-                    new
-                    {
-                        EmpresaID = HttpContext.Current.Session["EmpresaID"],
-                        UsuarioID = Convert.ToString(filtroUsuario) != "0" ? Convert.ToString(filtroUsuario) : null,
-                        CompetenciaID = id,
-                    });
-            }
-
-            return Pontos;
-        }
     }
 }

@@ -69,12 +69,9 @@
                                     </li>
                                 </ul>
                             }
-                            @if (Model.ListFazer.Count > 5)
-                            {
-                                <div style="position: relative; margin-top: 45px;" id="LoadMoreFazer">
-                                    <span onclick="Loader(this);LoadMore('Fazer', document.getElementById('indexFazer').value)" class="load-more"></span>
-                                </div>
-                            }
+                            <div style="position: relative; margin-top: 45px;" id="LoadMoreFazer">
+                                <span onclick="Loader(this);LoadMore('Fazer', document.getElementById('indexFazer').value)" class="load-more"></span>
+                            </div>
                         </div>
                         <div role="tabpanel" class="tab-pane fade" id="Andamento" aria-labelledby="andamento-tab">
                             @foreach (var item in Model.ListAndamento)
@@ -102,12 +99,9 @@
                                     </li>
                                 </ul>
                             }
-                            @if (Model.ListAndamento.Count > 5)
-                            {
-                                <div style="position: relative; margin-top: 45px;" id="LoadMoreAndamento">
-                                    <span onclick="Loader(this);LoadMore('Andamento', document.getElementById('indexAndamento').value)" class="load-more"></span>
-                                </div>
-                            }
+                            <div style="position: relative; margin-top: 45px;" id="LoadMoreAndamento">
+                                <span onclick="Loader(this);LoadMore('Andamento', document.getElementById('indexAndamento').value)" class="load-more"></span>
+                            </div>
                         </div>
                         <div role="tabpanel" class="tab-pane fade" id="Finalizada" aria-labelledby="finalizadas-tab">
                             @foreach (var item in Model.ListFinalizadas)
@@ -135,12 +129,9 @@
                                     </li>
                                 </ul>
                             }
-                            @if (Model.ListFinalizadas.Count > 5)
-                            {
-                                <div style="position: relative; margin-top: 45px;" id="LoadMoreFinalizada">
-                                    <span onclick="Loader(this);LoadMore('Finalizada', document.getElementById('indexFinalizada').value)" class="load-more"></span>
-                                </div>
-                            }
+                            <div style="position: relative; margin-top: 45px;" id="LoadMoreFinalizada">
+                                <span onclick="Loader(this);LoadMore('Finalizada', document.getElementById('indexFinalizada').value)" class="load-more"></span>
+                            </div>
                         </div>
                         <div role="tabpanel" class="tab-pane fade" id="Participante" aria-labelledby="participante-tab">
                             @foreach (var item in Model.ListParticipante)
@@ -168,12 +159,9 @@
                                     </li>
                                 </ul>
                             }
-                            @if (Model.ListParticipante.Count > 5)
-                            {
-                                <div style="position: relative; margin-top: 45px;" id="LoadMoreParticipante">
-                                    <span onclick="Loader(this);LoadMore('Participante', document.getElementById('indexParticipante').value)" class="load-more"></span>
-                                </div>
-                            }
+                            <div style="position: relative; margin-top: 45px;" id="LoadMoreParticipante">
+                                <span onclick="Loader(this);LoadMore('Participante', document.getElementById('indexParticipante').value)" class="load-more"></span>
+                            </div>
                         </div>
                     </div>
                 </div>
