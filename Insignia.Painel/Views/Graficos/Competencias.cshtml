@@ -349,9 +349,10 @@
             indicator: [
                 @foreach (var item in Model.ListCompetencias){
                     @:{
-                        @:text: '@Html.Raw(@item.Nome)',
-                        @:max: 100
-                    @:},
+                                            @:text: '@Html.Raw(@item.Nome)',
+                                            @:max: 100
+                                        @:
+                },
                 }
             ]
         }],

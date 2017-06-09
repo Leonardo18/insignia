@@ -302,7 +302,9 @@
     <Compile Include="ViewModels\Agenda.cs" />
     <Compile Include="ViewModels\Badge.cs" />
     <Compile Include="ViewModels\Competencia.cs" />
+    <Compile Include="ViewModels\DashboardEmpresa.cs" />
     <Compile Include="ViewModels\DashboardFuncionario.cs" />
+    <Compile Include="ViewModels\DashboardGestor.cs" />
     <Compile Include="ViewModels\GraficoBadges.cs" />
     <Compile Include="ViewModels\GraficoCompetencias.cs" />
     <Compile Include="ViewModels\GraficoTarefas.cs" />
