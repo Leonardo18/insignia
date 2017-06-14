@@ -167,7 +167,7 @@
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="Controllers\IndexController.cs" />
+    <Compile Include="Controllers\MainController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -187,7 +187,8 @@
     <Content Include="Content\sass\libs\_mixins.scss" />
     <Content Include="Content\sass\libs\_skel.scss" />
     <Content Include="Content\sass\libs\_vars.scss" />
-    <Content Include="Views\Index\Index.cshtml" />
+    <Content Include="Views\Main\Main.cshtml" />
+    <None Include="Properties\PublishProfiles\Site.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -198,6 +199,7 @@
   <ItemGroup>
     <Folder Include="App_Start\App_Data\" />
     <Folder Include="Fonts\" />
+    <Folder Include="Views\Home\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

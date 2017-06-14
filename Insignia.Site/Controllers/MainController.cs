@@ -2,10 +2,10 @@
 
 namespace Insignia.Site.Controllers
 {
-    public class IndexController : Controller
+    public class MainController : Controller
     {
         // GET: Index
-        public ActionResult Index()
+        public ActionResult Main()
         {
             return View();
         }

@@ -1592,8 +1592,11 @@ ol.default {
         }
 
 #header-wrapper {
-    background: url("https://s3-sa-east-1.amazonaws.com/insigniagamify/images/Background-Lozange.png") center center;
+    background-image: url("https://s3-sa-east-1.amazonaws.com/insigniagamify/images/Background-Gentella.jpg");
     background-size: cover;
+    background-blend-mode: multiply;
+    background-position: center;
+    background-color: rgba(0,0,0, 0.4);
 }
 
     #header-wrapper:before {
@@ -1704,7 +1707,7 @@ ol.default {
 
 #logo p {
     color: #eee;
-    color: rgba(255, 255, 255, 0.5);
+    color: rgba(255, 255, 255, 0.8);
     text-transform: uppercase;
 }
 
@@ -2011,7 +2014,7 @@ ol.default {
         #nav > ul {
             display: inline-block;
             border-radius: 0.35em;
-            box-shadow: inset 0px 0px 1px 1px rgba(255, 255, 255, 0.25);
+            box-shadow: inset 0px 0px 1px 1px rgba(255, 255, 255, 0.5);
             padding: 0 1.5em 0 1.5em;
         }
 

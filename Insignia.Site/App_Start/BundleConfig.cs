@@ -13,11 +13,11 @@ namespace Insignia.Site.App_Start
             BundleTable.EnableOptimizations = false;
 
             //Arquivos de css usados no index
-            bundles.Add(new StyleBundle("~/Index/styles").Include(
+            bundles.Add(new StyleBundle("~/Main/styles").Include(
                     "~/Content/css/main.css"));
 
             //Arquivos de javascript usados no index
-            bundles.Add(new ScriptBundle("~/Index/scripts").Include(
+            bundles.Add(new ScriptBundle("~/Main/scripts").Include(
                     "~/Scripts/js/jquery.min.js",
                     "~/Scripts/js/jquery.dropotron.min.js",
                     "~/Scripts/js/skel.min.js",
