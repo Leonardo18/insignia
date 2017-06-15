@@ -8,14 +8,14 @@
 <div class="page-title">
     <div class="title_left">
         <h3>Dashboard - @Session["EmpresaNome"]</h3>
-    </div>   
+    </div>
 </div>
 <div class="clearfix"></div>
 <div class="row">
     <div class="col-md-12 col-sm-4 col-xs-12">
         <div class="x_panel">
             <div class="x_title">
-                <h2><i class="fa fa-bars"></i> Filtros</h2>
+                <h2><i class="fa fa-filter"></i>Filtros</h2>
                 <ul class="nav navbar-right panel_toolbox" style="min-width: 0px;">
                     <li>
                         <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
@@ -27,24 +27,28 @@
                 @using (Html.BeginForm("Empresa", "Dashboard", FormMethod.Get, new { @class = "form-horizontal form-label-left" }))
                 {
                     <div class="form-group">
-                        @if (Convert.ToString(Session["UsuarioTipo"]) == "Empresa")
-                        {
-                            <label class="control-label col-md-1 col-sm-3 col-xs-12">
-                                Setor:
-                            </label>
-                            <div class="col-md-3 col-sm-6 col-xs-12">
-                                @Html.DropDownList("FiltroSetor", (List<SelectListItem>)ViewBag.Setores, "Todos Setores", new { @class = "select2_multiple form-control", onchange = "$(this).closest('form').submit();" })
-                            </div>
-                        }
-                        <label class="control-label col-md-1 col-sm-3 col-xs-12">
-                            Usuário:
-                        </label>
-                        <div class="col-md-3 col-sm-6 col-xs-12">
-                            @Html.DropDownList("FiltroUsuario", (List<SelectListItem>)ViewBag.Usuarios, "Todos Usuários", new { @class = "select2_multiple form-control" })
-                        </div>
                         <div>
                             <button class="btn btn-primary" type="submit">Filtrar</button>
                         </div>
+                        <div style="float: right">
+                            <label class="control-label col-md-1 col-sm-3 col-xs-12" style="width: 60px;">
+                                Usuário:
+                            </label>
+                            <div class="col-md-3 col-sm-6 col-xs-12" style="width: 300px;">
+                                @Html.DropDownList("FiltroUsuario", (List<SelectListItem>)ViewBag.Usuarios, "Selecione um usuário", new { @class = "select2_multiple form-control" })
+                            </div>
+                        </div>
+                        @if (Convert.ToString(Session["UsuarioTipo"]) == "Empresa")
+                        {
+                            <div style="float: right">
+                                <label class="control-label col-md-1 col-sm-3 col-xs-12" style="width: 45px;">
+                                    Setor:
+                                </label>
+                                <div class="col-md-3 col-sm-6 col-xs-12" style="width: 300px;">
+                                    @Html.DropDownList("FiltroSetor", (List<SelectListItem>)ViewBag.Setores, "Todos Setores", new { @class = "select2_multiple form-control", onchange = "$(this).closest('form').submit();" })
+                                </div>
+                            </div>
+                        }
                     </div>
                     <div class="clearfix"></div>
                 }
@@ -79,7 +83,7 @@
     <div class="col-md-6 col-sm-4 col-xs-12">
         <div class="x_panel">
             <div class="x_title">
-                <h2><i class="fa fa-bars"></i> Gráfico Radar</h2>
+                <h2>Gráfico Radar</h2>
                 <ul class="nav navbar-right panel_toolbox" style="min-width: 0px;">
                     <li>
                         <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
@@ -105,7 +109,7 @@
             </div>
             <div class="x_content">
                 @foreach (var item in Model.ListBadgeBasicas)
-            {
+                {
                 if (item.Adquirida)
                 {
                         <div class="badge-sistema" style="cursor: pointer;">
@@ -525,12 +529,13 @@
         },
         polar: [{
             indicator: [
-                @foreach (var item in Model.ListCompetencias){
+                @foreach (var item in Model.ListCompetencias)
+                {
                     @:{
-                                                                                                                    @:text: '@Html.Raw(@item.Nome)',
-                                                                                                                    @:max: 100
-                                                                                                                @:},
-                        }
+                        @:text: '@Html.Raw(@item.Nome)',
+                        @:max: 100
+                    @:},
+                }
             ]
         }],
         calculable: true,
@@ -542,7 +547,7 @@
                     @foreach (var item in Model.ListCompetencias)
                     {
                         @item.Pontos @:,
-                            }
+                    }
                 ],
             },
             ]

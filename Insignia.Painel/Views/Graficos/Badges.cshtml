@@ -15,7 +15,7 @@
 <div class="col-md-12 col-sm-12 col-xs-12">
     <div class="x_panel">
         <div class="x_title">
-            <h2><i class="fa fa-bars"></i> Filtros</h2>
+            <h2><i class="fa fa-filter"></i>Filtros</h2>
             <ul class="nav navbar-right panel_toolbox" style="min-width: 0px;">
                 <li>
                     <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
@@ -27,24 +27,28 @@
             @using (Html.BeginForm("Badges", "Graficos", FormMethod.Post, new { @class = "form-horizontal form-label-left" }))
             {
                 <div class="form-group">
-                    @if (Convert.ToString(Session["UsuarioTipo"]) == "Empresa")
-                    {
-                        <label class="control-label col-md-1 col-sm-3 col-xs-12">
-                            Setor:
-                        </label>
-                        <div class="col-md-3 col-sm-6 col-xs-12">
-                            @Html.DropDownList("FiltroSetor", (List<SelectListItem>)ViewBag.Setores, "Todos Setores", new { @class = "select2_multiple form-control", onchange = "$(this).closest('form').submit();" })
-                        </div>
-                    }
-                    <label class="control-label col-md-1 col-sm-3 col-xs-12">
-                        Usuário:
-                    </label>
-                    <div class="col-md-3 col-sm-6 col-xs-12">
-                        @Html.DropDownList("FiltroUsuario", (List<SelectListItem>)ViewBag.Usuarios, "Selecione um usuário", new { @class = "select2_multiple form-control" })
-                    </div>
                     <div>
                         <button class="btn btn-primary" type="submit">Filtrar</button>
                     </div>
+                    <div style="float: right">
+                        <label class="control-label col-md-1 col-sm-3 col-xs-12" style="width: 60px;">
+                            Usuário:
+                        </label>
+                        <div class="col-md-3 col-sm-6 col-xs-12" style="width: 300px;">
+                            @Html.DropDownList("FiltroUsuario", (List<SelectListItem>)ViewBag.Usuarios, "Todos Usuários", new { @class = "select2_multiple form-control" })
+                        </div>
+                    </div>
+                    @if (Convert.ToString(Session["UsuarioTipo"]) == "Empresa")
+                    {
+                        <div style="float: right">
+                            <label class="control-label col-md-1 col-sm-3 col-xs-12" style="width: 45px;">
+                                Setor:
+                            </label>
+                            <div class="col-md-3 col-sm-6 col-xs-12" style="width: 300px;">
+                                @Html.DropDownList("FiltroSetor", (List<SelectListItem>)ViewBag.Setores, "Todos Setores", new { @class = "select2_multiple form-control", onchange = "$(this).closest('form').submit();" })
+                            </div>
+                        </div>
+                    }                    
                 </div>
                 <div class="clearfix"></div>
             }

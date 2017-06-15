@@ -12,7 +12,7 @@
     <div class="col-md-12 col-sm-4 col-xs-12">
         <div class="x_panel">
             <div class="x_title">
-                <h2><i class="fa fa-bars"></i> Filtros</h2>
+                <h2><i class="fa fa-filter"></i>Filtros</h2>
                 <ul class="nav navbar-right panel_toolbox" style="min-width: 0px;">
                     <li>
                         <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
@@ -23,15 +23,15 @@
             <div class="x_content">
                 @using (Html.BeginForm("Competencias", "Graficos", FormMethod.Post, new { @class = "form-horizontal form-label-left" }))
                 {
-                    <div class="form-group">
-                        <label class="control-label col-md-1 col-sm-3 col-xs-12">
+                    <div>
+                        <button class="btn btn-primary" type="submit">Filtrar</button>
+                    </div>
+                    <div style="float: right">
+                        <label class="control-label col-md-1 col-sm-3 col-xs-12" style="width: 60px;">
                             Usuário:
                         </label>
-                        <div class="col-md-3 col-sm-6 col-xs-12">
+                        <div class="col-md-3 col-sm-6 col-xs-12" style="width: 300px;">
                             @Html.DropDownList("FiltroUsuario", (List<SelectListItem>)ViewBag.Usuarios, "Selecione um usuário", new { @class = "select2_multiple form-control" })
-                        </div>
-                        <div>
-                            <button class="btn btn-primary" type="submit">Filtrar</button>
                         </div>
                     </div>
                     <div class="clearfix"></div>
@@ -71,7 +71,7 @@
     <div class="col-md-6 col-sm-4 col-xs-12">
         <div class="x_panel">
             <div class="x_title">
-                <h2><i class="fa fa-bars"></i> Gráfico Radar</h2>
+                <h2>Gráfico Radar</h2>
                 <ul class="nav navbar-right panel_toolbox" style="min-width: 0px;">
                     <li>
                         <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
@@ -349,10 +349,9 @@
             indicator: [
                 @foreach (var item in Model.ListCompetencias){
                     @:{
-                                            @:text: '@Html.Raw(@item.Nome)',
-                                            @:max: 100
-                                        @:
-                },
+                        @:text: '@Html.Raw(@item.Nome)',
+                        @:max: 100
+                    @:},
                 }
             ]
         }],
