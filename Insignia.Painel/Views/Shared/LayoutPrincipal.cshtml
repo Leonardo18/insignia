@@ -82,6 +82,26 @@
                                         }
                                         @if (Convert.ToString(Session["UsuarioTipo"]) != "Funcionario")
                                         {
+                                            <li><a href="~/Competencias/Adicionar">Competências</a></li>
+                                        }
+                                        @if (Convert.ToString(Session["UsuarioTipo"]) == "Empresa")
+                                        {
+                                            <li><a href="~/Setores/Adicionar">Setores</a></li>
+                                        }
+                                        <li><a href="~/Tarefas/Adicionar">Tarefas</a></li>
+                                        @if (Convert.ToString(Session["UsuarioTipo"]) != "Funcionario")
+                                        {
+                                            <li><a href="~/Usuarios/Adicionar">Usuários</a></li>
+                                        }
+                                    </ul>
+                                </li>
+                            </ul>
+                            <ul class="nav side-menu">
+                                <li>
+                                    <a><i class="fa fa-eye"></i> Visualizações <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">                                       
+                                        @if (Convert.ToString(Session["UsuarioTipo"]) != "Funcionario")
+                                        {
                                             <li><a href="~/Competencias/Listar">Competências</a></li>
                                         }
                                         @if (Convert.ToString(Session["UsuarioTipo"]) == "Empresa")
