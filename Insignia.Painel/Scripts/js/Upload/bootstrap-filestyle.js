@@ -313,7 +313,7 @@
     };
 
     $.fn.filestyle.defaults = {
-        'buttonText': 'Buscar Anexo',
+        'buttonText': '&nbsp;Buscar Anexo',
         'iconName': 'glyphicon glyphicon-folder-open',
         'buttonName': 'btn-default',
         'size': 'nr',
