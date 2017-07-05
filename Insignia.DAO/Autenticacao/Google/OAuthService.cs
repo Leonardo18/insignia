@@ -30,8 +30,8 @@ namespace Insignia.DAO.Autenticacao.Google
 
                 //Use uma classe extendida para autenticação Google Flow
                 GoogleAuthorizationCodeFlow flow;
-                flow = new ForceOfflineGoogleAuthorizationCodeFlow
-                    (new GoogleAuthorizationCodeFlow.Initializer
+                flow = new ForceOfflineGoogleAuthorizationCodeFlow(
+                    new GoogleAuthorizationCodeFlow.Initializer
                     {
                         //Classe GoogleDAO para salvar o token de acesso no banco de dados.
                         DataStore = new GoogleDAO(conexaoBanco),
@@ -47,17 +47,10 @@ namespace Insignia.DAO.Autenticacao.Google
 
                 if (HttpContext.Current.Request["code"] != null)
                 {
-                    var token = flow.ExchangeCodeForTokenAsync
-                        (
-                            usuarioID, HttpContext.Current.Request["code"],
-                            uri.Substring(0, uri.IndexOf("?")), CancellationToken.None
-                        ).Result;
+                    var token = flow.ExchangeCodeForTokenAsync(usuarioID, HttpContext.Current.Request["code"], uri.Substring(0, uri.IndexOf("?")), CancellationToken.None).Result;
 
                     // Extrai dados salvos.
-                    var oauthState = AuthWebUtility.ExtracRedirectFromState
-                        (
-                            flow.DataStore, usuarioID, HttpContext.Current.Request["state"]
-                        ).Result;
+                    var oauthState = AuthWebUtility.ExtracRedirectFromState(flow.DataStore, usuarioID, HttpContext.Current.Request["state"]).Result;
 
                     var dados = new AuthorizationCodeWebApp(flow, uriRedirecionamento, uri).AuthorizeAsync(usuarioID, CancellationToken.None).Result;
 
@@ -114,15 +107,15 @@ namespace Insignia.DAO.Autenticacao.Google
         /// <param name="urlRedirecionamento">Url de redirecionamento definida no Google Console Developers</param>
         /// <param name="aplicacaoNome">Nome da aplicação no google</param>
         /// <param name="escopos">Acessos que o sistema irá solicitar ao usuário</param>
-        /// <returns>Caso esteja logado retorna o serviço para ser usado, s enão retorna null</returns>
+        /// <returns>Caso esteja logado retorna o serviço para ser usado, se não retorna null</returns>
         public static CalendarService OAuthLogged(string usuarioID, string conexaoBanco, string urlRedirecionamento, string aplicacaoNome, string[] escopos)
         {
             CalendarService service = new CalendarService();
 
             //Use uma classe extendida para autenticação Google Flow
             GoogleAuthorizationCodeFlow flow;
-            flow = new ForceOfflineGoogleAuthorizationCodeFlow
-                (new GoogleAuthorizationCodeFlow.Initializer
+            flow = new ForceOfflineGoogleAuthorizationCodeFlow(
+                new GoogleAuthorizationCodeFlow.Initializer
                 {
                     //Classe GoogleDAO para salvar o token de acesso no banco de dados.
                     DataStore = new GoogleDAO(conexaoBanco),

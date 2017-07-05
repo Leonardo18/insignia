@@ -119,7 +119,7 @@ namespace Insignia.Painel.Controllers
                 var CompetenciasUsuarios = CompetenciasDAO.VerificaCompetenciaUsuarios(CompetenciaModel.ID);
 
                 //Se existe pontos distribuídos na competência por usuários, redefine saldo
-                if (CompetenciasUsuarios.Count > 0)
+                if (CompetenciasUsuarios != null && CompetenciasUsuarios.Count > 0)
                 {
                     foreach (var item in CompetenciasUsuarios)
                     {
@@ -156,7 +156,7 @@ namespace Insignia.Painel.Controllers
                 item.Pontos = CompetenciasDAO.CompetenciaPontos(item.ID);
             }
 
-            ViewModel.SaldoPontos = CompetenciasDAO.SaldoPontos();
+            ViewModel.SaldoPontos = CompetenciasDAO.SaldoAtual(0);
 
             return View(ViewModel);
         }

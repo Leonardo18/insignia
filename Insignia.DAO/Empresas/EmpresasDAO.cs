@@ -28,7 +28,7 @@ namespace Insignia.DAO.Empresas
         {
             Empresa resp = null;
 
-            if (!string.IsNullOrWhiteSpace(Convert.ToString(id)))
+            if (id != 0)
             {
                 using (var sql = new SqlConnection(conStr))
                 {
@@ -52,7 +52,7 @@ namespace Insignia.DAO.Empresas
         {
             bool resp = false;
 
-            List<ValidationResult> resultadoValidacao;
+            List<ValidationResult> resultadoValidacao = null;
 
             if (Validacao.ValidaModel(empresa, out resultadoValidacao))
             {
@@ -68,6 +68,7 @@ namespace Insignia.DAO.Empresas
                                     });
 
                     empresa.ID = (int)queryResultado;
+
                     resp = ToBoolean(queryResultado);
                 }
             }
@@ -84,7 +85,7 @@ namespace Insignia.DAO.Empresas
         {
             bool resp = false;
 
-            List<ValidationResult> resultadoValidacao;
+            List<ValidationResult> resultadoValidacao = null;
 
             if (Validacao.ValidaModel(empresa, out resultadoValidacao) && !string.IsNullOrEmpty(Convert.ToString(empresa.ID)))
             {
@@ -150,10 +151,10 @@ namespace Insignia.DAO.Empresas
                 using (var sql = new SqlConnection(conStr))
                 {
                     int queryResultado = sql.Execute(" DELETE FROM Empresas WHERE ID = @ID ", 
-                        new
-                        {
-                            ID = id
-                        });
+                                    new
+                                    {
+                                        ID = id
+                                    });
 
                     resp = ToBoolean(queryResultado);
                 }
@@ -185,7 +186,7 @@ namespace Insignia.DAO.Empresas
 
             if (empresa != null && !string.IsNullOrEmpty(email) && !string.IsNullOrEmpty(cnpj))
             {
-                if (!string.IsNullOrEmpty(Convert.ToString(empresa.ID)))
+                if (empresa.ID != 0)
                 {
                     resp = false;
                 }
@@ -233,7 +234,7 @@ namespace Insignia.DAO.Empresas
         /// <returns>Dictionary contendo a Sigla e nome de cada estado</returns>
         public Dictionary<string, string> Estados()
         {
-            Dictionary<string, string> dict = new Dictionary<string, string>();
+            Dictionary<string, string> dict = null;
 
             using (var sql = new SqlConnection(conStr))
             {

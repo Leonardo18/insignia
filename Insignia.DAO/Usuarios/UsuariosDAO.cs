@@ -54,7 +54,7 @@ namespace Insignia.DAO.Usuarios
         {
             bool resp = false;
 
-            List<ValidationResult> resultadoValidacao;
+            List<ValidationResult> resultadoValidacao = null;
 
             if (Validacao.ValidaModel(usuario, out resultadoValidacao))
             {
@@ -90,7 +90,7 @@ namespace Insignia.DAO.Usuarios
         {
             bool resp = false;
 
-            List<ValidationResult> resultadoValidacao;
+            List<ValidationResult> resultadoValidacao = null;
 
             if (Validacao.ValidaModel(usuario, out resultadoValidacao) && !string.IsNullOrEmpty(Convert.ToString(usuario.ID)))
             {
@@ -174,7 +174,7 @@ namespace Insignia.DAO.Usuarios
         {
             bool resp = false;
 
-            if (!string.IsNullOrWhiteSpace(Convert.ToString(id)))
+            if (id != 0)
             {
                 using (var sql = new SqlConnection(conStr))
                 {
@@ -242,7 +242,7 @@ namespace Insignia.DAO.Usuarios
         /// <returns>Dictionary contendo ID e nome de cada setor</returns>
         public Dictionary<int, string> Setores()
         {
-            Dictionary<int, string> dict = new Dictionary<int, string>();
+            Dictionary<int, string> dict = null;
 
             using (var sql = new SqlConnection(conStr))
             {
@@ -271,12 +271,13 @@ namespace Insignia.DAO.Usuarios
                 using (var sql = new SqlConnection(conStr))
                 {
                     int queryResultado = sql.Execute(" UPDATE Usuarios SET Senha = @Senha, AtivadoEm = @AtivadoEm WHERE Token = @Token ",
-                        new
-                        {
-                            Token = token,
-                            Senha = Util.Autenticacao.Criptografar(senha),
-                            AtivadoEm = DateTime.Now
-                        });
+                                    new
+                                    {
+                                        Token = token,
+                                        Senha = Util.Autenticacao.Criptografar(senha),
+                                        AtivadoEm = DateTime.Now
+                                    });
+
                     resp = ToBoolean(queryResultado);
                 }
             }
@@ -338,10 +339,11 @@ namespace Insignia.DAO.Usuarios
                 using (var sql = new SqlConnection(conStr))
                 {
                     int queryResultado = sql.ExecuteScalar<int>(" SELECT ID FROM Usuarios WHERE Token = @Token AND NOT AtivadoEm IS NULL ",
-                        new
-                        {
-                            Token = token
-                        });
+                                    new
+                                    {
+                                        Token = token
+                                    });
+
                     resp = ToBoolean(queryResultado);
                 }
             }
@@ -364,11 +366,12 @@ namespace Insignia.DAO.Usuarios
                 using (var sql = new SqlConnection(conStr))
                 {
                     int queryResultado = sql.Execute(" UPDATE Usuarios SET Senha = @Senha WHERE Email = @Email ",
-                        new
-                        {
-                            Email = email,
-                            Senha = Util.Autenticacao.Criptografar(senha)
-                        });
+                                    new
+                                    {
+                                        Email = email,
+                                        Senha = Util.Autenticacao.Criptografar(senha)
+                                    });
+
                     resp = ToBoolean(queryResultado);
                 }
             }
@@ -413,7 +416,7 @@ namespace Insignia.DAO.Usuarios
         /// <returns>Dictionary contendo a Sigla e nome de cada estado</returns>
         public Dictionary<string, string> Estados()
         {
-            Dictionary<string, string> dict = new Dictionary<string, string>();
+            Dictionary<string, string> dict = null;
 
             using (var sql = new SqlConnection(conStr))
             {

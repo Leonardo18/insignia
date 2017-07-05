@@ -19,9 +19,9 @@ namespace Insignia.DAO.Autenticacao
         /// <summary>
         /// Verifica se a empresa existe e recupera os dados dela
         /// </summary>
-        /// <param name="usuario">Nome do usuário de login</param>
+        /// <param name="email">Email do usuário de acesso</param>
         /// <param name="senha">Senha de acesso do usuário</param>
-        /// <returns>Model contendo os dados da empresa ou null</returns>
+        /// <returns>Model contendo os dados da empresa ou null</returns>                    
         public Empresa LoginEmpresa(string email, string senha)
         {
             Empresa model = null;
@@ -51,7 +51,7 @@ namespace Insignia.DAO.Autenticacao
         /// <summary>
         /// Verifica se o usuário existe e recupera os dados dele
         /// </summary>
-        /// <param name="usuario">Nome do usuário de login</param>
+        /// <param name="email">Email do usuário de acesso</param>
         /// <param name="senha">Senha de acesso do usuário</param>
         /// <returns>Model contendo os dados do usuário ou null</returns>
         public Usuario LoginUsuario(string email, string senha)

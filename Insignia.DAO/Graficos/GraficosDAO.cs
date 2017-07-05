@@ -44,28 +44,6 @@ namespace Insignia.DAO.Graficos
         }
 
         /// <summary>
-        /// Busca total de usuários de um setor, caso nçao venha filtro de setor pega o total da empresas
-        /// </summary>
-        /// <param name="filtroSetor">Filtro de setor</param>
-        /// <returns>Retorna número total de usuários</returns>
-        public int TotalUsuarios(int filtroSetor)
-        {
-            int resp = 0;
-
-            using (var sql = new SqlConnection(conStr))
-            {
-                resp = sql.Query<int>(" SELECT Count(ID) AS TotalUsuarios FROM Usuarios WHERE EmpresaID = @EmpresaID AND SetorID = ISNULL(@SetorID, SetorID)",
-                    new
-                    {
-                        EmpresaID = HttpContext.Current.Session["EmpresaID"],
-                        SetorID = Convert.ToString(filtroSetor) != "0" ? Convert.ToString(filtroSetor) : null
-                    }).SingleOrDefault();
-            }
-
-            return resp;
-        }
-
-        /// <summary>
         /// Consulta que busca todas badges adquiridas conforme filtros passados, caso não passe filtros busca todas referente a empresa
         /// </summary>
         /// <param name="filtroSetor">Filtro de setor</param>
@@ -89,6 +67,28 @@ namespace Insignia.DAO.Graficos
 
             return resp;
         }
+
+        /// <summary>
+        /// Busca o total de usuários de um setor, caso não venha filtro de setor pega o total da empresa
+        /// </summary>
+        /// <param name="filtroSetor">Filtro de setor</param>
+        /// <returns>Retorna o número total de usuários</returns>
+        public int TotalUsuarios(int filtroSetor)
+        {
+            int resp = 0;
+
+            using (var sql = new SqlConnection(conStr))
+            {
+                resp = sql.Query<int>(" SELECT Count(ID) AS TotalUsuarios FROM Usuarios WHERE EmpresaID = @EmpresaID AND SetorID = ISNULL(@SetorID, SetorID)",
+                    new
+                    {
+                        EmpresaID = HttpContext.Current.Session["EmpresaID"],
+                        SetorID = Convert.ToString(filtroSetor) != "0" ? Convert.ToString(filtroSetor) : null
+                    }).SingleOrDefault();
+            }
+
+            return resp;
+        }       
 
         /// <summary>
         /// Busca a quantidade de tarefas finalizadas em um mês especifico
@@ -124,7 +124,7 @@ namespace Insignia.DAO.Graficos
         /// <returns>Retornar uma List de competências</returns>
         public List<Competencia> Listar()
         {
-            List<Competencia> list;
+            List<Competencia> list = null;
 
             using (var sql = new SqlConnection(conStr))
             {
@@ -167,7 +167,7 @@ namespace Insignia.DAO.Graficos
         /// <returns>Dictionary contendo ID e nome de cada setor</returns>
         public Dictionary<int, string> Setores()
         {
-            Dictionary<int, string> dict = new Dictionary<int, string>();
+            Dictionary<int, string> dict = null;
 
             using (var sql = new SqlConnection(conStr))
             {
@@ -188,7 +188,7 @@ namespace Insignia.DAO.Graficos
         /// <returns>Dictionary contendo o id e o nome dos usuários</returns>
         public Dictionary<int, string> Usuarios(int filtroSetor)
         {
-            Dictionary<int, string> dict = new Dictionary<int, string>();
+            Dictionary<int, string> dict = null;
 
             using (var sql = new SqlConnection(conStr))
             {
@@ -202,6 +202,5 @@ namespace Insignia.DAO.Graficos
 
             return dict;
         }
-
     }
 }

@@ -54,7 +54,7 @@ namespace Insignia.DAO.Setores
         {
             bool resp = false;
 
-            List<ValidationResult> resultadoValidacao;
+            List<ValidationResult> resultadoValidacao = null;
 
             if (Validacao.ValidaModel(setor, out resultadoValidacao))
             {
@@ -84,7 +84,7 @@ namespace Insignia.DAO.Setores
         {
             bool resp = false;
 
-            List<ValidationResult> resultadoValidacao;
+            List<ValidationResult> resultadoValidacao = null;
 
             if (Validacao.ValidaModel(setor, out resultadoValidacao) && !string.IsNullOrEmpty(Convert.ToString(setor.ID)))
             {
@@ -110,7 +110,7 @@ namespace Insignia.DAO.Setores
         /// <returns>Retornar uma List de setores</returns>
         public List<Setor> Listar()
         {
-            List<Setor> list;
+            List<Setor> list = null;
 
             using (var sql = new SqlConnection(conStr))
             {
@@ -138,11 +138,11 @@ namespace Insignia.DAO.Setores
                 using (var sql = new SqlConnection(conStr))
                 {
                     int queryResultado = sql.Query<int>(" SELECT Top 1 ID FROM Badges WHERE EmpresaID = @EmpresaID AND SetorID = @SetorID",
-                        new
-                        {
-                            EmpresaID = HttpContext.Current.Session["EmpresaID"],
-                            SetorID = id                            
-                        }).SingleOrDefault();
+                                    new
+                                    {
+                                        EmpresaID = HttpContext.Current.Session["EmpresaID"],
+                                        SetorID = id                            
+                                    }).SingleOrDefault();
 
                     resp = ToBoolean(queryResultado);
                 }
@@ -165,11 +165,11 @@ namespace Insignia.DAO.Setores
                 using (var sql = new SqlConnection(conStr))
                 {
                     int queryResultado = sql.Execute(" DELETE FROM Setores WHERE ID = @ID AND EmpresaID = @EmpresaID ",
-                        new
-                        {
-                            ID = id,
-                            EmpresaID = HttpContext.Current.Session["EmpresaID"]
-                        });
+                                    new
+                                    {
+                                        ID = id,
+                                        EmpresaID = HttpContext.Current.Session["EmpresaID"]
+                                    });
 
                     resp = ToBoolean(queryResultado);
                 }

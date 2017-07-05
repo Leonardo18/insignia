@@ -31,7 +31,7 @@ namespace Insignia.DAO.Tarefas
         {
             Tarefa resp = null;
 
-            if (!string.IsNullOrWhiteSpace(Convert.ToString(id)))
+            if (id != 0)
             {
                 using (var sql = new SqlConnection(conStr))
                 {
@@ -59,7 +59,7 @@ namespace Insignia.DAO.Tarefas
         {
             bool resp = false;
 
-            List<ValidationResult> resultadoValidacao;
+            List<ValidationResult> resultadoValidacao = null;
 
             if (Validacao.ValidaModel(tarefa, out resultadoValidacao))
             {
@@ -105,7 +105,7 @@ namespace Insignia.DAO.Tarefas
         {
             bool resp = false;
 
-            List<ValidationResult> resultadoValidacao;
+            List<ValidationResult> resultadoValidacao = null;
 
             if (Validacao.ValidaModel(tarefa, out resultadoValidacao) && !string.IsNullOrEmpty(Convert.ToString(tarefa.ID)))
             {
@@ -145,7 +145,7 @@ namespace Insignia.DAO.Tarefas
         /// <returns>Retorna uma list de tarefas</returns>
         public List<Tarefa> Listar(string status)
         {
-            List<Tarefa> list;
+            List<Tarefa> list = null;
 
             using (var sql = new SqlConnection(conStr))
             {
@@ -170,19 +170,19 @@ namespace Insignia.DAO.Tarefas
         {
             bool resp = false;
 
-            if (!string.IsNullOrWhiteSpace(Convert.ToString(id)))
+            if (id != 0)
             {
                 RemoverParticipantes(id);
 
                 using (var sql = new SqlConnection(conStr))
                 {
                     int queryResultado = sql.Execute(" DELETE FROM Tarefas WHERE ID = @ID AND EmpresaID = @EmpresaID AND UsuarioID = @UsuarioID ",
-                        new
-                        {
-                            ID = id,
-                            EmpresaID = HttpContext.Current.Session["EmpresaID"],
-                            UsuarioID = HttpContext.Current.Session["UsuarioID"]
-                        });
+                                    new
+                                    {
+                                        ID = id,
+                                        EmpresaID = HttpContext.Current.Session["EmpresaID"],
+                                        UsuarioID = HttpContext.Current.Session["UsuarioID"]
+                                    });
 
                     resp = ToBoolean(queryResultado);
                 }
@@ -224,7 +224,7 @@ namespace Insignia.DAO.Tarefas
         /// <returns>Dictionary contendo ID e tags de cada badges</returns>
         public Dictionary<int, string> Tipos()
         {
-            Dictionary<int, string> dict = new Dictionary<int, string>();
+            Dictionary<int, string> dict = null;
 
             using (var sql = new SqlConnection(conStr))
             {
@@ -245,7 +245,7 @@ namespace Insignia.DAO.Tarefas
         /// <returns>Dictionary contendo ID e nome de cada usuário</returns>
         public Dictionary<int, string> Participantes()
         {
-            Dictionary<int, string> dict = new Dictionary<int, string>();
+            Dictionary<int, string> dict = null;
 
             using (var sql = new SqlConnection(conStr))
             {
@@ -267,7 +267,7 @@ namespace Insignia.DAO.Tarefas
         /// <returns>Retornar uma List de Tarefas</returns>
         public List<Tarefa> ListarParticipante(int index, int maxIndex)
         {
-            List<Tarefa> list;
+            List<Tarefa> list = null;
 
             using (var sql = new SqlConnection(conStr))
             {
@@ -320,7 +320,7 @@ namespace Insignia.DAO.Tarefas
         /// <returns>True se os participantes foram encontrados, false caso contrário</returns>
         public List<dynamic> BuscarParticipantes(int tarefaID)
         {
-            if (!string.IsNullOrWhiteSpace(Convert.ToString(tarefaID)))
+            if (tarefaID != 0)
             {
                 using (var sql = new SqlConnection(conStr))
                 {
@@ -347,7 +347,7 @@ namespace Insignia.DAO.Tarefas
         {
             bool resp = false;
 
-            if (!string.IsNullOrWhiteSpace(Convert.ToString(tarefaID)))
+            if (tarefaID != 0)
             {
                 using (var sql = new SqlConnection(conStr))
                 {
@@ -374,7 +374,7 @@ namespace Insignia.DAO.Tarefas
         {
             string resp = string.Empty;
 
-            if (!string.IsNullOrWhiteSpace(Convert.ToString(id)))
+            if (id != 0)
             {
                 using (var sql = new SqlConnection(conStr))
                 {
@@ -399,7 +399,7 @@ namespace Insignia.DAO.Tarefas
         {
             bool resp = false;
 
-            if (!string.IsNullOrWhiteSpace(Convert.ToString(id)) && !string.IsNullOrWhiteSpace(status))
+            if (id != 0 && !string.IsNullOrWhiteSpace(status))
             {
                 using (var sql = new SqlConnection(conStr))
                 {
@@ -422,6 +422,7 @@ namespace Insignia.DAO.Tarefas
         /// </summary>
         /// <param name="TipoID">ID da badge em questão</param>
         /// <param name="UsuarioID">ID do usuário da tarefa</param>
+        /// <returns>Retorna true caso conquiste uma badge, false caso contrário</returns>
         public bool VerificaBadge(string tipoID, int usuarioID)
         {
             bool resp = false;
@@ -466,7 +467,7 @@ namespace Insignia.DAO.Tarefas
         {
             int Quantidade = 0;
 
-            if (!string.IsNullOrEmpty(Convert.ToString(tipoID)))
+            if (tipoID != 0)
             {
                 using (var sql = new SqlConnection(conStr))
                 {
@@ -492,7 +493,7 @@ namespace Insignia.DAO.Tarefas
         {
             int PontosGanhos = 0;
 
-            if (!string.IsNullOrEmpty(Convert.ToString(nivel)))
+            if (!string.IsNullOrEmpty(nivel))
             {
                 switch (nivel)
                 {
@@ -529,7 +530,7 @@ namespace Insignia.DAO.Tarefas
         {
             int Quantidade = 0;
 
-            if (!string.IsNullOrEmpty(Convert.ToString(mes)))
+            if (mes != 0)
             {
                 using (var sql = new SqlConnection(conStr))
                 {
@@ -556,7 +557,7 @@ namespace Insignia.DAO.Tarefas
         {
             bool resp = false;
 
-            if (!string.IsNullOrEmpty(Convert.ToString(eventoID)))
+            if (eventoID != 0)
             {
                 using (var sql = new SqlConnection(conStr))
                 {
@@ -584,7 +585,7 @@ namespace Insignia.DAO.Tarefas
         {
             bool resp = false;
 
-            if (!string.IsNullOrWhiteSpace(Convert.ToString(id)) && eventoID != 0)
+            if (id != 0 && eventoID != 0)
             {
                 using (var sql = new SqlConnection(conStr))
                 {

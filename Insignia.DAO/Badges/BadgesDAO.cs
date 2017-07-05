@@ -29,7 +29,7 @@ namespace Insignia.DAO.Badges
         {
             Badge resp = null;
 
-            if (!string.IsNullOrWhiteSpace(Convert.ToString(id)))
+            if (id != 0)
             {
                 using (var sql = new SqlConnection(conStr))
                 {
@@ -54,7 +54,7 @@ namespace Insignia.DAO.Badges
         {
             bool resp = false;
 
-            List<ValidationResult> resultadoValidacao;
+            List<ValidationResult> resultadoValidacao = null;
 
             if (Validacao.ValidaModel(badge, out resultadoValidacao))
             {
@@ -84,15 +84,15 @@ namespace Insignia.DAO.Badges
         /// <summary>
         /// Edita uma badge no banco de dados
         /// </summary>
-        /// <param name="bagde">Badge contendo a badge a ser editada</param>
+        /// <param name="bagde">Badge contendo os dados a serem editados</param>
         /// <returns>True se o registro foi editado com sucesso, false caso contrário</returns>
         public bool Editar(Badge badge)
         {
             bool resp = false;
 
-            List<ValidationResult> resultadoValidacao;
+            List<ValidationResult> resultadoValidacao = null;
 
-            if (Validacao.ValidaModel(badge, out resultadoValidacao) && !String.IsNullOrEmpty(Convert.ToString(badge.ID)))
+            if (Validacao.ValidaModel(badge, out resultadoValidacao) && badge.ID != 0)
             {
                 using (var sql = new SqlConnection(conStr))
                 {
@@ -109,6 +109,7 @@ namespace Insignia.DAO.Badges
                                         Tags = badge.Tags,
                                         Quantidade = badge.Quantidade,
                                     });
+
                     resp = ToBoolean(queryResultado);
                 }
             }
@@ -119,8 +120,8 @@ namespace Insignia.DAO.Badges
         /// <summary>
         /// Carrega uma lista com todas as badges encontradas no banco de dados por nível
         /// </summary>
-        /// <param name="nivel">Nível qeu está sendo filtrado</param>        
-        /// <returns>Retorna uma list com bagdes</returns>
+        /// <param name="nivel">Nível que está sendo filtrado</param>        
+        /// <returns>Retorna uma list contendo as bagdes</returns>
         public List<Badge> Listar(string nivel)
         {
             List<Badge> list = null;
@@ -140,24 +141,24 @@ namespace Insignia.DAO.Badges
         }
 
         /// <summary>
-        /// Verifica se existe tarefas para a bagde cadastrada
+        /// Verifica se existem tarefas para a bagde cadastrada
         /// </summary>
-        /// <param name="id">Id da badge.</param>
+        /// <param name="id">ID da badge</param>
         /// <returns>Caso exista tarefas para a badge retorna true, se não false</returns>
         public bool PodeRemover(int id)
         {
             bool resp = false;
 
-            if (!string.IsNullOrWhiteSpace(Convert.ToString(id)))
+            if (id != 0)
             {
                 using (var sql = new SqlConnection(conStr))
                 {
                     int queryResultado = sql.Query<int>(" SELECT Top 1 ID FROM Tarefas WHERE BadgeID = @BadgeID AND EmpresaID = @EmpresaID",
-                        new
-                        {
-                            BadgeID = id,
-                            EmpresaID = HttpContext.Current.Session["EmpresaID"]
-                        }).SingleOrDefault();
+                                    new
+                                    {
+                                        EmpresaID = HttpContext.Current.Session["EmpresaID"],
+                                        BadgeID = id
+                                    }).SingleOrDefault();
 
                     resp = ToBoolean(queryResultado);
                 }
@@ -175,16 +176,16 @@ namespace Insignia.DAO.Badges
         {
             bool resp = false;
 
-            if (!string.IsNullOrWhiteSpace(Convert.ToString(id)))
+            if (id != 0)
             {
                 using (var sql = new SqlConnection(conStr))
                 {
                     int queryResultado = sql.Execute(" DELETE FROM Badges WHERE ID = @ID AND EmpresaID = @EmpresaID ",
-                        new
-                        {
-                            ID = id,
-                            EmpresaID = HttpContext.Current.Session["EmpresaID"]
-                        });
+                                    new
+                                    {
+                                        ID = id,
+                                        EmpresaID = HttpContext.Current.Session["EmpresaID"]
+                                    });
 
                     resp = ToBoolean(queryResultado);
                 }
@@ -201,16 +202,16 @@ namespace Insignia.DAO.Badges
         /// <returns>Retornar uma List de Badges adquiridas por um usuário</returns>
         public List<Badge> ListarAdquiridas(int usuarioID, string nivel)
         {
-            List<Badge> list;
+            List<Badge> list = null;
 
             using (var sql = new SqlConnection(conStr))
             {
-                list = sql.Query<Badge>(" SELECT Badges.ID AS ID, Titulo, Descricao, Cor, CorFonte, Nivel, Tags, Quantidade FROM Badges INNER JOIN BadgesAdquiridas ON Badges.ID = BadgesAdquiridas.BadgeID WHERE Badges.EmpresaID = @EmpresaID AND Badges.Nivel = @Nivel AND BadgesAdquiridas.UsuarioID = @UsuarioID ",
+                list = sql.Query<Badge>(" SELECT ID, Titulo, Descricao, Cor, CorFonte, Nivel, Tags, Quantidade FROM Badges WHERE ID IN (SELECT BadgeID FROM BadgesAdquiridas WHERE UsuarioID = @UsuarioID) WHERE EmpresaID = @EmpresaID AND Nivel = @Nivel ",
                     new
                     {
                         EmpresaID = HttpContext.Current.Session["EmpresaID"],
-                        Nivel = nivel,
-                        UsuarioID = usuarioID
+                        UsuarioID = usuarioID,
+                        Nivel = nivel
                     }).ToList();
             }
 
@@ -218,7 +219,7 @@ namespace Insignia.DAO.Badges
         }
 
         /// <summary>
-        /// Verifica se o usuário possui a badge em questão
+        /// Verifica se o usuário possui a badge
         /// </summary>
         /// <param name="id">ID da badge</param>
         /// <param name="usuarioID">ID do usuário</param>

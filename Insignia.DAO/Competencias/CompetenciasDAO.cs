@@ -1,7 +1,6 @@
 ﻿using Dapper;
 using Insignia.DAO.Util;
 using Insignia.Model.Competencia;
-using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Data.SqlClient;
@@ -29,7 +28,7 @@ namespace Insignia.DAO.Competencias
         {
             Competencia resp = null;
 
-            if (!string.IsNullOrWhiteSpace(Convert.ToString(id)))
+            if (id != 0)
             {
                 using (var sql = new SqlConnection(conStr))
                 {
@@ -54,7 +53,7 @@ namespace Insignia.DAO.Competencias
         {
             bool resp = false;
 
-            List<ValidationResult> resultadoValidacao;
+            List<ValidationResult> resultadoValidacao = null;
 
             if (Validacao.ValidaModel(competencia, out resultadoValidacao))
             {
@@ -69,6 +68,7 @@ namespace Insignia.DAO.Competencias
                                     });
 
                     competencia.ID = (int)queryResultado;
+
                     resp = ToBoolean(queryResultado);
                 }
             }
@@ -79,15 +79,15 @@ namespace Insignia.DAO.Competencias
         /// <summary>
         /// Edita uma competência no banco de dados
         /// </summary>
-        /// <param name="competencia">Competência contendo a empresa a ser editada</param>
+        /// <param name="competencia">Competência contendo os dados a serem editados</param>
         /// <returns>True se a competência foi encontrada e editada, false caso contrário</returns>
         public bool Editar(Competencia competencia)
         {
             bool resp = false;
 
-            List<ValidationResult> resultadoValidacao;
+            List<ValidationResult> resultadoValidacao = null;
 
-            if (Validacao.ValidaModel(competencia, out resultadoValidacao) && !string.IsNullOrEmpty(Convert.ToString(competencia.ID)))
+            if (Validacao.ValidaModel(competencia, out resultadoValidacao) && competencia.ID != 0)
             {
                 using (var sql = new SqlConnection(conStr))
                 {
@@ -112,7 +112,7 @@ namespace Insignia.DAO.Competencias
         /// <returns>Retornar uma List de competências</returns>
         public List<Competencia> Listar()
         {
-            List<Competencia> list;
+            List<Competencia> list = null;
 
             using (var sql = new SqlConnection(conStr))
             {
@@ -135,7 +135,7 @@ namespace Insignia.DAO.Competencias
         {
             bool resp = false;
 
-            if (!string.IsNullOrWhiteSpace(Convert.ToString(id)))
+            if (id != 0)
             {
                 using (var sql = new SqlConnection(conStr))
                 {
@@ -184,91 +184,6 @@ namespace Insignia.DAO.Competencias
         }
 
         /// <summary>
-        /// Busca o total de pontos que um usuário possui para distribuir
-        /// </summary>        
-        /// <returns>Retorna 0 caso não tenha pontos para distribuir ou retorna o número de pontos que possui para distribuir</returns>
-        public int SaldoPontos()
-        {
-            int Saldo = 0;
-
-            using (var sql = new SqlConnection(conStr))
-            {
-                Saldo = sql.ExecuteScalar<int>(" SELECT Pontos FROM UsuariosPontos WHERE EmpresaID = @EmpresaID AND UsuarioID = @UsuarioID ",
-                    new
-                    {
-                        EmpresaID = HttpContext.Current.Session["EmpresaID"],
-                        UsuarioID = HttpContext.Current.Session["UsuarioID"]
-                    });
-            }
-
-            return Saldo;
-        }
-
-        /// <summary>
-        /// Adiciona pontos em uma competência
-        /// </summary>
-        /// <param name="id">ID da competência</param>
-        /// <param name="pontos">Pontos que serão adicionados</param>
-        /// <returns>Não possui retorno</returns>
-        public void AdicionarPontos(int id, int pontos, int saldo)
-        {
-            using (var sql = new SqlConnection(conStr))
-            {
-                int queryResultado = sql.ExecuteScalar<int>(" UPDATE CompetenciasUsuarios SET Pontos = @PontosAdicionados WHERE EmpresaID = @EmpresaID AND UsuarioID = @UsuarioID AND CompetenciaID = @CompetenciaID IF @@ROWCOUNT=0 INSERT INTO CompetenciasUsuarios(EmpresaID, UsuarioID, CompetenciaID, Pontos) VALUES (@EmpresaID, @UsuarioID, @CompetenciaID, @PontosAdicionados) ",
-                                new
-                                {
-                                    EmpresaID = HttpContext.Current.Session["EmpresaID"],
-                                    UsuarioID = HttpContext.Current.Session["UsuarioID"],
-                                    CompetenciaID = id,
-                                    PontosAdicionados = pontos
-                                });
-
-                AtualizaSaldo(saldo);
-            }
-        }
-
-        /// <summary>
-        /// Remove pontos em uma competência
-        /// </summary>
-        /// <param name="id">ID da competência</param>
-        /// <param name="pontos">Pontos que serão removidos</param>   
-        /// <returns>Não possui retorno</returns>
-        public void RemoverPontos(int id, int pontos, int saldo)
-        {
-            using (var sql = new SqlConnection(conStr))
-            {
-                int queryResultado = sql.ExecuteScalar<int>(" UPDATE CompetenciasUsuarios SET Pontos = @PontosRemovidos WHERE EmpresaID = @EmpresaID AND UsuarioID = @UsuarioID AND CompetenciaID = @CompetenciaID IF @@ROWCOUNT=0 INSERT INTO CompetenciasUsuarios(EmpresaID, UsuarioID, CompetenciaID, Pontos) VALUES (@EmpresaID, @UsuarioID, @CompetenciaID, @PontosRemovidos) ",
-                                new
-                                {
-                                    EmpresaID = HttpContext.Current.Session["EmpresaID"],
-                                    UsuarioID = HttpContext.Current.Session["UsuarioID"],
-                                    CompetenciaID = id,
-                                    PontosRemovidos = pontos
-                                });
-
-                AtualizaSaldo(saldo);
-            }
-        }
-
-        /// <summary>
-        /// Atualiza saldo de pontos de um usuário
-        /// </summary>
-        /// <returns>Caso tenha atualizado com sucesso retorna true, se não retorna false</returns>
-        public void AtualizaSaldo(int saldo)
-        {
-            using (var sql = new SqlConnection(conStr))
-            {
-                int queryResultado = sql.ExecuteScalar<int>(" UPDATE UsuariosPontos SET Pontos = @Saldo WHERE EmpresaID = @EmpresaID AND UsuarioID = @UsuarioID ",
-                                new
-                                {
-                                    EmpresaID = HttpContext.Current.Session["EmpresaID"],
-                                    UsuarioID = HttpContext.Current.Session["UsuarioID"],
-                                    Saldo = saldo
-                                });
-            }
-        }
-
-        /// <summary>
         /// Busca saldo de pontos de um usuário
         /// </summary>
         /// <param name="usuarioID">ID do usuário</param>
@@ -293,13 +208,79 @@ namespace Insignia.DAO.Competencias
         }
 
         /// <summary>
-        /// Verifica se algum usuário já distribuíu pontos para esta competencia
+        /// Adiciona pontos em uma competência
         /// </summary>
         /// <param name="id">ID da competência</param>
-        /// <returns>Retorna lista com id's de usuários caso exista registro se não retorna a lista vazia</returns>
+        /// <param name="pontos">Pontos que serão adicionados</param>
+        /// <returns>Não possui retorno</returns>
+        public void AdicionarPontos(int id, int pontos, int saldo)
+        {
+            using (var sql = new SqlConnection(conStr))
+            {
+                int queryResultado = sql.ExecuteScalar<int>(" UPDATE CompetenciasUsuarios SET Pontos = @PontosAdicionados WHERE EmpresaID = @EmpresaID AND UsuarioID = @UsuarioID AND CompetenciaID = @CompetenciaID IF @@ROWCOUNT=0 INSERT INTO CompetenciasUsuarios(EmpresaID, UsuarioID, CompetenciaID, Pontos) VALUES (@EmpresaID, @UsuarioID, @CompetenciaID, @PontosAdicionados) ",
+                                new
+                                {
+                                    EmpresaID = HttpContext.Current.Session["EmpresaID"],
+                                    UsuarioID = HttpContext.Current.Session["UsuarioID"],
+                                    CompetenciaID = id,
+                                    PontosAdicionados = pontos
+                                });
+
+                //Atualiza o saldo do usuário
+                AtualizaSaldo(saldo);
+            }
+        }
+
+        /// <summary>
+        /// Atualiza o saldo de pontos de um usuário
+        /// </summary>
+        /// <param name="saldo">Saldo atual do usuário</param>
+        /// <returns>Não possui retorno</returns>
+        public void AtualizaSaldo(int saldo)
+        {
+            using (var sql = new SqlConnection(conStr))
+            {
+                int queryResultado = sql.ExecuteScalar<int>(" UPDATE UsuariosPontos SET Pontos = @Saldo WHERE EmpresaID = @EmpresaID AND UsuarioID = @UsuarioID ",
+                                new
+                                {
+                                    EmpresaID = HttpContext.Current.Session["EmpresaID"],
+                                    UsuarioID = HttpContext.Current.Session["UsuarioID"],
+                                    Saldo = saldo
+                                });
+            }
+        }
+
+        /// <summary>
+        /// Remove pontos de uma competência
+        /// </summary>
+        /// <param name="id">ID da competência</param>
+        /// <param name="pontos">Pontos que serão removidos</param>   
+        /// <returns>Não possui retorno</returns>
+        public void RemoverPontos(int id, int pontos, int saldo)
+        {
+            using (var sql = new SqlConnection(conStr))
+            {
+                int queryResultado = sql.ExecuteScalar<int>(" UPDATE CompetenciasUsuarios SET Pontos = @PontosRemovidos WHERE EmpresaID = @EmpresaID AND UsuarioID = @UsuarioID AND CompetenciaID = @CompetenciaID IF @@ROWCOUNT=0 INSERT INTO CompetenciasUsuarios(EmpresaID, UsuarioID, CompetenciaID, Pontos) VALUES (@EmpresaID, @UsuarioID, @CompetenciaID, @PontosRemovidos) ",
+                                new
+                                {
+                                    EmpresaID = HttpContext.Current.Session["EmpresaID"],
+                                    UsuarioID = HttpContext.Current.Session["UsuarioID"],
+                                    CompetenciaID = id,
+                                    PontosRemovidos = pontos
+                                });
+
+                AtualizaSaldo(saldo);
+            }
+        }
+
+        /// <summary>
+        /// Verifica se algum usuário já distribuíu pontos para uma competência
+        /// </summary>
+        /// <param name="id">ID da competência</param>
+        /// <returns>Retorna uma lista com id's de usuários caso exista registro se não retorna a lista vazia</returns>
         public Dictionary<int, int> VerificaCompetenciaUsuarios(int id)
         {
-            Dictionary<int, int> resp = new Dictionary<int, int>();
+            Dictionary<int, int> resp = null;
 
             using (var sql = new SqlConnection(conStr))
             {
@@ -318,7 +299,8 @@ namespace Insignia.DAO.Competencias
         /// Ao excluir uma competência na qual usuários já distribuíram pontos, redefine o saldo do usuário somando esses pontos já distribuídos para redistribuição
         /// </summary>        
         /// <param name="usuarioID">ID do usuário</param>
-        /// <param name="pontosDistribuidos">Pontos ´já distribuídos</param>
+        /// <param name="pontosDistribuidos">Pontos já distribuídos</param>
+        /// <returns>Não possui retorno</returns>
         public void RedefinePontosCompetencia(int usuarioID, int pontosDistribuidos)
         {
             int saldoAtual = SaldoAtual(usuarioID);
