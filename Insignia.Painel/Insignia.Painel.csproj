@@ -167,6 +167,7 @@
     <Content Include="Content\css\pnotify\pnotify.css" />
     <Content Include="Content\css\select2\select2.css" />
     <Content Include="Content\css\tags\jquery.tagsinput.css" />
+    <Content Include="Content\images\Background-Lozange.png" />
     <Content Include="Content\images\favicon.ico" />
     <Content Include="Content\uploads\ReadMe.txt" />
     <Content Include="Fonts\css\font-awesome.css" />

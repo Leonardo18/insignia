@@ -1,7 +1,8 @@
 ﻿@charset "UTF-8";
 
 .left_col {
-    background: url(https://s3-sa-east-1.amazonaws.com/insigniagamify/images/Background-Lozange.png);
+    /*background: url(https://s3-sa-east-1.amazonaws.com/insigniagamify/images/Background-Lozange.png);*/
+    background: url(../images/Background-Lozange.png);
 }
 
 .nav-sm .container.body .col-md-3.left_col {
@@ -258,7 +259,8 @@ body .container.body .right_col {
 .nav_title {
     width: 230px;
     float: left;
-    background: url(https://s3-sa-east-1.amazonaws.com/insigniagamify/images/Background-Lozange.png);    
+    /*background: url(https://s3-sa-east-1.amazonaws.com/insigniagamify/images/Background-Lozange.png);*/
+    background: url(../images/Background-Lozange.png);
     border-radius: 0;
     height: 57px;
 }
@@ -415,7 +417,8 @@ body .container.body .right_col {
 
 body {
     color: #73879C;
-    background: url(https://s3-sa-east-1.amazonaws.com/insigniagamify/images/Background-Lozange.png);
+    /*background: url(https://s3-sa-east-1.amazonaws.com/insigniagamify/images/Background-Lozange.png);*/
+    background: url(../images/Background-Lozange.png);
     font-family: "Helvetica Neue", Roboto, Arial, "Droid Sans", sans-serif;
     font-size: 13px;
     font-weight: 400;
