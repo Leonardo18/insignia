@@ -115,7 +115,7 @@ namespace Insignia.Painel.Controllers
                         item.Adquirida = true;
                     }
                 }
-            }            
+            }
 
             ViewBag.UsuarioID = FiltroUsuario;
 
@@ -170,13 +170,13 @@ namespace Insignia.Painel.Controllers
             var Usuarios = SelectListMVC.CriaListaSelecao(GraficosDAO.Usuarios(Convert.ToInt32(Session["SetorID"])));
 
             foreach (var item in Usuarios)
-            {                                                
+            {
                 if (Convert.ToInt32(item.Value) == Convert.ToInt32(Session["UsuarioID"]))
                 {
                     item.Selected = true;
                     usuarioID = Convert.ToInt32(item.Value);
                     break;
-                }                
+                }
             }
 
             ViewBag.Usuarios = Usuarios;
@@ -270,7 +270,7 @@ namespace Insignia.Painel.Controllers
             }
 
             ViewBag.UsuarioID = usuarioID;
-                     
+
             return View(ViewModel);
         }
 
@@ -301,6 +301,12 @@ namespace Insignia.Painel.Controllers
                 item.Pontos = CompetenciasDAO.CompetenciaPontos(item.ID);
             }
 
+            //Cria model com as propriedades da agenda
+            ViewModel.ListAgenda = new List<Agenda>();
+
+            //Busca tarefas para montar a agenda com as mesmas, mesmo que não esteja integrado com Google as tarefas aparecem no calendário
+            ViewModel.ListAgenda = TarefasDAO.ListarTarefasAgenda();
+
             CalendarService service = OAuthService.OAuthLogged
                                (
                                    Convert.ToString(Session["UsuarioID"]),
@@ -311,8 +317,7 @@ namespace Insignia.Painel.Controllers
 
             if (service != null)
             {
-                //Cria model com as propriedades da agenda
-                ViewModel.ListAgenda = new List<Agenda>();
+                ViewModel.ListAgenda = ViewModel.ListAgenda == null ? new List<Agenda>() : ViewModel.ListAgenda;
 
                 //Cria serviço para buscar agendas do usuário
                 var ListaAgendas = service.CalendarList.List();

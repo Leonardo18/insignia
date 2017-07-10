@@ -8,11 +8,14 @@ using System.Configuration;
 using System.Web.Mvc;
 using Insignia.Model.Agenda;
 using System.Collections.Generic;
+using Insignia.DAO.Tarefas;
 
 namespace Insignia.Painel.Controllers
 {
     public class AgendaController : Controller
     {
+        TarefasDAO TarefasDAO = new TarefasDAO(ConfigurationManager.ConnectionStrings["strConMain"].ConnectionString);
+
         /// <summary>
         /// GET: Agenda Visualizar
         /// </summary>
@@ -21,6 +24,9 @@ namespace Insignia.Painel.Controllers
         public ActionResult Visualizar()
         {
             var ViewModel = new ViewModelAgenda();
+
+            //Busca tarefas para montar a agenda com as mesmas, mesmo que não esteja integrado com Google as tarefas aparecem no calendário
+            ViewModel.ListAgenda = TarefasDAO.ListarTarefasAgenda();
 
             CalendarService service = OAuthService.OAuthLogged
                                 (
@@ -32,8 +38,7 @@ namespace Insignia.Painel.Controllers
 
             if (service != null)
             {
-                //Cria model com as propriedades da agenda
-                ViewModel.ListAgenda = new List<Agenda>();
+                ViewModel.ListAgenda = ViewModel.ListAgenda == null ? new List<Agenda>() : ViewModel.ListAgenda;
 
                 //Cria serviço para buscar agendas do usuário
                 var ListaAgendas = service.CalendarList.List();

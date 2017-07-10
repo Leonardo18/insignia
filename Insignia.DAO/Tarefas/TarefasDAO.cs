@@ -1,6 +1,7 @@
 ﻿using Dapper;
 using Insignia.DAO.Badges;
 using Insignia.DAO.Util;
+using Insignia.Model.Agenda;
 using Insignia.Model.Tarefa;
 using System;
 using System.Collections.Generic;
@@ -299,12 +300,12 @@ namespace Insignia.DAO.Tarefas
                 foreach (var item in participantes)
                 {
                     int queryResultado = sql.ExecuteScalar<int>(" INSERT INTO TarefasParticipantes(EmpresaID, UsuarioID, TarefaID) OUTPUT INSERTED.ID VALUES (@EmpresaID, @UsuarioID, @TarefaID) ",
-                                        new
-                                        {
-                                            EmpresaID = HttpContext.Current.Session["EmpresaID"],
-                                            UsuarioID = item,
-                                            TarefaID = tarefaID
-                                        });
+                                    new
+                                    {
+                                        EmpresaID = HttpContext.Current.Session["EmpresaID"],
+                                        UsuarioID = item,
+                                        TarefaID = tarefaID
+                                    });
 
                     resp = ToBoolean(queryResultado);
                 }
@@ -325,11 +326,11 @@ namespace Insignia.DAO.Tarefas
                 using (var sql = new SqlConnection(conStr))
                 {
                     var participantes = sql.Query(" SELECT UsuarioID FROM TarefasParticipantes WHERE EmpresaID = @EmpresaID AND TarefaID = @TarefaID ",
-                        new
-                        {
-                            EmpresaID = HttpContext.Current.Session["EmpresaID"],
-                            TarefaID = tarefaID
-                        }).ToList();
+                                    new
+                                    {
+                                        EmpresaID = HttpContext.Current.Session["EmpresaID"],
+                                        TarefaID = tarefaID
+                                    }).ToList();
 
                     return participantes;
                 }
@@ -352,11 +353,11 @@ namespace Insignia.DAO.Tarefas
                 using (var sql = new SqlConnection(conStr))
                 {
                     int queryResultado = sql.Execute(" DELETE FROM TarefasParticipantes WHERE EmpresaID = @EmpresaID AND TarefaID = @TarefaID ",
-                        new
-                        {
-                            EmpresaID = HttpContext.Current.Session["EmpresaID"],
-                            TarefaID = tarefaID
-                        });
+                                    new
+                                    {
+                                        EmpresaID = HttpContext.Current.Session["EmpresaID"],
+                                        TarefaID = tarefaID
+                                    });
 
                     resp = ToBoolean(queryResultado);
                 }
@@ -404,11 +405,11 @@ namespace Insignia.DAO.Tarefas
                 using (var sql = new SqlConnection(conStr))
                 {
                     int queryResultado = sql.Execute(" UPDATE Tarefas SET Status = @status WHERE ID = @ID ",
-                        new
-                        {
-                            ID = id,
-                            Status = status
-                        });
+                                    new
+                                    {
+                                        ID = id,
+                                        Status = status
+                                    });
 
                     resp = ToBoolean(queryResultado);
                 }
@@ -472,13 +473,13 @@ namespace Insignia.DAO.Tarefas
                 using (var sql = new SqlConnection(conStr))
                 {
                     Quantidade = sql.ExecuteScalar<int>(" SELECT Count(ID) FROM Tarefas WHERE BadgeID = @BadgeID AND Status = @Status AND EmpresaID = @EmpresaID AND UsuarioID = @UsuarioID ",
-                        new
-                        {
-                            EmpresaID = HttpContext.Current.Session["EmpresaID"],
-                            UsuarioID = HttpContext.Current.Session["UsuarioID"],
-                            BadgeID = tipoID,
-                            Status = ConfigurationManager.AppSettings["Finalizada"]
-                        });
+                            new
+                            {
+                                EmpresaID = HttpContext.Current.Session["EmpresaID"],
+                                UsuarioID = HttpContext.Current.Session["UsuarioID"],
+                                BadgeID = tipoID,
+                                Status = ConfigurationManager.AppSettings["Finalizada"]
+                            });
                 }
             }
 
@@ -511,12 +512,12 @@ namespace Insignia.DAO.Tarefas
                 using (var sql = new SqlConnection(conStr))
                 {
                     int queryResultado = sql.ExecuteScalar<int>(" UPDATE UsuariosPontos SET Pontos = Pontos + @PontosGanhos WHERE EmpresaID = @EmpresaID AND UsuarioID = @UsuarioID IF @@ROWCOUNT=0 INSERT INTO UsuariosPontos(EmpresaID, UsuarioID, Pontos) VALUES(@EmpresaID, @UsuarioID, @PontosGanhos) ",
-                        new
-                        {
-                            EmpresaID = HttpContext.Current.Session["EmpresaID"],
-                            UsuarioID = HttpContext.Current.Session["UsuarioID"],
-                            PontosGanhos = PontosGanhos
-                        });
+                                    new
+                                    {
+                                        EmpresaID = HttpContext.Current.Session["EmpresaID"],
+                                        UsuarioID = HttpContext.Current.Session["UsuarioID"],
+                                        PontosGanhos = PontosGanhos
+                                    });
                 }
             }
         }
@@ -535,13 +536,13 @@ namespace Insignia.DAO.Tarefas
                 using (var sql = new SqlConnection(conStr))
                 {
                     Quantidade = sql.ExecuteScalar<int>(" SELECT Count(ID) FROM Tarefas WHERE Status = @Status AND Month(CriadoEm) = @Mes AND Year(CriadoEm) = Year(GetDate()) AND EmpresaID = @EmpresaID AND UsuarioID = @UsuarioID ",
-                        new
-                        {
-                            EmpresaID = HttpContext.Current.Session["EmpresaID"],
-                            UsuarioID = HttpContext.Current.Session["UsuarioID"],
-                            Mes = mes,
-                            Status = ConfigurationManager.AppSettings["Finalizada"]
-                        });
+                            new
+                            {
+                                EmpresaID = HttpContext.Current.Session["EmpresaID"],
+                                UsuarioID = HttpContext.Current.Session["UsuarioID"],
+                                Mes = mes,
+                                Status = ConfigurationManager.AppSettings["Finalizada"]
+                            });
                 }
             }
 
@@ -549,58 +550,24 @@ namespace Insignia.DAO.Tarefas
         }
 
         /// <summary>
-        /// Verifica se já existe um evento id em alguma tarefa do usuário
+        /// Lista as tarefas para o model agenda
         /// </summary>
-        /// <param name="eventoID"></param>
-        /// <returns></returns>
-        public bool VerificaEventoID(long eventoID)
+        /// <returns>Retorna uma lista de agenda contendo as tarefas</returns>
+        public List<Agenda> ListarTarefasAgenda()
         {
-            bool resp = false;
+            List<Agenda> list = null;
 
-            if (eventoID != 0)
+            using (var sql = new SqlConnection(conStr))
             {
-                using (var sql = new SqlConnection(conStr))
-                {
-                    int queryResultado = sql.ExecuteScalar<int>(" SELECT ID FROM Tarefas WHERE EventoID = @EventoID AND EmpresaID = @EmpresaID AND UsuarioID = @UsuarioID ",
-                        new
-                        {
-                            EmpresaID = HttpContext.Current.Session["EmpresaID"],
-                            UsuarioID = HttpContext.Current.Session["UsuarioID"],
-                            EventoID = eventoID
-                        });
-                    resp = ToBoolean(queryResultado);
-                }
+                list = sql.Query<Agenda>(" SELECT Titulo, Resumo, Termino FROM Tarefas WHERE EmpresaID = @EmpresaID AND UsuarioID = @UsuarioID ",
+                    new
+                    {
+                        EmpresaID = HttpContext.Current.Session["EmpresaID"],
+                        UsuarioID = HttpContext.Current.Session["UsuarioID"],
+                    }).ToList();
             }
 
-            return resp;
-        }
-
-        /// <summary>
-        /// Atualiza eventoID de uma tarefa no banco de dados
-        /// </summary>
-        /// <param name="id">ID da tarefa</param>
-        /// <param name="eventoID">ID do evento no Google Calendar</param>
-        /// <returns>Caso consiga atualizar retornar true, caso de erro retorna false</returns>
-        public bool AtualizaEventoID(int id, long eventoID)
-        {
-            bool resp = false;
-
-            if (id != 0 && eventoID != 0)
-            {
-                using (var sql = new SqlConnection(conStr))
-                {
-                    int queryResultado = sql.Execute(" UPDATE Tarefas SET EventoID = @EventoID WHERE ID = @ID ",
-                        new
-                        {
-                            ID = id,
-                            EventoID = eventoID
-                        });
-
-                    resp = ToBoolean(queryResultado);
-                }
-            }
-
-            return resp;
+            return list;
         }
     }
 }
