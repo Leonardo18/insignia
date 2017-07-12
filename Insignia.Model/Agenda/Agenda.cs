@@ -22,6 +22,11 @@ namespace Insignia.Model.Agenda
         /// <summary>
         /// Data de Fim na agenda
         /// </summary>
-        public DateTime DataFim { get; set; }        
+        public DateTime DataFim { get; set; }
+
+        /// <summary>
+        /// Cor da tarefa na Agenda
+        /// </summary>
+        public string Cor { get; set; }
     }
 }

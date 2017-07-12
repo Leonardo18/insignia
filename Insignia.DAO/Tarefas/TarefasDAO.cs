@@ -559,7 +559,7 @@ namespace Insignia.DAO.Tarefas
 
             using (var sql = new SqlConnection(conStr))
             {
-                list = sql.Query<Agenda>(" SELECT Titulo, Resumo, Termino FROM Tarefas WHERE EmpresaID = @EmpresaID AND UsuarioID = @UsuarioID ",
+                list = sql.Query<Agenda>(" SELECT Titulo, Resumo, Termino AS DataInicio, '#2C4257' AS Cor FROM Tarefas WHERE EmpresaID = @EmpresaID AND UsuarioID = @UsuarioID ",
                     new
                     {
                         EmpresaID = HttpContext.Current.Session["EmpresaID"],

@@ -68,7 +68,7 @@
                         @:{
                             @:title: '@Html.Raw(item.Titulo)',
                             @:start: new Date(@item.DataInicio.Year + '-' + @item.DataInicio.Month + '-' + @item.DataInicio.Day),
-                            @:backgroundColor : "#2C4257"
+                            @:backgroundColor : "@*@item.Cor*@"
                         @:},
                     }
                 }

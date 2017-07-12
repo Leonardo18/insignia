@@ -69,7 +69,8 @@ namespace Insignia.Painel.Controllers
                             {
                                 Titulo = !string.IsNullOrEmpty(eventItem.Summary) ? eventItem.Summary.Replace("'", "") : "",
                                 DataInicio = Convert.ToDateTime(eventItem.Start.DateTime),
-                                DataFim = Convert.ToDateTime(eventItem.End.DateTime)
+                                DataFim = Convert.ToDateTime(eventItem.End.DateTime),
+                                Cor = "#3a87ad"
                             });
                         }
                         ViewModel.IconeRefreshCor = "green";
