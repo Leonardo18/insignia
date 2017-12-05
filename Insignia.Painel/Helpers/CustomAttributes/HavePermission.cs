@@ -19,7 +19,7 @@ namespace Insignia.Painel.Helpers.CustomAttributes
             {
                 Auth auth = new Auth(ConfigurationManager.ConnectionStrings["strConMain"].ConnectionString);
                 string usuarioID = Convert.ToString(context.Session["UsuarioID"]);
-                string tipo = Database.DBBuscaInfo("Usuarios", "ID", Convert.ToString(context.Session["UsuarioID"]), "Tipo");
+                string tipo = Convert.ToString(context.Session["UsuarioTipo"]) != "Empresa" ? Database.DBBuscaInfo("Usuarios", "ID", Convert.ToString(context.Session["UsuarioID"]), "Tipo") : "Empresa";
 
                 if (!string.IsNullOrEmpty(tipo))
                 {

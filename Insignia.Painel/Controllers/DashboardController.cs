@@ -310,7 +310,8 @@ namespace Insignia.Painel.Controllers
             CalendarService service = OAuthService.OAuthLogged
                                (
                                    Convert.ToString(Session["UsuarioID"]),
-                                   ConfigurationManager.ConnectionStrings["strConMain"].ConnectionString, "https://www.portalinsignia.com.br/Dashboard/SincronizarAgenda",
+                                   ConfigurationManager.ConnectionStrings["strConMain"].ConnectionString,
+                                   ConfigurationManager.AppSettings["RedirectUriAgenda"] + "/Dashboard/SincronizarAgenda",
                                    "Calendar API",
                                    new[] { CalendarService.Scope.CalendarReadonly, CalendarService.Scope.Calendar }
                                );
@@ -376,7 +377,8 @@ namespace Insignia.Painel.Controllers
             CalendarService service = OAuthService.OAuthLogin
                                 (
                                     Convert.ToString(Session["UsuarioID"]),
-                                    ConfigurationManager.ConnectionStrings["strConMain"].ConnectionString, "https://www.portalinsignia.com.br/Dashboard/SincronizarAgenda",
+                                    ConfigurationManager.ConnectionStrings["strConMain"].ConnectionString,
+                                    ConfigurationManager.AppSettings["RedirectUriAgenda"] + "/Dashboard/SincronizarAgenda",
                                     "Calendar API",
                                     new[] { CalendarService.Scope.CalendarReadonly, CalendarService.Scope.Calendar }
                                 );
